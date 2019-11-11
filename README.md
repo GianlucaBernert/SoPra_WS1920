@@ -1,1 +1,11 @@
-# SoPra19-20
+# SoPra_WS1920
+Repository for our software project at the University of Media, Stuttgart
+
+## Members
+@GianlucaBernert
+@DavidFlattich
+@SebastianHermann
+@MatthiasKling
+@LoftiShila
+@YesinSoufi
+
