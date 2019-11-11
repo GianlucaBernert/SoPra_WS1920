@@ -6,6 +6,6 @@ Repository for our software project at the University of Media, Stuttgart
 @DavidFlattich
 @SebastianHermann
 @MatthiasKling
-@LoftiShila
+@ShilaLofti
 @YesinSoufi
 
