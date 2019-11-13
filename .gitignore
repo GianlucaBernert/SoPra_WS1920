@@ -65,4 +65,6 @@ war/WEB-INF/classes/
 /.factorypath
 .svn/
 /.settings
-/.gwt
+.gwt/
+www-test/
+.gwt-tmp/
