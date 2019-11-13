@@ -9,3 +9,7 @@ Repository for our software project at the University of Media, Stuttgart
 @ShilaLofti
 @YesinSoufi
 
+## Viewers
+@PeterThies
+@ChristophKunz
+
