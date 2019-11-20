@@ -18,26 +18,19 @@ public class Ownership extends BusinessObject {
      */
     private int personFK;
 
+   
     /**
-     * 
-     */
-    public Person Creator;
-
-    /**
-     * @return
+     * @return personFK
      */
     public int getPersonFK() {
-        // TODO implement here
-        return 0;
+        return personFK;
     }
 
     /**
      * @param PersonFK 
-     * @return
      */
     public void setPersonFK(int PersonFK) {
-        // TODO implement here
-        return null;
+        this.personFK = personFK;
     }
 
 }

@@ -1,4 +1,4 @@
-package de.hdm.SP1920.shared.bo;
+
 
 import java.util.*;
 
@@ -23,56 +23,33 @@ public class SurveyEntry extends BusinessObject {
      */
     private int surveyFK;
 
+   
     /**
-     * 
-     */
-    public Screening Survey Content;
-
-    /**
-     * 
-     */
-    public Survey optionlist;
-
-    /**
-     * 
-     */
-    public Set<Vote> preference;
-
-
-
-
-    /**
-     * @return
+     * @return screeningFK
      */
     public int getScreeningFK() {
-        // TODO implement here
-        return 0;
+        return screeningFK;
     }
 
     /**
      * @param screeningFK 
-     * @return
      */
     public void setScreeningFK(int screeningFK) {
-        // TODO implement here
-        return null;
+        this.screeningFK = screeningFK;
     }
 
     /**
-     * @return
+     * @return surveyFK
      */
     public int getSurveyFK() {
-        // TODO implement here
-        return 0;
+       return surveyFK;
     }
 
     /**
      * @param survexFK 
-     * @return
      */
     public void setSurveyFK(int survexFK) {
-        // TODO implement here
-        return null;
+     this.surveyFK = surveyFK;
     }
 
 }

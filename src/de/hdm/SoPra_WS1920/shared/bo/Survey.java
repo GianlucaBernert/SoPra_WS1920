@@ -1,5 +1,6 @@
 package de.hdm.SoPra_WS1920.shared.bo;
 
+import java.sql.Date;
 import java.util.*;
 
 /**
@@ -21,58 +22,35 @@ public class Survey extends Ownership {
     /**
      * 
      */
-    private Datetime endDate;
+    private Date endDate;
 
+    
     /**
-     * 
-     */
-    public Group valid;
-
-    /**
-     * 
-     */
-    public Set<SurveyEntry> vote object;
-
-
-
-    /**
-     * 
-     */
-    public Person creator;
-
-
-    /**
-     * @return
+     * @return group
      */
     public int getGroupFK() {
-        // TODO implement here
-        return 0;
+        return groupFK;
     }
 
-    /**
-     * @param groupFK 
-     * @return
+    /** 
+     * @return groupFK
      */
     public void setGroupFK(int groupFK) {
-        // TODO implement here
-        return null;
+        this.groupFK = groupFK;
     }
 
     /**
      * @return
      */
-    public Datetime getEndDate() {
-        // TODO implement here
-        return null;
+    public Date getEndDate() {
+       return endDate;
     }
 
     /**
      * @param endDate 
-     * @return
      */
-    public void setEndDate(Datetime endDate) {
-        // TODO implement here
-        return null;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
 }

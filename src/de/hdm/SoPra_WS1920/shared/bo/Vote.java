@@ -25,48 +25,31 @@ public class Vote extends Ownership {
 
 
     /**
-     * 
-     */
-    public Person participant;
-
-    /**
-     * 
-     */
-    public SurveyEntry Survey subject;
-
-
-    /**
      * @return
      */
     public int getVotingWeight() {
-        // TODO implement here
-        return 0;
+        return votingWeight;
     }
 
     /**
      * @param votingWeight 
-     * @return
      */
     public void setVotingWeight(int votingWeight) {
-        // TODO implement here
-        return null;
+       this.votingWeight = votingWeight;
     }
 
     /**
-     * @return
+     * @return surveyEntryFK
      */
     public int getSurveyEntryFK() {
-        // TODO implement here
-        return 0;
+        return surveyEntryFK;
     }
 
     /**
      * @param surveyEntryFK 
-     * @return
      */
     public void setSurveyEntryID(int surveyEntryFK) {
-        // TODO implement here
-        return null;
+        this.surveyEntryFK = surveyEntryFK;
     }
 
 }

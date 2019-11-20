@@ -16,7 +16,8 @@ public class BusinessObject {
     /**
      * 
      */
-    private Long SerialVersionUID;
+    @SuppressWarnings("unused")
+	private static final long SerialVersionUID = 1L;
 
     /**
      * 
@@ -27,8 +28,7 @@ public class BusinessObject {
      * @return
      */
     public int getId() {
-        // TODO implement here
-        return 0;
+        return id;
     }
 
     /**
@@ -36,7 +36,7 @@ public class BusinessObject {
      * @return
      */
     public void setId(int id) {
-        // TODO implement here
+        this.id = id;
         
     }
 

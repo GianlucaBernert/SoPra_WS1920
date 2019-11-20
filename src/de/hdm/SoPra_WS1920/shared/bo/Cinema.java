@@ -1,6 +1,6 @@
 package de.hdm.SoPra_WS1920.shared.bo;
-
 import java.util.*;
+
 
 /**
  * 
@@ -38,101 +38,77 @@ public class Cinema extends Ownership {
      */
     private String streetNo;
 
+    
     /**
-     * 
+     *@return name
      */
-    public Person Organizer;
-
-    /**
-     * 
-     */
-    public Set<Screening> Playing Time;
-
-
-
-    /**
-     * @return
-     */
+    
     public String getName() {
-        // TODO implement here
-        return "";
+        return name;
     }
 
     /**
      * @param name 
-     * @return
      */
     public void setName(String name) {
-        // TODO implement here
-        return null;
+        this.name = name;
+        
     }
 
     /**
      * @return
      */
     public String getCity() {
-        // TODO implement here
-        return "";
+        return city;
     }
 
     /**
      * @param city 
-     * @return
      */
     public void setCity(String city) {
-        // TODO implement here
-        return null;
+       this.city = city;
     }
 
     /**
      * @return
      */
     public int getPostCode() {
-        // TODO implement here
-        return 0;
+       return postCode;
     }
 
     /**
      * @param postCode 
-     * @return
      */
     public void setPostCode(int postCode) {
-        // TODO implement here
-        return null;
+        this.postCode = postCode;
     }
 
     /**
-     * @return
+     * @return street
      */
     public String getStreet() {
-        // TODO implement here
-        return "";
+       return street;
     }
 
     /**
      * @param street 
-     * @return
      */
     public void setStreet(String street) {
-        // TODO implement here
-        return null;
+       this.street = street;
     }
 
     /**
-     * @return
+     * @return streetNo
      */
     public String getStreetNo() {
-        // TODO implement here
-        return "";
+       return streetNo;
     }
 
     /**
      * @param streetNo 
-     * @return
      */
     public void setStreetNo(String streetNo) {
-        // TODO implement here
-        return null;
+       this.streetNo = streetNo;
     }
 
 }

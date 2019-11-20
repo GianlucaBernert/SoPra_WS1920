@@ -36,132 +36,77 @@ public class Person extends BusinessObject {
     /**
      * 
      */
-    private Boolean isAdmin = false;
+    private int isAdmin;
 
+   
     /**
-     * 
-     */
-    public Set<Movie> Creation;
-
-
-    /**
-     * 
-     */
-    public Set<Cinema> Location;
-
-
-    /**
-     * 
-     */
-    public Set<Screening> Movie Event;
-
-
-
-    /**
-     * 
-     */
-    public Set<Survey> inquiry;
-
-    /**
-     * 
-     */
-    public Set<Vote> interest;
-
-
-
-    /**
-     * 
-     */
-    public Set<Ownership> CreationObject;
-
-    /**
-     * 
-     */
-    public Set<Group> team;
-
-    /**
-     * @return
+     * @return id
      */
     public int getId() {
-        // TODO implement here
-        return 0;
+        return id;
     }
 
     /**
      * @param id 
-     * @return
      */
     public void setId(int id) {
-        // TODO implement here
-        return null;
+        this.id = id;
     }
 
     /**
      * @return
      */
     public String getFirstname() {
-        // TODO implement here
-        return "";
+        return firstname;
     }
 
     /**
      * @param firstname 
-     * @return
      */
     public void setFirstname(String firstname) {
-        // TODO implement here
-        return null;
+       this.firstname = firstname;
     }
 
     /**
-     * @return
+     * @return lastname
      */
     public String getLastname() {
-        // TODO implement here
-        return "";
+       return lastname;
     }
 
     /**
      * @param lastname 
-     * @return
      */
     public void setLastname(String lastname) {
-        // TODO implement here
-        return null;
+        this.lastname = lastname;
     }
 
     /**
-     * @return
+     * @return email
      */
     public String getEMail() {
-        // TODO implement here
-        return "";
+        return eMail;
     }
 
     /**
      * @param eMail 
-     * @return
      */
     public void setEMail(String eMail) {
-        // TODO implement here
-        return null;
+        this.eMail = eMail;
     }
 
     /**
-     * @return
+     * @return isAdmin
      */
-    public Boolean getIsAdmin() {
-        // TODO implement here
-        return null;
+    public int getIsAdmin() {
+        return isAdmin;
     }
 
     /**
      * @param isAdmin 
-     * @return
      */
-    public void setIsAdmin(Boolean isAdmin) {
-        // TODO implement here
-        return null;
+    public void setIsAdmin(int isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
 }

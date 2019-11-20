@@ -18,33 +18,19 @@ public class Group extends Ownership {
      */
     private String name;
 
+    
     /**
-     * 
-     */
-    public Set<Survey> poll;
-
-
-
-    /**
-     * 
-     */
-    public Set<Person> member;
-
-    /**
-     * @return
+     * @return name
      */
     public String getName() {
-        // TODO implement here
-        return "";
+        return name;
     }
 
     /**
      * @param name 
-     * @return
      */
     public void setName(String name) {
-        // TODO implement here
-        return null;
+        this.name = name;
     }
 
 }

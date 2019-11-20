@@ -28,68 +28,47 @@ public class Movie extends Ownership {
      */
     private String genre;
 
-    /**
-     * 
-     */
-    public Set<Screening> Movie Programm;
-
-    /**
-     * 
-     */
-    public Person Movie-Administrator;
-
-
-
-
+   
     /**
      * @param name 
-     * @return
      */
     public void setName(String name) {
-        // TODO implement here
-        return null;
+        this.name = name;
     }
 
     /**
-     * @return
+     * @return name
      */
     public String getName() {
-        // TODO implement here
-        return "";
+       return name;
     }
 
     /**
      * @param description 
-     * @return
      */
     public void setDescription(String description) {
-        // TODO implement here
-        return null;
+       this.description = description;
     }
 
     /**
-     * @return
+     * @return description
      */
     public String getDescription() {
-        // TODO implement here
-        return "";
+        return description;
     }
 
     /**
      * @param genre 
-     * @return
      */
     public void setGenre(String genre) {
-        // TODO implement here
-        return null;
+       this.genre = genre;
     }
 
     /**
      * @return
      */
-    public void getGenre() {
-        // TODO implement here
-        return null;
+    public String getGenre() {
+        return genre;
     }
 
 }

@@ -1,5 +1,6 @@
 package de.hdm.SoPra_WS1920.shared.bo;
 
+import java.sql.Time;
 import java.util.*;
 
 /**
@@ -33,97 +34,61 @@ public class Screening extends Ownership {
      */
     private Time time;
 
+  
     /**
-     * 
-     */
-    public Movie Content;
-
-    /**
-     * 
-     */
-    public Set<SurveyEntry> Voting Option;
-
-    /**
-     * 
-     */
-    public Cinema Screening location;
-
-    /**
-     * 
-     */
-    public Person Promoter;
-
-
-
-
-
-
-    /**
-     * @return
+     * @return cinemaFK
      */
     public int getCinemaFK() {
-        // TODO implement here
-        return 0;
+        return cinemaFK;
     }
 
     /**
      * @param cinemaFK 
-     * @return
      */
     public void setCinemaFK(int cinemaFK) {
-        // TODO implement here
-        return null;
+        this.cinemaFK = cinemaFK;
     }
 
     /**
-     * @return
+     * @return movieFK
      */
     public int getMovieFK() {
-        // TODO implement here
-        return 0;
+        return movieFK;
     }
 
     /**
      * @param movieFK 
-     * @return
      */
     public void setMovieFK(int movieFK) {
-        // TODO implement here
-        return null;
+       this.movieFK = movieFK;
     }
 
     /**
-     * @return
+     * @return date
      */
     public Date getDate() {
-        // TODO implement here
-        return null;
+        return date;
     }
 
     /**
      * @param date 
-     * @return
      */
     public void setDate(Date date) {
-        // TODO implement here
-        return null;
+       this.date = date;
     }
 
     /**
-     * @return
+     * @return time
      */
     public Time getTime() {
-        // TODO implement here
-        return null;
+        return time;
     }
 
     /**
      * @param time 
-     * @return
      */
     public void setTime(Time time) {
-        // TODO implement here
-        return null;
+        this.time = time;
     }
 
 }
