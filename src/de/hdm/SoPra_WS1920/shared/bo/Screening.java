@@ -1,4 +1,4 @@
-package de.hdm.SP1920.shared.bo;
+package de.hdm.SoPra_WS1920.shared.bo;
 
 import java.util.*;
 

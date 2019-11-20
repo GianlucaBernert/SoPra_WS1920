@@ -1,4 +1,4 @@
-package de.hdm.SP1920.server.db;
+package de.hdm.SoPra_WS1920.server.db;
 
 import java.util.*;
 

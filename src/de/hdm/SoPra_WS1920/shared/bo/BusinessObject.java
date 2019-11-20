@@ -1,4 +1,4 @@
-package de.hdm.SP1920.shared.bo;
+package de.hdm.SoPra_WS1920.shared.bo;
 
 import java.util.*;
 
@@ -37,7 +37,7 @@ public class BusinessObject {
      */
     public void setId(int id) {
         // TODO implement here
-        return null;
+        
     }
 
 }

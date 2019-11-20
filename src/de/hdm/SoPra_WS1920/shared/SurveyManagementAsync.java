@@ -1,3 +1,5 @@
+package de.hdm.SoPra_WS1920.shared;
+
 
 import java.util.*;
 
