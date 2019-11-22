@@ -1,0 +1,94 @@
+/* body */
+body{
+	margin: 0px !important; /*!important is for overwriting the browser default settings*/
+	background-color: #2A2A2A !important;/* Sets background color */
+	font-family: "Roboto";
+	overflow-x: hidden; /* Disables horizontal scroll */
+}
+
+/* The sidebar menu */
+.sidenav {
+  height: 100%; /* Full-height*/
+  width: 200px; /* width of the sidenav */
+  position: fixed; /* Fixed Sidenav->stay in place on scroll */
+  z-index: 0; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-image: linear-gradient(to bottom right, #302F2F, #101010); /*Generates a gradient from top left to bottom right*/
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/*All Labels in the side navigation bar */
+.sidenav .gwt-Label {
+	margin-left: 40px;
+	font-family: "Roboto" !important;
+}
+
+/*The Header*/
+.header {
+	height: 80px;	/*height of the header*/
+	width: 100%;
+	margin-left:200px;	/*Necessary due to the sidenav width of 200px*/
+	overflow-x: hidden; 
+}
+/*For headlines wrapped in the header div*/
+.header .headline {
+	font-family:"Roboto";
+	font-weight: bold; /*Makes text bold*/
+	font-size: 40px;
+	color: #f1f1f1;
+	margin-left: 15px;
+	margin-top: 15px;
+	width: auto;
+	float: left; /*floats the headline left*/
+	text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); /*Sets a shadow to the headline*/
+}
+/* The searchBox -Textbox */
+.searchBox{
+	min-width: 400px; /*Minimum width of 400px*/
+	background-color: white;
+	border-radius: 15px; /*Round corners for the searchbox*/
+	height: 30px;
+	padding-left:15px;
+	float: left;
+	margin-left: 15px;
+	border-style: none;	/*Erases the default border of a textbox*/
+	margin-top: 22px;
+	outline: none; /*Prevents the textbox to get a blue outline when selected*/
+    outline-style: none;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);/*Sets a shadow to the box*/
+}
+/* The submit-button for the respective searchBox */
+.searchSubmit {
+	color: white;
+	height: 30px;
+	min-width: 80px;
+	float: left;
+	background-color:#FF0000;
+	font-family: "Roboto";
+	margin-left: 10px;
+	margin-top: 22px;
+	padding-left: 30px;
+	padding-right: 30px;
+	border-radius: 15px;
+	border-style: none;
+	outline: none;
+    outline-style: none;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    cursor: pointer; /*Transforms the mouse click symbol to a hand*/
+}
+/*Hover effect for the submit-button*/
+.searchSubmit:hover {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 40px 0 rgba(0, 0, 0, 0.19);
+  background-color:#E40000;
+}
+
+/* Style of the pages content */
+.main {
+  margin-left: 200px; /* Same as the width of the sidebar */
+  width:auto;
+  height: auto;
+  box-sizing: border-box;
+  overflow-x: hidden; 
+}
