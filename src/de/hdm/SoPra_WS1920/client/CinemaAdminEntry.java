@@ -1,4 +1,4 @@
-package de.hdm.SoPra_WS1920.client.gui;
+package de.hdm.SoPra_WS1920.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.FlowPanel;
