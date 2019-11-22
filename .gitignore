@@ -2,12 +2,26 @@
 # Java-Spezifika
 ################################################################################
 
+# Compiled class file
 *.class
 
-# Package Files #
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+*mtj.tmp/
+
+# Package Files 
 *.jar
 *.war
 *.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
 
 ################################################################################
 # Android-Spezifika 
@@ -51,4 +65,7 @@ war/WEB-INF/classes/
 /.factorypath
 .svn/
 /.settings
-/.gwt
+.gwt/
+www-test/
+.gwt-tmp/
+/test-classes/
