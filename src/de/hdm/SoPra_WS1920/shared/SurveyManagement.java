@@ -3,9 +3,21 @@ package de.hdm.SoPra_WS1920.shared;
 
 import java.util.*;
 
+import org.apache.james.mime4j.field.datetime.DateTime;
+
+import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.google.gwt.validation.client.impl.Group;
+
+import de.hdm.SoPra_WS1920.shared.bo.Person;
+import de.hdm.SoPra_WS1920.shared.bo.Survey;
+import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
+import de.hdm.SoPra_WS1920.shared.bo.Vote;
+
 /**
  * 
  */
+@RemoteServiceRelativePath("surveyManagement")
 public interface SurveyManagement extends RemoteService {
 
     /**
@@ -164,7 +176,7 @@ public interface SurveyManagement extends RemoteService {
      * @param id 
      * @return
      */
-    public Survey getSurveyById(Int id);
+    public Survey getSurveyById(int id);
 
     /**
      * @param id 
