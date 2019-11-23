@@ -7,13 +7,33 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>de.hdm.SoPra_WS1920.server.GreetingServiceImpl</servlet-class>
+    <servlet-name>loginServiceServlet</servlet-name>
+    <servlet-class>de.hdm.SoPra_WS1920.server.LoginServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/sopra_ws1920a/greet</url-pattern>
+    <servlet-name>loginServiceServlet</servlet-name>
+    <url-pattern>/sopra_ws1920a/login</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>cinemaAdminstrationServlet</servlet-name>
+    <servlet-class>de.hdm.SoPra_WS1920.server.CinemaAdministrationImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>cinemaAdministrationServlet</servlet-name>
+    <url-pattern>/sopra_ws1920a/cinemaAdministration</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>surveyManagementServlet</servlet-name>
+    <servlet-class>de.hdm.SoPra_WS1920.server.SurveyManagementImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>surveyManagementServlet</servlet-name>
+    <url-pattern>/sopra_ws1920a/surveyManagement</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->

@@ -3,6 +3,16 @@ package de.hdm.SoPra_WS1920.shared;
 
 import java.util.*;
 
+import org.apache.james.mime4j.field.datetime.DateTime;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.validation.client.impl.Group;
+
+import de.hdm.SoPra_WS1920.shared.bo.Person;
+import de.hdm.SoPra_WS1920.shared.bo.Survey;
+import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
+import de.hdm.SoPra_WS1920.shared.bo.Vote;
+
 /**
  * 
  */
@@ -49,7 +59,7 @@ public interface SurveyManagementAsync {
      * @param callback 
      * @return
      */
-    public Void createSurveyEntry(int id, AsyncCallback <SurveyEntry callback);
+    public Void createSurveyEntry(int id, AsyncCallback <SurveyEntry> callback);
 
     /**
      * @param person 
@@ -168,7 +178,7 @@ public interface SurveyManagementAsync {
      * @param callback 
      * @return
      */
-    public Void getVoteByVotingWeight(int votingWeight, AsyncCallBack<Vote> callback);
+    public Void getVoteByVotingWeight(int votingWeight, AsyncCallback<Vote> callback);
 
     /**
      * @param id 
@@ -189,7 +199,7 @@ public interface SurveyManagementAsync {
      * @param callback 
      * @return
      */
-    public Void getSurveyById(Int id, AsyncCallback<Survey> callback);
+    public Void getSurveyById(int id, AsyncCallback<Survey> callback);
 
     /**
      * @param id 

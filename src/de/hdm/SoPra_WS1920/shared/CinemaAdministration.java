@@ -3,9 +3,20 @@ package de.hdm.SoPra_WS1920.shared;
 
 import java.util.*;
 
+import org.apache.james.mime4j.field.datetime.DateTime;
+
+import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+
+import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
+import de.hdm.SoPra_WS1920.shared.bo.Screening;
+
 /**
  * 
  */
+@RemoteServiceRelativePath("cinemaAdministration")
 public interface CinemaAdministration extends RemoteService {
 
     /**
