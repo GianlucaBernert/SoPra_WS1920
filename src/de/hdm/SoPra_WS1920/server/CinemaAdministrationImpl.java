@@ -3,7 +3,7 @@ package de.hdm.SoPra_WS1920.server;
 import java.util.*;
 
 /**
- * 
+ * @author MatthiasKling
  */
 public class CinemaAdministrationImpl extends RemoteServiceServlet implements CinemaAdministration {
 
