@@ -2,36 +2,62 @@ package de.hdm.SoPra_WS1920.server;
 
 import java.util.*;
 
+import org.apache.james.mime4j.field.datetime.DateTime;
+
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import de.hdm.SoPra_WS1920.server.db.CinemaMapper;
+import de.hdm.SoPra_WS1920.server.db.MovieMapper;
+import de.hdm.SoPra_WS1920.server.db.PersonMapper;
+import de.hdm.SoPra_WS1920.server.db.ScreeningMapper;
+import de.hdm.SoPra_WS1920.shared.CinemaAdministration;
+import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
+import de.hdm.SoPra_WS1920.shared.bo.Screening;
+
 /**
  * @author MatthiasKling
  */
+@SuppressWarnings("serial")
 public class CinemaAdministrationImpl extends RemoteServiceServlet implements CinemaAdministration {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Default constructor
      */
     public CinemaAdministrationImpl() {
     }
 
     /**
-     * 
+     * Referenzen auf Mapperklassen
      */
-    private CinemaMapper cMapper;
+    private CinemaMapper cMapper = null;
 
-    /**
-     * 
-     */
-    private MovieMapper mMapper;
+    private MovieMapper mMapper = null;
 
-    /**
-     * 
-     */
-    private ScreeningMapper sMapper;
+    private ScreeningMapper sMapper = null;
 
+    public PersonMapper pMapper = null;
+    
     /**
-     * 
+     * Initialisierung
      */
-    public PersonMapper pMapper;
+    
+    public void init() {
+    	
+    	this.cMapper = CinemaMapper.cineMapper();
+    	this.mMapper = MovieMapper.moviemapper();
+    	this.sMapper = ScreeningMapper.screeningMapper();
+    	this.pMapper = PersonMapper.personMapper();
+    }
+    
+    
+    
 
     /**
      * @param name 
@@ -40,20 +66,54 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @param postCode 
      * @return
      */
-    public Cinema createCinema(String name, String cityName, String street, String postCode) {
-        // TODO implement here
-        return null;
-    }
+    @Override
+    public Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode, int PersonFK) {
 
+        	Cinema c = new Cinema();
+        	
+        	c.setName(name);
+        	c.setCity(cityName);
+        	c.setStreet(street);
+        	c.setPostCode(postCode);
+        	c.setId(1);
+        	c.setPersonFK(PersonFK);
+        	
+        	return this.cMapper.insertCinema(c);
+        	
+        
+    }
+    
     /**
      * @param name 
      * @param genre 
      * @param description 
      * @return
      */
-    public Movie createMovie(String name, String genre, String description) {
-        // TODO implement here
-        return null;
+    @Override
+    public Movie createMovie(String name, String genre, String description, int PersonFK) {
+        
+    	Vector <Movie> m1 = new Vector <Movie>();
+    	m1 = mMapper.findMovieByName(name);
+		
+		if (m1 != null) {
+			return null;
+		}
+		
+		else {
+			
+		Movie m	= new Movie();
+		
+		m.setName(name);
+		m.setGenre(genre);
+		m.setDescription(description);
+		m.setId(1);
+		m.setPersonFK(PersonFK);
+		
+		return this.mMapper.insertMovie(m);
+			
+		}
+    	
+        
     }
 
     /**
@@ -62,15 +122,24 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @param movieFK 
      * @return
      */
+    @Override
     public Screening createScreening(DateTime screeningDateTime, int cinemaFK, int movieFK) {
-        // TODO implement here
+        
+    	Screening s = new Screening();
+    	
+    	s.setCinemaFK(cinemaFK);
+    	s.setMovieFK(movieFK);
+    	/**
+    	 * TO DO: Date + Time anstelle von DateTime siehe bo screening
+    	 */
         return null;
-    }
+    } 
 
     /**
      * @param cinema 
      * @return
      */
+    @Override
     public Void deleteCinema(Cinema cinema) {
         // TODO implement here
         return null;
@@ -80,6 +149,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @param movie 
      * @return
      */
+    @Override
     public Void deleteMovie(Movie movie) {
         // TODO implement here
         return null;
@@ -89,6 +159,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @param screening 
      * @return
      */
+    @Override
     public Void deleteScreening(Screening screening) {
         // TODO implement here
         return null;
@@ -98,360 +169,131 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @param id 
      * @return
      */
-    public Movie getCinemaById(int id) {
-        // TODO implement here
-        return null;
+    @Override
+    public Cinema getCinemaById(int id) {
+        
+    	
+        return this.cMapper.findCinemaByID(id);
     }
 
     /**
      * @param name 
      * @return
      */
-    public Vector<Cinema> getCinemasByName(String name) {
-        // TODO implement here
-        return null;
+    @Override
+    public Vector<Cinema> getCinemaByName(String name) {
+        
+        return this.cMapper.findCinemaByName(name);
     }
 
     /**
      * @param cityName 
      * @return
      */
-    public Vector<Cinema> getCinemasByCityName(String cityName) {
-        // TODO implement here
-        return null;
+    @Override
+    public Vector<Cinema> getCinemaByCity(String cityName) {
+        
+        return this.cMapper.findCinemaByCity(cityName);
     }
 
     /**
      * @param id 
      * @return
      */
+    @Override
     public Movie getMovieById(int id) {
-        // TODO implement here
-        return null;
+        
+        return this.mMapper.findMovieByID(id);
     }
 
     /**
      * @param name 
      * @return
      */
+    @Override
     public Vector<Movie> getMoviesByName(String name) {
-        // TODO implement here
-        return null;
+       
+        return this.mMapper.findMovieByName(name);
     }
 
     /**
      * @param genre 
      * @return
      */
-    public Vector<Movie> getMoviesByGenre(String genre) {
-        // TODO implement here
-        return null;
+    @Override
+    public Vector<Movie> getMovieByGenre(String genre) {
+        
+        return this.mMapper.findMovieByGenre(genre);
     }
 
     /**
      * @param id 
      * @return
      */
+    @Override
     public Screening getScreeningById(int id) {
-        // TODO implement here
-        return null;
+        
+        return this.sMapper.findScreeningByID(id);
     }
 
     /**
      * @param cinemaFK 
      * @return
      */
+    @Override
     public Vector<Screening> getScreeningByCinemaFK(int cinemaFK) {
-        // TODO implement here
-        return null;
+        
+        return this.sMapper.findScreeningByCinemaFK(cinemaFK);
     }
 
     /**
      * @param movieFK 
      * @return
      */
+    @Override
     public Vector<Screening> getScreeningByMovieFK(int movieFK) {
-        // TODO implement here
-        return null;
+        
+        return this.sMapper.findScreeningByMovieFK(movieFK);
     }
 
     /**
      * @param screeningDateTime 
      * @return
      */
-    public Vector<Screening> getScreeningsByScreeningDateTime(DateTime screeningDateTime) {
-        // TODO implement here
-        return null;
+    @Override
+    public Vector<Screening> getScreeningByScreeningDateTime(DateTime screeningDateTime) {
+        
+        return this.sMapper.findScreeningByScreeningDateTime(screeningDateTime);
     }
 
     /**
      * @param cinema 
      * @return
      */
+    @Override
     public Cinema updateCinema(Cinema cinema) {
-        // TODO implement here
-        return null;
+        
+        return this.cMapper.updateCinema(cinema);
     }
 
     /**
      * @param movie 
      * @return
      */
+    @Override
     public Movie updateMovie(Movie movie) {
-        // TODO implement here
-        return null;
+        
+        return this.mMapper.updateMovie(movie);
     }
 
     /**
      * @param screening
      */
-    public void updateScreening(Screening screening) {
-        // TODO implement here
-    }
-
-    /**
-     * @param firstName 
-     * @param lastName 
-     * @param eMail 
-     * @param isAdmin 
-     * @return
-     */
-    public Person createPerson(String firstName, String lastName, String eMail, boolean isAdmin) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param id 
-     * @return
-     */
-    public Person getPersonById(int id) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param firstName 
-     * @return
-     */
-    public Person getPersonByFirstName(String firstName) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param lastName 
-     * @return
-     */
-    public Person getPersonByLastName(String lastName) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param eMail 
-     * @return
-     */
-    public Person getPersonByeMail(String eMail) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param person 
-     * @return
-     */
-    public Void deletePerson(Person person) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param person 
-     * @return
-     */
-    public Person updatePerson(Person person) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param name 
-     * @param cityName 
-     * @param street 
-     * @param streetNr 
-     * @param postCode 
-     * @return
-     */
-    public Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param name 
-     * @param genre 
-     * @param description 
-     * @return
-     */
-    public Movie createMovie(String name, String genre, String description) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param screeningDatetime 
-     * @param movieFK 
-     * @param cinemaFK 
-     * @return
-     */
-    public Screening createScreening(DateTime screeningDatetime, int movieFK, int cinemaFK) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param cinema 
-     * @return
-     */
-    public Void deleteCinema(Cinema cinema) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param movie 
-     * @return
-     */
-    public Void deleteMovie(Movie movie) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param screening 
-     * @return
-     */
-    public Void deleteScreening(Screening screening) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param cityName 
-     * @return
-     */
-    public Vector<Cinema> getCinemaByCity(String cityName) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param id 
-     * @return
-     */
-    public Cinema getCinemaById(int id) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param name 
-     * @return
-     */
-    public Vector<Cinema> getCinemaByName(String name) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param genre 
-     * @return
-     */
-    public Vector<Movie> getMovieByGenre(String genre) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param id 
-     * @return
-     */
-    public Movie getMovieById(int id) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param name 
-     * @return
-     */
-    public Vector<Movie> getMoviesByName(String name) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param cinemaFK 
-     * @return
-     */
-    public Vector<Screening> getScreeningByCinemaFK(int cinemaFK) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param id 
-     * @return
-     */
-    public Screening getScreeningById(int id) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param movieFK 
-     * @return
-     */
-    public Vector<Screening> getScreeningByMovieFK(int movieFK) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param screeningDateTime 
-     * @return
-     */
-    public Vector<Screening> getScreeningByScreeningDateTime(DateTime screeningDateTime) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param cinema 
-     * @return
-     */
-    public Cinema updateCinema(Cinema cinema) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param movie 
-     * @return
-     */
-    public Movie updateMovie(Movie movie) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param screening 
-     * @return
-     */
+    @Override
     public Screening updateScreening(Screening screening) {
-        // TODO implement here
-        return null;
+		
+    	return this.sMapper.updateScreening(screening);
+     
     }
 
     /**
@@ -461,6 +303,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @param isAdmin 
      * @return
      */
+    @Override
     public Person createPerson(String firstName, String lastName, String eMail, boolean isAdmin) {
         // TODO implement here
         return null;
@@ -470,43 +313,48 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @param id 
      * @return
      */
+    @Override
     public Person getPersonById(int id) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param person 
-     * @return
-     */
-    public Void deletePerson(Person person) {
-        // TODO implement here
-        return null;
+        
+        return this.pMapper.findPersonByID(id);
     }
 
     /**
      * @param firstName 
      * @return
      */
+    @Override
     public Person getPersonByFirstName(String firstName) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param eMail 
-     * @return
-     */
-    public Person getPersonByEMail(String eMail) {
-        // TODO implement here
-        return null;
+        
+        return this.pMapper.findPersonByFirstname(firstname);
     }
 
     /**
      * @param lastName 
      * @return
      */
+    @Override
     public Person getPersonByLastName(String lastName) {
+        
+        return this.pMapper.findPersonByLastname(lastname);
+    }
+
+    /**
+     * @param eMail 
+     * @return
+     */
+    @Override
+    public Person getPersonByEMail(String eMail) {
+        
+        return this.pMapper.findPersonByEmail(email);
+    }
+
+    /**
+     * @param person 
+     * @return
+     */
+    @Override
+    public Void deletePerson(Person person) {
         // TODO implement here
         return null;
     }
@@ -515,9 +363,10 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @param person 
      * @return
      */
+    @Override
     public Person updatePerson(Person person) {
-        // TODO implement here
-        return null;
+        
+        return this.pMapper.updatePerson(person);
     }
 
 }
