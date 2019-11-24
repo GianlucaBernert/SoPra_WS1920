@@ -27,7 +27,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param postCode 
      * @return
      */
-    public Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode);
+    public Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode, int PersonFK);
 
     /**
      * @param name 
@@ -35,7 +35,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param description 
      * @return
      */
-    public Movie createMovie(String name, String genre, String description);
+    public Movie createMovie(String name, String genre, String description, int PersonFK);
 
     /**
      * @param screeningDatetime 
