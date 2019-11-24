@@ -8,10 +8,14 @@ public class MovieCard extends FlowPanel{
 		
 	Movie movieToShow;
 	FlowPanel main;
+	MovieCardView movieCardView;
+	MovieCardEdit movieCardEdit;
 		
 	public void onLoad() {
 		super.onLoad();
 		this.setStylePrimaryName("moviecard");
+		this.showMovieCardView(movieToShow);
+		movieCardView = new MovieCardView(this, movieToShow);
 		this.showMovieCardView(movieToShow);
 	}
 		
@@ -27,12 +31,14 @@ public class MovieCard extends FlowPanel{
 
 	public void showMovieCardEdit(Movie movieToShow) {
 		this.movieToShow=movieToShow;
-
+		this.clear();
+		this.add(new MovieCardEdit(this,movieToShow));
 	}
 		
 	public void showMovieCardView(Movie movieToShow) {
 		this.movieToShow=movieToShow;
-
+		this.clear();
+		this.add(new MovieCardView(this,movieToShow));
 	}
 	public void remove() {
 		main.remove(this);
