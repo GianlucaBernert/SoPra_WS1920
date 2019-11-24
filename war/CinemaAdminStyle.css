@@ -92,3 +92,31 @@ body{
   box-sizing: border-box;
   overflow-x: hidden; 
 }
+
+/*Style of the moviecards*/
+.moviecard {
+  position: relative;
+  float:left;
+  width:calc(25% - 200px); /*calculate the width by dividing the sidenav margin from the total screen and each card should be 25% of the total screen*/
+  min-width: 250px;
+  max-width: 400px;
+  height: 200px;
+  margin: 15px 0px 0px 15px;
+  padding: 30px;
+  border-radius: 10px;
+  background-image: linear-gradient(to bottom right, #393838, #242424);
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  overflow-x: hidden; 
+}
+/*Moviecard on hover*/
+.moviecard:hover {
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/*All buttons in the moviecard div*/
+.moviecard button {
+	width: 33.33%;
+	border: none;	
+	outline: none;
+    outline-style: none;
+}
