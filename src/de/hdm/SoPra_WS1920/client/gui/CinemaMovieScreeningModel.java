@@ -22,7 +22,7 @@ public class CinemaMovieScreeningModel {
 	ListDataProvider<Screening> screeningProvider;
 	
 	//To be declared: Proxy-object
-	//BO-Key Provider to get the Key of the respective bo. !Carefull: We have to differenciate between the ids by manipulating the bo-Keys
+	//BO-Key Provider to get the Key of the respective bo. !Careful: We have to differentiate between the ids by manipulating the bo-Keys
 	//SelectionModel: Define, which bo is selected, to efficiently update or remove the bo from the model
 	
 	public CinemaMovieScreeningModel() {
