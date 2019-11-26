@@ -1,5 +1,6 @@
 package de.hdm.SoPra_WS1920.server;
 
+import java.sql.Time;
 import java.util.*;
 
 import org.apache.james.mime4j.field.datetime.DateTime;
@@ -10,11 +11,15 @@ import de.hdm.SoPra_WS1920.server.db.CinemaMapper;
 import de.hdm.SoPra_WS1920.server.db.MovieMapper;
 import de.hdm.SoPra_WS1920.server.db.PersonMapper;
 import de.hdm.SoPra_WS1920.server.db.ScreeningMapper;
+import de.hdm.SoPra_WS1920.server.db.SurveyEntryMapper;
+import de.hdm.SoPra_WS1920.server.db.VoteMapper;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministration;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
+import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
+import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
 /**
  * @author MatthiasKling
@@ -44,6 +49,10 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 
     public PersonMapper pMapper = null;
     
+    public SurveyEntryMapper seMapper = null;
+    
+    public VoteMapper vMapper = null;
+    
     /**
      * Initialisierung
      */
@@ -54,6 +63,9 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	this.mMapper = MovieMapper.moviemapper();
     	this.sMapper = ScreeningMapper.screeningMapper();
     	this.pMapper = PersonMapper.personMapper();
+    	this.seMapper = SurveyEntryMapper.surveyEntryMapper();
+    	this.vMapper = VoteMapper.voteMapper();
+    	
     }
     
     
@@ -67,7 +79,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode, int PersonFK) {
+    public Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode, int personFK) {
 
         	Cinema c = new Cinema();
         	
@@ -75,8 +87,9 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
         	c.setCity(cityName);
         	c.setStreet(street);
         	c.setPostCode(postCode);
+//        	TO DO: Postcode in Klasse Cinema zu typ String ändern
         	c.setId(1);
-        	c.setPersonFK(PersonFK);
+        	c.setPersonFK(personFK);
         	
         	return this.cMapper.insertCinema(c);
         	
@@ -90,7 +103,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Movie createMovie(String name, String genre, String description, int PersonFK) {
+    public Movie createMovie(String name, String genre, String description, int personFK) {
         
     	Vector <Movie> m1 = new Vector <Movie>();
     	m1 = mMapper.findMovieByName(name);
@@ -101,13 +114,15 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 		
 		else {
 			
+//		TO DO/DISCUSS: braucht movie einen Person FK? Probleme beim löschen der Person!	
+			
 		Movie m	= new Movie();
 		
 		m.setName(name);
 		m.setGenre(genre);
 		m.setDescription(description);
 		m.setId(1);
-		m.setPersonFK(PersonFK);
+		m.setPersonFK(personFK);
 		
 		return this.mMapper.insertMovie(m);
 			
@@ -123,15 +138,17 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Screening createScreening(DateTime screeningDateTime, int cinemaFK, int movieFK) {
+    public Screening createScreening(Date date, Time time, int cinemaFK, int movieFK, int personFK) {
         
     	Screening s = new Screening();
     	
     	s.setCinemaFK(cinemaFK);
     	s.setMovieFK(movieFK);
-    	/**
-    	 * TO DO: Date + Time anstelle von DateTime siehe bo screening
-    	 */
+    	s.setDate(date);
+    	s.setTime(time);
+    	s.setId(1);
+    	s.setPersonFK(personFK);
+    	
         return null;
     } 
 
@@ -140,9 +157,20 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Void deleteCinema(Cinema cinema) {
-        // TODO implement here
-        return null;
+    public void deleteCinema(Cinema cinema) {
+    	
+    	//Loeschen aller Screenings eines Kinos
+        
+    	Vector<Screening> s = this.getScreeningByCinemaFK(cinema.getId());
+    	
+    	if (s != null) {
+    		for(Screening s1 : s) {
+    			this.deleteScreening(s1);
+    		}
+    	}
+    	
+    	//Loeschen des Cinema Object
+        this.cMapper.deleteCinema(cinema);
     }
 
     /**
@@ -150,9 +178,17 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Void deleteMovie(Movie movie) {
-        // TODO implement here
-        return null;
+    public void deleteMovie(Movie movie) {
+        
+    	Vector<Screening> screenings = this.getScreeningByMovieFK(movie.getId());
+    	
+    	if(screenings != null) {
+    		for(Screening s : screenings) {
+    			this.deleteScreening(s);
+    		}
+    	}
+    	
+       this.mMapper.deleteMovie(movie); 
     }
 
     /**
@@ -160,9 +196,17 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Void deleteScreening(Screening screening) {
-        // TODO implement here
-        return null;
+    public void deleteScreening(Screening screening) {
+        
+    	Vector<SurveyEntry> ses = this.getSurveyEntryByScreening(screening.getId());
+    	
+    	if (ses != null) {
+    		for (SurveyEntry se : ses) {
+    			this.deleteSurveyEntry(se);
+    		}
+    	}
+    	
+        this.sMapper.deleteScreening(screening);
     }
 
     /**
@@ -304,9 +348,17 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Person createPerson(String firstName, String lastName, String eMail, boolean isAdmin) {
-        // TODO implement here
-        return null;
+    public Person createPerson(String firstName, String lastName, String eMail, int isAdmin) {
+        
+    	Person p = new Person();
+    	
+    	p.setEMail(eMail);
+    	p.setFirstname(firstName);
+    	p.setLastname(lastName);
+    	p.setIsAdmin(isAdmin);
+    	p.setId(1);
+    	
+        return pMapper.insertPerson(p);
     }
 
     /**
@@ -326,7 +378,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     @Override
     public Person getPersonByFirstName(String firstName) {
         
-        return this.pMapper.findPersonByFirstname(firstname);
+        return this.pMapper.findPersonByFirstname(firstName);
     }
 
     /**
@@ -336,7 +388,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     @Override
     public Person getPersonByLastName(String lastName) {
         
-        return this.pMapper.findPersonByLastname(lastname);
+        return this.pMapper.findPersonByLastname(lastName);
     }
 
     /**
@@ -346,7 +398,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     @Override
     public Person getPersonByEMail(String eMail) {
         
-        return this.pMapper.findPersonByEmail(email);
+        return this.pMapper.findPersonByEmail(eMail);
     }
 
     /**
@@ -354,9 +406,9 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Void deletePerson(Person person) {
+    public void deletePerson(Person person) {
         // TODO implement here
-        return null;
+        
     }
 
     /**
@@ -367,6 +419,50 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     public Person updatePerson(Person person) {
         
         return this.pMapper.updatePerson(person);
+    }
+    
+    /**
+     * @param vote 
+     * @return
+     */
+    @Override
+    public void deleteVote(Vote vote) {
+        
+    	this.vMapper.deleteVote(vote);
+        
+    }
+
+    /**
+     * @param surveyentry 
+     * @return
+     */
+    @Override
+    public void deleteSurveyEntry(SurveyEntry surveyEntry) {
+        
+    	Vector<Vote> votes = this.getVotesBySurveyEntryFK(surveyEntry.getId());
+    	
+    	if(votes != null) {
+    		for(Vote v : votes) {
+    			this.deleteVote(v);
+    		}
+    	}
+    	
+    	this.seMapper.deleteSurveyEntry(surveyEntry);
+        
+    }
+    
+    
+    @Override
+    public Vector<Vote> getVotesBySurveyEntryFK(int surveyEntryFK){
+    	
+    	return this.vMapper.findVoteBySurveyEntryFK(surveyEntryFK);
+    }
+    
+    
+    @Override
+    public Vector<SurveyEntry> getSurveyEntryByScreeningFK(int screeningFK){
+    	
+    	return this.seMapper.findSurveyEntryByScreeningFK(screeningFK);
     }
 
 }
