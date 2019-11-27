@@ -1,6 +1,9 @@
 package de.hdm.SoPra_WS1920.server.db;
 
-import java.util.*;
+import java.util.Vector;
+
+import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 /**
  * 
@@ -73,7 +76,7 @@ public class CinemaMapper {
      * @param name 
      * @return
      */
-    public vector<Cinema> findCinemaByName(String name) {
+    public Vector<Cinema> findCinemaByName(String name) {
         // TODO implement here
         return null;
     }
@@ -82,7 +85,7 @@ public class CinemaMapper {
      * @param city 
      * @return
      */
-    public vector<Cinema> findCinemaByCity(String city) {
+    public Vector<Cinema> findCinemaByCity(String city) {
         // TODO implement here
         return null;
     }
@@ -91,7 +94,7 @@ public class CinemaMapper {
      * @param postcode 
      * @return
      */
-    public vector<Cinema> findByPostcode(int postcode) {
+    public Vector<Cinema> findByPostcode(int postcode) {
         // TODO implement here
         return null;
     }
@@ -115,10 +118,10 @@ public class CinemaMapper {
     }
 
     /**
-     * @param person 
+     * @param id 
      * @return
      */
-    public vector<Cinema> findCinemaByPersonFK(Person person) {
+    public Vector<Cinema> findCinemaByPersonFK(int id) {
         // TODO implement here
         return null;
     }

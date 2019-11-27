@@ -1,6 +1,11 @@
 package de.hdm.SoPra_WS1920.server.db;
 
-import java.util.*;
+import java.util.Vector;
+
+import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
+import de.hdm.SoPra_WS1920.shared.bo.Screening;
 
 /**
  * 
@@ -73,7 +78,7 @@ public class ScreeningMapper {
      * @param DateTime 
      * @return
      */
-    public vector<Screening> findScreeningByScreeningDateTime(String DateTime) {
+    public Vector<Screening> findScreeningByScreeningDateTime(String DateTime) {
         // TODO implement here
         return null;
     }
@@ -91,7 +96,7 @@ public class ScreeningMapper {
      * @param movie 
      * @return
      */
-    public vector<Screening> findScreeningByMovieFK(Movie movie) {
+    public Vector<Screening> findScreeningByMovieFK(Movie movie) {
         // TODO implement here
         return null;
     }
@@ -127,7 +132,7 @@ public class ScreeningMapper {
      * @param person 
      * @return
      */
-    public vector<Screening> findScreeningByPersonFK(Person person) {
+    public Vector<Screening> findScreeningByPersonFK(int id) {
         // TODO implement here
         return null;
     }

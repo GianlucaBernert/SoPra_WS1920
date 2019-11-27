@@ -3,40 +3,24 @@ import java.util.*;
 
 
 /**
- * 
+ * @author GianlucaBernert
  */
 public class Cinema extends Ownership {
 
+    /**
+     * Variables of the class Group
+     */
+    private String name;
+    private String city;
+    private int postCode;
+    private String street;
+    private String streetNo;
+    
     /**
      * Default constructor
      */
     public Cinema() {
     }
-
-    /**
-     * 
-     */
-    private String name;
-
-    /**
-     * 
-     */
-    private String city;
-
-    /**
-     * 
-     */
-    private int postCode;
-
-    /**
-     * 
-     */
-    private String street;
-
-    /**
-     * 
-     */
-    private String streetNo;
 
     
     /**
@@ -110,5 +94,12 @@ public class Cinema extends Ownership {
     public void setStreetNo(String streetNo) {
        this.streetNo = streetNo;
     }
+    
+    /**
+	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+	 */
+	public String toString() {
+		return "CinemaID #C" + this.getId();
+	}
 
 }
