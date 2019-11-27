@@ -4,36 +4,23 @@ import java.sql.Time;
 import java.util.*;
 
 /**
- * 
+ * @author GianlucaBernert
  */
 public class Screening extends Ownership {
+
+    /**
+     * Variables of the class Group
+     */
+    private int cinemaFK;
+    private int movieFK;
+    private Date date;
+    private Time time;
 
     /**
      * Default constructor
      */
     public Screening() {
     }
-
-    /**
-     * 
-     */
-    private int cinemaFK;
-
-    /**
-     * 
-     */
-    private int movieFK;
-
-    /**
-     * 
-     */
-    private Date date;
-
-    /**
-     * 
-     */
-    private Time time;
-
   
     /**
      * @return cinemaFK
@@ -91,4 +78,10 @@ public class Screening extends Ownership {
         this.time = time;
     }
 
+    /**
+   	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+   	 */
+   	public String toString() {
+   		return "ScreeningID #SC" + this.getId();
+   	}
 }

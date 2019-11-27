@@ -8,21 +8,18 @@ import java.util.*;
 public class Vote extends Ownership {
 
     /**
+     * Variables of the class Group
+     */
+    private int votingWeight;
+    private int surveyEntryFK;
+    private int PersonFK;
+    
+
+    /**
      * Default constructor
      */
     public Vote() {
     }
-
-    /**
-     * 
-     */
-    private int votingWeight;
-
-    /**
-     * 
-     */
-    private int surveyEntryFK;
-
 
     /**
      * @return
@@ -39,6 +36,20 @@ public class Vote extends Ownership {
     }
 
     /**
+     * @return PersonFK
+     */
+    public int getpersonFK() {
+        return PersonFK;
+    }
+
+    /**
+     * @param PersonFK 
+     */
+    public void setPersonFK(int PersonFK) {
+        this.PersonFK = PersonFK;
+    }
+    
+    /**
      * @return surveyEntryFK
      */
     public int getSurveyEntryFK() {
@@ -48,8 +59,14 @@ public class Vote extends Ownership {
     /**
      * @param surveyEntryFK 
      */
-    public void setSurveyEntryID(int surveyEntryFK) {
+    public void setSurveyEntryFK(int surveyEntryFK) {
         this.surveyEntryFK = surveyEntryFK;
     }
+    /**
+   	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+   	 */
+   	public String toString() {
+   		return "VoteID #V" + this.getId();
+   	}
 
 }
