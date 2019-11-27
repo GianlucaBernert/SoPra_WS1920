@@ -1,8 +1,6 @@
 package de.hdm.SoPra_WS1920.shared.bo;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.*;
 
 /**
  * 
