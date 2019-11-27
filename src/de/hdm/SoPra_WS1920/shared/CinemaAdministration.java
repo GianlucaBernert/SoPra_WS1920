@@ -1,6 +1,7 @@
 package de.hdm.SoPra_WS1920.shared;
 
 
+import java.sql.Time;
 import java.util.*;
 
 import org.apache.james.mime4j.field.datetime.DateTime;
@@ -12,6 +13,8 @@ import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
+import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
+import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
 /**
  * 
@@ -27,15 +30,15 @@ public interface CinemaAdministration extends RemoteService {
      * @param postCode 
      * @return
      */
-    public Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode, int PersonFK);
+    Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode, int personFK);
 
     /**
      * @param name 
      * @param genre 
      * @param description 
      * @return
-     */
-    public Movie createMovie(String name, String genre, String description, int PersonFK);
+     */                       
+    Movie createMovie(String name, String genre, String description, int personFK);
 
     /**
      * @param screeningDatetime 
@@ -43,103 +46,103 @@ public interface CinemaAdministration extends RemoteService {
      * @param cinemaFK 
      * @return
      */
-    public Screening createScreening(DateTime screeningDatetime, int movieFK, int cinemaFK);
+    Screening createScreening(Date date, Time time, int cinemaFK, int movieFK, int personFK);
 
     /**
      * @param cinema 
      * @return
      */
-    public Void deleteCinema(Cinema cinema);
+    void deleteCinema(Cinema cinema);
 
     /**
      * @param movie 
      * @return
      */
-    public Void deleteMovie(Movie movie);
+    void deleteMovie(Movie movie);
 
     /**
      * @param screening 
      * @return
      */
-    public Void deleteScreening(Screening screening);
+    void deleteScreening(Screening screening);
 
     /**
      * @param cityName 
      * @return
      */
-    public Vector<Cinema> getCinemaByCity(String cityName);
+    Vector<Cinema> getCinemaByCity(String cityName);
 
     /**
      * @param id 
      * @return
      */
-    public Cinema getCinemaById(int id);
+    Cinema getCinemaById(int id);
 
     /**
      * @param name 
      * @return
      */
-    public Vector<Cinema> getCinemaByName(String name);
+    Vector<Cinema> getCinemaByName(String name);
 
     /**
      * @param genre 
      * @return
      */
-    public Vector<Movie> getMovieByGenre(String genre);
+    Vector<Movie> getMovieByGenre(String genre);
 
     /**
      * @param id 
      * @return
      */
-    public Movie getMovieById(int id);
+    Movie getMovieById(int id);
 
     /**
      * @param name 
      * @return
      */
-    public Vector<Movie> getMoviesByName(String name);
+    Vector<Movie> getMoviesByName(String name);
 
     /**
      * @param cinemaFK 
      * @return
      */
-    public Vector<Screening> getScreeningByCinemaFK(int cinemaFK);
+    Vector<Screening> getScreeningByCinemaFK(int cinemaFK);
 
     /**
      * @param id 
      * @return
      */
-    public Screening getScreeningById(int id);
+    Screening getScreeningById(int id);
 
     /**
      * @param movieFK 
      * @return
      */
-    public Vector<Screening> getScreeningByMovieFK(int movieFK);
+    Vector<Screening> getScreeningByMovieFK(int movieFK);
 
     /**
      * @param screeningDateTime 
      * @return
      */
-    public Vector<Screening> getScreeningByScreeningDateTime(DateTime screeningDateTime);
+    Vector<Screening> getScreeningByScreeningDateTime(DateTime screeningDateTime);
 
     /**
      * @param cinema 
      * @return
      */
-    public Cinema updateCinema(Cinema cinema);
+    Cinema updateCinema(Cinema cinema);
 
     /**
      * @param movie 
      * @return
      */
-    public Movie updateMovie(Movie movie);
+    Movie updateMovie(Movie movie);
 
     /**
      * @param screening 
      * @return
      */
-    public Screening updateScreening(Screening screening);
+    Screening updateScreening(Screening screening);
 
     /**
      * @param firstName 
@@ -148,42 +151,50 @@ public interface CinemaAdministration extends RemoteService {
      * @param isAdmin 
      * @return
      */
-    public Person createPerson(String firstName, String lastName, String eMail, boolean isAdmin);
+    Person createPerson(String firstName, String lastName, String eMail, int isAdmin);
 
     /**
      * @param id 
      * @return
      */
-    public Person getPersonById(int id);
+    Person getPersonById(int id);
 
     /**
      * @param person 
      * @return
      */
-    public Void deletePerson(Person person);
+    void deletePerson(Person person);
 
     /**
      * @param firstName 
      * @return
      */
-    public Person getPersonByFirstName(String firstName);
+    Person getPersonByFirstName(String firstName);
 
     /**
      * @param eMail 
      * @return
      */
-    public Person getPersonByEMail(String eMail);
+    Person getPersonByEMail(String eMail);
 
     /**
      * @param lastName 
      * @return
      */
-    public Person getPersonByLastName(String lastName);
+    Person getPersonByLastName(String lastName);
 
     /**
      * @param person 
      * @return
      */
-    public Person updatePerson(Person person);
+    Person updatePerson(Person person);
+
+	void deleteVote(Vote vote);
+
+	void deleteSurveyEntry(SurveyEntry surveyEntry);
+
+	Vector<Vote> getVotesBySurveyEntryFK(int SurveyEntryFK);
+
+	Vector<SurveyEntry> getSurveyEntryByScreeningFK(int ScreeningFK);
 
 }

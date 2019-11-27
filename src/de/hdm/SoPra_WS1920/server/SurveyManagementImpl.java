@@ -1,17 +1,66 @@
 package de.hdm.SoPra_WS1920.server;
 
 
-import java.util.*;
+import java.sql.Timestamp;
+import java.util.Vector;
+
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import de.hdm.SoPra_WS1920.server.db.CinemaMapper;
+import de.hdm.SoPra_WS1920.server.db.GroupMapper;
+import de.hdm.SoPra_WS1920.server.db.MovieMapper;
+import de.hdm.SoPra_WS1920.server.db.PersonMapper;
+import de.hdm.SoPra_WS1920.server.db.ScreeningMapper;
+import de.hdm.SoPra_WS1920.server.db.SurveyEntryMapper;
+import de.hdm.SoPra_WS1920.server.db.SurveyMapper;
+import de.hdm.SoPra_WS1920.server.db.VoteMapper;
+import de.hdm.SoPra_WS1920.shared.SurveyManagement;
+import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.Group;
+import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
+import de.hdm.SoPra_WS1920.shared.bo.Screening;
+import de.hdm.SoPra_WS1920.shared.bo.Survey;
+import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
+import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
 /**
- * 
+ * @author GianlucaBernert
  */
-public class SurveyManagementImpl {
+public class SurveyManagementImpl extends RemoteServiceServlet implements SurveyManagement{
 
+	/*
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private CinemaMapper cMapper = null;
+	private GroupMapper gMapper = null;
+	private MovieMapper mMapper = null;
+	private PersonMapper pMapper = null;
+	private ScreeningMapper scMapper = null;
+	private SurveyEntryMapper seMapper = null;
+	private SurveyMapper sMapper = null;
+	private VoteMapper vMapper = null;
+	
     /**
      * Default constructor
      */
-    public SurveyManagementImpl() {
+    public SurveyManagementImpl() throws IllegalArgumentException {
+    	
+    }
+    
+    /*
+     * 
+     */
+    public void init() throws IllegalArgumentException {
+    	this.cMapper = CinemaMapper.cineMapper();
+    	this.gMapper = GroupMapper.groupMapper();
+    	this.mMapper = MovieMapper.moviemapper();
+    	this.pMapper = PersonMapper.personMapper();
+    	this.scMapper = ScreeningMapper.screeningMapper();
+    	this.seMapper = SurveyEntryMapper.surveyEntryMapper();
+    	this.sMapper = SurveyMapper.surveyMapper();
+    	this.vMapper = VoteMapper.voteMapper();
     }
 
     /**
@@ -19,249 +68,396 @@ public class SurveyManagementImpl {
      * @param String firstname 
      * @param String lastname 
      * @param String email 
-     * @param isAdmin boolean 
+     * @param int isAdmin
+     * @param Timestamp creationTimestamp
+     * @return Person p
+     */
+    public Person createPerson(int id, String firstname, String lastname, String eMail, int isAdmin, Timestamp creationTimestamp) throws IllegalArgumentException {
+        Person p = new Person();
+        p.setId(id);
+        p.setFirstname(firstname);
+        p.setLastname(lastname);
+        p.setEMail(eMail);
+        p.setIsAdmin(isAdmin);
+        p.setCreationTimestamp(creationTimestamp);
+        this.pMapper.insertPerson(p);
+        return p;
+    }
+    
+    /**
+     * @param Person p 
+     */
+    public void editPerson(Person p) {
+    	this.pMapper.updatePerson(p);
+    }
+    
+    /**
+     * @param Person p
+     */
+    public void deletePerson(Person p) {
+        Vector<Vote> vOfPerson = this.vMapper.findVoteByPersonFK(p.getId());
+        if (vOfPerson != null) {
+        	for (Vote v : vOfPerson) {
+        		this.vMapper.deleteVote(v);
+        	}
+        }
+        
+        Vector<SurveyEntry> seOfPerson = this.seMapper.findSurveyEntryByPersonFK(p.getId());
+        if (seOfPerson != null) {
+        	for (SurveyEntry se : seOfPerson) {
+        		this.seMapper.deleteSurveyEntry(se);
+        	}
+        }
+        
+        Vector<Group> gOfPerson = this.gMapper.findGroupByPersonFK(p.getId());
+        if (gOfPerson != null) {
+        	for (Group g : gOfPerson) {
+        		this.gMapper.deleteGroup(g);
+        	}
+        }
+        
+        Vector<Survey> sOfPerson = this.sMapper.findSurveyByPersonFK(p.getId());
+        if (sOfPerson != null) {
+        	for (Survey s : sOfPerson) {
+        		this.sMapper.deleteSurvey(s);
+        	}
+        }
+        
+        Vector<Screening> scOfPerson = this.scMapper.findScreeningByPersonFK(p.getId());
+        if (scOfPerson != null) {
+        	for (Screening sc : scOfPerson) {
+        		this.scMapper.deleteScreening(sc);
+        	}
+        }
+        
+        Vector<Cinema> cOfPerson = this.cMapper.findCinemaByPersonFK(p.getId());
+        if (cOfPerson != null) {
+        	for (Cinema c : cOfPerson) {
+        		this.cMapper.deleteCinema(c);
+        	}
+        }
+        
+        Vector<Movie> mOfPerson = this.mMapper.findMovieByPersonFK(p.getId());
+        if (mOfPerson != null) {
+        	for (Movie m : mOfPerson) {
+        		this.mMapper.deleteMovie(m);
+        	}
+        }
+        
+        this.deletePerson(this.pMapper.findPersonByID(p.getId()));
+        
+        this.pMapper.deletePerson(p);
+    }
+    
+    /**
+     * @param int id 
      * @return
      */
-    public Person createPerson(void int id, void String firstname, void String lastname, void String email, void isAdmin boolean) {
-        // TODO implement here
-        return null;
+    public Person getPersonById(int id) {
+    	return this.pMapper.findPersonByID(id);
     }
 
     /**
-     * @param idt int 
-     * @param String Group 
+     * @param String 
      * @return
      */
-    public Group createGroup(void idt int, void String Group) {
-        // TODO implement here
-        return null;
+    public Vector<Person> getPersonByFirstname(String firstname) {
+        return this.pMapper.findPersonByFirstname(firstname);
+    }
+
+    /**
+     * @param String 
+     * @return
+     */
+    public Vector<Person> getPersonByLastname(String lastname) {
+        return this.pMapper.findPersonByLastname(lastname);
+    }
+
+    /**
+     * @param String 
+     * @return
+     */
+    public Person getPersonByEmail(String email) {
+        return this.pMapper.findPersonByEmail(email);
     }
 
     /**
      * @param int id 
-     * @param Datetime endDate 
-     * @return
+     * @param String name
+     * @param int PersonFK
+     * @param Timestamp creationTimestamp 
+     * @return Group g
      */
-    public Survey createSurvey(void int id, void Datetime endDate) {
-        // TODO implement here
-        return null;
+    public Group createGroup(int id, String name, int PersonFK, Timestamp creationTimestamp) throws IllegalArgumentException {
+        Group g = new Group();
+        g.setId(id);
+        g.setName(name);
+        g.setPersonFK(PersonFK);
+        g.setCreationTimestamp(creationTimestamp);
+        this.gMapper.insertGroup(g);
+        return g;
     }
-
+    
     /**
-     * @param int id 
-     * @param int votingWeight 
-     * @return
+     * @param Group g
      */
-    public Vote createVote(void int id, void int votingWeight) {
-        // TODO implement here
-        return null;
+    public void editGroup(Group g) {
+        this.gMapper.updateGroup(g);
     }
-
-    /**
-     * @param surveyentry 
-     * @return
-     */
-    public void createSurveyEntry(Surveyentry surveyentry) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param person 
-     * @return
-     */
-    public void editPerson(Person person) {
-        // TODO implement here
-        return null;
-    }
-
+    
     /**
      * @param group 
      * @return
      */
-    public void editGroup(Group group) {
-        // TODO implement here
-        return null;
+    public void deleteGroup(Group g) {
+        
+    	this.deleteGroup(this.gMapper.findGroupByID(g.getId()));
+    	
+    	this.gMapper.deleteGroup(g);
     }
-
+    
     /**
-     * @param survey 
+     * @param id 
      * @return
      */
-    public void editSurvey(Survey survey) {
-        // TODO implement here
-        return null;
+    public Group getGroupById(int id) {
+    	return this.gMapper.findGroupByID(id);
     }
-
+    
     /**
-     * @param vote 
+     * @param String 
      * @return
      */
-    public void editVote(Vote vote) {
-        // TODO implement here
-        return null;
+    public Vector<Group> getGroupByName(String name) {
+        return this.gMapper.findGroupByName(name);
     }
-
+    
     /**
-     * @param surveyentry 
+     * @param personFK 
      * @return
      */
-    public void editSurvey(SurveyEntry surveyentry) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param person 
-     * @return
-     */
-    public void deletePerson(Person person) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param group 
-     * @return
-     */
-    public void deleteGroup(Group group) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param survey 
-     * @return
-     */
-    public void deleteSurvey(Survey survey) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param vote 
-     * @return
-     */
-    public void deleteVote(Vote vote) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param surveyentry 
-     * @return
-     */
-    public void deleteSurveyEntry(SurveyEntry surveyentry) {
-        // TODO implement here
-        return null;
+    public Vector<Group> getGroupByPersonFK(int personFK) {
+    	return this.gMapper.findGroupByPersonFK(personFK);
     }
 
     /**
      * @param int id 
-     * @return
+     * @param int GroupFK
+     * @param int PersonFK
+     * @param Timestamp startDate
+     * @param Timestamp endDate 
+     * @param Timestamp creationTimestamp
+     * @return Survey s
      */
-    public Person getPersonById(void int id) {
-        // TODO implement here
-        return null;
+    public Survey createSurvey(int id, int GroupFK, int PersonFK, Timestamp startDate, Timestamp endDate, Timestamp creationTimestamp) throws IllegalArgumentException {
+        Survey s = new Survey();
+        s.setId(id);
+        s.setGroupFK(GroupFK);
+        s.setPersonFK(PersonFK);
+        s.setStartDate(startDate);
+        s.setEndDate(endDate);
+        s.setCreationTimestamp(creationTimestamp);
+        this.sMapper.insertSurvey(s);
+        return s;
     }
-
+    
     /**
-     * @param String 
-     * @return
+     * @param Survey s
      */
-    public Person getPersonByFirstname(firstname String) {
-        // TODO implement here
-        return null;
+    public void editSurvey(Survey s) {
+        this.sMapper.updateSurvey(s);
     }
-
+    
     /**
-     * @param String 
+     * @param survey 
      * @return
      */
-    public Person getPersonByLastname(lastname String) {
-        // TODO implement here
-        return null;
+    public void deleteSurvey(Survey s) {
+        
+        Vector<SurveyEntry> seOfSurvey = this.getSurveyEntryBySurveyFK(s.getId());
+        if (seOfSurvey != null) {
+        	for (SurveyEntry se : seOfSurvey) {
+        		this.deleteSurveyEntry(se);
+        	}
+        }
+        
+        this.deleteSurvey(this.sMapper.findSurveyByID(s.getId()));
+        
+        this.sMapper.deleteSurvey(s);
     }
-
-    /**
-     * @param String 
-     * @return
-     */
-    public Person getPersonByEmail(email String) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param int id 
-     * @return
-     */
-    public Group getGroupById(void int id) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param String 
-     * @return
-     */
-    public Group getGroupByName(name String) {
-        // TODO implement here
-        return null;
-    }
-
+    
     /**
      * @param int 
      * @return
      */
-    public Survey getSurveyById(id int) {
-        // TODO implement here
-        return null;
+    public Survey getSurveyById(int id) {
+        return this.sMapper.findSurveyByID(id);
+    }
+    
+    /**
+     * @param Datetime 
+     * @return
+     */
+    public Vector<Survey> getSurveyByStartDate(Timestamp startDate) {
+        return this.sMapper.findSurveyByEndDate(startDate);
     }
 
     /**
      * @param Datetime 
      * @return
      */
-    public Survey getSurveyByEndDate(endDate Datetime) {
-        // TODO implement here
-        return null;
+    public Vector<Survey> getSurveyByEndDate(Timestamp endDate) {
+        return this.sMapper.findSurveyByEndDate(endDate);
     }
-
+    
     /**
-     * @param int 
+     * @param personFK 
      * @return
      */
-    public Vote getVoteById(id int) {
-        // TODO implement here
-        return null;
+    public Vector<Survey> getSurveyByPersonFK(int personFK) {
+    	return this.sMapper.findSurveyByPersonFK(personFK);
     }
-
+    
     /**
-     * @param int 
+     * @param groupFK 
      * @return
      */
-    public Vote getVoteByVotingWeight(votingWeight int) {
-        // TODO implement here
-        return null;
+    public Vector<Survey> getSurveyByGroupFK(int groupFK) {
+    	return this.sMapper.findSurveyByGroupFK(groupFK);
     }
-
+    
     /**
-     * @param int 
-     * @return
+     * @param int id
+     * @param int screeningFK
+     * @param in surveyFK
+     * @param Timestamp creationTimestamp
+     * @return SurveyEntry se
      */
-    public SurveyEntry getSurveyEntryById(id int) {
-        // TODO implement here
-        return null;
+    public SurveyEntry createSurveyEntry(int id, int screeningFK, int surveyFK, Timestamp creationTimestamp) throws IllegalArgumentException {
+        SurveyEntry se = new SurveyEntry();
+        se.setId(id);
+        se.setScreeningFK(screeningFK);
+        se.setSurveyFK(surveyFK);
+        se.setCreationTimestamp(creationTimestamp);
+        this.seMapper.insertSurveyEntry(se);
+        return se;
     }
-
+    
+    /**
+     * @param SurveyEntry se
+     */
+    public void editSurvey(SurveyEntry se) {
+        this.seMapper.updateSurveyEntry(se);
+    }
+    
     /**
      * @param surveyentry 
      * @return
      */
-    public int countVotes(SurveyEntry surveyentry) {
-        // TODO implement here
-        return 0;
+    public void deleteSurveyEntry(SurveyEntry se)  {
+    	Vector<Vote> vOfSurveyEntry = this.vMapper.findVoteBySurveyEntryFK(se.getId());
+        if (vOfSurveyEntry != null) {
+        	for (Vote v : vOfSurveyEntry) {
+        		this.vMapper.deleteVote(v);
+        	}
+        }
+        
+        this.deleteSurveyEntry(this.seMapper.findSurveyEntryByID(se.getId()));
+        
+        this.seMapper.deleteSurveyEntry(se);
+    }
+    
+    /**
+     * @param int 
+     * @return
+     */
+    public SurveyEntry getSurveyEntryById(int id) {
+        return this.seMapper.findSurveyEntryByID(id);
+    }
+    
+    /**
+     * @param surveyFK 
+     * @return
+     */
+    public Vector<SurveyEntry> getSurveyEntryBySurveyFK(int surveyFK){
+    	return this.seMapper.findSurveyEntryBySurveyFK(surveyFK);
     }
 
+    /**
+     * @param int id 
+     * @param int votingWeight 
+     * @param int SurveyEntryFK
+     * @param int PersonFK
+     * @param Timestamp creationTimestamp
+     * @return Vote v
+     */
+    public Vote createVote(int id, int votingWeight, int SurveyEntryFK, int PersonFK, Timestamp creationTimestamp) throws IllegalArgumentException {
+        Vote v = new Vote();
+        v.setId(id);
+        v.setVotingWeight(votingWeight);
+        v.setSurveyEntryFK(SurveyEntryFK);
+        v.setPersonFK(PersonFK);
+        v.setCreationTimestamp(creationTimestamp);
+        this.vMapper.insertVote(v);
+        return v;
+    }
+
+    /**
+     * @param Vote v
+     */
+    public void editVote(Vote v) {
+        this.vMapper.updateVote(v);
+    }
+
+    /**
+     * @param vote 
+     * @return
+     */
+    public void deleteVote(Vote v) {
+        
+    	this.deleteVote(this.vMapper.findVoteByID(v.getId()));
+    	
+    	this.vMapper.deleteVote(v);
+    }
+
+    /**
+     * @param int 
+     * @return
+     */
+    public Vote getVoteById(int id) {
+        return this.vMapper.findVoteByID(id);
+    }
+
+    /**
+     * @param int 
+     * @return
+     */
+    public Vector<Vote> getVoteByVotingWeight(int vw) {
+        return this.vMapper.findVoteByVotingWeight(vw);
+    }
+
+    /**
+     * @param personFK 
+     * @return
+     */
+    public Vector<Vote> getVoteByPersonFK(int personFK) {
+    	return this.vMapper.findVoteByPersonFK(personFK);
+    }
+    
+    /**
+     * @param surveyEntryFK 
+     * @return
+     */
+    public Vector<Vote> getVoteBySurveyEntryFK(int surveyEntryFK){
+    	return this.vMapper.findVoteBySurveyEntryFK(surveyEntryFK);
+    }
+    
+    /**
+     * @param surveyentry 
+     * @return
+     */
+    public int countVotes(SurveyEntry se) {
+        Vector<Vote> v = this.vMapper.findVoteBySurveyEntryFK(se.getId());
+        return v.size();
+    }
 }

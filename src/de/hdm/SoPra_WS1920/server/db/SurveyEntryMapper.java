@@ -1,6 +1,11 @@
 package de.hdm.SoPra_WS1920.server.db;
 
-import java.util.*;
+import java.util.Vector;
+
+import de.hdm.SoPra_WS1920.shared.bo.Screening;
+import de.hdm.SoPra_WS1920.shared.bo.Survey;
+import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
+import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
 /**
  * 
@@ -28,7 +33,7 @@ public class SurveyEntryMapper {
     /**
      * @return
      */
-    public static SurveyMapper surveyMapper() {
+    public static SurveyEntryMapper surveyEntryMapper() {
         // TODO implement here
         return null;
     }
@@ -73,7 +78,7 @@ public class SurveyEntryMapper {
      * @param screening 
      * @return
      */
-    public vector<SurveyEntry> findSurveyEntryByScreeningFK(Screening screening) {
+    public Vector<SurveyEntry> findSurveyEntryByScreeningFK(Screening screening) {
         // TODO implement here
         return null;
     }
@@ -91,7 +96,7 @@ public class SurveyEntryMapper {
      * @param vote 
      * @return
      */
-    public vector<SurveyEntry> findSurveyEntryByVoteFK(Vote vote) {
+    public Vector<SurveyEntry> findSurveyEntryByVoteFK(Vote vote) {
         // TODO implement here
         return null;
     }
@@ -106,10 +111,19 @@ public class SurveyEntryMapper {
     }
 
     /**
+     * @param id 
+     * @return
+     */
+    public Vector<SurveyEntry> findSurveyEntryBySurveyFK(int id) {
+        // TODO implement here
+        return null;
+    }
+    
+    /**
      * @param survey 
      * @return
      */
-    public vector<SurveyEntry> findSurveyEntryBySurveyFK(Survey survey) {
+    public Vector<SurveyEntry> findSurveyEntryByPersonFK(int id) {
         // TODO implement here
         return null;
     }

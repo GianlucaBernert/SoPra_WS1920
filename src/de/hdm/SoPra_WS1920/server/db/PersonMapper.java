@@ -1,6 +1,9 @@
 package de.hdm.SoPra_WS1920.server.db;
 
-import java.util.*;
+import java.util.Vector;
+
+import de.hdm.SoPra_WS1920.shared.bo.Group;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 /**
  * 
@@ -73,7 +76,7 @@ public class PersonMapper {
      * @param firstname 
      * @return
      */
-    public vector<Person> findPersonByFirstname(String firstname) {
+    public Vector<Person> findPersonByFirstname(String firstname) {
         // TODO implement here
         return null;
     }
@@ -82,7 +85,7 @@ public class PersonMapper {
      * @param lastname 
      * @return
      */
-    public vector<Person> findPersonByLastname(String lastname) {
+    public Vector<Person> findPersonByLastname(String lastname) {
         // TODO implement here
         return null;
     }
@@ -100,7 +103,7 @@ public class PersonMapper {
      * @param group 
      * @return
      */
-    public vector<Person> findPersonByGroupFK(Group group) {
+    public Vector<Person> findPersonByGroupFK(Group group) {
         // TODO implement here
         return null;
     }
@@ -118,7 +121,7 @@ public class PersonMapper {
      * @param isAdmin 
      * @return
      */
-    public vector<Person> findPersonByIsAdmin(boolean isAdmin) {
+    public Vector<Person> findPersonByIsAdmin(boolean isAdmin) {
         // TODO implement here
         return null;
     }

@@ -3,54 +3,22 @@ package de.hdm.SoPra_WS1920.shared.bo;
 import java.util.*;
 
 /**
- * 
+ * @author GianlucaBernert
  */
 public class Person extends BusinessObject {
 
+	/**
+     * Variables of the class Person
+     */
+    private String firstname;
+    private String lastname;
+    private String eMail;
+    private int isAdmin;
+    
     /**
      * Default constructor
      */
     public Person() {
-    }
-
-    /**
-     * 
-     */
-    private int id;
-
-    /**
-     * 
-     */
-    private String firstname;
-
-    /**
-     * 
-     */
-    private String lastname;
-
-    /**
-     * 
-     */
-    private String eMail;
-
-    /**
-     * 
-     */
-    private int isAdmin;
-
-   
-    /**
-     * @return id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id 
-     */
-    public void setId(int id) {
-        this.id = id;
     }
 
     /**
@@ -108,5 +76,12 @@ public class Person extends BusinessObject {
     public void setIsAdmin(int isAdmin) {
         this.isAdmin = isAdmin;
     }
+    
+    /**
+	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+	 */
+	public String toString() {
+		return "PersonID #P" + super.getId() + " " + this.firstname + " " + this.lastname;
+	}
 
 }
