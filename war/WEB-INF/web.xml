@@ -11,49 +11,16 @@
 </welcome-file-list>
 
   <!-- Servlets -->
-<<<<<<< HEAD
 <servlet>
 	<servlet-name>SurveyManagementImpl</servlet-name>
     <servlet-class>de.hdm.SoPra_WS1920.server.SurveyManagementImpl</servlet-class>
 </servlet>
-=======
-  <servlet>
-    <servlet-name>loginServiceServlet</servlet-name>
-    <servlet-class>de.hdm.SoPra_WS1920.server.LoginServiceImpl</servlet-class>
-  </servlet>
->>>>>>> branch 'GianlucaBernert' of https://github.com/GianlucaBernert/SoPra_WS1920.git
-  
-<<<<<<< HEAD
+
 <servlet-mapping>
     <servlet-name>SurveyManagementImpl</servlet-name>
     <url-pattern>/sopra_ws1920a/SurveyManagementImpl</url-pattern>
 </servlet-mapping>
-=======
-  <servlet-mapping>
-    <servlet-name>loginServiceServlet</servlet-name>
-    <url-pattern>/sopra_ws1920a/login</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>cinemaAdminstrationServlet</servlet-name>
-    <servlet-class>de.hdm.SoPra_WS1920.server.CinemaAdministrationImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>cinemaAdministrationServlet</servlet-name>
-    <url-pattern>/sopra_ws1920a/cinemaAdministration</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>surveyManagementServlet</servlet-name>
-    <servlet-class>de.hdm.SoPra_WS1920.server.SurveyManagementImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>surveyManagementServlet</servlet-name>
-    <url-pattern>/sopra_ws1920a/surveyManagement</url-pattern>
-  </servlet-mapping>
->>>>>>> branch 'GianlucaBernert' of https://github.com/GianlucaBernert/SoPra_WS1920.git
+
   
 <servlet>
 	<servlet-name>CinemaAdministrationImpltImpl</servlet-name>

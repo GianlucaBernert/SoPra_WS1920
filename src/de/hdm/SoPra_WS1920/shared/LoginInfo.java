@@ -1,127 +1,82 @@
 package de.hdm.SoPra_WS1920.shared;
 
-
-import java.util.*;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * 
  */
-public class LoginInfo {
-
-    /**
-     * Default constructor
-     */
-    public LoginInfo() {
-    }
-
+public class LoginInfo implements IsSerializable{
+	
     /**
      * 
      */
-    private boolean loggedIn;
-
-    /**
-     * 
-     */
+    private boolean loggedIn = false;
     private String loginURL;
-
-    /**
-     * 
-     */
     private String logoutURL;
-
+    private String emailAddress;
+    
     /**
      * 
-     */
-    private String emailAdress;
-
-    /**
-     * 
-     */
-    private String nickname;
-
-    /**
-     * @return
+     * @return boolean loggedIn
      */
     public boolean isLoggedIn() {
-        // TODO implement here
-        return false;
+    	return loggedIn;
     }
-
+    
     /**
-     * @param loggedIn 
-     * @return
+     * 
+     * @param boolean loggedIn
      */
     public void setLoggedIn(boolean loggedIn) {
-        // TODO implement here
-        return null;
-    }
+	    this.loggedIn = loggedIn;
+	}
 
     /**
-     * @return
+     * 
+     * @return String loginURL
      */
-    public String getLoginURL() {
-        // TODO implement here
-        return "";
-    }
+	public String getLoginUrl() {
+	    return loginURL;
+	}
 
-    /**
-     * @param loginURL 
-     * @return
-     */
-    public void setLoginURL(String loginURL) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * 
+	 * @param String loginUrl
+	 */
+	public void setLoginUrl(String loginUrl) {
+	    this.loginURL = loginUrl;
+	}
 
-    /**
-     * @return
-     */
-    public String getLogoutURL() {
-        // TODO implement here
-        return "";
-    }
+	/**
+	 * 
+	 * @return String logoutURL
+	 */
+	public String getLogoutUrl() {
+	    return logoutURL;
+	}
 
-    /**
-     * @param logoutURL 
-     * @return
-     */
-    public void setLogoutURL(String logoutURL) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * 
+	 * @param String logoutUrl
+	 */
+	public void setLogoutUrl(String logoutUrl) {
+	    this.logoutURL = logoutUrl;
+	}
 
-    /**
-     * @return
-     */
-    public String getEmailAdress() {
-        // TODO implement here
-        return "";
-    }
+	/**
+	 * 
+	 * @return String emailAddress
+	 */
+	public String getEmailAddress() {
+	    return emailAddress;
+	}
 
-    /**
-     * @param emailAdress 
-     * @return
-     */
-    public void setEmailAdress(String emailAdress) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public String getNickname() {
-        // TODO implement here
-        return "";
-    }
-
-    /**
-     * @param nickname 
-     * @return
-     */
-    public void setNickname(String nickname) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * 
+	 * @param String emailAddress
+	 */
+	public void setEmailAddress(String emailAddress) {
+	    this.emailAddress = emailAddress;
+	}
 
 }
