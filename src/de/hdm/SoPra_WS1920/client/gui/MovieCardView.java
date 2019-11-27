@@ -29,10 +29,15 @@ public class MovieCardView extends FlowPanel{
 		super.onLoad();
 		
 		name=new Label(movieToShow.getName());
+		name.setStyleName("title");
 		genre=new Label(movieToShow.getGenre());
+		genre.setStyleName("subtitle");
 		description=new Label(movieToShow.getDescription());
+		description.setStyleName("description");
 		edit=new Button("");
+		edit.setStyleName("invisibleButton");
 		editIcon = new Image("/Images/004-edit.svg");
+		editIcon.setStyleName("icon");
 		editIcon.addClickHandler(new EditClickHandler(this));
 		
 		this.add(name);

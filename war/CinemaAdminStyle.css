@@ -135,6 +135,38 @@ body{
 .gwt-TextBox:focus {
   box-shadow: 0 0 3pt 2pt red;
 }
+
+.title {
+	width: 100%;
+	font-family: "Roboto";
+	font-weight: bold;
+	font-size: 37px;
+	color: #f1f1f1;
+  	display: block;
+  	text-decoration: none;
+  	margin: 10px;
+}
+
+.subtitle {
+	font-family: "Roboto";
+  	text-decoration: none;
+  	font-size: 20px;
+  	color: #7D7D7D;
+  	display: block;
+  	text-decoration: none;
+  	margin-bottom: 10px;
+  	margin-left:10px;
+}
+.description {
+	font-family: "Roboto";
+  	text-decoration: none;
+  	font-size: 14px;
+  	color: #f1f1f1;
+  	display: block;
+  	text-decoration: none;
+  	margin: 10px;
+}
+
 .saveIcon {
 	position: absolute;
 	float:right;
