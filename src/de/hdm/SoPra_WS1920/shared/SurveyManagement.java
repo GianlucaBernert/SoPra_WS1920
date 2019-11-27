@@ -81,12 +81,6 @@ public interface SurveyManagement extends RemoteService {
     public Group getGroupById(int id);
 
     /**
-     * @param id 
-     * @return
-     */
-    public SurveyEntry getSurveyEntryId(int id);
-
-    /**
      * @param personFK 
      * @return
      */
