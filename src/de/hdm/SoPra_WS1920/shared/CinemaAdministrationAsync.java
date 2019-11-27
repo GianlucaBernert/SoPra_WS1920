@@ -139,7 +139,7 @@ public interface CinemaAdministrationAsync {
      * @param callback 
      * @return
      */
-    void getScreeningByScreeningDateTime(DateTime screeningDateTime, AsyncCallback<Vector<Screening>> callback);
+    void getScreeningByScreeningDateTime(Date date, Time time, AsyncCallback<Vector<Screening>> callback);
 
     /**
      * @param cinema 

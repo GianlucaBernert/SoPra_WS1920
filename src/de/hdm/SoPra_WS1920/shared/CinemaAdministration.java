@@ -124,7 +124,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param screeningDateTime 
      * @return
      */
-    Vector<Screening> getScreeningByScreeningDateTime(DateTime screeningDateTime);
+    Vector<Screening> getScreeningByScreeningDateTime(Date date, Time time);
 
     /**
      * @param cinema 
@@ -169,7 +169,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param firstName 
      * @return
      */
-    Person getPersonByFirstName(String firstName);
+    Vector <Person> getPersonByFirstName(String firstName);
 
     /**
      * @param eMail 
@@ -181,7 +181,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param lastName 
      * @return
      */
-    Person getPersonByLastName(String lastName);
+    Vector<Person> getPersonByLastName(String lastName);
 
     /**
      * @param person 
