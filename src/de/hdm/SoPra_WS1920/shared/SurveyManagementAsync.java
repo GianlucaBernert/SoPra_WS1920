@@ -28,7 +28,7 @@ public interface SurveyManagementAsync {
      * @param callback 
      * @return
      */
-    public Void createPerson(int id, String firstName, String lastName, String email, int isAdmin, AsyncCallback<Person> callback);
+    public Void createPerson(int id, String firstName, String lastName, String email, boolean isAdmin, AsyncCallback<Person> callback);
 
     /**
      * @param id 

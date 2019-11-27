@@ -13,7 +13,7 @@ public class Person extends BusinessObject {
     private String firstname;
     private String lastname;
     private String eMail;
-    private int isAdmin;
+    private boolean isAdmin;
     
     /**
      * Default constructor
@@ -22,63 +22,63 @@ public class Person extends BusinessObject {
     }
 
     /**
-     * @return
+     * @return String firstname
      */
     public String getFirstname() {
         return firstname;
     }
 
     /**
-     * @param firstname 
+     * @param String firstname 
      */
     public void setFirstname(String firstname) {
        this.firstname = firstname;
     }
 
     /**
-     * @return lastname
+     * @return String lastname
      */
     public String getLastname() {
        return lastname;
     }
 
     /**
-     * @param lastname 
+     * @param String lastname 
      */
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
     /**
-     * @return email
+     * @return String email
      */
     public String getEMail() {
         return eMail;
     }
 
     /**
-     * @param eMail 
+     * @param String eMail 
      */
     public void setEMail(String eMail) {
         this.eMail = eMail;
     }
 
     /**
-     * @return isAdmin
+     * @return boolean isAdmin
      */
-    public int getIsAdmin() {
+    public boolean getIsAdmin() {
         return isAdmin;
     }
 
     /**
-     * @param isAdmin 
+     * @param boolean isAdmin 
      */
-    public void setIsAdmin(int isAdmin) {
+    public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
     
     /**
-	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+	 * @return String of id + firstname + lastname
 	 */
 	public String toString() {
 		return "PersonID #P" + super.getId() + " " + this.firstname + " " + this.lastname;
