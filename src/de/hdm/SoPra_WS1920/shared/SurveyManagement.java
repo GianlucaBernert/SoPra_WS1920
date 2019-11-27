@@ -29,7 +29,7 @@ public interface SurveyManagement extends RemoteService {
      * @param isAdmin 
      * @return
      */
-    public Person createPerson(int id, String firstname, String lastname, String eMail, int isAdmin, Timestamp creationTimestamp);
+    public Person createPerson(int id, String firstname, String lastname, String eMail, boolean isAdmin, Timestamp creationTimestamp);
     
     /**
      * @param person 
