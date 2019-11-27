@@ -3,7 +3,6 @@ package de.hdm.SoPra_WS1920.server;
 import java.sql.Time;
 import java.util.*;
 
-import org.apache.james.mime4j.field.datetime.DateTime;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -198,7 +197,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     @Override
     public void deleteScreening(Screening screening) {
         
-    	Vector<SurveyEntry> ses = this.getSurveyEntryByScreening(screening.getId());
+    	Vector<SurveyEntry> ses = this.getSurveyEntryByScreeningFK(screening.getId());
     	
     	if (ses != null) {
     		for (SurveyEntry se : ses) {
@@ -305,9 +304,9 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Vector<Screening> getScreeningByScreeningDateTime(DateTime screeningDateTime) {
+    public Vector<Screening> getScreeningByScreeningDateTime(Date date, Time time) {
         
-        return this.sMapper.findScreeningByScreeningDateTime(screeningDateTime);
+        return this.sMapper.findScreeningByScreeningDateTime(date, time);
     }
 
     /**
@@ -376,7 +375,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Person getPersonByFirstName(String firstName) {
+    public Vector<Person> getPersonByFirstName(String firstName) {
         
         return this.pMapper.findPersonByFirstname(firstName);
     }
@@ -386,7 +385,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Person getPersonByLastName(String lastName) {
+    public Vector<Person> getPersonByLastName(String lastName) {
         
         return this.pMapper.findPersonByLastname(lastName);
     }

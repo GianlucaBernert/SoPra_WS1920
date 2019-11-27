@@ -75,10 +75,10 @@ public class SurveyEntryMapper {
     }
 
     /**
-     * @param screening 
+     * @param screeningFK 
      * @return
      */
-    public Vector<SurveyEntry> findSurveyEntryByScreeningFK(Screening screening) {
+    public Vector<SurveyEntry> findSurveyEntryByScreeningFK(int screeningFK) {
         // TODO implement here
         return null;
     }

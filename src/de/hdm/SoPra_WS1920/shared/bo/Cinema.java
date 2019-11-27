@@ -12,7 +12,7 @@ public class Cinema extends Ownership {
      */
     private String name;
     private String city;
-    private int postCode;
+    private String postCode;
     private String street;
     private String streetNo;
     
@@ -56,15 +56,15 @@ public class Cinema extends Ownership {
     /**
      * @return
      */
-    public int getPostCode() {
+    public String getPostCode() {
        return postCode;
     }
 
     /**
-     * @param postCode 
+     * @param postCode2 
      */
-    public void setPostCode(int postCode) {
-        this.postCode = postCode;
+    public void setPostCode(String postCode2) {
+        this.postCode = postCode2;
     }
 
     /**
