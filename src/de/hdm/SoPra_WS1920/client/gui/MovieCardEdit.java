@@ -1,5 +1,7 @@
 package de.hdm.SoPra_WS1920.client.gui;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -34,13 +36,18 @@ public class MovieCardEdit extends FlowPanel{
 		super.onLoad();
 
 		nameLabel = new Label("Title");
+		nameLabel.setStyleName("inputLabel");
 		name=new TextBox();
 		genreLabel = new Label("Genre");
+		genreLabel.setStyleName("inputLabel");
 		genre=new TextBox();
 		descriptionLabel = new Label("Description");
+		descriptionLabel.setStyleName("inputLabel");
 		description=new TextBox();
 		save=new Button("SAVE");
+		save.setStyleName("invisibleButton");
 		cancel=new Button("CANCEL");
+		cancel.setStyleName("invisibleButton");
 		delete=new Button("Delete");
 		delete.setStyleName("invisibleButton");
 		name.setText(movieToShow.getName());
@@ -49,12 +56,15 @@ public class MovieCardEdit extends FlowPanel{
 		
 		saveIcon = new Image("/Images/002-checked.svg");
 		saveIcon.setStyleName("saveIcon");
+		saveIcon.addClickHandler(new SaveClickHandler(this));
 		
 		cancelIcon = new Image("/Images/001-unchecked.svg");
 		cancelIcon.setStyleName("cancelIcon");
+		cancelIcon.addClickHandler(new CancelClickHandler(this));
 		
 		deleteIcon = new Image("/Images/003-delete.svg");
 		deleteIcon.setStyleName("deleteIcon");
+		deleteIcon.addClickHandler(new DeleteClickHandler(this));
 		
 		this.add(nameLabel);
 		this.add(name);
@@ -68,5 +78,52 @@ public class MovieCardEdit extends FlowPanel{
 		this.add(saveIcon);
 		this.add(cancelIcon);
 		this.add(deleteIcon);
+	}
+	class SaveClickHandler implements ClickHandler{
+		MovieCardEdit movieCardEdit;
+		public SaveClickHandler(MovieCardEdit movieCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.movieCardEdit=movieCardEdit;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			movieToShow.setName(name.getText());
+			movieToShow.setGenre(genre.getText());
+			movieToShow.setDescription(description.getText());
+			parentCard.showMovieCardView(movieToShow);
+		}
+		
+	}
+	
+	class CancelClickHandler implements ClickHandler{
+		MovieCardEdit movieCardEdit;
+		public CancelClickHandler(MovieCardEdit movieCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.movieCardEdit=movieCardEdit;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			parentCard.showMovieCardView(movieToShow);
+		}
+		
+	}
+	
+	class DeleteClickHandler implements ClickHandler{
+		MovieCardEdit movieCardEdit;
+		public DeleteClickHandler(MovieCardEdit movieCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.movieCardEdit=movieCardEdit;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			parentCard.remove();
+		}
+		
 	}
 }
