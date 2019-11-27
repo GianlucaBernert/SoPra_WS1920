@@ -1,6 +1,9 @@
 package de.hdm.SoPra_WS1920.server.db;
 
-import java.util.*;
+import java.util.Vector;
+
+import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
+import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
 /**
  * 
@@ -70,10 +73,10 @@ public class VoteMapper {
     }
 
     /**
-     * @param person 
+     * @param personFK 
      * @return
      */
-    public vector<Vote> findVoteByPersonFK(String person) {
+    public Vector<Vote> findVoteByPersonFK(int personFK) {
         // TODO implement here
         return null;
     }
@@ -88,10 +91,10 @@ public class VoteMapper {
     }
 
     /**
-     * @param surveyentry 
+     * @param id 
      * @return
      */
-    public vector<Vote> findVoteBySurveyEntryFK(SurveyEntry surveyentry) {
+    public Vector<Vote> findVoteBySurveyEntryFK(int id) {
         // TODO implement here
         return null;
     }
@@ -104,5 +107,22 @@ public class VoteMapper {
         // TODO implement here
         return null;
     }
+    
+    /**
+     * @param surveyentry 
+     * @return
+     */
+    public Vector<Vote> findVoteByVotingWeight(int vw) {
+        // TODO implement here
+        return null;
+    }
 
+    /**
+     * @param surveyentry 
+     * @return
+     */
+    public void deleteVoteByVotingWeight(int vw) {
+        // TODO implement here
+        return null;
+    }
 }

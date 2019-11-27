@@ -3,40 +3,24 @@ import java.util.*;
 
 
 /**
- * 
+ * @author GianlucaBernert
  */
 public class Cinema extends Ownership {
 
+    /**
+     * Variables of the class Group
+     */
+    private String name;
+    private String city;
+    private String postCode;
+    private String street;
+    private String streetNo;
+    
     /**
      * Default constructor
      */
     public Cinema() {
     }
-
-    /**
-     * 
-     */
-    private String name;
-
-    /**
-     * 
-     */
-    private String city;
-
-    /**
-     * 
-     */
-    private int postCode;
-
-    /**
-     * 
-     */
-    private String street;
-
-    /**
-     * 
-     */
-    private String streetNo;
 
     
     /**
@@ -72,15 +56,15 @@ public class Cinema extends Ownership {
     /**
      * @return
      */
-    public int getPostCode() {
+    public String getPostCode() {
        return postCode;
     }
 
     /**
-     * @param postCode 
+     * @param postCode2 
      */
-    public void setPostCode(int postCode) {
-        this.postCode = postCode;
+    public void setPostCode(String postCode2) {
+        this.postCode = postCode2;
     }
 
     /**
@@ -110,5 +94,12 @@ public class Cinema extends Ownership {
     public void setStreetNo(String streetNo) {
        this.streetNo = streetNo;
     }
+    
+    /**
+	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+	 */
+	public String toString() {
+		return "CinemaID #C" + this.getId();
+	}
 
 }

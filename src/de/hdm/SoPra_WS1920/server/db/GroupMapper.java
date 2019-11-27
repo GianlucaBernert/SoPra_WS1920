@@ -1,6 +1,9 @@
 package de.hdm.SoPra_WS1920.server.db;
 
-import java.util.*;
+import java.util.Vector;
+
+import de.hdm.SoPra_WS1920.shared.bo.Group;
+import de.hdm.SoPra_WS1920.shared.bo.Survey;
 
 /**
  * 
@@ -73,16 +76,16 @@ public class GroupMapper {
      * @param name 
      * @return
      */
-    public Group findGroupByName(String name) {
+    public Vector<Group> findGroupByName(String name) {
         // TODO implement here
         return null;
     }
 
     /**
-     * @param person 
+     * @param id 
      * @return
      */
-    public vector<Group> findGroupByPersonFK(String person) {
+    public Vector<Group> findGroupByPersonFK(int id) {
         // TODO implement here
         return null;
     }
@@ -100,7 +103,7 @@ public class GroupMapper {
      * @param survey 
      * @return
      */
-    public vector<Survey> findGroupBySurveyFK(Survey survey) {
+    public Vector<Survey> findGroupBySurveyFK(Survey survey) {
         // TODO implement here
         return null;
     }

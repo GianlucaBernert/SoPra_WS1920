@@ -1,6 +1,11 @@
 package de.hdm.SoPra_WS1920.server.db;
 
-import java.util.*;
+import java.sql.Timestamp;
+import java.util.Vector;
+
+import de.hdm.SoPra_WS1920.shared.bo.Group;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
+import de.hdm.SoPra_WS1920.shared.bo.Survey;
 
 /**
  * 
@@ -73,16 +78,16 @@ public class SurveyMapper {
      * @param endDate 
      * @return
      */
-    public Survey findSurveyByEndDate(Datetime endDate) {
+    public Vector<Survey> findSurveyByEndDate(Timestamp endDate) {
         // TODO implement here
         return null;
     }
 
     /**
-     * @param group 
+     * @param groupFK 
      * @return
      */
-    public vector<Survey> findSurveyByGroupFK(Group group) {
+    public Vector<Survey> findSurveyByGroupFK(int groupFK) {
         // TODO implement here
         return null;
     }
@@ -97,10 +102,10 @@ public class SurveyMapper {
     }
 
     /**
-     * @param person 
+     * @param id 
      * @return
      */
-    public vector<Survey> findSurveyByPersonFK(Person person) {
+    public Vector<Survey> findSurveyByPersonFK(int id) {
         // TODO implement here
         return null;
     }

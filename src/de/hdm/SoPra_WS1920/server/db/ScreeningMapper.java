@@ -1,6 +1,13 @@
 package de.hdm.SoPra_WS1920.server.db;
 
-import java.util.*;
+import java.sql.Time;
+import java.util.Date;
+import java.util.Vector;
+
+import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
+import de.hdm.SoPra_WS1920.shared.bo.Screening;
 
 /**
  * 
@@ -73,7 +80,7 @@ public class ScreeningMapper {
      * @param DateTime 
      * @return
      */
-    public vector<Screening> findScreeningByScreeningDateTime(String DateTime) {
+    public Vector<Screening> findScreeningByScreeningDateTime(String DateTime) {
         // TODO implement here
         return null;
     }
@@ -88,10 +95,10 @@ public class ScreeningMapper {
     }
 
     /**
-     * @param movie 
+     * @param movieFK 
      * @return
      */
-    public vector<Screening> findScreeningByMovieFK(Movie movie) {
+    public Vector<Screening> findScreeningByMovieFK(int movieFK) {
         // TODO implement here
         return null;
     }
@@ -106,10 +113,10 @@ public class ScreeningMapper {
     }
 
     /**
-     * @param cinema 
+     * @param cinemaFK 
      * @return
      */
-    public vector<Screening> findScreeningByCinemaFK(Cinema cinema) {
+    public Vector<Screening> findScreeningByCinemaFK(int cinemaFK) {
         // TODO implement here
         return null;
     }
@@ -127,7 +134,7 @@ public class ScreeningMapper {
      * @param person 
      * @return
      */
-    public vector<Screening> findScreeningByPersonFK(Person person) {
+    public Vector<Screening> findScreeningByPersonFK(int id) {
         // TODO implement here
         return null;
     }
@@ -140,5 +147,10 @@ public class ScreeningMapper {
         // TODO implement here
         return null;
     }
+
+	public Vector<Screening> findScreeningByScreeningDateTime(Date date, Time time) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

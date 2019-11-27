@@ -1,6 +1,9 @@
 package de.hdm.SoPra_WS1920.server.db;
 
-import java.util.*;
+import java.util.Vector;
+
+import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 /**
  * 
@@ -73,7 +76,7 @@ public class MovieMapper {
      * @param name 
      * @return
      */
-    public vector<Movie> findMovieByName(String name) {
+    public Vector<Movie> findMovieByName(String name) {
         // TODO implement here
         return null;
     }
@@ -91,16 +94,16 @@ public class MovieMapper {
      * @param genre 
      * @return
      */
-    public vector<Movie> findMovieByGenre(String genre) {
+    public Vector<Movie> findMovieByGenre(String genre) {
         // TODO implement here
         return null;
     }
 
     /**
-     * @param person 
+     * @param id 
      * @return
      */
-    public vector<Movie> findMovieByPersonFK(Person person) {
+    public Vector<Movie> findMovieByPersonFK(int id) {
         // TODO implement here
         return null;
     }
