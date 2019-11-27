@@ -4,14 +4,15 @@ package de.hdm.SoPra_WS1920.shared;
 import java.sql.Timestamp;
 import java.util.Vector;
 
+import org.apache.james.mime4j.field.datetime.DateTime;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 import de.hdm.SoPra_WS1920.shared.bo.Vote;
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
 
 /**
  * @author GianlucaBernert
@@ -28,7 +29,16 @@ public interface SurveyManagementAsync {
      * @return
      */
     public Void createPerson(int id, String firstName, String lastName, String email, int isAdmin, AsyncCallback<Person> callback);
-    
+
+    /**
+     * @param id 
+     * @param startDate 
+     * @param endDate 
+     * @param callback 
+     * @return
+     */
+    public Void createSurvey(int id, DateTime startDate, DateTime endDate, AsyncCallback<Survey> callback);
+
     /**
      * @param person 
      * @param callback 
@@ -42,13 +52,6 @@ public interface SurveyManagementAsync {
      * @return
      */
     public Void deletePerson(Person person, AsyncCallback <Person> callback);
-    
-    /**
-     * @param id 
-     * @param callback 
-     * @return
-     */
-    public Void getPersonById(int id, AsyncCallback<Person> callback);
     
     /**
      * @param firstName 
@@ -99,14 +102,35 @@ public interface SurveyManagementAsync {
      * @return
      */
     public Void getGroupByName(String name, AsyncCallback <Vector <Group>> callback);
-    
+
+    /**
+     * @param startDate 
+     * @param callback 
+     * @return
+     */
+    public Void getSurveyByStartDate(DateTime startDate, AsyncCallback <Vector<Survey>> callback);
+
+    /**
+     * @param endDate 
+     * @param callback 
+     * @return
+     */
+    public Void getSurveyByEndDate(DateTime endDate, AsyncCallback <Vector<Survey>> callback);
+
+    /**
+     * @param id 
+     * @param callback 
+     * @return
+     */
+    public Void getPersonById(int id, AsyncCallback<Person> callback);
+
     /**
      * @param id 
      * @param callback 
      * @return
      */
     public Void getGroupById(int id, AsyncCallback<Group> callback);
-    
+
     /**
      * @param personFK 
      * @param callback 

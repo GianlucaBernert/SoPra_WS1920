@@ -16,7 +16,8 @@ import de.hdm.SoPra_WS1920.shared.bo.Vote;
  * @author GianlucaBernert
  */
 
-@RemoteServiceRelativePath("SurveyManagementImpl")
+@RemoteServiceRelativePath("surveyManagement")
+
 public interface SurveyManagement extends RemoteService {
 
     /**
@@ -78,7 +79,13 @@ public interface SurveyManagement extends RemoteService {
      * @return
      */
     public Group getGroupById(int id);
-    
+
+    /**
+     * @param id 
+     * @return
+     */
+    public SurveyEntry getSurveyEntryId(int id);
+
     /**
      * @param personFK 
      * @return
