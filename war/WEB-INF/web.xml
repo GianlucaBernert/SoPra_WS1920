@@ -23,13 +23,13 @@
 
   
 <servlet>
-	<servlet-name>CinemaAdministrationImpltImpl</servlet-name>
-    <servlet-class>de.hdm.SoPra_WS1920.server.CinemaAdministrationImpltImpl</servlet-class>
+	<servlet-name>CinemaAdministrationImpl</servlet-name>
+    <servlet-class>de.hdm.SoPra_WS1920.server.CinemaAdministrationImpl</servlet-class>
 </servlet>
   
 <servlet-mapping>
-    <servlet-name>CinemaAdministrationImpltImpl</servlet-name>
-    <url-pattern>/sopra_ws1920a/CinemaAdministrationImpltImpl</url-pattern>
+    <servlet-name>CinemaAdministrationImpl</servlet-name>
+    <url-pattern>/sopra_ws1920a/CinemaAdministrationImpl</url-pattern>
 </servlet-mapping>  
 
 <servlet>
