@@ -80,7 +80,7 @@ public class PersonMapper {
 				p.setFirstname(rs.getString("firstname"));
 				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
-				p.setIsAdmin(rs.getBoolean("isAdmin"));
+				p.setIsAdmin(rs.getInt("isAdmin"));
 				return p;
 				
 			}
@@ -97,22 +97,21 @@ public class PersonMapper {
 	 * @param person
 	 */
     
-    public void insert(Person person) {
+    public void insertPerson(Person person) {
     	Connection con = DBConnection.connection();
 
     	try {
 		
     		Statement stm1 = con.createStatement();
+    		Statement stm2 = con.createStatement();
     		
     		stm1.executeUpdate("INSERT INTO businessobject (bo_id, creationTimeStamp) VALUES ('"
     							+ person.getId()
     							+ "', '"+person.getCreationTimestamp()
-    							+"#)");
-			Statement stm2 = con.createStatement();
-			
+    							+"')");
 			stm2.executeUpdate("INSERT INTO person (bo_id, firstname, lastname, eMail, isAdmin, creationTimeStamp) VALUES ('"
 								+person.getId()
-								+"*, '"+person.getFirstname()
+								+"', '"+person.getFirstname()
 								+"', '"+person.getLastname()
 								+"', '"+person.getEMail()
 								+"', '"+person.getIsAdmin()
@@ -132,7 +131,7 @@ public class PersonMapper {
 	 * @param person
 	 */
     
-    public Person updatePerson(Person person) {
+    public void updatePerson(Person person) {
     	Connection con = DBConnection.connection();
 
     	try {
@@ -141,18 +140,17 @@ public class PersonMapper {
     		stmt.executeUpdate("UPDATE person Set firstname='"+person.getFirstname()
     				+"', lastname='"+person.getLastname()
     				+"', eMail='"+person.getEMail()
-    				+"', isAdmin='"+person.getEMail()
-    				+"' Where id="+person.getId());
+    				+"', isAdmin='"+person.getIsAdmin()
+    				+"' Where bo_id="+person.getId());
     		
     	}
     		catch(SQLException exc) {
     			exc.printStackTrace();
     			}
-    	return person;
     }
 
     /**
-	 * Methode, die das Loeschen eines User-Objekts aus der Datenbank ermöglicht
+	 * Methode, die das Loeschen eines Person-Objekts aus der Datenbank ermöglicht
 	 * @param person
 	 */
     public void deletePerson(Person person) {
@@ -160,9 +158,9 @@ public class PersonMapper {
     	
     	try {
 			Statement stm1 = con.createStatement();
-			stm1.executeUpdate("Delete from person Where ('bo_id' = '1')");
 			Statement stm2 = con.createStatement();
-			stm2.executeUpdate("Delte from businessobject Where ('bo_id' = '1')");
+			stm1.executeUpdate("Delete from person Where ('bo_id' =" +person.getId());
+			stm2.executeUpdate("Delete from businessobject Where ('bo_id' =" +person.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
@@ -189,10 +187,10 @@ public class PersonMapper {
 		
 			while (rs.next()) {
 				Person p = new Person();
-				p.setfirstname(rs.getString("firstname"));
-				p.setlastname(rs.getString("lastname"));
+				p.setFirstname(rs.getString("firstname"));
+				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
-				p.setIsAdmin(rs.getString("isAdmin"));
+				p.setIsAdmin(rs.getInt("isAdmin"));
 				result.add(p);
 				
 			}			
@@ -213,7 +211,7 @@ public class PersonMapper {
      * @param firstname 
      * @return
      */
-    public vector<Person> findPersonByFirstname(String firstname) {
+    public Vector<Person> findPersonByFirstname(String firstname) {
     	Connection con= DBConnection.connection();	
     	Vector<Person> result = new Vector<Person>();
 		try{
@@ -221,11 +219,10 @@ public class PersonMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM person Where firstname='" + firstname+"'");		
 			while(rs.next()) {
 				Person p = new Person();
-				p.setId(rs.getInt("id"));
-				p.setfirstname(rs.getString("firstname"));
-				p.setlastname(rs.getString("lastname"));
+				p.setFirstname(rs.getString("firstname"));
+				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
-				p.setIsAdmin(rs.getString("isAdmin"));
+				p.setIsAdmin(rs.getInt("isAdmin"));
 				result.add(p);
 			}
 		}catch (SQLException e) {
@@ -238,7 +235,7 @@ public class PersonMapper {
      * @param lastname 
      * @return
      */
-    public vector<Person> findPersonByLastname(String lastname) {
+    public Vector<Person> findPersonByLastname(String lastname) {
     	Connection con= DBConnection.connection();	
     	Vector<Person> result = new Vector<Person>();
 		try{
@@ -246,10 +243,10 @@ public class PersonMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM person Where lastname='" + lastname+"'");		
 			while(rs.next()) {
 				Person p = new Person();
-				p.setfirstname(rs.getString("firstname"));
-				p.setlastname(rs.getString("lastname"));
+				p.setFirstname(rs.getString("firstname"));
+				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
-				p.setIsAdmin(rs.getString("isAdmin"));
+				p.setIsAdmin(rs.getInt("isAdmin"));
 				result.add(p);
 			}
 		}catch (SQLException e) {
@@ -262,32 +259,35 @@ public class PersonMapper {
      * @param email 
      * @return
      */
-    public Person findPersonByEmail(String email) {
+   public Person findPersonByEmail(String mail) {
     	Connection con= DBConnection.connection();	
-    	Vector<Person> result = new Vector<Person>();
-		try{
+		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM person Where eMail='" + email+"'");		
-			while(rs.next()) {
+			
+			ResultSet rs = stmt.executeQuery("SELECT * FROM person " + "WHERE eMail= " + mail);
+			
+			if(rs.next()) {
 				Person p = new Person();
-				p.setfirstname(rs.getString("firstname"));
-				p.setlastname(rs.getString("lastname"));
+				p.setFirstname(rs.getString("firstname"));
+				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
-				p.setIsAdmin(rs.getString("isAdmin"));
-				result.add(p);
+				p.setIsAdmin(rs.getInt("isAdmin"));
+				return p;
+				
 			}
-		}catch (SQLException e) {
+			
+		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return result;
-    }
+		return null ;	
+	}	
     
     
     /**
      * @param isAdmin 
      * @return
      */
-    public vector<Person> findPersonByIsAdmin(boolean isAdmin) {
+    public Vector<Person> findPersonByIsAdmin(boolean isAdmin) {
     	Connection con= DBConnection.connection();	
     	Vector<Person> result = new Vector<Person>();
 		try{
@@ -295,10 +295,10 @@ public class PersonMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM person Where isAdmin='" + isAdmin+"'");		
 			while(rs.next()) {
 				Person p = new Person();
-				p.setfirstname(rs.getString("firstname"));
-				p.setlastname(rs.getString("lastname"));
+				p.setFirstname(rs.getString("firstname"));
+				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
-				p.setIsAdmin(rs.getString("isAdmin"));
+				p.setIsAdmin(rs.getInt("isAdmin"));
 				result.add(p);
 			}
 		}catch (SQLException e) {
