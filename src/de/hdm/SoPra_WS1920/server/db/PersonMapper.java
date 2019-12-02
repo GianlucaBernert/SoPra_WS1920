@@ -183,7 +183,9 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM membership WHERE groupFK= " + groupFK);
+			ResultSet rs = stmt.executeQuery("SELECT person.bo_id, person.firstname, person.email, person.lastname, person.isAdmin" 
+					+ "FROM person INNER JOIN membership" + 
+					"ON membership.groupFK =" +groupFK);
 		
 			while (rs.next()) {
 				Person p = new Person();
