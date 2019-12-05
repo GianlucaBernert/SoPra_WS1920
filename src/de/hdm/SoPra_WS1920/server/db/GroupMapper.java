@@ -27,7 +27,7 @@ public class GroupMapper {
 	
 
     /**
-     * Ein gesch?tzter Konstruktor der weitere Instanzierungen von MovieMapper Objekten verhindert.
+     * Ein gesch?tzter Konstruktor der weitere Instanzierungen von GroupMapper Objekten verhindert.
      */
     protected GroupMapper() {
     }
@@ -93,18 +93,12 @@ public class GroupMapper {
 		
     		Statement stm1 = con.createStatement();
     		Statement stm2 = con.createStatement();
-    		Statement stm3 = con.createStatement();
     		
     		stm1.executeUpdate("INSERT INTO businessobject (bo_id, creationTimeStamp) VALUES ('"
     							+group.getId()
     							+ "', '"+group.getCreationTimestamp()
     							+"')");
-    		stm2.executeUpdate("INSERT INTO businessownership (bo_id, creationTimeStamp, PersonFK) VALUES ('"
-    							+ group.getId()
-    							+ "', '"+group.getCreationTimestamp()
-    							+ "', '"+group.getPersonFK()
-    							+"')");
-			stm3.executeUpdate("INSERT INTO popcorns.group (bo_id, name, creationTimeStamp) VALUES ('"
+			stm2.executeUpdate("INSERT INTO popcorns.group (bo_id, name, creationTimeStamp) VALUES ('"
 								+group.getId()
 								+"', '"+group.getName()
 								+"', '"+group.getCreationTimestamp()
@@ -140,17 +134,16 @@ public class GroupMapper {
 	 * Methode, die das Loeschen eines Group-Objekts aus der Datenbank ermöglicht
 	 * @param group
 	 */
+    
     public void deleteGroup(Group group) {
     	Connection con = DBConnection.connection();
     	
     	try {
 			Statement stm1 = con.createStatement();
 			Statement stm2 = con.createStatement();
-			Statement stm3 = con.createStatement();
 			
 			stm1.executeUpdate("Delete from popcorns.group Where bo_id = "+group.getId());
-			stm2.executeUpdate("Delete from businessownership Where bo_id = "+group.getId());
-			stm3.executeUpdate("Delete from businessobject Where bo_id = "+group.getId());
+			stm2.executeUpdate("Delete from businessobject Where bo_id = "+group.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
@@ -269,6 +262,7 @@ public class GroupMapper {
         return result;
     }
 
+    
     /**
      * @param id 
      * @return

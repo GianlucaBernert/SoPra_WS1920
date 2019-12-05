@@ -94,18 +94,12 @@ public class MovieMapper {
 		
     		Statement stm1 = con.createStatement();
     		Statement stm2 = con.createStatement();
-    		Statement stm3 = con.createStatement();
     		
     		stm1.executeUpdate("INSERT INTO businessobject (bo_id, creationTimeStamp) VALUES ('"
 								+movie.getId()
 								+"', '"+movie.getCreationTimestamp()
 								+"')");
-    		stm2.executeUpdate("INSERT INTO businessownership (bo_id, creationTimeStamp, PersonFK) VALUES ('"
-    							+ movie.getId()
-    							+ "', '"+movie.getCreationTimestamp()
-    							+ "', '"+movie.getPersonFK()
-    							+"')");
-			stm3.executeUpdate("INSERT INTO movie (bo_id, name, genre, description, creationTimeStamp) VALUES ('"
+			stm2.executeUpdate("INSERT INTO movie (bo_id, name, genre, description, creationTimeStamp) VALUES ('"
 								+movie.getId()
 								+"', '"+movie.getName()
 								+"', '"+movie.getGenre()
@@ -147,17 +141,16 @@ public class MovieMapper {
 	 * Methode, die das Loeschen eines Movie-Objekts aus der Datenbank ermöglicht
 	 * @param person
 	 */
+    
     public void deleteMovie(Movie movie) {
     	Connection con = DBConnection.connection();
     	
     	try {
 			Statement stm1 = con.createStatement();
 			Statement stm2 = con.createStatement();
-			Statement stm3 = con.createStatement();
 			
 			stm1.executeUpdate("Delete from movie Where bo_id = "+movie.getId());
-			stm2.executeUpdate("Delete from businessownership Where bo_id = "+movie.getId());
-			stm3.executeUpdate("Delete from businessobject Where bo_id = "+movie.getId());
+			stm2.executeUpdate("Delete from businessobject Where bo_id = "+movie.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
@@ -248,7 +241,7 @@ public class MovieMapper {
      * @param name 
      * @return
      */
-    public void deleteMovieByName(String name) {
+    /**public void deleteMovieByName(String name) {
     	Connection con = DBConnection.connection();
 		
 		try {
@@ -262,7 +255,9 @@ public class MovieMapper {
 			e.printStackTrace();
 		}        
     }
-
+	Umsetzung überhaupt nötig?/**
+	
+	
     /**
      * @param genre 
      * @return

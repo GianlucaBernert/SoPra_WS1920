@@ -96,18 +96,12 @@ public class VoteMapper {
 		
     		Statement stm1 = con.createStatement();
     		Statement stm2 = con.createStatement();
-    		Statement stm3 = con.createStatement();
     		
     		stm1.executeUpdate("INSERT INTO businessobject (bo_id, creationTimeStamp) VALUES ('"
-					+vote.getId()
-					+"', '"+vote.getCreationTimestamp()
-					+"')");
-    		stm2.executeUpdate("INSERT INTO businessownership (bo_id, creationTimeStamp, personFK) VALUES ('"
-    							+ vote.getId()
-    							+ "', '"+vote.getCreationTimestamp()
-    							+ "', '"+vote.getPersonFK()
-    							+"')");
-			stm3.executeUpdate("INSERT INTO vote (bo_id, votingWeight, surveyentryFK, creationTimeStamp) VALUES ('"
+    							+vote.getId()
+								+"', '"+vote.getCreationTimestamp()
+								+"')");
+			stm2.executeUpdate("INSERT INTO vote (bo_id, votingWeight, surveyentryFK, creationTimeStamp) VALUES ('"
 								+vote.getId()
 								+"', '"+vote.getVotingWeight()
 								+"', '"+vote.getSurveyEntryFK()
@@ -151,11 +145,9 @@ public class VoteMapper {
     	try {
 			Statement stm1 = con.createStatement();
 			Statement stm2 = con.createStatement();
-			Statement stm3 = con.createStatement();
 			
 			stm1.executeUpdate("Delete from vote Where bo_id = "+vote.getId());
-			stm2.executeUpdate("Delete from businessownership Where bo_id = "+vote.getId());
-			stm3.executeUpdate("Delete from businessobject Where bo_id = "+vote.getId());
+			stm2.executeUpdate("Delete from businessobject Where bo_id = "+vote.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
