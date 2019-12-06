@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.*;
 
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 /**
  * Mapper-Klasse, die <code>Cinema</code>-Objekte auf relationale Datenbank abbildet.
@@ -103,7 +104,6 @@ public class CinemaMapper {
         try {
         	Statement stmt1 = con.createStatement();
         	Statement stmt2 = con.createStatement();
-        	Statement stmt3 = con.createStatement();
         	/**
         	 * Prüfen, was der momentan höchste Primärschlüsselwert ist
         	 */
@@ -118,21 +118,13 @@ public class CinemaMapper {
         		
         		stmt1 = con.createStatement();
         		stmt2 = con.createStatement();
-        		stmt3 = con.createStatement();
         		//Business-Object
         		stmt1.executeUpdate("INSERT INTO businessobject(bo_id, creationTimeStamp)"
         		+ "VALUES ('"
         		+ c.getId()
         		+ "','"
-        		+ c.getCreationTimeStamp() + "')");
-        		//Ownership
-        		stmt2.executeUpdate("INSERT INTO businessownership(bo_id, creationTimeStamp, personFK"
-        		+ "VALUES ('"
-        		+ c.getId()
-        		+ "','"
-        		+ c.getCreationTimeStamp()
-        		+ "','"
-        		+ c.getPersonFK() + "')");
+        		+ c.getCreationTimestamp() + "')");
+        		
         		//Tatsächliche Einfügeoperation eines Cinema-Objekts
         		stmt2.executeUpdate("INSERT INTO cinema(bo_id, name, city, postCode, street, streetNo, creationTimeStamp)" 
         		+ "VALUES ('" 
@@ -148,7 +140,7 @@ public class CinemaMapper {
         		+ "','" 
         		+ c.getStreetNo() 
         		+ "','"
-        		+ c.getCreationTimeStamp() + "')");
+        		+ c.getCreationTimestamp() + "')");
         	
         }
         catch(SQLException e2) {
@@ -174,9 +166,9 @@ public class CinemaMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE cinema" + "SET name=\"" + c.getName()
-        	+ "\", " + "city=\"" + c.getCity() + "\", " + "postCode=\"" + c.getPostCode()  
-        			+ "\", " + "street=\"" + c.getStreet() + "\", " + "streetNo=\"" + c.getStreetNo() + "\", " 
+        	stmt.executeUpdate("UPDATE cinema" + "SET name=\'" + c.getName()
+        	+ "\", " + "city=\'" + c.getCity() + "\", " + "postCode=\'" + c.getPostCode()  
+        			+ "\", " + "street=\'" + c.getStreet() + "\", " + "streetNo=\'" + c.getStreetNo() + "\", " 
         	+ "WHERE bo_id=" + c.getId());
         	
         }
@@ -196,14 +188,11 @@ public class CinemaMapper {
     	
     	try {
     		Statement stmt1 = con.createStatement();
-    		Statement stmt2 = con.createStatement();
-    		Statement stmt3 = con.createStatement();
+    		Statement stmt2 = con.createStatement();;
     		
     		stmt1.executeUpdate("DELETE FROM cinema" + "WHERE bo_id=" + c.getId());
-    		//Ownership löschen anschließend
-    		stmt2.executeUpdate("DELETE FROM businessownership WHERE bo_id=" + c.getId());
     		//Businessobject löschen
-    		stmt3.executeUpdate("DELETE FROM businessobject WHERE bo_id=" + c.getId());
+    		stmt2.executeUpdate("DELETE FROM businessobject WHERE bo_id=" + c.getId());
     		
     	}
     	catch(SQLException e2) {
@@ -335,7 +324,7 @@ public class CinemaMapper {
      * @param person 
      * @return
      */
-    public Vector<Cinema> findCinemaByPersonFK(int id) {
+    public Vector<Cinema> findCinemaByPersonFK(int personFK) {
         Connection con = DBConnection.connection();
         Vector<Cinema> result = new Vector<Cinema>();
         
@@ -345,7 +334,7 @@ public class CinemaMapper {
         	ResultSet rs = stmt.executeQuery("SELECT cinema.bo_id, cinema.name, cinema.city, "
         			+ "cinema.postCode, cinema.street, cinema.streetNo, businessownership.personFK" +
         			"FROM  cinema INNER JOIN businessownership" + 
-        			"ON cinema.bo_id = businessownership.bo_id AND businessownership.personFK= '" + id + "'");
+        			"ON cinema.bo_id = businessownership.bo_id AND businessownership.personFK= '" + personFK);
         	
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt zugeordnet
         	while(rs.next()) {

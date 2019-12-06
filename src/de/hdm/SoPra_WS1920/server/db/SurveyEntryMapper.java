@@ -9,7 +9,7 @@ import java.util.Vector;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
-import de.hdm.SoPra_WS1920.shared.bo.Vote;
+
 
 /**
  * Mapper-Klasse, die <code>SurveyEntry</code>-Objekte auf relationale Datenbank abbildet.
@@ -101,7 +101,7 @@ public class SurveyEntryMapper {
     		"VALUES ('"
     		+ surveyEntry.getId()
     		+ "','"
-    		+ surveyEntry.getCreationTimeStamp() + "')");
+    		+ surveyEntry.getCreationTimestamp() + "')");
     		
     		stmt2.executeUpdate("INSERT INTO surveyentry(bo_id, surveyFK, screeningFK, creationTimeStamp)" +
     		"VALUES ('"
@@ -111,7 +111,7 @@ public class SurveyEntryMapper {
     		+ "','"
     		+ surveyEntry.getScreeningFK()
     		+ "','"
-    		+ surveyEntry.getCreationTimeStamp() + "')");
+    		+ surveyEntry.getCreationTimestamp() + "')");
     	}
     	catch(SQLException e2) {
     		e2.printStackTrace();
@@ -123,13 +123,23 @@ public class SurveyEntryMapper {
     /**
      * @param surveyEntry 
      * @return
+     */
      
     public SurveyEntry updateSurveyEntry(SurveyEntry surveyEntry) {
-        // TODO implement here
-        return null;
-        Methode in SurveyEntry nicht sinnvoll.
+    	Connection con = DBConnection.connection();
+    	
+    	try {
+    		Statement stmt = con.createStatement();
+    		stmt.executeUpdate("UPDATE surveyentry" + "SET surveyFK=\'" + surveyEntry.getSurveyFK() 
+    			+ "\", " + "screeningFK=\'" + surveyEntry.getScreeningFK() + "\", " + "WHERE bo_id=" + surveyEntry.getId());
+    	}
+    	
+    	catch(SQLException e2) {
+    		e2.printStackTrace();
+    	}
+        return surveyEntry;
     }
-    */
+    
 
     /**
      * @param surveyEntry 
@@ -162,7 +172,7 @@ public class SurveyEntryMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry" + "WHERE screeningFK='" + screeningFK + "'");
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry" + "WHERE screeningFK=" + screeningFK);
         	
         	while(rs.next()) {
         		SurveyEntry surveyEntry = new SurveyEntry();
@@ -183,13 +193,13 @@ public class SurveyEntryMapper {
      * Löschen eines Umfrageeintrags durch die Spielzeit
      * @param screeningFK 
      */
-    public void deleteSurveyEntryByScreeningFK(Screening screeningFK) {
+    public void deleteSurveyEntryByScreeningFK(int screeningFK) {
     	Connection con = DBConnection.connection();
     	
     	try {
     		Statement stmt = con.createStatement();
     		
-    		stmt.executeUpdate("DELETE FROM surveyentry" + "WHERE screeningFK='" + screeningFK + "'");
+    		stmt.executeUpdate("DELETE FROM surveyentry" + "WHERE screeningFK=" + screeningFK);
     	}
     	catch(SQLException e2) {
     		e2.printStackTrace();
@@ -209,7 +219,7 @@ public class SurveyEntryMapper {
     	
     	try {
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry" + "WHERE surveyFK='" + surveyFK + "'");
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry" + "WHERE surveyFK=" + surveyFK);
     		
     		while(rs.next()) {
     			SurveyEntry surveyEntry = new SurveyEntry();
@@ -222,7 +232,7 @@ public class SurveyEntryMapper {
     	catch(SQLException e2) {
     		e2.printStackTrace();
     	}
-    	
+    	return result;
 
     }
     
@@ -238,7 +248,7 @@ public class SurveyEntryMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("DELETE FROM surveyentry" + "WHERE surveyFK='" + surveyFK + "'");
+        	stmt.executeUpdate("DELETE FROM surveyentry" + "WHERE surveyFK=" + surveyFK);
         }
         catch(SQLException e2) {
         	e2.printStackTrace();
