@@ -117,10 +117,11 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 			
 		Movie m	= new Movie();
 		
+	
 		m.setName(name);
 		m.setGenre(genre);
 		m.setDescription(description);
-		m.setId(1);
+		m.setId(18);
 		m.setPersonFK(personFK);
 		
 		return this.mMapper.insertMovie(m);
@@ -358,6 +359,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	p.setId(1);
     	
         return pMapper.insertPerson(p);
+        
     }
 
     /**

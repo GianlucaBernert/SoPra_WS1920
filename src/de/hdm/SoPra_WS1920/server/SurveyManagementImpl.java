@@ -72,7 +72,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param Timestamp creationTimestamp
      * @return Person p
      */
-    public Person createPerson(int id, String firstname, String lastname, String eMail, boolean isAdmin, Timestamp creationTimestamp) throws IllegalArgumentException {
+    public Person createPerson(int id, String firstname, String lastname, String eMail, int isAdmin, Timestamp creationTimestamp) throws IllegalArgumentException {
         Person p = new Person();
         p.setId(id);
         p.setFirstname(firstname);
@@ -403,7 +403,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     }
 
     /**
-     * @param Vote v
+     * @param Vote 
      */
     public void editVote(Vote v) {
         this.vMapper.updateVote(v);

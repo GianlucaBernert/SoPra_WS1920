@@ -13,7 +13,7 @@ public class Person extends BusinessObject {
     private String firstname;
     private String lastname;
     private String eMail;
-    private boolean isAdmin;
+    private int isAdmin;
     
     /**
      * Default constructor
@@ -66,15 +66,15 @@ public class Person extends BusinessObject {
     /**
      * @return boolean isAdmin
      */
-    public boolean getIsAdmin() {
+    public int getIsAdmin() {
         return isAdmin;
     }
 
     /**
      * @param boolean isAdmin 
      */
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setIsAdmin(int isAdmin2) {
+        this.isAdmin = isAdmin2;
     }
     
     /**
