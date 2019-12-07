@@ -80,7 +80,6 @@ public class PersonMapper {
 				p.setFirstname(rs.getString("firstname"));
 				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
-				p.setIsAdmin(rs.getInt("isAdmin"));
 				return p;
 				
 			}
@@ -192,7 +191,6 @@ public class PersonMapper {
 				p.setFirstname(rs.getString("firstname"));
 				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
-				p.setIsAdmin(rs.getInt("isAdmin"));
 				result.add(p);
 				
 			}			
@@ -224,7 +222,6 @@ public class PersonMapper {
 				p.setFirstname(rs.getString("firstname"));
 				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
-				p.setIsAdmin(rs.getInt("isAdmin"));
 				result.add(p);
 			}
 		}catch (SQLException e) {
@@ -248,7 +245,6 @@ public class PersonMapper {
 				p.setFirstname(rs.getString("firstname"));
 				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
-				p.setIsAdmin(rs.getInt("isAdmin"));
 				result.add(p);
 			}
 		}catch (SQLException e) {
@@ -273,7 +269,6 @@ public class PersonMapper {
 				p.setFirstname(rs.getString("firstname"));
 				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
-				p.setIsAdmin(rs.getInt("isAdmin"));
 				return p;
 				
 			}
@@ -300,7 +295,6 @@ public class PersonMapper {
 				p.setFirstname(rs.getString("firstname"));
 				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
-				p.setIsAdmin(rs.getInt("isAdmin"));
 				result.add(p);
 			}
 		}catch (SQLException e) {
