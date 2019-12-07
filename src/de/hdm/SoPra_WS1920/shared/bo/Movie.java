@@ -1,62 +1,68 @@
 package de.hdm.SoPra_WS1920.shared.bo;
 
-import java.util.*;
-
 /**
  * @author GianlucaBernert
+ * Klasse Movie, welche die Attribute Name, Beschreibung und Genre direkt enthält 
+ * und die SerialVersionUID, die ID und den Erstellzeitpunkt von BusinessObject vererbt bekommt
  */
-public class Movie extends Ownership {
+public class Movie extends BusinessObject {
 
     /**
-     * Variables of the class Group
+     * Variablen der Klasse Movie 
      */
     private String name;
     private String description;
     private String genre;
 
     /**
-     * Default constructor
+     * Konstruktor der Klasse Movie, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
      */
     public Movie() {
     }
     
     /**
-     * @param name 
+     * Methode um den Namen eines Films zu setzen
+     * @param String name 
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * @return name
+     * Methode um den Namen eines FIlms auszugeben
+     * @return String name
      */
     public String getName() {
        return name;
     }
 
     /**
-     * @param description 
+     * Methode um die Beschreibung eines Films zu setzen
+     * @param String description 
      */
     public void setDescription(String description) {
        this.description = description;
     }
 
     /**
-     * @return description
+     * Methode um die Beschreibung eines FIlms auszugeben
+     * @return String description
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * @param genre 
+     * Methode um das Genre eines Films zu setzen
+     * @param String genre 
      */
     public void setGenre(String genre) {
        this.genre = genre;
     }
 
     /**
-     * @return
+     * Methode um das Genre eines FIlms auszugeben
+     * @return String genre
      */
     public String getGenre() {
         return genre;
@@ -64,6 +70,7 @@ public class Movie extends Ownership {
     
     /**
    	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+   	 * @return String MovieId + Name
    	 */
    	public String toString() {
    		return "MovieID #M" + this.getId() + " " + this.getName();

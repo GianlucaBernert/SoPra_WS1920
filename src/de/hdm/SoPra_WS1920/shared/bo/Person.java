@@ -4,11 +4,13 @@ import java.util.*;
 
 /**
  * @author GianlucaBernert
+ * Klasse Person die die Variable Vorname, Nachname, E-Mail und isAdmin besitzt
+ * sie erbt von der Klasse BusinessObject die SerialVersionUID, die id und den Erstellzeitpunkt
  */
 public class Person extends BusinessObject {
 
 	/**
-     * Variables of the class Person
+     * Variablen der Klasse Person
      */
     private String firstname;
     private String lastname;
@@ -16,12 +18,13 @@ public class Person extends BusinessObject {
     private boolean isAdmin;
     
     /**
-     * Default constructor
+     * Konstruktor der Klasse Person, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
      */
     public Person() {
     }
 
     /**
+     * Methode um den Vornamen einer Person auszugeben
      * @return String firstname
      */
     public String getFirstname() {
@@ -29,6 +32,7 @@ public class Person extends BusinessObject {
     }
 
     /**
+     * Methode um den Vornamen einer Perosn zu setzen
      * @param String firstname 
      */
     public void setFirstname(String firstname) {
@@ -36,6 +40,7 @@ public class Person extends BusinessObject {
     }
 
     /**
+     * Methode um den Nachnamen einer Person auszugeben
      * @return String lastname
      */
     public String getLastname() {
@@ -43,6 +48,7 @@ public class Person extends BusinessObject {
     }
 
     /**
+     * Methode um den Nachnamen einer Person zu setzen
      * @param String lastname 
      */
     public void setLastname(String lastname) {
@@ -50,6 +56,7 @@ public class Person extends BusinessObject {
     }
 
     /**
+     * Methode um die eMail adresse einer Person auszugeben
      * @return String email
      */
     public String getEMail() {
@@ -57,6 +64,7 @@ public class Person extends BusinessObject {
     }
 
     /**
+     * Methode um die eMail adresse einer Person zu setzen
      * @param String eMail 
      */
     public void setEMail(String eMail) {
@@ -64,6 +72,7 @@ public class Person extends BusinessObject {
     }
 
     /**
+     * Methode um abzufragen ob eine Person Adminrechte besitzt 
      * @return boolean isAdmin
      */
     public boolean getIsAdmin() {
@@ -71,6 +80,7 @@ public class Person extends BusinessObject {
     }
 
     /**
+     * Methode um einer Person Adminrechte zu erteilen
      * @param boolean isAdmin 
      */
     public void setIsAdmin(boolean isAdmin) {
@@ -78,7 +88,8 @@ public class Person extends BusinessObject {
     }
     
     /**
-	 * @return String of id + firstname + lastname
+     * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+	 * @return String id + firstname + lastname
 	 */
 	public String toString() {
 		return "PersonID #P" + super.getId() + " " + this.firstname + " " + this.lastname;

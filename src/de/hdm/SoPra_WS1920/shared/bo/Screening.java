@@ -5,11 +5,14 @@ import java.util.*;
 
 /**
  * @author GianlucaBernert
+ * Klasse Screening, welche die Attribute cinemaFK, movieFK, date und time direkt enthält
+ * und die die Beziehung zwischen Person und einem Screening von der Klasse Ownership erbt, 
+ * diese wiederum erbt SerialVersionUID, die ID und den Erstellzeitpunkt von BusinessObject.
  */
 public class Screening extends Ownership {
 
     /**
-     * Variables of the class Group
+     * Variablen der Klasse Screening
      */
     private int cinemaFK;
     private int movieFK;
@@ -17,62 +20,70 @@ public class Screening extends Ownership {
     private Time time;
 
     /**
-     * Default constructor
+     * Konstruktor der Klasse Screening, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
      */
     public Screening() {
     }
   
     /**
-     * @return cinemaFK
+     * Methode um den cinemaFK einer Vorführung auszugeben
+     * @return int cinemaFK
      */
     public int getCinemaFK() {
         return cinemaFK;
     }
 
     /**
-     * @param cinemaFK 
+     * Methode um den cinemaFK einer Vorführung zu setzen
+     * @param int cinemaFK 
      */
     public void setCinemaFK(int cinemaFK) {
         this.cinemaFK = cinemaFK;
     }
 
     /**
-     * @return movieFK
+     * Methode um den movieFK einer Vorführung auszugeben
+     * @return int movieFK
      */
     public int getMovieFK() {
         return movieFK;
     }
 
     /**
-     * @param movieFK 
+     * Methode um den movieFK einer Vorführung zu setzen
+     * @param int movieFK 
      */
     public void setMovieFK(int movieFK) {
        this.movieFK = movieFK;
     }
 
     /**
-     * @return date
+     * Methode um das Datum einer Vorführung auszugeben
+     * @return Date date
      */
     public Date getDate() {
         return date;
     }
 
     /**
-     * @param date 
+     * Methode um das Datum einer Vorführung zu setzen
+     * @param Date date 
      */
     public void setDate(Date date) {
        this.date = date;
     }
 
     /**
-     * @return time
+     * Methode um die Uhrzeit einer Vorführung auszugeben
+     * @return Time time
      */
     public Time getTime() {
         return time;
     }
 
     /**
-     * @param time 
+     * Methode um die Uhrzeit einer Vorführung zu setzen
+     * @param TIme time 
      */
     public void setTime(Time time) {
         this.time = time;
@@ -80,6 +91,7 @@ public class Screening extends Ownership {
 
     /**
    	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+   	 * @return String ScreeningID
    	 */
    	public String toString() {
    		return "ScreeningID #SC" + this.getId();
