@@ -77,6 +77,7 @@ public class CinemaMapper {
     			c.setPostCode(rs.getString("postCode"));
     			c.setStreet(rs.getString("street"));
     			c.setStreetNo(rs.getString("streetNo"));
+    			c.setCinemachainFK(rs.getInt("cinemachainFK"));
     			
     			
     			return c;
@@ -139,6 +140,8 @@ public class CinemaMapper {
         		+ c.getStreet()
         		+ "','" 
         		+ c.getStreetNo() 
+        		+ "','"
+        		+ c.getCinemachainFK()
         		+ "','"
         		+ c.getCreationTimestamp() + "')");
         	
@@ -225,6 +228,7 @@ public class CinemaMapper {
         		c.setPostCode(rs.getString("postCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
+        		c.setCinemachainFK(rs.getInt("cinemachainFK"));
         		
         		//Hinzufügen des neuen Objekts zum Ergebnisvektor
         		result.addElement(c);
@@ -257,6 +261,7 @@ public class CinemaMapper {
         		c.setPostCode(rs.getString("postCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
+        		c.setCinemachainFK(rs.getInt("cinemachainFK"));
         		
         		//Hinzufügen des neuen Objekts zum Ergebnisvektor
         		result.addElement(c);
@@ -273,14 +278,13 @@ public class CinemaMapper {
      * @param postcode 
      * @return Vektor mit Cinema-Objekten
      */
-    public Vector<Cinema> findByPostCode(String postCode) {
+    public Vector<Cinema> findCinemaByPostCode(String postCode) {
     	Connection con = DBConnection.connection();
     	Vector<Cinema> result = new Vector<Cinema>();
     	
     	try {
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT bo_id, name, city, postCode, street, streetNo, creationTimeStamp"
-    				+ "FROM cinema" + "WHERE postCode= '" + postCode + "'");
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM cinema" + "WHERE postCode= '" + postCode + "'");
     		
     		//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
     		while(rs.next()) {
@@ -289,6 +293,7 @@ public class CinemaMapper {
     			c.setCity(rs.getString("city"));
     			c.setPostCode(rs.getString("postCode"));
     			c.setStreetNo(rs.getString("streetNo"));
+    			c.setCinemachainFK(rs.getInt("cinemachainFK"));
     			
     			
     			//Hinzufügen des Objekts zum Ergebnisvektor
@@ -300,6 +305,32 @@ public class CinemaMapper {
     	//Rückgabe des Ergebnisvektors
     	return result;
         
+    }
+    
+    public Vector<Cinema> findCinemaByCinemaChain(int cinemachainFK) {
+    	Connection con = DBConnection.connection();
+    	Vector<Cinema> result = new Vector<Cinema>();
+    	
+    	try {
+    		Statement stmt = con.createStatement();
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM cinema" + "WHERE cinema.cinemachainFK=" + cinemachainFK);
+    		
+    		while(rs.next()) {
+    			Cinema c = new Cinema();
+    			c.setName(rs.getString("name"));
+    			c.setCity(rs.getString("city"));
+    			c.setPostCode(rs.getString("postCode"));
+    			c.setStreet(rs.getString("street"));
+    			c.setStreetNo(rs.getString("streetNo"));
+    			c.setCinemachainFK(rs.getInt("cinemachainFK"));
+    			
+    			result.addElement(c);
+    		}
+    	}
+    	catch(SQLException e2) {
+    		e2.printStackTrace();
+    	}
+    	return result;
     }
 
     /**
@@ -319,6 +350,18 @@ public class CinemaMapper {
     	}
         
     }
+    
+    public void deleteCinemaByCinemachainFK(int cinemachainFK) {
+    	Connection con = DBConnection.connection();
+    	
+    	try {
+    		Statement stmt = con.createStatement();
+    		stmt.executeUpdate("DELETE FROM cinema" + "WHERE cinema.cinemachainFK=" + cinemachainFK);
+    	}
+    	catch(SQLException e2) {
+    		e2.printStackTrace();
+    	}
+    }
 
     /**
      * @param person 
@@ -332,7 +375,7 @@ public class CinemaMapper {
         	Statement stmt = con.createStatement();
         	
         	ResultSet rs = stmt.executeQuery("SELECT cinema.bo_id, cinema.name, cinema.city, "
-        			+ "cinema.postCode, cinema.street, cinema.streetNo, businessownership.personFK" +
+        			+ "cinema.postCode, cinema.street, cinema.streetNo, cinema.cinemachainFK, businessownership.personFK" +
         			"FROM  cinema INNER JOIN businessownership" + 
         			"ON cinema.bo_id = businessownership.bo_id AND businessownership.personFK= '" + personFK);
         	
@@ -344,7 +387,7 @@ public class CinemaMapper {
         		c.setPostCode(rs.getString("postCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
-        		
+        		c.setCinemachainFK(rs.getInt("cinemachain"));
         		
         		
         		//Hinzufügen des neuen Objekts zum Ergebnisvektor
