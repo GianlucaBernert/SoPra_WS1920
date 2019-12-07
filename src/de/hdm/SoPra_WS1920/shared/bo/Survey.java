@@ -3,69 +3,79 @@ package de.hdm.SoPra_WS1920.shared.bo;
 import java.sql.Timestamp;
 
 /**
- * 
+ * @author GianlucaBernert
+ * Klasse Survey, welche die Attribute groupFK, startDate und endDate direkt enthält
+ * und die die Beziehung zwischen Person und einer Umfrage von der Klasse Ownership erbt, 
+ * diese wiederum erbt SerialVersionUID, die ID und den Erstellzeitpunkt von BusinessObject.
  */
 public class Survey extends Ownership {
 
     /**
-     * Variables of the class Group
+     * Variablen der Klasse Survey
      */
     private int groupFK;
     private Timestamp startDate;
     private Timestamp endDate;
 
     /**
-     * Default constructor
+     * Konstruktor der Klasse Survey, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
      */
     public Survey() {
     }
 
     /**
-     * @return group
+     * Methode um den groupFK einer Umfrage auszugeben
+     * @return int group
      */
     public int getGroupFK() {
         return groupFK;
     }
 
     /** 
-     * @return groupFK
+     * Methode um den groupFK einer Umfrage zu setzen 
+     * @return int groupFK
      */
     public void setGroupFK(int groupFK) {
         this.groupFK = groupFK;
     }
 
     /**
-     * @return
+     * Methode um das end Datum einer Umfrage auszugeben
+     * @return Timestamp endDate
      */
     public Timestamp getEndDate() {
        return endDate;
     }
 
     /**
-     * @param endDate 
+     * Methode um das end Datum einer Umfrage zu setzen
+     * @param Timestamp endDate 
      */
     public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
     }
 
-    /**
-   	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
-   	 */
-   	public String toString() {
-   		return "SurveyID #S" + this.getId();
-   	}
-
 	/**
-	 * @return the startDate
+	 * Methode um das start Datum einer Umfrage auszugeben
+	 * @return Timestamp startDate
 	 */
 	public Timestamp getStartDate() {
 		return startDate;
 	}
 
 	/**
-	 * @param startDate the startDate to set
+	 * Methode um das start Datum einer Umfrage zu setzen
+	 * @param Timesrtamp startDate
 	 */
 	public void setStartDate(Timestamp startDate) {
 		this.startDate = startDate;
 	}
+	
+	/**
+   	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+   	 * @return String SurveyID
+   	 */
+   	public String toString() {
+   		return "SurveyID #S" + this.getId();
+   	}
 }

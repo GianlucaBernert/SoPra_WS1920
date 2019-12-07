@@ -4,11 +4,14 @@ import java.util.*;
 
 /**
  * @author GianlucaBernert
+ * Klasse cinema, welche die Attribute Name, Stadt, PLZ, Straße und Hausnummer direkt enthält
+ * und die die Beziehung zwischen Person und einem Kino von der Klasse Ownership erbt, 
+ * diese wiederum erbt SerialVersionUID, die ID und den Erstellzeitpunkt von BusinessObject.
  */
 public class Cinema extends Ownership {
 
     /**
-     * Variables of the class Group
+     * Variablen der Klasse Cinema
      */
     private String name;
     private String city;
@@ -17,14 +20,15 @@ public class Cinema extends Ownership {
     private String streetNo;
     
     /**
-     * Default constructor
+     * Konstruktor der Klasse Cinema, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
      */
     public Cinema() {
     }
 
     
     /**
-     *@return name
+     * Methode um den Namen eines Kinos zu setzen
+     *@return String name
      */
     
     public String getName() {
@@ -32,64 +36,72 @@ public class Cinema extends Ownership {
     }
 
     /**
-     * @param name 
+     * Methode um den namen eines Kinos auszugeben
+     * @param String name 
      */
     public void setName(String name) {
         this.name = name;
         
     }
 
-    /**
-     * @return
+    /**Methode um die Stadt eines Kinos auszugeben
+     * @return String city
      */
     public String getCity() {
         return city;
     }
 
     /**
-     * @param city 
+     * Methode um die Stadt eines Kinos zu setzen
+     * @param String city 
      */
     public void setCity(String city) {
        this.city = city;
     }
 
     /**
-     * @return
+     * Methode um die Postleitzahl eines Kinos auszugeben
+     * @return String postCode
      */
     public String getPostCode() {
        return postCode;
     }
 
     /**
-     * @param postCode2 
+     * Methode um die Postleitzahl eines Kinos zu setzen
+     * @param String postCode 
      */
-    public void setPostCode(String postCode2) {
-        this.postCode = postCode2;
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
     }
 
     /**
-     * @return street
+     * Methode um die Straße eines Kinos auszugeben
+     * @return String street
      */
     public String getStreet() {
        return street;
     }
 
     /**
-     * @param street 
+     * Methode um die Straße eines Kinos zu setzen
+     * @param String street 
      */
     public void setStreet(String street) {
        this.street = street;
     }
 
     /**
-     * @return streetNo
+     * Methode um die Hausnummer eines Kinos auszugeben
+     * @return String streetNo
      */
     public String getStreetNo() {
        return streetNo;
     }
 
     /**
-     * @param streetNo 
+     * Methode um die Hausnummer eiens Kinos zu setzen
+     * @param String streetNo 
      */
     public void setStreetNo(String streetNo) {
        this.streetNo = streetNo;
@@ -97,6 +109,7 @@ public class Cinema extends Ownership {
     
     /**
 	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+	 * @retun CinemaID
 	 */
 	public String toString() {
 		return "CinemaID #C" + this.getId();

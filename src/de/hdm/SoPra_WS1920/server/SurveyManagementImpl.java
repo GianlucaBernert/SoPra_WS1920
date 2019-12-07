@@ -53,7 +53,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * 
      */
     public void init() throws IllegalArgumentException {
-    	this.cMapper = CinemaMapper.cineMapper();
+    	this.cMapper = CinemaMapper.cinemaMapper();
     	this.gMapper = GroupMapper.groupMapper();
     	this.mMapper = MovieMapper.moviemapper();
     	this.pMapper = PersonMapper.personMapper();
@@ -102,10 +102,10 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         	}
         }
         
-        Vector<SurveyEntry> seOfPerson = this.seMapper.findSurveyEntryByPersonFK(p.getId());
-        if (seOfPerson != null) {
-        	for (SurveyEntry se : seOfPerson) {
-        		this.seMapper.deleteSurveyEntry(se);
+        Vector<Survey> sOfPerson = this.sMapper.findSurveyByPersonFK(p.getId());
+        if (sOfPerson != null) {
+        	for (Survey s : sOfPerson) {
+        		this.sMapper.deleteSurvey(s);
         	}
         }
         
@@ -113,13 +113,6 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         if (gOfPerson != null) {
         	for (Group g : gOfPerson) {
         		this.gMapper.deleteGroup(g);
-        	}
-        }
-        
-        Vector<Survey> sOfPerson = this.sMapper.findSurveyByPersonFK(p.getId());
-        if (sOfPerson != null) {
-        	for (Survey s : sOfPerson) {
-        		this.sMapper.deleteSurvey(s);
         	}
         }
         
@@ -210,6 +203,13 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @return
      */
     public void deleteGroup(Group g) {
+    	
+    	Vector<Survey> sOfGroups = this.sMapper.findSurveyByGroupFK(g.getId());
+        if (sOfGroups != null) {
+        	for (Survey s : sOfGroups) {
+        		this.sMapper.deleteSurvey(s);
+        	}
+        }
         
     	this.deleteGroup(this.gMapper.findGroupByID(g.getId()));
     	

@@ -3,67 +3,77 @@ package de.hdm.SoPra_WS1920.shared.bo;
 import java.util.*;
 
 /**
- * 
+ * @author GianlucaBernert
+ * Klasse Vote, welche die Attribute votingWeight, surveyEntryFK und personFK direkt enthält
+ * und die die Beziehung zwischen Person und einem Voting von der Klasse Ownership erbt, 
+ * diese wiederum erbt SerialVersionUID, die ID und den Erstellzeitpunkt von BusinessObject.
  */
 public class Vote extends Ownership {
 
     /**
-     * Variables of the class Group
+     * Variablen der Klasse VOte
      */
     private int votingWeight;
     private int surveyEntryFK;
-    private int PersonFK;
+    private int personFK;
     
 
     /**
-     * Default constructor
+     * Konstruktor der Klasse Vote, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
      */
     public Vote() {
     }
 
     /**
-     * @return
+     * Methode um die Gewichtung eines Votings auszugeben
+     * @return int votingWeight
      */
     public int getVotingWeight() {
         return votingWeight;
     }
 
     /**
-     * @param votingWeight 
+     * Methode um die Gewichtung eines VOtings zu setzen
+     * @param int votingWeight 
      */
     public void setVotingWeight(int votingWeight) {
        this.votingWeight = votingWeight;
     }
 
     /**
-     * @return PersonFK
+     * Methode um den personFK eines Votings auszugeben
+     * @return int PersonFK
      */
     public int getpersonFK() {
-        return PersonFK;
+        return personFK;
     }
 
     /**
-     * @param PersonFK 
+     * Methode um den personFK eines Votings zu setzen
+     * @param int PersonFK 
      */
-    public void setPersonFK(int PersonFK) {
-        this.PersonFK = PersonFK;
+    public void setPersonFK(int personFK) {
+        this.personFK = personFK;
     }
     
     /**
-     * @return surveyEntryFK
+     * Methode um den surveyEntryFK eines Votings auszugeben
+     * @return int surveyEntryFK
      */
     public int getSurveyEntryFK() {
         return surveyEntryFK;
     }
 
     /**
-     * @param surveyEntryFK 
+     * MEthode um den surveyENtryFK eines VOtings zu setzen
+     * @param int surveyEntryFK 
      */
     public void setSurveyEntryFK(int surveyEntryFK) {
         this.surveyEntryFK = surveyEntryFK;
     }
     /**
    	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+   	 * @return String VoteID
    	 */
    	public String toString() {
    		return "VoteID #V" + this.getId();
