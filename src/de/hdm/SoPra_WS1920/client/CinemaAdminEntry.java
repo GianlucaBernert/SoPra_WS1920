@@ -9,6 +9,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.SoPra_WS1920.client.gui.Header;
+import de.hdm.SoPra_WS1920.client.gui.MovieCard;
+import de.hdm.SoPra_WS1920.shared.bo.Movie;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -23,12 +25,22 @@ public class CinemaAdminEntry implements EntryPoint{
 	Label movies;
 	Label screenings;
 	private int menuOpen = 0;
-	//To be defined: Header header;
+	MovieCard mCard;
+	MovieCard mCard2;
+	
+	//Example Movie
+	
+	
+	
+	
 	
 	@Override
 	public void onModuleLoad() {
 		// TODO Auto-generated method stub
-		
+		Movie m = new Movie();
+		m.setName("Joker");
+		m.setGenre("Drama");
+		m.setDescription("A Movie about a clown");
 		/*
 		 * Navbar Widgets
 		 */
@@ -38,6 +50,10 @@ public class CinemaAdminEntry implements EntryPoint{
 		
 		navbar.setStyleName("navbar");
 		main.setStyleName("content");
+		mCard = new MovieCard(main,m);
+		main.add(mCard);
+		mCard2 = new MovieCard(main,m);
+		main.add(mCard2);
 		
 		menuIcon = new Image("/Images/menu.png");
 		menuIcon.setStyleName("menuIcon");

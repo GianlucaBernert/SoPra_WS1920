@@ -1,12 +1,12 @@
 body{
 	margin: 0px !important; /*!important is for overwriting the browser default settings*/
 	background-color: #2A2A2A !important;/* Sets background color */
-	font-family: "Roboto";
+	font-family: "Roboto" !important;
 	overflow-x: hidden; /* Disables horizontal scroll */
 	min-width: 240px;
 }
 .navbar {
-	width: 100%;
+	width: calc(100% - 32px);
 	height: auto;
 	position: relative;
 	top: 0;
@@ -16,7 +16,7 @@ body{
 }
 .menuIcon{
 	display: block;
-	height: 15px;
+	height: 20px;
 	float: left;
 }
 
@@ -32,16 +32,16 @@ body{
 	overflow: hidden;
 	padding:16px;
 	margin: 0;
-background-image: linear-gradient(to bottom right, #302F2F, #101010);
+	background-image: linear-gradient(to bottom right, #302F2F, #101010);
 
 }
 
 .menuIcon-show {
-	height: 15px;
+	height: 20px;
 }
 
 .navbar-element-show {
-width: 100%;
+	width: 100%;
 	color: #ffffff;
 	float: none;
 	font-size: 12px;
@@ -64,9 +64,10 @@ width: 100%;
 .headline{
 	color: #ffffff;
 	font-weight: bold;
-	font-size: 20px;
+	font-size: 24px;
 	float: left;
 	vertical-align: center;
+	padding-top: 5px;
 }
 
 .searchBox{
@@ -77,6 +78,7 @@ width: 100%;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);/*Sets a shadow to the box*/
     width: 100%;
     margin-top: 16px;
+    padding: 5px 0px;
 }
 
 .searchText{
@@ -84,7 +86,7 @@ width: 100%;
 	outline: none; /*Prevents the textbox to get a blue outline when selected*/
     outline-style: none;
     margin-left: 5px;
-    width: 80%calc(100% - 22px);
+    width: 80%;
 }
 
 .searchIcon{
@@ -94,18 +96,163 @@ width: 100%;
 }
 
 .createBoButton{
-	padding: 7px 25px 7px 25px;
+	padding: 7px 20px;
 	outline: none;
 	border: none;
 	color: white;
-	font-size: 10px;
-	background-color:#FE2851;
+	font-size: 14px;
+/* 	background-color:#FE2851; */
+	background-color: red;
 	border-radius: 5px;
 	float: right;
 }
 
+.content{
+	padding:16px;
+}
+
+/*  
 
 
+
+*/
+
+.moviecard {
+	margin-top: 32px;
+  	position: relative;
+	float:left;
+	width: calc(100% - 40px);
+	min-width: 250px;
+	max-width: 400px;
+	height: 250px;
+	padding: 20px;
+	border-radius: 10px;
+	background-image: linear-gradient(to bottom right, #393838, #242424);
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	overflow-x: hidden; 
+}
+.moviecard:hover {
+	box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.moviecard button {
+	display: none;
+	width: 33.33%;
+	border: none;	
+	outline: none;
+    outline-style: none;
+}
+.title {
+	width: calc(100% - 40px);
+	font-weight: bold;
+	font-size: 24px;
+	color: #f1f1f1;
+  	display: block;
+  	text-decoration: none;
+}
+
+.subtitle {
+	width: calc(100% - 40px);
+  	text-decoration: none;
+  	font-size: 16px;
+  	color: #7D7D7D;
+  	display: block;
+  	text-decoration: none;
+	margin-top: 16px;
+}
+.description {
+	width: calc(100% - 40px);
+  	text-decoration: none;
+  	font-size: 14px;
+  	color: #f1f1f1;
+  	display: block;
+  	text-decoration: none;
+  	margin-top: 16px;
+}
+
+.icon {
+	position: absolute;
+	float:right;
+	width: 15px;
+	height: 15px;
+	bottom: 20px;
+	right: 20px;
+	cursor: pointer;
+	margin-left: 30px;
+}
+
+.inputLabel {
+	width:100%;
+	font-family: "Roboto";
+	font-size: 12px;
+	color: #f1f1f1;
+	margin-top:10px;
+	margin-bottom: 5px;
+}
+
+.inputTextBox{
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 5px;
+	font-family: "Roboto";
+	background-color:#3D3D3D;
+	color: white;
+	border: none !important;
+	padding: 7px 10px !important;
+	outline-style: none;
+}
+.inputTextBox:focus {
+	box-shadow: 0 0 3pt 2pt red;
+}
+
+.inputTextArea{
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 5px;
+	font-family: "Roboto";
+	background-color:#3D3D3D;
+	color: white;
+	border: none !important;
+	padding: 7px 10px !important;
+	outline-style: none;
+	resize: vertical;
+	height: 75px;
+}
+
+.inputTextArea:focus {
+	box-shadow: 0 0 3pt 2pt red;
+}
+
+
+.saveIcon {
+	position: absolute;
+	float:right;
+	width: 15px;
+	height: 15px;
+	bottom: 20px;
+	right: 20px;
+	cursor: pointer;
+	margin-left: 30px;
+}
+.cancelIcon {
+	position: absolute;
+	float:right;
+	width: 15px;
+	height: 15px;
+	bottom: 20px;
+	right: 60px;
+	cursor: pointer;
+	margin-left: 30px;
+}
+.deleteIcon {
+	position: absolute;
+	float:right;
+	width: 15px;
+	height: 15px;
+	bottom: 20px;
+	right: 100px;
+	cursor: pointer;
+	margin-left: 30px;
+}
 
 
 @media screen and (min-width: 500px) {
@@ -142,6 +289,17 @@ width: 100%;
 	.header{
 		margin-left: 200px;
 		padding: 16px;
+	}
+	
+	.content{
+	margin-top: 16px;
+	margin-left: 200px;
+	height: 100%;
+	}
+	.moviecard {
+	margin: 16px 16px 0px 0px;
+	width: calc(33% - 40px);
+
 	}
 
 }
