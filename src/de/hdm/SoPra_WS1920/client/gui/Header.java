@@ -16,21 +16,7 @@ public class Header extends FlowPanel{
 	
 	public void onLoad() {
 		super.onLoad();
-		this.setStyleName("header");
-
-		headline=new Label("Movies");
-		headline.setStyleName("headline");
-		
-		searchBox = new SearchBox();
-		
-		createBo = new Button("+Add Movie");
-		createBo.setStyleName("createBoButton");
-		createBo.addClickHandler(new CreateBoClickHandler(this));
-		
-		this.add(headline);
-		this.add(createBo);
-		this.add(searchBox);
-
+		this.setStyleName("header");	
 	}
 	
 	class CreateBoClickHandler implements ClickHandler{
@@ -73,23 +59,56 @@ public class Header extends FlowPanel{
 	
 	public void showCinemaHeader() {
 		//Set the Header to Cinemas
-		headline.setText("Cinemas");
-		createBo.setText("+Add Cinema");
+		this.clear();
+		headline=new Label("Cinemas");
+		headline.setStyleName("headline");
+		
+		searchBox = new SearchBox();
+		
+		createBo = new Button("+Add Cinema");
+		createBo.setStyleName("createBoButton");
+		createBo.addClickHandler(new CreateBoClickHandler(this));
+		
+		this.add(headline);
+		this.add(createBo);
+		this.add(searchBox);
 		//add the respective clickhandler to the createBo button
 		
 	}
 	
 	public void showMovieHeader() {
 		//Set the Header to Movies
-		headline.setText("Movies");
-		createBo.setText("+Add Movie");
 		//add the respective clickhandler to the createBo button
+		this.clear();
+		headline=new Label("Movies");
+		headline.setStyleName("headline");
+		
+		searchBox = new SearchBox();
+		
+		createBo = new Button("+Add Movie");
+		createBo.setStyleName("createBoButton");
+		createBo.addClickHandler(new CreateBoClickHandler(this));
+		
+		this.add(headline);
+		this.add(createBo);
+		this.add(searchBox);
 	}
 	
 	public void showScreeningHeader() {
 		//Set the Header to Screenings
-		headline.setText("Screenings");
-		createBo.setText("+Add Screening");
+		this.clear();
+		headline=new Label("Screenings");
+		headline.setStyleName("headline");
+		
+		searchBox = new SearchBox();
+		
+		createBo = new Button("+Add Screening");
+		createBo.setStyleName("createBoButton");
+		createBo.addClickHandler(new CreateBoClickHandler(this));
+		
+		this.add(headline);
+		this.add(createBo);
+		this.add(searchBox);
 		//add the respective clickhandler to the createBo button
 	}
 }
