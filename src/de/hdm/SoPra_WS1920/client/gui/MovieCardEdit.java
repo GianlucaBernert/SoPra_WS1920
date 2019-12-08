@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -17,7 +18,7 @@ public class MovieCardEdit extends FlowPanel{
 	Label genreLabel;
 	TextBox genre;
 	Label descriptionLabel;
-	TextBox description;
+	TextArea description;
 	Button save;
 	Button cancel;
 	Button delete;
@@ -38,12 +39,15 @@ public class MovieCardEdit extends FlowPanel{
 		nameLabel = new Label("Title");
 		nameLabel.setStyleName("inputLabel");
 		name=new TextBox();
+		name.setStyleName("inputTextBox");
 		genreLabel = new Label("Genre");
 		genreLabel.setStyleName("inputLabel");
 		genre=new TextBox();
+		genre.setStyleName("inputTextBox");
 		descriptionLabel = new Label("Description");
 		descriptionLabel.setStyleName("inputLabel");
-		description=new TextBox();
+		description=new TextArea();
+		description.setStyleName("inputTextArea");
 		save=new Button("SAVE");
 		save.setStyleName("invisibleButton");
 		cancel=new Button("CANCEL");
