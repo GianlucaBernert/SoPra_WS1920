@@ -39,25 +39,27 @@ public class Content extends FlowPanel{
 				+ "paints for his day job as a clown, and the guise he projects in a futile attempt "
 				+ "to feel like he's part of the world around him.");
 		m.setId(1);
-		
-		s = new Screening();
-		try {
-			Date date;
-			date = new SimpleDateFormat("dd/MM/yyyy").parse("31/12/2019");
-			s.setDate(date);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			s.setCinemaFK(1);
-			s.setMovieFK(1);
-		
+//		
+//		s = new Screening();
+//		try {
+//			Date date;
+//			date = new SimpleDateFormat("dd/MM/yyyy").parse("31/12/2019");
+//			s.setDate(date);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//			s.setCinemaFK(1);
+//			s.setMovieFK(1);
+//		
 		
 		
 	}
 	public void showCinemas() {
 		this.clear();
-		this.add(new Label("Cinemas"));
+//		this.add(new Label("Cinemas"));
+		CinemaCard cinemaCard = new CinemaCard(this, c);
+		this.add(cinemaCard);
 		//Get all cinemas where user is permitted to
 		//for every cinema...
 		//create a new CinemaCard

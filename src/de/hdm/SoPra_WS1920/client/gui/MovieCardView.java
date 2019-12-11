@@ -18,7 +18,7 @@ public class MovieCardView extends FlowPanel{
 	Movie movieToShow;
 	MovieCard parentCard;
 	Image editIcon;
-	FlowPanel editIconWrapper;
+
 	
 	public MovieCardView(MovieCard movieCard, Movie movieToShow) {
 		this.parentCard=movieCard;
@@ -27,6 +27,7 @@ public class MovieCardView extends FlowPanel{
 
 	public void onLoad() {
 		super.onLoad();
+		
 		
 		name=new Label(movieToShow.getName());
 		name.setStyleName("title");
