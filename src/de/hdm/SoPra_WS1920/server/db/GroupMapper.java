@@ -12,8 +12,8 @@ import java.sql.*;
  * 
  * 
  * Mit Hilfe der MapperKlasse <code>GroupMapper</code> werden Group-Objekte auf eine relationale Datenbank abgebildet.
- * Durch das implementieren der Methoden können Group-Objekte gesucht, erzeugt, modifiziert und
- * gelöscht werden.
+ * Durch das implementieren der Methoden kï¿½nnen Group-Objekte gesucht, erzeugt, modifiziert und
+ * gelï¿½scht werden.
  * 
  */
 public class GroupMapper {
@@ -55,7 +55,7 @@ public class GroupMapper {
     
     /*
 	 * =============================================================================================
-	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezï¿½hlt, die
 	 * in allen Mapper-Klassen existieren.
 	 * 
 	 */	
@@ -94,6 +94,11 @@ public class GroupMapper {
     		Statement stm1 = con.createStatement();
     		Statement stm2 = con.createStatement();
     		
+    		//TODO
+    		// ResultSet rs = stmt3executeQuery("SELECT MAX(id) as maxId FROM popcorns.group");
+    		// group.setId(rs.getInt("maxid") + 1);
+    		//
+    		
     		stm1.executeUpdate("INSERT INTO businessobject (bo_id, creationTimeStamp) VALUES ('"
     							+group.getId()
     							+ "', '"+group.getCreationTimestamp()
@@ -112,7 +117,7 @@ public class GroupMapper {
     }
 
     /**
-	 * Methode, die das Updaten eines Group-Objekts in der Datenbank ermöglicht	
+	 * Methode, die das Updaten eines Group-Objekts in der Datenbank ermï¿½glicht	
 	 * @param group
 	 */
     
@@ -131,7 +136,7 @@ public class GroupMapper {
     }
 
     /**
-	 * Methode, die das Loeschen eines Group-Objekts aus der Datenbank ermöglicht
+	 * Methode, die das Loeschen eines Group-Objekts aus der Datenbank ermï¿½glicht
 	 * @param group
 	 */
     
@@ -225,7 +230,7 @@ public class GroupMapper {
 		}
         return result;
     }
-      Überhaupt nötig?
+      ï¿½berhaupt nï¿½tig?
     /**
      * @param survey 
      * @return
@@ -234,7 +239,7 @@ public class GroupMapper {
         // TODO implement here
         return null;
     }  
-    Überhaupt nötig?
+    ï¿½berhaupt nï¿½tig?
     */
     /**
      * @param name 

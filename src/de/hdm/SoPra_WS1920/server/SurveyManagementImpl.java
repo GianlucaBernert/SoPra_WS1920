@@ -8,7 +8,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.SoPra_WS1920.server.db.CinemaMapper;
 import de.hdm.SoPra_WS1920.server.db.GroupMapper;
+import de.hdm.SoPra_WS1920.server.db.MembershipMapper;
 import de.hdm.SoPra_WS1920.server.db.MovieMapper;
+import de.hdm.SoPra_WS1920.server.db.OwnershipMapper;
 import de.hdm.SoPra_WS1920.server.db.PersonMapper;
 import de.hdm.SoPra_WS1920.server.db.ScreeningMapper;
 import de.hdm.SoPra_WS1920.server.db.SurveyEntryMapper;
@@ -17,7 +19,9 @@ import de.hdm.SoPra_WS1920.server.db.VoteMapper;
 import de.hdm.SoPra_WS1920.shared.SurveyManagement;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
+import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
@@ -41,6 +45,8 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
 	private SurveyEntryMapper seMapper = null;
 	private SurveyMapper sMapper = null;
 	private VoteMapper vMapper = null;
+	private OwnershipMapper oMapper = null;
+	private MembershipMapper meMapper = null;
 	
     /**
      * Default constructor
@@ -61,6 +67,8 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	this.seMapper = SurveyEntryMapper.surveyEntryMapper();
     	this.sMapper = SurveyMapper.surveyMapper();
     	this.vMapper = VoteMapper.voteMapper();
+    	this.oMapper = OwnershipMapper.ownershipMapper();
+    	this.meMapper = MembershipMapper.membershipMapper();
     }
 
     /**
@@ -68,17 +76,15 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param String firstname 
      * @param String lastname 
      * @param String email 
-     * @param int isAdmin
      * @param Timestamp creationTimestamp
      * @return Person p
      */
-    public Person createPerson(int id, String firstname, String lastname, String eMail, boolean isAdmin, Timestamp creationTimestamp) throws IllegalArgumentException {
+    public Person createPerson(int id, String firstname, String lastname, String eMail, Timestamp creationTimestamp) throws IllegalArgumentException {
         Person p = new Person();
         p.setId(id);
         p.setFirstname(firstname);
         p.setLastname(lastname);
         p.setEMail(eMail);
-        p.setIsAdmin(isAdmin);
         p.setCreationTimestamp(creationTimestamp);
         this.pMapper.insertPerson(p);
         return p;
@@ -137,6 +143,13 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         	}
         }
         
+        Vector<Ownership> oOfPerson = this.oMapper.findOwnershipByPersonFK(p.getId());
+        if (oOfPerson != null) {
+        	for (Ownership o : oOfPerson) {
+        		this.oMapper.deleteOwnership(o);
+        	}
+        }
+        
         this.deletePerson(this.pMapper.findPersonByID(p.getId()));
         
         this.pMapper.deletePerson(p);
@@ -188,14 +201,40 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         g.setPersonFK(PersonFK);
         g.setCreationTimestamp(creationTimestamp);
         this.gMapper.insertGroup(g);
+        Ownership o = new Ownership();
+        o.setId(id);
+        o.setPersonFK(PersonFK);
+        this.oMapper.insertOwnership(o);
         return g;
+       
     }
-    
     /**
      * @param Group g
      */
     public void editGroup(Group g) {
         this.gMapper.updateGroup(g);
+    }
+    
+    /**
+     * @param Group g
+     * @param Person p
+     */
+    public void createMembership(Group g, Person p) {
+    	Membership m = new Membership();
+    	m.setGroup(g);
+    	m.setPerson(p);
+        this.meMapper.insertMembership(g, p);
+    }
+    
+    /**
+     * @param Group g
+     * @param Person p
+     */
+    public void deleteMembership(Group g, Person p) {
+    	
+    	//this.deleteMembership(g, p);
+    	
+        this.meMapper.deleteMembership(g, p);
     }
     
     /**
