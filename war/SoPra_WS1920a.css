@@ -25,7 +25,7 @@ body{
 }
 
 .navbar-show{
-	width: 100%;
+	width: calc(100% - 32px);
 	height: auto;
 	position: relative;
 	top: 0;
@@ -179,6 +179,63 @@ body{
 	cursor: pointer;
 	margin-left: 30px;
 }
+
+.cinemacard {
+	margin-top: 32px;
+  	position: relative;
+	float:left;
+	width: calc(100% - 40px);
+	min-width: 250px;
+	max-width: 400px;
+	padding: 20px;
+	border-radius: 10px;
+	background-image: linear-gradient(to bottom right, #393838, #242424);
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	overflow-x: hidden; 
+}
+.cinemacard:hover {
+	box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.cinemacard button {
+	display: none;
+	width: 33.33%;
+	border: none;	
+	outline: none;
+    outline-style: none;
+}
+
+.streetrow-inline {
+	float: left;
+	width: calc(100% - 40px);
+}
+.street {
+  	text-decoration: none;
+  	font-size: 14px;
+  	color: #f1f1f1;
+  	display: block;
+  	text-decoration: none;
+  	margin-top: 16px;
+  	margin-right: 8px;
+  	float:left;
+}
+
+.cityrow-inline {
+	float: left;
+	width: calc(100% - 40px);
+}
+
+.city {
+  	text-decoration: none;
+  	font-size: 14px;
+  	color: #f1f1f1;
+  	display: block;
+  	text-decoration: none;
+  	margin-top: 16px;
+  	margin-right: 8px;
+  	float:left;
+}
+
+
 
 .inputLabel {
 	width:100%;
