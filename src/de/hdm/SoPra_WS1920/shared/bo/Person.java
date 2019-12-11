@@ -15,7 +15,6 @@ public class Person extends BusinessObject {
     private String firstname;
     private String lastname;
     private String eMail;
-    private boolean isAdmin;
     
     /**
      * Konstruktor der Klasse Person, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
