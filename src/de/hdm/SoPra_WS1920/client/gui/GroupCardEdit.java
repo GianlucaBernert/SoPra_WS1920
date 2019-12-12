@@ -29,7 +29,7 @@ public class GroupCardEdit extends FlowPanel {
 	Image cancelIcon;
 	Image deleteIcon;
 	
-	public GroupCardEdit(GroupCard groupCard, Group GroupToShow) {
+	public GroupCardEdit(GroupCard groupCard, Group groupToShow) {
 		this.parentCard = groupCard;
 		this.groupToShow = groupToShow;
 	}
@@ -58,14 +58,16 @@ public class GroupCardEdit extends FlowPanel {
 		saveIcon.setStyleName("saveIcon");
 		saveIcon.addClickHandler(new SaveClickHandler(this));
 		
+	
 		cancelIcon = new Image("/Images/001-unchecked.svg");
 		cancelIcon.setStyleName("cancelIcon");
 		cancelIcon.addClickHandler(new CancelClickHandler(this));
-		
+
 		deleteIcon = new Image("/Images/003-delete.svg");
 		deleteIcon.setStyleName("deleteIcon");
 		deleteIcon.addClickHandler(new DeleteClickHandler(this));
 		
+			
 		this.add(groupName);
 		this.add(groupNameBox);
 		this.add(member);
@@ -74,6 +76,7 @@ public class GroupCardEdit extends FlowPanel {
 		this.add(cancel);
 		this.add(delete);
 		
+	}
 		class SaveClickHandler implements ClickHandler{
 			
 			GroupCardEdit groupCardEdit;
@@ -88,7 +91,8 @@ public class GroupCardEdit extends FlowPanel {
 				groupToShow.setName(member.getText());
 				parentCard.showGroupCardView(groupToShow);
 			}
-			
+		
+		}
 		class CancelClickHandler implements ClickHandler{
 			
 			GroupCardEdit groupCardEdit;
@@ -102,6 +106,8 @@ public class GroupCardEdit extends FlowPanel {
 				parentCard.showGroupCardEdit(groupToShow);
 				
 			}
+			
+		}
 			
 			class DeleteClickHandler implements ClickHandler{
 				GroupCardEdit groupCardEdit;
@@ -117,10 +123,6 @@ public class GroupCardEdit extends FlowPanel {
 			
 		}
 			}
-		}
-		}
-		}
-	
 }
 		
 		
