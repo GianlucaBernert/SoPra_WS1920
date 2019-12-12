@@ -96,11 +96,20 @@ public class PersonMapper {
 	 * @param person
 	 */
     
-    public void insertPerson(Person person) {
+    public Person insertPerson(Person person) {
     	Connection con = DBConnection.connection();
 
     	try {
-		
+    		con.setAutoCommit(false);
+    		Statement stmt = con.createStatement();
+    	
+    	    ResultSet rs = stmt.executeQuery("SELECT MAX(bo_id) AS maxid "
+    	          + "FROM businessobject ");
+
+    	      if (rs.next()) {
+    	     
+    	        person.setId(rs.getInt("maxid") + 1);
+    	        
     		Statement stm1 = con.createStatement();
     		Statement stm2 = con.createStatement();
     		
@@ -108,21 +117,18 @@ public class PersonMapper {
     							+ person.getId()
     							+ "', '"+person.getCreationTimestamp()
     							+"')");
-			stm2.executeUpdate("INSERT INTO person (bo_id, firstname, lastname, eMail, isAdmin, creationTimeStamp) VALUES ('"
+			stm2.executeUpdate("INSERT INTO person (bo_id, firstname, lastname, eMail) VALUES ('"
 								+person.getId()
 								+"', '"+person.getFirstname()
 								+"', '"+person.getLastname()
 								+"', '"+person.getEMail()
-								+"', '"+person.getIsAdmin()
-								+"', '"+person.getCreationTimestamp()
 								+"')");
-			
-		}
+		}con.setAutoCommit(true);
+    	}
 			catch(SQLException exc) {
 				exc.printStackTrace();
-			
 			}
-
+    	return person;
     }
 
 	/**
@@ -130,22 +136,22 @@ public class PersonMapper {
 	 * @param person
 	 */
     
-    public void updatePerson(Person person) {
+    public Person updatePerson(Person person) {
     	Connection con = DBConnection.connection();
 
     	try {
-    	
+    		con.setAutoCommit(false);
     		Statement stmt = con.createStatement();
     		stmt.executeUpdate("UPDATE person Set firstname='"+person.getFirstname()
     				+"', lastname='"+person.getLastname()
     				+"', eMail='"+person.getEMail()
-    				+"', isAdmin='"+person.getIsAdmin()
     				+"' Where bo_id="+person.getId());
-    		
+    		con.setAutoCommit(true);
     	}
     		catch(SQLException exc) {
     			exc.printStackTrace();
     			}
+    	return person;
     }
 
     /**

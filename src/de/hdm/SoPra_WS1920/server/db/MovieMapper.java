@@ -91,7 +91,15 @@ public class MovieMapper {
     	Connection con = DBConnection.connection();
 
     	try {
-		
+    		con.setAutoCommit(false);
+    		Statement stmt = con.createStatement();
+        	
+    	    ResultSet rs = stmt.executeQuery("SELECT MAX(bo_id) AS maxid "
+    	          + "FROM businessobject ");
+
+    	    if (rs.next()) {
+    	     
+    	    movie.setId(rs.getInt("maxid") + 1);
     		Statement stm1 = con.createStatement();
     		Statement stm2 = con.createStatement();
     		
@@ -107,7 +115,8 @@ public class MovieMapper {
 								+"', '"+movie.getCreationTimestamp()
 								+"')");
 			
-		}
+		}con.setAutoCommit(true);
+    	}
 			catch(SQLException exc) {
 				exc.printStackTrace();
 			
@@ -124,17 +133,18 @@ public class MovieMapper {
     	Connection con = DBConnection.connection();
 
     	try {
-    	
+    		con.setAutoCommit(false);
     		Statement stmt = con.createStatement();
     		stmt.executeUpdate("UPDATE movie Set name='"+movie.getName()
     				+"', genre='"+movie.getGenre()
     				+"', description='"+movie.getDescription()
     				+"' Where bo_id="+movie.getId());
+    		con.setAutoCommit(true);
     	}
     		catch(SQLException exc) {
     			exc.printStackTrace();
     			}
-        return null;
+        return movie;
     }
 
     /**
@@ -208,7 +218,35 @@ public class MovieMapper {
      * Beginn: Spezifische Business Object Methoden
 	 */	
     	
-    	
+    // Find-All Methode zum Abrufen aller Movie-Objekte
+    public Vector<Movie> findAll() {
+        Connection con = DBConnection.connection();
+        Vector<Movie> result = new Vector<Movie>();
+
+        try {
+          Statement stmt = con.createStatement();
+
+          ResultSet rs = stmt.executeQuery("SELECT * FROM movie "
+              + " ORDER BY bo_id");
+
+          while (rs.next()) {
+            Movie m = new Movie();
+            m.setId(rs.getInt("bo_id"));
+            m.setName(rs.getString("name"));
+            m.setGenre(rs.getString("genre"));
+            m.setDescription(rs.getString("description"));
+
+            // Hinzufügen des neuen Objekts zum Ergebnisvektor
+            result.addElement(m);
+          }
+        }
+        catch (SQLException e2) {
+          e2.printStackTrace();
+        }
+
+        // Ergebnisvektor zurückgeben
+        return result;
+      }
     /**
      * @param name 
      * @return

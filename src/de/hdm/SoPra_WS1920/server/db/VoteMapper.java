@@ -93,6 +93,14 @@ public class VoteMapper {
     	Connection con = DBConnection.connection();
 
     	try {
+    		Statement stmt = con.createStatement();
+        	
+    	    ResultSet rs = stmt.executeQuery("SELECT MAX(bo_id) AS maxid "
+    	          + "FROM businessobject ");
+
+    	      if (rs.next()) {
+    	     
+    	        vote.setId(rs.getInt("maxid") + 1);
 		
     		Statement stm1 = con.createStatement();
     		Statement stm2 = con.createStatement();
@@ -109,6 +117,7 @@ public class VoteMapper {
 								+"')");
 			
 		}
+    	}
 			catch(SQLException exc) {
 				exc.printStackTrace();
 			
