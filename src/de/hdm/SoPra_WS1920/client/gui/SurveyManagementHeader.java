@@ -77,6 +77,35 @@ public class SurveyManagementHeader extends FlowPanel {
 			this.add(searchBox);
 		}
 		
+
+		
+		public void showSurveyHeader() {
+			this.clear();
+			headline = new Label("Survey");
+			headline.setStylePrimaryName("headline");
+			
+			searchBox = new SearchBox();
+			
+			createBo = new Button("+Add Survey");
+			createBo.setStylePrimaryName("createBoButton");
+			createBo.addClickHandler(new CreateBoClickHandler(this));
+			
+			this.add(headline);
+			this.add(createBo);
+			this.add(searchBox);
+		}
+		
+
+		public void showMoviesHeader(){
+			this.clear();
+			headline = new Label("Movies");
+			headline.setStylePrimaryName("headline");
+			
+			searchBox = new SearchBox();
+			
+			this.add(headline);
+		}
+		
 		}
 		
 

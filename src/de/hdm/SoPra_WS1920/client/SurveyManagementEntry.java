@@ -42,15 +42,16 @@ public class SurveyManagementEntry implements EntryPoint {
 		
 		movies = new Label("Movies"); //Menu Item 1
 		movies.setStyleName("navbar-element");
-		//movies.addClickHandler(new ShowMoviesClickHandler(header, content));
+		movies.addClickHandler(new ShowMoviesClickHandler(header, content));
 		
 		groups = new Label("Groups"); //Menu Item 2
 		groups.setStyleName("navbar-element");
 		groups.addClickHandler(new ShowGroupsClickHandler(header, content));
 		
-		surveys = new Label("Screenings"); //Menu Item 2
+	
+		surveys = new Label("Surveys"); //Menu Item 2
 		surveys.setStyleName("navbar-element");
-		surveys.addClickHandler(new ShowGroupsClickHandler(header, content));
+		surveys.addClickHandler(new ShowSurveysClickHandler(header, content));
 		
 		navbar.add(menuIcon);
 		navbar.add(movies);
@@ -99,10 +100,43 @@ public class SurveyManagementEntry implements EntryPoint {
 		
 		}
 		
+	}
+	
+	class ShowSurveysClickHandler implements ClickHandler{
+		
+		public ShowSurveysClickHandler(SurveyManagementHeader header, SurveyContent content) {
+			
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			header.showSurveyHeader();
+			
+		}
 		
 	}
+		
+	class ShowMoviesClickHandler implements ClickHandler{
+		
+		public ShowMoviesClickHandler(SurveyManagementHeader header, SurveyContent content) {
+			
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			header.showMoviesHeader();
+			
+		}
+	
+		
+	}		
+		
+	}
+		
+		
+	
 	
 
 	
-}
+
 

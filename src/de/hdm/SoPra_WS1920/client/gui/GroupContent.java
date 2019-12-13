@@ -15,6 +15,11 @@ public class GroupContent extends FlowPanel{
 		this.add(new Label("Groups"));
 	}
 	
+	public void showSurveys() {
+		this.clear();
+		this.add(new Label("Surveys"));
+	}
+	
 	
 
 }
