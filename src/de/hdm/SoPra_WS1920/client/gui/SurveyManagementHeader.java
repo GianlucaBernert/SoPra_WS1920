@@ -10,25 +10,31 @@ import com.google.gwt.user.client.ui.TextBox;
 
 
 
+
 public class SurveyManagementHeader extends FlowPanel {
 	
 	Label headline;
 	Button createBo;
 	SearchBox searchBox;
 	
+	GroupForm gf;
+	
 	public void onLoad() {
 		super.onLoad();
 		this.setStylePrimaryName("header");
+		createBo.addClickHandler(new CreateBoClickHandler(this, gf));
 		
 	}
 		class CreateBoClickHandler implements ClickHandler{
 			
-			public CreateBoClickHandler(SurveyManagementHeader header) {
+			public CreateBoClickHandler(SurveyManagementHeader header, GroupForm gf) {
 				
 			}
 
 			@Override
 			public void onClick(ClickEvent event) {
+				GroupForm gf = new GroupForm();
+				gf.showGroupForm();
 				
 			}
 		
@@ -70,7 +76,7 @@ public class SurveyManagementHeader extends FlowPanel {
 			
 			createBo = new Button("+Add Group");
 			createBo.setStylePrimaryName("createBoButton");
-			createBo.addClickHandler(new CreateBoClickHandler(this));
+			createBo.addClickHandler(new CreateBoClickHandler(this, gf));
 			
 			this.add(headline);
 			this.add(createBo);
@@ -88,7 +94,7 @@ public class SurveyManagementHeader extends FlowPanel {
 			
 			createBo = new Button("+Add Survey");
 			createBo.setStylePrimaryName("createBoButton");
-			createBo.addClickHandler(new CreateBoClickHandler(this));
+			createBo.addClickHandler(new CreateBoClickHandler(this, gf));
 			
 			this.add(headline);
 			this.add(createBo);
