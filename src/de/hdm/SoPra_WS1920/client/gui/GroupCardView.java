@@ -42,6 +42,7 @@ public class GroupCardView extends FlowPanel {
 		this.add(edit);
 		this.add(editIcon);
 		
+	}
 		class EditClickHandler implements ClickHandler{
 			
 			GroupCardView groupCardView;
@@ -63,5 +64,5 @@ public class GroupCardView extends FlowPanel {
 		
 	}
 
-}
+
 
