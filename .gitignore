@@ -69,3 +69,4 @@ war/WEB-INF/classes/
 www-test/
 .gwt-tmp/
 /test-classes/
+/build/

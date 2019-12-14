@@ -117,7 +117,7 @@ body{
 
 */
 
-.moviecard {
+.groupcard {
 	margin-top: 32px;
   	position: relative;
 	float:left;
@@ -131,10 +131,10 @@ body{
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 	overflow-x: hidden; 
 }
-.moviecard:hover {
+.groupcard:hover {
 	box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.moviecard button {
+.groupcard button {
 	display: none;
 	width: 33.33%;
 	border: none;	
@@ -159,7 +159,7 @@ body{
   	text-decoration: none;
 	margin-top: 16px;
 }
-.description {
+.member {
 	width: calc(100% - 40px);
   	text-decoration: none;
   	font-size: 14px;
@@ -178,30 +178,6 @@ body{
 	right: 20px;
 	cursor: pointer;
 	margin-left: 30px;
-}
-
-.cinemacard {
-	margin-top: 32px;
-  	position: relative;
-	float:left;
-	width: calc(100% - 40px);
-	min-width: 250px;
-	max-width: 400px;
-	padding: 20px;
-	border-radius: 10px;
-	background-image: linear-gradient(to bottom right, #393838, #242424);
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-	overflow-x: hidden; 
-}
-.cinemacard:hover {
-	box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.cinemacard button {
-	display: none;
-	width: 33.33%;
-	border: none;	
-	outline: none;
-    outline-style: none;
 }
 
 .streetrow-inline {
@@ -353,7 +329,7 @@ body{
 	margin-left: 200px;
 	height: 100%;
 	}
-	.moviecard {
+	.groupcard {
 	margin: 16px 16px 0px 0px;
 	width: calc(33% - 40px);
 
