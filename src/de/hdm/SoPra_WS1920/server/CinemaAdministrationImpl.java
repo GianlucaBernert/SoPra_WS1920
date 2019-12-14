@@ -1,20 +1,25 @@
 package de.hdm.SoPra_WS1920.server;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.*;
 
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.SoPra_WS1920.server.db.CinemaChainMapper;
 import de.hdm.SoPra_WS1920.server.db.CinemaMapper;
 import de.hdm.SoPra_WS1920.server.db.MovieMapper;
+import de.hdm.SoPra_WS1920.server.db.OwnershipMapper;
 import de.hdm.SoPra_WS1920.server.db.PersonMapper;
 import de.hdm.SoPra_WS1920.server.db.ScreeningMapper;
 import de.hdm.SoPra_WS1920.server.db.SurveyEntryMapper;
 import de.hdm.SoPra_WS1920.server.db.VoteMapper;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministration;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
@@ -44,7 +49,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 
     private MovieMapper mMapper = null;
 
-    private ScreeningMapper sMapper = null;
+    private ScreeningMapper scMapper = null;
 
     public PersonMapper pMapper = null;
     
@@ -52,18 +57,24 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     
     public VoteMapper vMapper = null;
     
+    private CinemaChainMapper ccMapper = null;
+    
+    private OwnershipMapper oMapper = null;
+    
     /**
      * Initialisierung
      */
     
     public void init() {
     	
-    	this.cMapper = CinemaMapper.cineMapper();
+    	this.cMapper = CinemaMapper.cinemaMapper();
     	this.mMapper = MovieMapper.moviemapper();
-    	this.sMapper = ScreeningMapper.screeningMapper();
+    	this.scMapper = ScreeningMapper.screeningMapper();
     	this.pMapper = PersonMapper.personMapper();
     	this.seMapper = SurveyEntryMapper.surveyEntryMapper();
     	this.vMapper = VoteMapper.voteMapper();
+    	this.ccMapper = CinemaChainMapper.cinemaChainMapper();
+    	this.oMapper = OwnershipMapper.ownershipMapper();
     	
     }
     
@@ -78,19 +89,23 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode, int personFK) {
-
+    public Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode, int personFK, Timestamp creationTimestamp) {
+    		
+    	
         	Cinema c = new Cinema();
         	
         	c.setName(name);
         	c.setCity(cityName);
         	c.setStreet(street);
         	c.setPostCode(postCode);
-//        	TO DO: Postcode in Klasse Cinema zu typ String ändern
         	c.setId(1);
-        	c.setPersonFK(personFK);
+        	c.setCreationTimestamp(creationTimestamp);
         	
-        	return this.cMapper.insertCinema(c);
+        	this.cMapper.insertCinema(c);
+        	
+        	this.createOwnership(personFK, creationTimestamp, c.getId());
+        	
+        	return c;
         	
         
     }
@@ -102,7 +117,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Movie createMovie(String name, String genre, String description, int personFK) {
+    public Movie createMovie(String name, String genre, String description, int personFK, Timestamp creationTimestamp) {
         
     	Vector <Movie> m1 = new Vector <Movie>();
     	m1 = mMapper.findMovieByName(name);
@@ -113,17 +128,18 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 		
 		else {
 			
-//		TO DO/DISCUSS: braucht movie einen Person FK? Probleme beim löschen der Person!	
-			
 		Movie m	= new Movie();
 		
 		m.setName(name);
 		m.setGenre(genre);
 		m.setDescription(description);
 		m.setId(1);
-		m.setPersonFK(personFK);
 		
-		return this.mMapper.insertMovie(m);
+		this.mMapper.insertMovie(m);
+		
+		this.createOwnership(personFK, creationTimestamp, m.getId());
+		
+		return  m;
 			
 		}
     	
@@ -137,18 +153,21 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Screening createScreening(Date date, Time time, int cinemaFK, int movieFK, int personFK) {
+    public Screening createScreening(Timestamp screeningDateTime, int cinemaFK, int movieFK, int personFK, Timestamp creationTimestamp) {
         
-    	Screening s = new Screening();
+    	Screening sc = new Screening();
     	
-    	s.setCinemaFK(cinemaFK);
-    	s.setMovieFK(movieFK);
-    	s.setDate(date);
-    	s.setTime(time);
-    	s.setId(1);
-    	s.setPersonFK(personFK);
+    	sc.setCinemaFK(cinemaFK);
+    	sc.setMovieFK(movieFK);
+    	sc.setScreeningDateTime(screeningDateTime);
+    	sc.setId(1);
+    	sc.setCreationTimestamp(creationTimestamp);
     	
-        return null;
+        this.scMapper.insertScreening(sc);
+        
+        this.createOwnership(personFK, creationTimestamp, sc.getId());
+        
+        return sc;
     } 
 
     /**
@@ -170,6 +189,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	
     	//Loeschen des Cinema Object
         this.cMapper.deleteCinema(cinema);
+        this.deleteOwnership(this.findOwnership(cinema.getId()));
     }
 
     /**
@@ -188,6 +208,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	}
     	
        this.mMapper.deleteMovie(movie); 
+       this.deleteOwnership(this.findOwnership(movie.getId()));
     }
 
     /**
@@ -205,7 +226,8 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     		}
     	}
     	
-        this.sMapper.deleteScreening(screening);
+        this.scMapper.deleteScreening(screening);
+        this.deleteOwnership(this.findOwnership(screening.getId()));
     }
 
     /**
@@ -276,7 +298,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     @Override
     public Screening getScreeningById(int id) {
         
-        return this.sMapper.findScreeningByID(id);
+        return this.scMapper.findScreeningByID(id);
     }
 
     /**
@@ -286,7 +308,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     @Override
     public Vector<Screening> getScreeningByCinemaFK(int cinemaFK) {
         
-        return this.sMapper.findScreeningByCinemaFK(cinemaFK);
+        return this.scMapper.findScreeningByCinemaFK(cinemaFK);
     }
 
     /**
@@ -296,7 +318,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     @Override
     public Vector<Screening> getScreeningByMovieFK(int movieFK) {
         
-        return this.sMapper.findScreeningByMovieFK(movieFK);
+        return this.scMapper.findScreeningByMovieFK(movieFK);
     }
 
     /**
@@ -304,9 +326,9 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Vector<Screening> getScreeningByScreeningDateTime(Date date, Time time) {
+    public Vector<Screening> getScreeningByScreeningDateTime(Timestamp screeningDateTime) {
         
-        return this.sMapper.findScreeningByScreeningDateTime(date, time);
+        return this.scMapper.findScreeningByScreeningDateTime(screeningDateTime);
     }
 
     /**
@@ -335,7 +357,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     @Override
     public Screening updateScreening(Screening screening) {
 		
-    	return this.sMapper.updateScreening(screening);
+    	return this.scMapper.updateScreening(screening);
      
     }
 
@@ -347,17 +369,17 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Person createPerson(String firstName, String lastName, String eMail, int isAdmin) {
+    public Person createPerson(String firstName, String lastName, String eMail, Timestamp creationTimestamp) {
         
     	Person p = new Person();
     	
     	p.setEMail(eMail);
     	p.setFirstname(firstName);
     	p.setLastname(lastName);
-    	p.setIsAdmin(isAdmin);
     	p.setId(1);
+    	p.setCreationTimestamp(creationTimestamp);
     	
-        return pMapper.insertPerson(p);
+        return this.pMapper.insertPerson(p);
     }
 
     /**
@@ -428,6 +450,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     public void deleteVote(Vote vote) {
         
     	this.vMapper.deleteVote(vote);
+    	this.deleteOwnership(this.findOwnership(vote.getId()));
         
     }
 
@@ -463,5 +486,97 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	
     	return this.seMapper.findSurveyEntryByScreeningFK(screeningFK);
     }
-
+    
+    @Override
+    public Ownership createOwnership(int personFK, Timestamp creationTimestamp, int id ) {
+    	
+    	Ownership o = new Ownership();
+    	o.setId(id);
+    	o.setPersonFK(personFK);
+    	o.setCreationTimestamp(creationTimestamp);
+    	
+    	
+    	return this.oMapper.insertOwnership(o);
+    }
+    
+    @Override
+    public void deleteOwnership(Ownership ownership) {
+    	this.oMapper.deleteOwnership(ownership);
+    }
+    
+    @Override
+    public Ownership findOwnership(int id) {
+    	return this.oMapper.findOwnershipByID(id);
+    }
+    
+    @Override
+    public Vector <Ownership> getOwnershipsbyPersonFK(int personFK){
+    	return this.oMapper.findOwnershipByPersonFK(personFK);
+    }
+    
+    @Override
+    public CinemaChain createCinemaChain(Cinema c , String name, Timestamp creationTimestamp,int personFK) {
+    	
+    	CinemaChain cc = new CinemaChain();
+    	
+    	cc.setId(1);
+    	cc.setName(name);
+    	cc.setCreationTimestamp(creationTimestamp);
+    	
+    	
+    	this.ccMapper.insertCinemaChain(cc);
+    	
+    	c.setId(cc.getId());
+    	this.updateCinema(c);
+    	
+    	this.createOwnership(personFK, creationTimestamp, cc.getId());
+    	
+    	return cc;
+    	
+    }
+    
+    // Methode updateCinemaId hierzu muss bei einem Vector von ausgewählten Kino Objekten die CinemaChain ID geupdatet werden.
+    
+    @Override
+    public CinemaChain updateCinemaChain(CinemaChain cc) {
+    	return this.ccMapper.updateCinemaChain(cc);
+    }
+    
+    @Override
+    public void deleteCinemaChain(CinemaChain cc) {
+    	this.ccMapper.deleteCinemaChain(cc);
+    	this.deleteOwnership(this.findOwnership(cc.getId()));
+    	// Löschen der CinemaChainID in den Cinema Objekten notwenig!
+    }
+    
+    @Override
+    public CinemaChain findCinemaChainByName(String name) {
+    	return this.ccMapper.findCinemaChainByName(name);
+    }
+    
+    @Override
+    public Vector <CinemaChain> findCinemaChainByPersonFK(int personFK){
+    	return this.ccMapper.findCinemaChainByPersonFK(personFK);
+    }
+    
+    @Override
+    public CinemaChain findCinemaChainById(int id) {
+    	return this.ccMapper.findCinemaChainByID(id);
+    }
+    
+    @Override
+    public Vector <Cinema> findCinemasByPersonFK(int personFK){
+    	return this.cMapper.findCinemaByPersonFK(personFK);
+    }
+    
+    /**
+     * Methode zum Aufrufen aller zugehörigen Cinema Objekte einer CinemaChain
+     * @param cc
+     * @return
+     */
+    @Override
+    public Vector <Cinema> findCinemasByCinemaChainID(CinemaChain cc){
+    	return this.ccMapper.findCinemasByCinemaChainID(cc);
+    }
+    
 }

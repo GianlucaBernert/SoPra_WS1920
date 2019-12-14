@@ -1,6 +1,7 @@
 package de.hdm.SoPra_WS1920.shared.bo;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -16,8 +17,7 @@ public class Screening extends Ownership {
      */
     private int cinemaFK;
     private int movieFK;
-    private Date date;
-    private Time time;
+    private Timestamp screeningDateTime;
 
     /**
      * Konstruktor der Klasse Screening, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
@@ -58,42 +58,26 @@ public class Screening extends Ownership {
     }
 
     /**
-     * Methode um das Datum einer Vorführung auszugeben
-     * @return Date date
-     */
-    public Date getDate() {
-        return date;
-    }
-
-    /**
-     * Methode um das Datum einer Vorführung zu setzen
-     * @param Date date 
-     */
-    public void setDate(Date date) {
-       this.date = date;
-    }
-
-    /**
-     * Methode um die Uhrzeit einer Vorführung auszugeben
-     * @return Time time
-     */
-    public Time getTime() {
-        return time;
-    }
-
-    /**
-     * Methode um die Uhrzeit einer Vorführung zu setzen
-     * @param TIme time 
-     */
-    public void setTime(Time time) {
-        this.time = time;
-    }
-
-    /**
    	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
    	 * @return String ScreeningID
    	 */
    	public String toString() {
    		return "ScreeningID #SC" + this.getId();
    	}
+   	/**
+   	 * Methode um den Zeitpunkt einer Vorf�hrung auszugeben
+   	 * @return Timestamp screeningDateTime
+   	 */
+
+	public Timestamp getScreeningDateTime() {
+		return screeningDateTime;
+	}
+
+   	/**
+   	 * Methode um den Zeitpunkt einer Vorf�hrung zu setzen
+   	 * @param Timestamp screeningDateTime
+   	 */	
+	public void setScreeningDateTime(Timestamp screeningDateTime) {
+		this.screeningDateTime = screeningDateTime;
+	}
 }

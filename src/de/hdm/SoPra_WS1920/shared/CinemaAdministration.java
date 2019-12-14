@@ -2,6 +2,7 @@ package de.hdm.SoPra_WS1920.shared;
 
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.*;
 
 import org.apache.james.mime4j.field.datetime.DateTime;
@@ -10,7 +11,9 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
@@ -30,7 +33,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param postCode 
      * @return
      */
-    Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode, int personFK);
+    Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode, int personFK, Timestamp creationTimestamp);
 
     /**
      * @param name 
@@ -38,7 +41,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param description 
      * @return
      */                       
-    Movie createMovie(String name, String genre, String description, int personFK);
+    Movie createMovie(String name, String genre, String description, int personFK, Timestamp creationTimestamp);
 
     /**
      * @param screeningDatetime 
@@ -46,7 +49,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param cinemaFK 
      * @return
      */
-    Screening createScreening(Date date, Time time, int cinemaFK, int movieFK, int personFK);
+    Screening createScreening(Timestamp screeningDateTime, int cinemaFK, int movieFK, int personFK, Timestamp creationTimestamp);
 
     /**
      * @param cinema 
@@ -124,7 +127,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param screeningDateTime 
      * @return
      */
-    Vector<Screening> getScreeningByScreeningDateTime(Date date, Time time);
+    Vector<Screening> getScreeningByScreeningDateTime(Timestamp screeningDateTime);
 
     /**
      * @param cinema 
@@ -151,7 +154,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param isAdmin 
      * @return
      */
-    Person createPerson(String firstName, String lastName, String eMail, int isAdmin);
+    Person createPerson(String firstName, String lastName, String eMail, Timestamp creationTimestamp);
 
     /**
      * @param id 
@@ -196,5 +199,29 @@ public interface CinemaAdministration extends RemoteService {
 	Vector<Vote> getVotesBySurveyEntryFK(int SurveyEntryFK);
 
 	Vector<SurveyEntry> getSurveyEntryByScreeningFK(int ScreeningFK);
+
+	Vector<Cinema> findCinemasByCinemaChainID(CinemaChain cc);
+
+	Vector<Cinema> findCinemasByPersonFK(int personFK);
+
+	CinemaChain findCinemaChainById(int id);
+
+	Vector<CinemaChain> findCinemaChainByPersonFK(int personFK);
+
+	CinemaChain findCinemaChainByName(String name);
+
+	void deleteCinemaChain(CinemaChain cc);
+
+	CinemaChain updateCinemaChain(CinemaChain cc);
+
+	CinemaChain createCinemaChain(Cinema c, String name, Timestamp creationTimestamp, int personFK);
+
+	Vector<Ownership> getOwnershipsbyPersonFK(int personFK);
+
+	Ownership findOwnership(int id);
+
+	void deleteOwnership(Ownership ownership);
+
+	Ownership createOwnership(int personFK, Timestamp creationTimestamp, int id);
 
 }
