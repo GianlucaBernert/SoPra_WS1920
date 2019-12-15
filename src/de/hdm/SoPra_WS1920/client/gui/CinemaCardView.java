@@ -51,7 +51,7 @@ public class CinemaCardView extends FlowPanel{
 		
 		edit=new Button("");
 		edit.setStyleName("invisibleButton");
-		editIcon = new Image("/Images/004-edit.svg");
+		editIcon = new Image("/Images/png/006-pen.png");
 		editIcon.setStyleName("icon");
 		
 

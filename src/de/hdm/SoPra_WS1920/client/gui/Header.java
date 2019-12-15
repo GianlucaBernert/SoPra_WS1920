@@ -56,6 +56,7 @@ public class Header extends FlowPanel{
 		TextBox searchText;
 		Button submitSearch;
 		Image searchIcon;
+		Image searchSubmitIcon;
 		
 		public void onLoad(){
 			super.onLoad();
@@ -67,11 +68,15 @@ public class Header extends FlowPanel{
 			
 			submitSearch = new Button();
 
-			searchIcon = new Image("/Images/search.png");
+			searchSubmitIcon = new Image("/Images/png/009-arrow-pointing-to-right-1.png");
+			searchSubmitIcon.setStyleName("searchSubmitIcon");
+			
+			searchIcon = new Image("/Images/png/003-search.png");
 			searchIcon.setStyleName("searchIcon");
 
 			this.add(searchIcon);
 			this.add(searchText);
+			this.add(searchSubmitIcon);
 			
 		}
 	}
