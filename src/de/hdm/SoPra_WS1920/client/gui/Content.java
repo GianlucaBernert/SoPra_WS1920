@@ -22,8 +22,8 @@ public class Content extends FlowPanel{
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("content");
-		dP = new DatePicker();
-		this.add(dP);
+//		dP = new DatePicker();
+//		this.add(dP);
 		
 		//Example Objects for testing the GUI. Those objects will be deleted as soon as the backend is attached to the frontend
 		c = new Cinema();
