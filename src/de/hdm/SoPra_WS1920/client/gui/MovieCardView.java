@@ -28,7 +28,6 @@ public class MovieCardView extends FlowPanel{
 	public void onLoad() {
 		super.onLoad();
 		
-		
 		name=new Label(movieToShow.getName());
 		name.setStyleName("title");
 		genre=new Label(movieToShow.getGenre());

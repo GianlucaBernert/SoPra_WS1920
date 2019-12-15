@@ -45,6 +45,11 @@ public class CinemaAdminEntry implements EntryPoint{
 		/*
 		 * Navbar Widgets
 		 */
+//		Vector<Movie> movies = new Vector<Movie>();
+//		for(Movie m:movies) {
+//			MovieCard moviecard = new MovieCard(m);
+//		}
+//		
 		navbar = new FlowPanel();
 		content = new Content();
 		

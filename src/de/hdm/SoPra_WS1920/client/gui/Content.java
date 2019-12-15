@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.datepicker.client.DatePicker;
 
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -16,10 +17,13 @@ public class Content extends FlowPanel{
 	Cinema c;
 	Screening s;
 	Movie m;
+	DatePicker dP;
 	
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("content");
+		dP = new DatePicker();
+		this.add(dP);
 		
 		//Example Objects for testing the GUI. Those objects will be deleted as soon as the backend is attached to the frontend
 		c = new Cinema();
@@ -27,7 +31,7 @@ public class Content extends FlowPanel{
 		c.setCity("Stuttgart");
 		c.setPostCode("70372");
 		c.setPersonFK(1);
-		c.setStreet("Deckerstraße");
+		c.setStreet("Deckerstraï¿½e");
 		c.setStreetNo("49");
 		c.setId(1);
 		
