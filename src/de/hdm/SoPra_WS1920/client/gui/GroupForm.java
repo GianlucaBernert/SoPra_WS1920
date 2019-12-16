@@ -1,9 +1,12 @@
 package de.hdm.SoPra_WS1920.client.gui;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 
@@ -19,6 +22,7 @@ public class GroupForm extends DialogBox {
 	FlowPanel main;
 	HorizontalPanel buttonPanel;
 	Button cancel;
+	Image cancelIcon;
 	
 	GroupForm gf;
 	
@@ -32,7 +36,7 @@ public class GroupForm extends DialogBox {
 		super.onLoad();
 		
 		FlowPanel main = new FlowPanel();
-		this.setStylePrimaryName("groupcard");
+		this.setStylePrimaryName("moviecard");
 		groupName = new Label("Gruppenname:");
 		groupName.setStylePrimaryName("inputLabel");
 		
@@ -46,16 +50,21 @@ public class GroupForm extends DialogBox {
 		memberTextBox = new TextBox();
 		memberTextBox.setStylePrimaryName("inputTextBox");
 		
-		cancel = new Button("cancel");
-		cancel.setStylePrimaryName("createBoButton");
+		//cancel = new Button("cancel");
+		//cancel.setStylePrimaryName("createBoButton");
+		
+		cancelIcon = new Image("/Images/001-unchecked.svg");
+		cancelIcon.setStyleName("cancelIcon");
+		cancelIcon.addClickHandler(new CancelClickHandler(this));
 	
 		main.add(groupName);
 		main.add(groupTextBox);
+		main.add(cancelIcon);
 		
 		main.add(memberName);
 		main.add(memberTextBox);
 		
-		main.add(cancel);
+		//main.add(cancel);
 		
 		this.add(main);
 		
@@ -70,5 +79,22 @@ public class GroupForm extends DialogBox {
 		
 
 }
+	
+	class CancelClickHandler implements ClickHandler {
+		GroupForm gf;
+		
+		public CancelClickHandler(GroupForm gf) {
+			this.gf = gf;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			gf.hide();
+		
+			
+			
+		}
+		
+	}
 	
 }
