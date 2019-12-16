@@ -8,7 +8,10 @@ import org.apache.james.mime4j.field.datetime.DateTime;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
+import de.hdm.SoPra_WS1920.shared.bo.Membership;
+import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
@@ -18,267 +21,362 @@ import de.hdm.SoPra_WS1920.shared.bo.Vote;
  * @author GianlucaBernert
  */
 public interface SurveyManagementAsync {
+	
+	/**
+     * Methode um ein BusinessObject zu erstellen
+     * @param AsyncCallback<BusinessObject> callback
+     * @return BusinessObject bo
+     */
+	public void createBusinessObject(AsyncCallback<BusinessObject> callback);
+	
+    /**
+     * Methode um ein BusinessObject zu löschen
+     * @param BusinessObject bo
+     * @param AsyncCallback<Void> callback
+     */
+	public void deleteBusinessObject(BusinessObject bo, AsyncCallback<Void> callback);
+	
+    /*
+     * Methode um eine Ownership zu erstellen
+     * @param int pFK
+     * @param AsyncCallback<Ownership> callback
+     * @return Ownership os
+     */
+	public void createOwnership(int pFK, AsyncCallback<Ownership> callback);
+	
+    /*
+     * Methode um eine Ownership zu löschen
+     * @param Ownership os
+     * @param AsyncCallback<Void> callback
+     */
+	public void deleteOwnership(Ownership os, AsyncCallback<Void> callback);
 
     /**
-     * @param id 
-     * @param firstName 
-     * @param lastName 
-     * @param email 
-     * @param isAdmin 
-     * @param callback 
-     * @return
+     * Methode um eine Person zu erstellen
+     * @param String firstName 
+     * @param String lastName 
+     * @param String email 
+     * @param AsyncCallback<Person> callback
+     * @return Person p
      */
-    public Void createPerson(int id, String firstName, String lastName, String email, boolean isAdmin, AsyncCallback<Person> callback);
-
-    /**
-     * @param id 
-     * @param startDate 
-     * @param endDate 
-     * @param callback 
-     * @return
-     */
-    public Void createSurvey(int id, DateTime startDate, DateTime endDate, AsyncCallback<Survey> callback);
-
-    /**
-     * @param person 
-     * @param callback 
-     * @return
-     */
-    public Void updatePerson(Person person, AsyncCallback <Person> callback);
+    public void createPerson(String firstName, String lastName, String eMail, AsyncCallback<Person> callback);
     
     /**
-     * @param person 
-     * @param callback 
-     * @return
+     * Methode um eine Person zu bearbeiten
+     * @param Person p 
+     * @param AsyncCallback<Void> callback
      */
-    public Void deletePerson(Person person, AsyncCallback <Person> callback);
+    public void editPerson(Person p, AsyncCallback<Void> callback);
+
+    /** 
+     * Methode um eine Umfrage zu erstellen
+     * @param int gFK
+     * @param int pFK
+     * @param Timestamp startDate
+     * @param Timestamp endDate 
+     * @param AsyncCallback<Survey> callback
+     * @return Survey s
+     */
+    public void createSurvey(int gFK, int pFK, Timestamp startDate, Timestamp endDate, AsyncCallback<Survey> callback);
     
     /**
-     * @param firstName 
-     * @param callback 
-     * @return
+     * Methode um eine Umfrage zu bearbeiten
+     * @param Survey s
+     * @param AsyncCallback<Void> callback
+     * @return Survey
      */
-    public Void getPersonByFirstname(String firstName, AsyncCallback <Vector <Person>> callback);
+    public void editSurvey(Survey s, AsyncCallback<Void> callback);
 
-    /**
-     * @param lastName 
-     * @param callback 
-     * @return
+    /*
+     * Methode um eine Person zu aktualisieren
+     * @param Person p
+     * @param AsyncCallback<Person> callback
+     * @return Person p
      */
-    public Void getPersonByLastname(String lastName, AsyncCallback <Vector <Person>> callback);
-
-    /**
-     * @param email 
-     * @param callback 
-     * @return
-     */
-    public Void getPersonByEmail(String email, AsyncCallback <Vector <Person>> callback);
-
-    /**
-     * @param id 
-     * @param name 
-     * @param callback 
-     * @return
-     */
-    public Void createGroup(int id, String name, AsyncCallback<Group> callback);
+    public void updatePerson(Person p, AsyncCallback<Person> callback);
     
     /**
-     * @param group 
-     * @param callback 
-     * @return
+     * Methode um eine Person zu löschen
+     * @param Person p
+     * @param AsyncCallback<Void> callback
      */
-    public Void updateGroup(Group group, AsyncCallback <Group> callback);
-
-    /**
-     * @param group 
-     * @param callback 
-     * @return
-     */
-    public Void deleteGroup(Group group, AsyncCallback <Group> callback);
+    public void deletePerson(Person p, AsyncCallback<Void> callback);
     
     /**
-     * @param name 
-     * @param callback 
-     * @return
+     * Methode um eine Person anhand des Vornamens zu finden
+     * @param String firstName
+     * @param AsyncCallback<Vector<Person>> callback
+     * @return Vector<Person>
      */
-    public Void getGroupByName(String name, AsyncCallback <Vector <Group>> callback);
+    public void getPersonByFirstname(String firstName, AsyncCallback<Vector<Person>> callback);
 
     /**
-     * @param startDate 
-     * @param callback 
-     * @return
+     * Methode um eine Person anhand des Nachnamens zu finden
+     * @param String lastName
+     * @param AsyncCallback<Vector<Person>> callback
+     * @return Vector<Person>
      */
-    public Void getSurveyByStartDate(DateTime startDate, AsyncCallback <Vector<Survey>> callback);
+    public void getPersonByLastname(String lastName, AsyncCallback<Vector<Person>> callback);
 
     /**
-     * @param endDate 
-     * @param callback 
-     * @return
+     * Methode um eine Person anhand der E-Mail adresse zu finden
+     * @param String eMail
+     * @param AsyncCallback<Person> callback
+     * @return Person
      */
-    public Void getSurveyByEndDate(DateTime endDate, AsyncCallback <Vector<Survey>> callback);
+    public void getPersonByEmail(String eMail, AsyncCallback<Person> callback);
 
     /**
-     * @param id 
-     * @param callback 
-     * @return
+     * Methode um eine Gruppe zu erstellen
+     * @param String name
+     * @param int pFK
+     * @param AsyncCallback<Group> callback
+     * @return Group g
      */
-    public Void getPersonById(int id, AsyncCallback<Person> callback);
-
-    /**
-     * @param id 
-     * @param callback 
-     * @return
-     */
-    public Void getGroupById(int id, AsyncCallback<Group> callback);
-
-    /**
-     * @param personFK 
-     * @param callback 
-     * @return
-     */
-    public Void getGroupByPersonFK(int personFK, AsyncCallback<Vector<Group>> callback);
+    public void createGroup(String name, int pFK, AsyncCallback<Group> callback);
     
     /**
-     * @param id 
-     * @param startDate 
-     * @param endDate 
-     * @param callback 
-     * @return
+     * Methode um eine Mitgliedschaft zu erstellen 
+     * @param Group g
+     * @param Person p
+     * @param AsyncCallback<Void> callback
      */
-    public Void createSurvey(int id, Timestamp startDate, Timestamp endDate, AsyncCallback<Survey> callback);
+    void createMembership(Group g, Person p, AsyncCallback<Void> callback);
     
     /**
-     * @param survey 
-     * @param callback 
-     * @return
+     * Methode um eine Mitgliedschaft zu löschen
+     * @param Group g
+     * @param Person p
+     * @param AsyncCallback<Void> callback
      */
-    public Void updateSurvey(Survey survey, AsyncCallback <Survey> callback);
+    public void deleteMembership(Group g, Person p, AsyncCallback<Void> callback);
     
     /**
-     * @param survey 
-     * @param callback 
-     * @return
+     * Methode um eine Gruppe zu bearbeiten
+     * @param Group g
+     * @param AsyncCallback<Void> callback
      */
-    public Void deleteSurvey(Survey survey, AsyncCallback<Survey> callback);
+    public void editGroup(Group g, AsyncCallback<Void> callback);
     
     /**
-     * @param startDate 
-     * @param callback 
-     * @return
+     * Methode um eine Gruppe zu aktualisieren
+     * @param Group g
+     * @param AsyncCallback<Group> callback
+     * @return Grou g
      */
-    public Void getSurveyByStartDate(Timestamp startDate, AsyncCallback <Vector<Survey>> callback);
+    public void updateGroup(Group g, AsyncCallback<Group> callback);
 
     /**
-     * @param endDate 
-     * @param callback 
-     * @return
+     * Methode um eine Gruppe zu löschen
+     * @param Group g 
+     * @param AsyncCallback<Void> callback
      */
-    public Void getSurveyByEndDate(Timestamp endDate, AsyncCallback <Vector<Survey>> callback);
+    public void deleteGroup(Group g, AsyncCallback<Void> callback);
     
     /**
-     * @param id 
-     * @param callback 
-     * @return
+     * Methode um eine Gruppe anhand des Namens zu finden
+     * @param String name
+     * @param AsyncCallback<Vector<Group>> callback
+     * @return Vector<Group>
      */
-    public Void getSurveyById(int id, AsyncCallback<Survey> callback);
-    
-    /**
-     * @param groupFK 
-     * @param callback 
-     * @return
+    public void getGroupByName(String name, AsyncCallback<Vector<Group>> callback);
+
+    /** 
+     * Methode um eine Umfrage anhand des Start Datums zu finden
+     * @param Timestamp startDate
+     * @param AsyncCallback<Vector<Survey>> callback
+     * @return Vector<Survey>
      */
-    public Void getSurveyByGroupFK(int groupFK, AsyncCallback<Vector<Survey>> callback);
+    public void getSurveyByStartDate(Timestamp startDate, AsyncCallback<Vector<Survey>> callback);
 
     /**
-     * @param personFK 
-     * @param callback 
-     * @return
+     * Methode um eine Umfrage anhand des ENd Datums zu finden
+     * @param Timestamp endDate
+     * @param AsyncCallback<Vector<Survey>> callback
+     * @return Vector<Survey>
      */
-    public Void getSurveyByPersonFK(int personFK, AsyncCallback<Vector<Survey>> callback);
+    public void getSurveyByEndDate(Timestamp endDate, AsyncCallback<Vector<Survey>> callback);
 
     /**
-     * @param id 
-     * @param votingWeight 
-     * @param callback 
-     * @return
+     * Methode um eine Person anhand der ID zu finden
+     * @param int id 
+     * @param AsyncCallback<Person> callback
+     * @return Person
      */
-    public Void createVote(int id, int votingWeight, AsyncCallback<Vote> callback);
-    
-    /**
-     * @param vote 
-     * @param callback 
-     * @return
-     */
-    public Void updateVote(Vote vote, AsyncCallback <Vote> callback);
-    
-    /**
-     * @param vote 
-     * @param callback 
-     * @return
-     */
-    public Void deleteVote(Vote vote, AsyncCallback <Vote> callback);
-    
-    /**
-     * @param votingWeight 
-     * @param callback 
-     * @return
-     */
-    public Void getVoteByVotingWeight(int votingWeight, AsyncCallback<Vote> callback);
-    
-    /**
-     * @param id 
-     * @param callback 
-     * @return
-     */
-    public Void getVoteById(int id, AsyncCallback<Vote> callback);
-    
-    /**
-     * @param personFK 
-     * @param callback 
-     * @return
-     */
-    public Void getVoteByPersonFK(int personFK, AsyncCallback<Vector<Vote>> callback);
+    public void getPersonById(int id, AsyncCallback<Person> callback);
 
     /**
-     * @param surveyEntryFK 
-     * @param callback 
-     * @return
+     * Methode um eine Gruppe anhand der ID zu finden
+     * @param int id
+     * @param AsyncCallback<Group> callback
+     * @return Group
      */
-    public Void getVoteBySurveyEntryFK(int surveyEntryFK, AsyncCallback<Vector<SurveyEntry>> callback);
+    public void getGroupById(int id, AsyncCallback<Group> callback);
 
     /**
-     * @param id 
-     * @param callback 
-     * @return
+     * Methode um eine Gruppe anhand des PersonFK zu finden
+     * @param int pFK
+     * @param AsyncCallback<Vector<Group>> callback
+     * @return Vector<Group>
      */
-    public Void createSurveyEntry(int id, AsyncCallback <SurveyEntry> callback);
-
-    /**
-     * @param surveyentry 
-     * @param callback 
-     * @return
-     */
-    public Void updateSurveyEntry(SurveyEntry surveyentry, AsyncCallback<SurveyEntry> callback);
-
-    /**
-     * @param surveyentry 
-     * @param callback 
-     * @return
-     */
-    public Void deleteSurveyEntry(SurveyEntry surveyentry, AsyncCallback <SurveyEntry> callback);
+    public void getGroupByPersonFK(int pFK, AsyncCallback<Vector<Group>> callback);
     
     /**
-     * @param id 
-     * @param callback 
-     * @return
+	 * Methode um eine Umfrage zu aktualisieren
+	 * @param Survey s
+	 * @param AsyncCallback<Survey> callback
+	 * @return Survey s
+	 */
+    public void updateSurvey(Survey s, AsyncCallback<Survey> callback);
+    
+    /**
+     * Methode um eine Umfrage zu löschen
+     * @param Survey s
+     * @param AsyncCallback<Void> callback
      */
-    public Void getSurveyEntryId(int id, AsyncCallback<SurveyEntry> callback);
+    public void deleteSurvey(Survey s, AsyncCallback<Void> callback);
+       
+    /**
+     * Methode um eine Umfrage anhand der ID zu finden
+     * @param int id
+     * @param AsyncCallback<Survey> callback
+     * @return Survey
+     */
+    public void getSurveyById(int id, AsyncCallback<Survey> callback);
+    
+    /**
+     * Methode um eine Umfrage anhand des GrouFKs zu finden
+     * @param int gFK
+     * @param AsyncCallback<Vector<Survey>> callback
+     * @return Vector<Survey>
+     */
+    public void getSurveyByGroupFK(int gFK, AsyncCallback<Vector<Survey>> callback);
 
     /**
-     * @param surveyFK 
-     * @param callback 
-     * @return
+     * Methode um eine Umfrage anhand des PersonFKs zu finden
+     * @param int pFK
+     * @param AsyncCallback<Vector<Survey>> callback
+     * @return Vector<Survey>
      */
-    public Void getSurveyEntryBySurveyFK(int surveyFK, AsyncCallback<Vector<SurveyEntry>> callback);
+    public void getSurveyByPersonFK(int pFK, AsyncCallback<Vector<Survey>> callback);
+
+    /**
+     * Methode um ein Vote zu erstellen
+     * @param int vw 
+     * @param int seFK
+     * @param int pFK
+     * @param AsyncCallback<Vote> callback
+     * @return Vote v
+     */
+    public void createVote(int vw, int seFK, int pFK, AsyncCallback<Vote> callback);
+    
+    /**
+     * Methode um ein Vote zu bearbeiten
+     * @param Vote v
+     * @param AsyncCallback<Void> callback
+     */
+    public void editVote(Vote v, AsyncCallback<Void> callback);
+    
+	/**
+	 * Methode um ein Vote zu aktualisieren
+	 * @param Vote v
+	 * @param AsyncCallback<Vote> callback
+	 * @return Vote v
+	 */
+    public void updateVote(Vote v, AsyncCallback<Vote> callback);
+    
+    /**
+     * Methode um ein Vote zu löschen
+     * @param Vote v
+     * @param AsyncCallback<Void> callback
+     */
+    public void deleteVote(Vote v, AsyncCallback<Void> callback);
+    
+    /**
+     * Methode um ein Vote anhand seiner Gewichtung zu finden
+     * @param int vw
+     * @param AsyncCallback<Vector<Vote>> callback
+     * @return Vector<Vote>
+     */
+    public void getVoteByVotingWeight(int vw, AsyncCallback<Vector<Vote>> callback);
+    
+    /**
+     * Methode um ein Vote anhand der ID zu finden
+     * @param int id
+     * @param AsyncCallback<Vote> callback
+     * @return Vote 
+     */
+    public void getVoteById(int id, AsyncCallback<Vote> callback);
+    
+    /**
+     * Methode um die Anzahl der Votes zu Zählen
+     * @param SurveyEntry se 
+     * @param AsyncCallback<Integer> callback
+     * @return int v.size();
+     */
+    public void countVotes(SurveyEntry se, AsyncCallback<Integer> callback);
+    
+    /**
+     * Methode um ein Vote anhand des PersonFK zu finden
+     * @param int pFK
+     * @param AsyncCallback<Vector<Vote>> callback
+     * @return Vector<Vote>
+     */
+    public void getVoteByPersonFK(int pFK, AsyncCallback<Vector<Vote>> callback);
+
+    /**
+     * Methode um ein Vote anhand des SurveyEntryFKs zu finden
+     * @param int seFK 
+     * @param AsyncCallback<Vector<Vote>> callback
+     * @return Vector<Vote>
+     */
+    public void getVoteBySurveyEntryFK(int seFK, AsyncCallback<Vector<Vote>> callback);
+
+    /**
+     * Methode um einen Umfrageeintrag zu erstellen
+     * @param int scFK
+     * @param in sFK
+     * @param AsyncCallback<SurveyEntry> callback
+     * @return SurveyEntry se
+     */
+    public void createSurveyEntry(int scFK, int sFK, AsyncCallback<SurveyEntry> callback);
+
+	/**
+	 * Methode um einen Umfrageeintrag zu aktualisieren
+	 * @param SurveyEntry se
+	 * @param AsyncCallback<SurveyEntry> callback
+	 * @return SurveyEntry se
+	 */
+    public void updateSurveyEntry(SurveyEntry se, AsyncCallback<SurveyEntry> callback);
+
+    /**
+     * Methode um einen Umfrageeintrag zu löschen
+     * @param SurveyEntry se
+     * @param AsyncCallback<Void> callback
+     */
+    public void deleteSurveyEntry(SurveyEntry se, AsyncCallback<Void> callback);
+    
+    /**
+     * Methode um einen Umfrageeintrag anhand der ID zu finden
+     * @param int id
+     * @param AsyncCallback<SurveyEntry> callback
+     * @return SurveyEntry
+     */
+    public void getSurveyEntryById(int id, AsyncCallback<SurveyEntry> callback);
+
+    /**
+     * Methode um den Umfrageeintrag anhand der SurveyFk zu finden
+     * @param sFK 
+     * @param AsyncCallback<Vector<SurveyEntry>> callback
+     * @return Vector<SurveyEntry>
+     */
+    public void getSurveyEntryBySurveyFK(int sFK, AsyncCallback<Vector<SurveyEntry>> callback);
+    
+    /**
+     * Methode um einen Umfrageeintrag zu bearbeiten
+     * @param SurveyEntry se
+     * @param AsyncCallback<Void> callback
+     */
+    public void editSurvey(SurveyEntry se, AsyncCallback<Void> callback);
 
 }
