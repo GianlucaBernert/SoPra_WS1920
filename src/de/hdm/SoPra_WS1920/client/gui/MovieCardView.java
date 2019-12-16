@@ -18,7 +18,7 @@ public class MovieCardView extends FlowPanel{
 	Movie movieToShow;
 	MovieCard parentCard;
 	Image editIcon;
-	FlowPanel editIconWrapper;
+
 	
 	public MovieCardView(MovieCard movieCard, Movie movieToShow) {
 		this.parentCard=movieCard;
