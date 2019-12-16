@@ -103,8 +103,8 @@ public class CinemaAdminEntry implements EntryPoint{
 //		  vp.add(label);
 //		        vp.add(dateBox);
 //		         
-		  // Add Vertical Panel to Root Panel
-		RootPanel.get().add(vp);
+//		Add Vertical Panel to Root Panel
+//		RootPanel.get().add(vp);
 
 		
 		RootPanel.get().add(navBar); //Add the Menu to the RootPanel
