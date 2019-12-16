@@ -15,7 +15,6 @@ public class Person extends BusinessObject {
     private String firstname;
     private String lastname;
     private String eMail;
-    private boolean isAdmin;
     
     /**
      * Konstruktor der Klasse Person, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
@@ -71,21 +70,6 @@ public class Person extends BusinessObject {
         this.eMail = eMail;
     }
 
-    /**
-     * Methode um abzufragen ob eine Person Adminrechte besitzt 
-     * @return boolean isAdmin
-     */
-    public boolean getIsAdmin() {
-        return isAdmin;
-    }
-
-    /**
-     * Methode um einer Person Adminrechte zu erteilen
-     * @param boolean isAdmin 
-     */
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
     
     /**
      * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
