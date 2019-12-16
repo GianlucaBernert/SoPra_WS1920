@@ -68,13 +68,14 @@ public class MembershipMapper {
     	Connection con = DBConnection.connection();
 
     	try {
-		
+    		con.setAutoCommit(false);
     		Statement stm1 = con.createStatement();
     		
     		stm1.executeUpdate("INSERT INTO membership (groupFK, personFK) VALUES ('"
     							+group.getId()
     							+ "', '"+person.getId()
     							+"')");
+    		con.setAutoCommit(true);
 		}
 			catch(SQLException exc) {
 				exc.printStackTrace();
