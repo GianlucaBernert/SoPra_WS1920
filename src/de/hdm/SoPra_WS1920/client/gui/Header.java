@@ -2,21 +2,36 @@ package de.hdm.SoPra_WS1920.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.PopupPanel.PositionCallback;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Header extends FlowPanel{
 	
 	Label headline;
 	Button createBo;
 	SearchBox searchBox;
+	PopupPanel pPanel;
+	Label cinema;
+	Label cinemaChain;
+	VerticalPanel vPanel;
 	
 	public void onLoad() {
 		super.onLoad();
-		this.setStyleName("header");	
+		this.setStyleName("header");
+		vPanel = new VerticalPanel();
+		cinema = new Label("New Cinema");
+		cinemaChain = new Label("New CinemaChain");
+//		vPanel.add(cinema);
+//		vPanel.add(cinemaChain);
+//		
+//		this.add(pPanel);
 	}
 	
 	class CreateBoClickHandler implements ClickHandler{
@@ -28,7 +43,11 @@ public class Header extends FlowPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			
-			
+//			pPanel = new PopupPanel(true);
+//			pPanel.setStyleName("PopUpPanel");
+//			
+//			pPanel.add(vPanel);
+//			pPanel.show();
 		}
 		
 	}
@@ -37,6 +56,7 @@ public class Header extends FlowPanel{
 		TextBox searchText;
 		Button submitSearch;
 		Image searchIcon;
+		Image searchSubmitIcon;
 		
 		public void onLoad(){
 			super.onLoad();
@@ -48,11 +68,15 @@ public class Header extends FlowPanel{
 			
 			submitSearch = new Button();
 
-			searchIcon = new Image("/Images/search.png");
+			searchSubmitIcon = new Image("/Images/png/009-arrow-pointing-to-right-1.png");
+			searchSubmitIcon.setStyleName("searchSubmitIcon");
+			
+			searchIcon = new Image("/Images/png/003-search.png");
 			searchIcon.setStyleName("searchIcon");
 
 			this.add(searchIcon);
 			this.add(searchText);
+			this.add(searchSubmitIcon);
 			
 		}
 	}

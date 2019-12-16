@@ -60,7 +60,7 @@ public class MovieCardEdit extends FlowPanel{
 		
 		saveIcon = new Image("/Images/002-checked.svg");
 		saveIcon.setStyleName("saveIcon");
-		saveIcon.addClickHandler(new SaveClickHandler(this));
+		saveIcon.addClickHandler(new SaveClickHandler());
 		
 		cancelIcon = new Image("/Images/001-unchecked.svg");
 		cancelIcon.setStyleName("cancelIcon");
@@ -84,12 +84,12 @@ public class MovieCardEdit extends FlowPanel{
 		this.add(deleteIcon);
 	}
 	class SaveClickHandler implements ClickHandler{
-		MovieCardEdit movieCardEdit;
-		public SaveClickHandler(MovieCardEdit movieCardEdit) {
-			// TODO Auto-generated constructor stub
-			this.movieCardEdit=movieCardEdit;
-		}
-
+//		MovieCardEdit movieCardEdit;
+//		public SaveClickHandler(MovieCardEdit movieCardEdit) {
+//			// TODO Auto-generated constructor stub
+//			this.movieCardEdit=movieCardEdit;
+//		}
+		
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
