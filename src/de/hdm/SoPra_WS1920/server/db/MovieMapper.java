@@ -91,31 +91,16 @@ public class MovieMapper {
     	Connection con = DBConnection.connection();
 
     	try {
-    		con.setAutoCommit(false);
-    		Statement stmt = con.createStatement();
-        	
-    	    ResultSet rs = stmt.executeQuery("SELECT MAX(bo_id) AS maxid "
-    	          + "FROM businessobject ");
-
-    	    if (rs.next()) {
-    	     
-    	    movie.setId(rs.getInt("maxid") + 1);
-    		Statement stm1 = con.createStatement();
-    		Statement stm2 = con.createStatement();
     		
-    		stm1.executeUpdate("INSERT INTO businessobject (bo_id, creationTimeStamp) VALUES ('"
-								+movie.getId()
-								+"', '"+movie.getCreationTimestamp()
-								+"')");
-			stm2.executeUpdate("INSERT INTO movie (bo_id, name, genre, description, creationTimeStamp) VALUES ('"
+    		Statement stm = con.createStatement();
+
+			stm.executeUpdate("INSERT INTO movie (bo_id, name, genre, description) VALUES ('"
 								+movie.getId()
 								+"', '"+movie.getName()
 								+"', '"+movie.getGenre()
 								+"', '"+movie.getDescription()
-								+"', '"+movie.getCreationTimestamp()
 								+"')");
 			
-		}con.setAutoCommit(true);
     	}
 			catch(SQLException exc) {
 				exc.printStackTrace();
@@ -157,10 +142,8 @@ public class MovieMapper {
     	
     	try {
 			Statement stm1 = con.createStatement();
-			Statement stm2 = con.createStatement();
 			
 			stm1.executeUpdate("Delete from movie Where bo_id = "+movie.getId());
-			stm2.executeUpdate("Delete from businessobject Where bo_id = "+movie.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();

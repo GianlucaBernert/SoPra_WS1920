@@ -84,14 +84,14 @@ public class OwnershipMapper {
     	
     	try {
     		con.setAutoCommit(false);
+    		
     		Statement stm1 = con.createStatement();
     		
-    		stm1.executeUpdate("INSERT INTO businessownership (bo_id, creationTimeStamp, PersonFK) VALUES ('"
+    		stm1.executeUpdate("INSERT INTO businessownership (bo_id, PersonFK) VALUES ('"
     				+ ownership.getId()
-    				+ "', '"+ownership.getCreationTimestamp()
 					+ "', '"+ownership.getPersonFK()
 					+"')");
-    		con.setAutoCommit(true);
+    	con.setAutoCommit(true);
     	}
         catch(SQLException exc) {
         	exc.printStackTrace();

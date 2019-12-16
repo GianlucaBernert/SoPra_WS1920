@@ -90,25 +90,16 @@ public class GroupMapper {
     	Connection con = DBConnection.connection();
 
     	try {
-		
+    		con.setAutoCommit(false);
+    	        
     		Statement stm1 = con.createStatement();
-    		Statement stm2 = con.createStatement();
-    		
-    		//TODO
-    		// ResultSet rs = stmt3executeQuery("SELECT MAX(id) as maxId FROM popcorns.group");
-    		// group.setId(rs.getInt("maxid") + 1);
-    		//
-    		
-    		stm1.executeUpdate("INSERT INTO businessobject (bo_id, creationTimeStamp) VALUES ('"
-    							+group.getId()
-    							+ "', '"+group.getCreationTimestamp()
-    							+"')");
-			stm2.executeUpdate("INSERT INTO popcorns.group (bo_id, name, creationTimeStamp) VALUES ('"
+
+			stm1.executeUpdate("INSERT INTO popcorns.group (bo_id, name) VALUES ('"
 								+group.getId()
 								+"', '"+group.getName()
-								+"', '"+group.getCreationTimestamp()
 								+"')");
-		}
+		con.setAutoCommit(true);
+    	}
 			catch(SQLException exc) {
 				exc.printStackTrace();
 			
@@ -145,10 +136,8 @@ public class GroupMapper {
     	
     	try {
 			Statement stm1 = con.createStatement();
-			Statement stm2 = con.createStatement();
 			
 			stm1.executeUpdate("Delete from popcorns.group Where bo_id = "+group.getId());
-			stm2.executeUpdate("Delete from businessobject Where bo_id = "+group.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
@@ -192,10 +181,7 @@ public class GroupMapper {
 		try {
 			Statement stm1 = con.createStatement();
 			stm1.executeUpdate("Delete popcorns.group FROM popcorns.group INNER JOIN businessownership" 
-							+ "ON businessownership.personFK =" + personFK+
-					"AND businessownership.bo_id = popcorns.group.bo_id");
-				
-						
+							+ "ON businessownership.personFK =" + personFK);
 		}
 		catch (SQLException e) {
 			e.printStackTrace();

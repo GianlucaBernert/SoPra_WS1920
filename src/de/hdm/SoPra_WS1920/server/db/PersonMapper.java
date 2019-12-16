@@ -101,29 +101,15 @@ public class PersonMapper {
 
     	try {
     		con.setAutoCommit(false);
-    		Statement stmt = con.createStatement();
-    	
-    	    ResultSet rs = stmt.executeQuery("SELECT MAX(bo_id) AS maxid "
-    	          + "FROM businessobject ");
+    		Statement stm = con.createStatement();
 
-    	      if (rs.next()) {
-    	     
-    	        person.setId(rs.getInt("maxid") + 1);
-    	        
-    		Statement stm1 = con.createStatement();
-    		Statement stm2 = con.createStatement();
-    		
-    		stm1.executeUpdate("INSERT INTO businessobject (bo_id, creationTimeStamp) VALUES ('"
-    							+ person.getId()
-    							+ "', '"+person.getCreationTimestamp()
-    							+"')");
-			stm2.executeUpdate("INSERT INTO person (bo_id, firstname, lastname, eMail) VALUES ('"
+			stm.executeUpdate("INSERT INTO person (bo_id, firstname, lastname, eMail) VALUES ('"
 								+person.getId()
 								+"', '"+person.getFirstname()
 								+"', '"+person.getLastname()
 								+"', '"+person.getEMail()
 								+"')");
-		}con.setAutoCommit(true);
+		con.setAutoCommit(true);
     	}
 			catch(SQLException exc) {
 				exc.printStackTrace();
@@ -163,9 +149,7 @@ public class PersonMapper {
     	
     	try {
 			Statement stm1 = con.createStatement();
-			Statement stm2 = con.createStatement();
 			stm1.executeUpdate("Delete from person Where ('bo_id' =" +person.getId());
-			stm2.executeUpdate("Delete from businessobject Where ('bo_id' =" +person.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
@@ -188,7 +172,7 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT person.bo_id, person.firstname, person.email, person.lastname, person.isAdmin" 
+			ResultSet rs = stmt.executeQuery("SELECT person.bo_id, person.firstname, person.email, person.lastname" 
 					+ "FROM person INNER JOIN membership" + 
 					"ON membership.groupFK =" +groupFK);
 		

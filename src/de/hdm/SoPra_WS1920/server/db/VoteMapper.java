@@ -93,30 +93,15 @@ public class VoteMapper {
     	Connection con = DBConnection.connection();
 
     	try {
-    		Statement stmt = con.createStatement();
-        	
-    	    ResultSet rs = stmt.executeQuery("SELECT MAX(bo_id) AS maxid "
-    	          + "FROM businessobject ");
-
-    	      if (rs.next()) {
-    	     
-    	        vote.setId(rs.getInt("maxid") + 1);
-		
     		Statement stm1 = con.createStatement();
-    		Statement stm2 = con.createStatement();
     		
-    		stm1.executeUpdate("INSERT INTO businessobject (bo_id, creationTimeStamp) VALUES ('"
-    							+vote.getId()
-								+"', '"+vote.getCreationTimestamp()
-								+"')");
-			stm2.executeUpdate("INSERT INTO vote (bo_id, votingWeight, surveyentryFK, creationTimeStamp) VALUES ('"
+			stm1.executeUpdate("INSERT INTO vote (bo_id, votingWeight, surveyentryFK, creationTimeStamp) VALUES ('"
 								+vote.getId()
 								+"', '"+vote.getVotingWeight()
 								+"', '"+vote.getSurveyEntryFK()
 								+"', '"+vote.getCreationTimestamp()
 								+"')");
 			
-		}
     	}
 			catch(SQLException exc) {
 				exc.printStackTrace();
@@ -153,10 +138,8 @@ public class VoteMapper {
     	
     	try {
 			Statement stm1 = con.createStatement();
-			Statement stm2 = con.createStatement();
 			
 			stm1.executeUpdate("Delete from vote Where bo_id = "+vote.getId());
-			stm2.executeUpdate("Delete from businessobject Where bo_id = "+vote.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
