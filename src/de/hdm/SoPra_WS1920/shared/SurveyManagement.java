@@ -3,10 +3,14 @@ package de.hdm.SoPra_WS1920.shared;
 import java.sql.Timestamp;
 import java.util.Vector;
 
+import org.apache.james.mime4j.field.datetime.DateTime;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
+import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
@@ -21,182 +25,315 @@ import de.hdm.SoPra_WS1920.shared.bo.Vote;
 public interface SurveyManagement extends RemoteService {
 
     /**
-     * Method to create a person
-     * @param id 
-     * @param firstName 
-     * @param lastName 
-     * @param email 
-     * @param isAdmin 
-     * @return
+     * Methode um ein BusinessObject zu erstellen
+     * @return BusinessObject bo
      */
-    public Person createPerson(int id, String firstname, String lastname, String eMail, boolean isAdmin, Timestamp creationTimestamp);
+	public BusinessObject createBusinessObject();
+	
+    /**
+     * Methode um ein BusinessObject zu löschen
+     * @param BusinessObject bo
+     */
+    public void deleteBusinessObject(BusinessObject bo);
+    
+    /*
+     * Methode um eine Ownership zu erstellen
+     * @param int pFK
+     * @return Ownership os
+     */
+    public Ownership createOwnership(int pFK);
+
+    /*
+     * Methode um eine Ownership zu löschen
+     * @param Ownership os
+     */
+    public void deleteOwnership(Ownership os);
     
     /**
-     * @param person 
-     * @return
+     * Methode um eine Person zu erstellen
+     * @param String firstName 
+     * @param String lastName 
+     * @param String email 
+     * @return Person p
+     */
+    public Person createPerson(String firstName, String lastName, String eMail);
+    
+    /**
+     * Methode um eine Person zu bearbeiten
+     * @param Person p 
+     */
+    public void editPerson(Person p);
+    
+    /**
+     * Methode um eine Person zu löschen
+     * @param Person p
      */
     public void deletePerson(Person person);
     
     /**
-     * @param id 
-     * @return
+     * Methode um eine Person anhand der ID zu finden
+     * @param int id 
+     * @return Person
      */
     public Person getPersonById(int id);
     
     /**
-     * @param firstName 
-     * @return
+     * Methode um eine Person anhand des Vornamens zu finden
+     * @param String firstName
+     * @return Vector<Person>
      */
     public Vector<Person> getPersonByFirstname(String firstName);
 
     /**
-     * @param lastName 
-     * @return
+     * Methode um eine Person anhand des Nachnamens zu finden
+     * @param String lastName
+     * @return Vector<Person>
      */
     public Vector<Person> getPersonByLastname(String lastName);
 
     /**
-     * @param email 
-     * @return
+     * Methode um eine Person anhand der E-Mail adresse zu finden
+     * @param String eMail
+     * @return Person
      */
-    public Person getPersonByEmail(String email);
+    public Person getPersonByEmail(String eMail);
 
     /**
-     * @param id 
-     * @param name 
-     * @return
+     * Methode um eine Gruppe zu erstellen
+     * @param String name
+     * @param int pFK
+     * @return Group g
      */
-    public Group createGroup(int id, String name, int PersonFK, Timestamp creationTimestamp);
+    public Group createGroup(String name, int pFK);
     
     /**
-     * @param group 
-     * @return
+     * Methode um eine Mitgliedschaft zu erstellen 
+     * @param Group g
+     * @param Person p
      */
-    public void deleteGroup(Group group);
+    public void createMembership(Group g, Person p);
     
     /**
-     * @param id 
-     * @return
+     * Methode um eine Mitgliedschaft zu löschen
+     * @param Group g
+     * @param Person p
+     */
+    public void deleteMembership(Group g, Person p);
+    
+    /**
+     * Methode um eine Gruppe zu bearbeiten
+     * @param Group g
+     */
+    public void editGroup(Group g);
+    
+    /**
+     * Methode um eine Gruppe zu löschen
+     * @param Group g 
+     */
+    public void deleteGroup(Group g);
+    
+    /**
+     * Methode um eine Gruppe anhand der ID zu finden
+     * @param int id
+     * @return Group
      */
     public Group getGroupById(int id);
 
     /**
-     * @param personFK 
-     * @return
+     * Methode um eine Gruppe anhand des PersonFK zu finden
+     * @param int pFK
+     * @return Vector<Group>
      */
-    public Vector<Group> getGroupByPersonFK(int personFK);
+    public Vector<Group> getGroupByPersonFK(int pFK);
 
     /**
-     * @param name 
-     * @return
+     * Methode um eine Gruppe anhand des Namens zu finden
+     * @param String name
+     * @return Vector<Group>
      */
     public Vector<Group> getGroupByName(String name);
 
-    /**
-     * @param id 
-     * @param startDate 
-     * @param endDate 
-     * @return
+    /** 
+     * Methode um eine Umfrage zu erstellen
+     * @param int gFK
+     * @param int pFK
+     * @param Timestamp startDate
+     * @param Timestamp endDate 
+     * @return Survey s
      */
-    public Survey createSurvey(int id, int GroupFK, int PersonFK, Timestamp startDate, Timestamp endDate, Timestamp creationTimestamp);
+    public Survey createSurvey(int gFK, int pFK, Timestamp startDate, Timestamp endDate);
     
     /**
-     * @param survey 
-     * @return
+     * Methode um eine Umfrage zu bearbeiten
+     * @param Survey s
+     * @return Survey
      */
-    public void deleteSurvey(Survey survey);
+    public void editSurvey(Survey s);
     
     /**
-     * @param id 
-     * @return
+     * Methode um eine Umfrage zu löschen
+     * @param Survey s
+     */
+    public void deleteSurvey(Survey s);
+    
+    /**
+     * Methode um eine Umfrage anhand der ID zu finden
+     * @param int id
+     * @return Survey
      */
     public Survey getSurveyById(int id);
     
     /**
-     * @param personFK 
-     * @return
+     * Methode um eine Umfrage anhand des PersonFKs zu finden
+     * @param int pFK
+     * @return Vector<Survey>
      */
-    public Vector<Survey> getSurveyByPersonFK(int personFK);
+    public Vector<Survey> getSurveyByPersonFK(int pFK);
     
     /**
-     * @param groupFK 
-     * @return
+     * Methode um eine Umfrage anhand des GrouFKs zu finden
+     * @param int gFK
+     * @return Vector<Survey>
      */
-    public Vector<Survey> getSurveyByGroupFK(int groupFK);
+    public Vector<Survey> getSurveyByGroupFK(int gFK);
     
     /**
-     * @param surveyFK 
-     * @return
+     * Methode um den Umfrageeintrag anhand der SurveyFk zu finden
+     * @param sFK 
+     * @return Vector<SurveyEntry>
      */
-    public Vector<SurveyEntry> getSurveyEntryBySurveyFK(int surveyFK);
+    public Vector<SurveyEntry> getSurveyEntryBySurveyFK(int sFK);
     
-    /**
-     * @param startDate 
-     * @return
+    /** 
+     * Methode um eine Umfrage anhand des Start Datums zu finden
+     * @param Timestamp startDate
+     * @return Vector<Survey>
      */
     public Vector<Survey> getSurveyByStartDate(Timestamp startDate);
 
     /**
-     * @param endDate 
-     * @return
+     * Methode um eine Umfrage anhand des ENd Datums zu finden
+     * @param Timestamp endDate
+     * @return Vector<Survey>
      */
     public Vector<Survey> getSurveyByEndDate(Timestamp endDate);
 
     /**
-     * @param id 
-     * @param votingWeight 
-     * @return
+     * Methode um ein Vote zu erstellen
+     * @param int vw 
+     * @param int seFK
+     * @param int pFK
+     * @return Vote v
      */
-    public Vote createVote(int id, int votingWeight, int SurveyEntryFK, int PersonFK, Timestamp creationTimestamp);
+    public Vote createVote(int vw, int seFK, int pFK);
     
     /**
-     * @param vote 
-     * @return
+     * Methode um ein Vote zu bearbeiten
+     * @param Vote v
      */
-    public void deleteVote(Vote vote);
+    public void editVote(Vote v);
     
     /**
-     * @param id 
-     * @return
+     * Methode um ein Vote zu löschen
+     * @param Vote v
+     */
+    public void deleteVote(Vote v);
+    
+    /**
+     * Methode um ein Vote anhand der ID zu finden
+     * @param int id
+     * @return Vote 
      */
     public Vote getVoteById(int id);
     
     /**
-     * @param personFK 
-     * @return
+     * Methode um ein Vote anhand des PersonFK zu finden
+     * @param int pFK
+     * @return Vector<Vote>
      */
-    public Vector<Vote> getVoteByPersonFK(int personFK);
+    public Vector<Vote> getVoteByPersonFK(int pFK);
 
     /**
-     * @param surveyEntryFK 
-     * @return
+     * Methode um ein Vote anhand des SurveyEntryFKs zu finden
+     * @param int seFK 
+     * @return Vector<Vote>
      */
-    public Vector<Vote> getVoteBySurveyEntryFK(int surveyEntryFK);
+    public Vector<Vote> getVoteBySurveyEntryFK(int SEFK);
     
     /**
-     * @param votingWeight 
-     * @return
+     * Methode um ein Vote anhand seiner Gewichtung zu finden
+     * @param int vw
+     * @return Vector<Vote>
      */
-    public Vector<Vote> getVoteByVotingWeight(int votingWeight);
-
-    /**
-     * @param id 
-     * @return
-     */
-    public SurveyEntry createSurveyEntry(int id, int screeningFK, int surveyFK, Timestamp creationTimestamp);
+    public Vector<Vote> getVoteByVotingWeight(int vw);
     
     /**
-     * @param id 
-     * @return
+     * Methode um die Anzahl der Votes zu Zählen
+     * @param SurveyEntry se 
+     * @return int v.size();
+     */
+    public int countVotes(SurveyEntry se);
+    
+    /**
+     * Methode um einen Umfrageeintrag zu erstellen
+     * @param int scFK
+     * @param in sFK
+     * @return SurveyEntry se
+     */
+    public SurveyEntry createSurveyEntry(int scFK, int sFK);
+    
+    /**
+     * Methode um einen Umfrageeintrag zu bearbeiten
+     * @param SurveyEntry se
+     */
+    public void editSurvey(SurveyEntry se);
+    
+    /**
+     * Methode um einen Umfrageeintrag anhand der ID zu finden
+     * @param int id
+     * @return SurveyEntry
      */
     public SurveyEntry getSurveyEntryById(int id);
     
-    
-
     /**
-     * @param surveyentry 
-     * @return
+     * Methode um einen Umfrageeintrag zu löschen
+     * @param SurveyEntry se
      */
-    public void deleteSurveyEntry(SurveyEntry surveyentry);
+    public void deleteSurveyEntry(SurveyEntry se);
+    
+    /**
+     * Methode um eine Person zu aktualisieren
+     * @param Person p
+     * @return Person p
+     */
+    public Person updatePerson(Person p);
+    
+    /**
+     * Methode um eine Gruppe zu aktualisieren
+     * @param Group g
+     * @return Grou g
+     */
+    public Group updateGroup(Group g);	
+    		
+    /**
+	 * Methode um eine Umfrage zu aktualisieren
+	 * @param Survey s
+	 * @return Survey s
+	 */
+    public Survey updateSurvey(Survey s);
+    
+	/**
+	 * Methode um ein Vote zu aktualisieren
+	 * @param Vote v
+	 * @return Vote v
+	 */
+    public Vote updateVote(Vote v);
+    
+	/**
+	 * Methode um einen Umfrageeintrag zu aktualisieren
+	 * @param SurveyEntry se
+	 * @return SurveyEntry se
+	 */
+    public SurveyEntry updateSurveyEntry(SurveyEntry se);
    
 }

@@ -1,7 +1,5 @@
 package de.hdm.SoPra_WS1920.shared.bo;
 
-import java.util.*;
-
 /**
  * @author GianlucaBernert
  * Klasse Person die die Variable Vorname, Nachname, E-Mail und isAdmin besitzt
@@ -69,7 +67,6 @@ public class Person extends BusinessObject {
     public void setEMail(String eMail) {
         this.eMail = eMail;
     }
-
     
     /**
      * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
