@@ -27,6 +27,33 @@ body{
 	float: right;
 }
 
+.invisibleButton {
+	background: transparent;
+    border: none !important;
+    font-size:0;
+}
+
+.createDecisionBox{
+	background-color: #112D49;
+	width: calc(100% - 80px);
+	border-radius: 10px;
+	top: 60px !important;
+	left: 40px !important;
+	right: 40px !important;
+}
+.createDecisionBox table{
+	margin: 0 !important;
+	width: 100%;
+}
+
+.decision-element {
+	text-align: center;
+	color: #7A93B0;
+	width: calc(100% - 40px);
+	padding: 20px;
+	font-size: 14px;
+}
+
 .navbar-element {
 	display: none;
 }
@@ -325,13 +352,12 @@ body{
 }
 .cancelIcon {
 	position: absolute;
-	float:right;
-	width: 15px;
-	height: 15px;
-	bottom: 20px;
-	right: 60px;
-	cursor: pointer;
-	margin-left: 30px;
+    float: right;
+    width: 10px;
+    height: 10px;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
 }
 .deleteIcon {
 	position: absolute;

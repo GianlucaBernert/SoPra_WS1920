@@ -96,33 +96,25 @@ public class PersonMapper {
 	 * @param person
 	 */
     
-    public void insertPerson(Person person) {
+    public Person insertPerson(Person person) {
     	Connection con = DBConnection.connection();
 
     	try {
-		
-    		Statement stm1 = con.createStatement();
-    		Statement stm2 = con.createStatement();
-    		
-    		stm1.executeUpdate("INSERT INTO businessobject (bo_id, creationTimeStamp) VALUES ('"
-    							+ person.getId()
-    							+ "', '"+person.getCreationTimestamp()
-    							+"')");
-			stm2.executeUpdate("INSERT INTO person (bo_id, firstname, lastname, eMail, isAdmin, creationTimeStamp) VALUES ('"
+    		con.setAutoCommit(false);
+    		Statement stm = con.createStatement();
+
+			stm.executeUpdate("INSERT INTO person (bo_id, firstname, lastname, eMail) VALUES ('"
 								+person.getId()
 								+"', '"+person.getFirstname()
 								+"', '"+person.getLastname()
 								+"', '"+person.getEMail()
-								+"', '"+person.getIsAdmin()
-								+"', '"+person.getCreationTimestamp()
 								+"')");
-			
-		}
+		con.setAutoCommit(true);
+    	}
 			catch(SQLException exc) {
 				exc.printStackTrace();
-			
 			}
-
+    	return person;
     }
 
 	/**
@@ -130,22 +122,22 @@ public class PersonMapper {
 	 * @param person
 	 */
     
-    public void updatePerson(Person person) {
+    public Person updatePerson(Person person) {
     	Connection con = DBConnection.connection();
 
     	try {
-    	
+    		con.setAutoCommit(false);
     		Statement stmt = con.createStatement();
     		stmt.executeUpdate("UPDATE person Set firstname='"+person.getFirstname()
     				+"', lastname='"+person.getLastname()
     				+"', eMail='"+person.getEMail()
-    				+"', isAdmin='"+person.getIsAdmin()
     				+"' Where bo_id="+person.getId());
-    		
+    		con.setAutoCommit(true);
     	}
     		catch(SQLException exc) {
     			exc.printStackTrace();
     			}
+    	return person;
     }
 
     /**
@@ -157,9 +149,7 @@ public class PersonMapper {
     	
     	try {
 			Statement stm1 = con.createStatement();
-			Statement stm2 = con.createStatement();
 			stm1.executeUpdate("Delete from person Where ('bo_id' =" +person.getId());
-			stm2.executeUpdate("Delete from businessobject Where ('bo_id' =" +person.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
@@ -182,7 +172,7 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT person.bo_id, person.firstname, person.email, person.lastname, person.isAdmin" 
+			ResultSet rs = stmt.executeQuery("SELECT person.bo_id, person.firstname, person.email, person.lastname" 
 					+ "FROM person INNER JOIN membership" + 
 					"ON membership.groupFK =" +groupFK);
 		

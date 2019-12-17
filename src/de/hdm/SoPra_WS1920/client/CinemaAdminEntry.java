@@ -3,10 +3,14 @@ package de.hdm.SoPra_WS1920.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.SoPra_WS1920.client.gui.Content;
 import de.hdm.SoPra_WS1920.client.gui.Header;
@@ -54,6 +58,7 @@ public class CinemaAdminEntry implements EntryPoint{
 		header = new Header();
 		content = new Content();
 		navBar = new NavigationBar(header,content);
+		
 //		navbar.setStyleName("navbar");
 //		mCard = new MovieCard(content,m);
 //		content.add(mCard);
@@ -84,6 +89,22 @@ public class CinemaAdminEntry implements EntryPoint{
 //		/*
 //		 * Header Widgets
 //		 */
+//		Label label = new Label("Click to choose date/time :");
+//		  // Define date format
+//		        @SuppressWarnings("deprecation")
+//				DateTimeFormat dateFormat = DateTimeFormat.getFullDateTimeFormat();
+//		  // Create new DateBox
+//		  DateBox dateBox = new DateBox();
+//		  // Set date format to the dateBox 
+//		  dateBox.setFormat(new DateBox.DefaultFormat(dateFormat));
+//		  // Create new Vertical Panel
+//		  VerticalPanel vp = new VerticalPanel();
+//		  // Add widgets to Verical Panel
+//		  vp.add(label);
+//		        vp.add(dateBox);
+//		         
+//		Add Vertical Panel to Root Panel
+//		RootPanel.get().add(vp);
 
 		
 		RootPanel.get().add(navBar); //Add the Menu to the RootPanel
