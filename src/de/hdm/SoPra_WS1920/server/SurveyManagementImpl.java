@@ -107,6 +107,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	os.setId(bo.getId());
     	os.setCreationTimestamp(bo.getCreationTimestamp());
     	os.setPersonFK(pFK);
+    	this.oMapper.insertOwnership(os);
     	return os;
     }
 
