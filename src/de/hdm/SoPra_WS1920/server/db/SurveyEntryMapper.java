@@ -96,7 +96,7 @@ public class SurveyEntryMapper {
     	try {
     		Statement stmt = con.createStatement();
 
-    		stmt.executeUpdate("INSERT INTO surveyentry(bo_id, surveyFK, screeningFK)" +
+    		stmt.executeUpdate("INSERT INTO surveyentry(id, surveyFK, screeningFK)" +
     		"VALUES ('"
     		+ se.getId()
     		+ "','"
@@ -104,7 +104,6 @@ public class SurveyEntryMapper {
     		+ "','"
     		+ se.getScreeningFK() + "')");
     		
-    		con.commit();
     	}
     	catch(SQLException e2) {
     		e2.printStackTrace();
