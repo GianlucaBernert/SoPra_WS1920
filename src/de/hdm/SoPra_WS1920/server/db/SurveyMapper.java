@@ -68,7 +68,7 @@ public class SurveyMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM survey" + "WHERE bo_id=" + id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM survey" + "WHERE id=" + id);
 			
 			if(rs.next()) {
 				
@@ -98,28 +98,22 @@ public class SurveyMapper {
 		Connection con = DBConnection.connection();
 		
 		try {
-			Statement stmt1 = con.createStatement();
-			Statement stmt2 = con.createStatement();
+		
+			Statement stmt = con.createStatement();
 			
-			stmt1.executeUpdate("INSERT INTO businessobject(bo_id, creationTimeStamp)"
-					+ "VALUES ('"
-					+ s.getId()
-					+ "','"
-					+ s.getCreationTimestamp() + "')");
-			
-			stmt2.executeUpdate("INSERT INTO survey(bo_id, startDate, endDate, groupFK)"
+				stmt.executeUpdate("INSERT INTO survey(id, startDate, endDate, groupFK)"
 					+ "VALUES ('"
 					+ s.getId()
 					+ "','"
 					+ s.getStartDate()
 					+ "','"
-					+ s.getEndDate()
-					+ "','"
-					+ s.getCreationTimestamp() + "')");
+					+ s.getEndDate() + "')");
 		}
 		catch(SQLException e2) {
 			e2.printStackTrace();
+		
 		}
+		
 		return s;
 	}
 	
@@ -133,12 +127,13 @@ public class SurveyMapper {
         Connection con = DBConnection.connection();
         
         try {
+        	con.setAutoCommit(true);
         	Statement stmt = con.createStatement();
         	
         	stmt.executeUpdate("UPDATE survey" + "SET startDate=\'" + s.getStartDate()
         	+ "\", " + "endDate=\'" + s.getEndDate() +  "\", " + "groupFK=\'" + s.getGroupFK() + "\", " 
-        	+ "WHERE bo_id=" + s.getId());
-        	
+        	+ "WHERE id=" + s.getId());
+        	con.setAutoCommit(false);
         }
         catch(SQLException e2) {
         e2.printStackTrace();
@@ -155,12 +150,9 @@ public class SurveyMapper {
     	Connection con = DBConnection.connection();
     	
     	try {
-    		Statement stmt1 = con.createStatement();
-    		Statement stmt2 = con.createStatement();;
+    		Statement stmt = con.createStatement();
     		
-    		stmt1.executeUpdate("DELETE FROM survey" + "WHERE bo_id=" + s.getId());
-    		//Businessobject löschen
-    		stmt2.executeUpdate("DELETE FROM businessobject WHERE bo_id=" + s.getId());
+    		stmt.executeUpdate("DELETE FROM survey" + "WHERE id=" + s.getId());
     		
     	}
     	catch(SQLException e2) {
@@ -245,7 +237,7 @@ public class SurveyMapper {
     		ResultSet rs = stmt.executeQuery("SELECT * FROM survey"
     				 + "WHERE survey.groupFK=" + groupFK);
     		
-    		//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+    		//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
     		while(rs.next()) {
     			Survey s = new Survey();
     			s.setStartDate(rs.getTimestamp("startDate"));
@@ -294,7 +286,7 @@ public class SurveyMapper {
         	
         	ResultSet rs = stmt.executeQuery("SELECT survey.startDate, survey.endDate, survey.groupFK" +
         			"FROM  survey INNER JOIN pocorns.businessownership" + 
-        			"ON survey.bo_id = businessownership.bo_id AND businessownership.personFK= '" + personFK);
+        			"ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK);
         	
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt zugeordnet
         	while(rs.next()) {
