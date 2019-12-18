@@ -73,7 +73,7 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM person " + "WHERE bo_id= " + personID);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM person " + "WHERE id= " + personID);
 			
 			if(rs.next()) {
 				Person p = new Person();
@@ -103,7 +103,7 @@ public class PersonMapper {
     		con.setAutoCommit(false);
     		Statement stm = con.createStatement();
 
-			stm.executeUpdate("INSERT INTO person (bo_id, firstname, lastname, eMail) VALUES ('"
+			stm.executeUpdate("INSERT INTO person (id, firstname, lastname, eMail) VALUES ('"
 								+person.getId()
 								+"', '"+person.getFirstname()
 								+"', '"+person.getLastname()
@@ -131,7 +131,7 @@ public class PersonMapper {
     		stmt.executeUpdate("UPDATE person Set firstname='"+person.getFirstname()
     				+"', lastname='"+person.getLastname()
     				+"', eMail='"+person.getEMail()
-    				+"' Where bo_id="+person.getId());
+    				+"' Where id="+person.getId());
     		con.setAutoCommit(true);
     	}
     		catch(SQLException exc) {
@@ -149,7 +149,7 @@ public class PersonMapper {
     	
     	try {
 			Statement stm1 = con.createStatement();
-			stm1.executeUpdate("Delete from person Where ('bo_id' =" +person.getId());
+			stm1.executeUpdate("Delete from person Where ('id' =" +person.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
@@ -172,7 +172,7 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT person.bo_id, person.firstname, person.email, person.lastname" 
+			ResultSet rs = stmt.executeQuery("SELECT person.id, person.firstname, person.email, person.lastname" 
 					+ "FROM person INNER JOIN membership" + 
 					"ON membership.groupFK =" +groupFK);
 		
