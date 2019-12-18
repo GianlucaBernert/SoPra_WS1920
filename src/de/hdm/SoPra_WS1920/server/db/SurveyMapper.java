@@ -206,7 +206,7 @@ public class SurveyMapper {
         try {
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery("SELECT * FROM survey" + "WHERE endDate= '" + endDate + "'");
-        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+        	//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
         	while(rs.next()) {
         		Survey s = new Survey();
         		s.setStartDate(rs.getTimestamp("startDate"));
@@ -288,7 +288,7 @@ public class SurveyMapper {
         			"FROM  survey INNER JOIN pocorns.businessownership" + 
         			"ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK);
         	
-        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt zugeordnet
+        	//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt zugeordnet
         	while(rs.next()) {
         		Survey s = new Survey();
         		s.setStartDate(rs.getTimestamp("startDate"));

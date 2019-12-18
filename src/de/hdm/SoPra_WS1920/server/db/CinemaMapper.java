@@ -74,7 +74,7 @@ public class CinemaMapper {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
     			c.setCity(rs.getString("city"));
-    			c.setPostCode(rs.getString("postCode"));
+    			c.setZipCode(rs.getString("zipCode"));
     			c.setStreet(rs.getString("street"));
     			c.setStreetNo(rs.getString("streetNo"));
     			c.setCinemachainFK(rs.getInt("cinemachainFK"));
