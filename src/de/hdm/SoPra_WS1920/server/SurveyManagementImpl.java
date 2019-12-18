@@ -83,6 +83,8 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      */
     public BusinessObject createBusinessObject() throws IllegalArgumentException {
     	BusinessObject bo = new BusinessObject();
+    	Timestamp time = new Timestamp(System.currentTimeMillis());
+    	bo.setCreationTimestamp(time);
     	this.boMapper.insertBusinessObject(bo);
     	return bo;
     }
