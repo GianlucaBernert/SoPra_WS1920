@@ -18,6 +18,7 @@ public class Cinema extends Ownership {
     private String postCode;
     private String street;
     private String streetNo;
+    private int cinemaChainFK;
     
     /**
      * Konstruktor der Klasse Cinema, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
@@ -105,6 +106,22 @@ public class Cinema extends Ownership {
      */
     public void setStreetNo(String streetNo) {
        this.streetNo = streetNo;
+    }
+    
+    /**
+     * Methode um den CinemaChainFK eines Kinos zu setzen
+     * @param int ccFK
+     */
+    public void setCinemaChainFK(int ccFK) {
+    	this.cinemaChainFK = ccFK;
+    }
+    
+    /**
+     * Methode um den CinemaChainFK eines Kinos auszugeben
+     * @return int cinemaChainFK
+     */
+    public int getCinemaChainFK() {
+    	return cinemaChainFK;
     }
     
     /**
