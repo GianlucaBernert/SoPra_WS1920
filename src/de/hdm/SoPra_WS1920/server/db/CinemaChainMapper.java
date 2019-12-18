@@ -103,10 +103,9 @@ public class CinemaChainMapper {
 						+ "','"
 						+ cc.getName() + "')");
 				
-				con.commit();
 			}
 			catch(SQLException e2) {
-				con.rollback();
+				
 				e2.printStackTrace();
 			}
 			return cc;
