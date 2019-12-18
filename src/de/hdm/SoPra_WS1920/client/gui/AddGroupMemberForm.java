@@ -44,6 +44,7 @@ public class AddGroupMemberForm extends DialogBox {
 }
 	public void showAddGroupMemberForm() {
 		this.show();
+	
 		
 	}
 	
