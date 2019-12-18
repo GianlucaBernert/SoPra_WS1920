@@ -65,7 +65,7 @@ public class BusinessObjectMapper {
 		
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.businessobject " + "WHERE bo_id= " + BOID);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.businessobject " + "WHERE id= " + BOID);
 			
 			if(rs.next()) {
 				BusinessObject o = new BusinessObject();
@@ -89,7 +89,7 @@ public class BusinessObjectMapper {
     		
     		Statement stmt = con.createStatement();
         	
-    	    ResultSet rs = stmt.executeQuery("SELECT MAX(bo_id) AS maxid "
+    	    ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
     	          + "FROM businessobject ");
 
     	    if (rs.next()) {
@@ -97,7 +97,7 @@ public class BusinessObjectMapper {
     	    BO.setId(rs.getInt("maxid") + 1);
     		Statement stm1 = con.createStatement();
     		
-    		stm1.executeUpdate("INSERT INTO businessobject (bo_id, CreationTimestamp) VALUES ('"
+    		stm1.executeUpdate("INSERT INTO businessobject (id, CreationTimestamp) VALUES ('"
     				+ BO.getId()
 					+ "', '"+BO.getCreationTimestamp()
 					+"')");
@@ -122,7 +122,7 @@ public class BusinessObjectMapper {
     	
     	try {
     		Statement stm1 = con.createStatement();
-    		stm1.executeUpdate("Delete from businessownership Where bo_id = "+businessobject.getId());
+    		stm1.executeUpdate("Delete from businessownership Where id = "+businessobject.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();

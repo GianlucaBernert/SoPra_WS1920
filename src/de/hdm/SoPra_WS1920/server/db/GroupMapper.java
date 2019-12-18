@@ -70,7 +70,7 @@ public class GroupMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.group " + "WHERE bo_id= " + groupID);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.group " + "WHERE id= " + groupID);
 			
 			if(rs.next()) {
 				Group g = new Group();
@@ -94,7 +94,7 @@ public class GroupMapper {
     	        
     		Statement stm1 = con.createStatement();
 
-			stm1.executeUpdate("INSERT INTO popcorns.group (bo_id, name) VALUES ('"
+			stm1.executeUpdate("INSERT INTO popcorns.group (id, name) VALUES ('"
 								+group.getId()
 								+"', '"+group.getName()
 								+"')");
@@ -118,7 +118,7 @@ public class GroupMapper {
     	try {
     		Statement stmt = con.createStatement();
     		stmt.executeUpdate("UPDATE popcorns.group Set name='"+group.getName()
-    				+"' Where bo_id="+group.getId());
+    				+"' Where id="+group.getId());
     	}
     		catch(SQLException exc) {
     			exc.printStackTrace();
@@ -137,7 +137,7 @@ public class GroupMapper {
     	try {
 			Statement stm1 = con.createStatement();
 			
-			stm1.executeUpdate("Delete from popcorns.group Where bo_id = "+group.getId());
+			stm1.executeUpdate("Delete from popcorns.group Where id = "+group.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
@@ -155,7 +155,7 @@ public class GroupMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT popcorns.group.bo_id, popcorns.group.name FROM popcorns.group"
+			ResultSet rs = stmt.executeQuery("SELECT popcorns.group.id, popcorns.group.name FROM popcorns.group"
 					+ " INNER JOIN membership ON membership.personFK=" + personFK);
 		
 			while (rs.next()) {

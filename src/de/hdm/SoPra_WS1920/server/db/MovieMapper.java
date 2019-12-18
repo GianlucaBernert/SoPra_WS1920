@@ -63,7 +63,7 @@ public class MovieMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM movie " + "WHERE bo_id= " + movieID);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM movie " + "WHERE id= " + movieID);
 			
 			if(rs.next()) {
 				Movie m = new Movie();
@@ -94,7 +94,7 @@ public class MovieMapper {
     		
     		Statement stm = con.createStatement();
 
-			stm.executeUpdate("INSERT INTO movie (bo_id, name, genre, description) VALUES ('"
+			stm.executeUpdate("INSERT INTO movie (id, name, genre, description) VALUES ('"
 								+movie.getId()
 								+"', '"+movie.getName()
 								+"', '"+movie.getGenre()
@@ -123,7 +123,7 @@ public class MovieMapper {
     		stmt.executeUpdate("UPDATE movie Set name='"+movie.getName()
     				+"', genre='"+movie.getGenre()
     				+"', description='"+movie.getDescription()
-    				+"' Where bo_id="+movie.getId());
+    				+"' Where id="+movie.getId());
     		con.setAutoCommit(true);
     	}
     		catch(SQLException exc) {
@@ -143,7 +143,7 @@ public class MovieMapper {
     	try {
 			Statement stm1 = con.createStatement();
 			
-			stm1.executeUpdate("Delete from movie Where bo_id = "+movie.getId());
+			stm1.executeUpdate("Delete from movie Where id = "+movie.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
@@ -166,9 +166,9 @@ public class MovieMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT movie.bo_id, movie.name, movie.genre, movie.description FROM movie\n" + 
-					"INNER JOIN popcorns.businessownership\n" + 
-					"ON businessownership.bo_id = movie.bo_id\n" + 
+			ResultSet rs = stmt.executeQuery("SELECT movie.id, movie.name, movie.genre, movie.description FROM movie" + 
+					"INNER JOIN popcorns.businessownership" + 
+					"ON businessownership.bo_id = movie.id" + 
 					"AND businessownership.personFK = " + personFK);
 		
 			while (rs.next()) {
@@ -210,11 +210,11 @@ public class MovieMapper {
           Statement stmt = con.createStatement();
 
           ResultSet rs = stmt.executeQuery("SELECT * FROM movie "
-              + " ORDER BY bo_id");
+              + " ORDER BY id");
 
           while (rs.next()) {
             Movie m = new Movie();
-            m.setId(rs.getInt("bo_id"));
+            m.setId(rs.getInt("id"));
             m.setName(rs.getString("name"));
             m.setGenre(rs.getString("genre"));
             m.setDescription(rs.getString("description"));

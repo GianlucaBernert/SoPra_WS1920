@@ -70,7 +70,7 @@ public class VoteMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM vote " + "WHERE bo_id= " + voteID);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM vote " + "WHERE id= " + voteID);
 			
 			if(rs.next()) {
 				Vote v = new Vote();
@@ -95,7 +95,7 @@ public class VoteMapper {
     	try {
     		Statement stm1 = con.createStatement();
     		
-			stm1.executeUpdate("INSERT INTO vote (bo_id, votingWeight, surveyentryFK, creationTimeStamp) VALUES ('"
+			stm1.executeUpdate("INSERT INTO vote (id, votingWeight, surveyentryFK, creationTimeStamp) VALUES ('"
 								+vote.getId()
 								+"', '"+vote.getVotingWeight()
 								+"', '"+vote.getSurveyEntryFK()
@@ -121,7 +121,7 @@ public class VoteMapper {
     	
     		Statement stmt = con.createStatement();
     		stmt.executeUpdate("UPDATE vote Set votingWeight='"+vote.getVotingWeight()
-    				+"' Where bo_id="+vote.getId());
+    				+"' Where id="+vote.getId());
     	}
     		catch(SQLException exc) {
     			exc.printStackTrace();
@@ -139,7 +139,7 @@ public class VoteMapper {
     	try {
 			Statement stm1 = con.createStatement();
 			
-			stm1.executeUpdate("Delete from vote Where bo_id = "+vote.getId());
+			stm1.executeUpdate("Delete from vote Where id = "+vote.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
@@ -158,8 +158,8 @@ public class VoteMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT vote.bo_id, vote.votingWeight, vote.surveyEntryFK FROM vote INNER JOIN businessownership" + 
-					"WHERE businessownership.bo_id = vote.bo_id AND businessownership.personFK = "+personFK);
+			ResultSet rs = stmt.executeQuery("SELECT vote.id, vote.votingWeight, vote.surveyEntryFK FROM vote INNER JOIN businessownership" + 
+					"WHERE businessownership.id = vote.id AND businessownership.personFK = "+personFK);
 		
 			while (rs.next()) {
 				Vote v = new Vote();
