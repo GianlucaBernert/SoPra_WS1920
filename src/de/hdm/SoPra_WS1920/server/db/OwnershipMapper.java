@@ -28,7 +28,7 @@ public class OwnershipMapper {
     /**
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von OwnsershipMapper Objekten verhindert.
      */
-    protected OwnershipMapper() {
+    public OwnershipMapper() {
     }
 
     /**
@@ -63,7 +63,7 @@ public class OwnershipMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.businessownership " + "WHERE id= " + ownershipID);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.businessownership WHERE id= " + ownershipID);
 			
 			if(rs.next()) {
 				Ownership o = new Ownership();
@@ -147,7 +147,7 @@ public class OwnershipMapper {
 			Statement stmt = con.createStatement();
 			
 			ResultSet rs = stmt.executeQuery("SELECT * FROM businessownership "
-					+ "WHERE businessownership.personFK= "+personFK);
+					+ "WHERE businessownership.personFK= '"+personFK+"'");
 		
 			while (rs.next()) {
 				Ownership o = new Ownership();

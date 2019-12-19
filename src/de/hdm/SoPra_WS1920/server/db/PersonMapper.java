@@ -29,7 +29,7 @@ public class PersonMapper {
     /**
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von UserMapper Objekten verhindert.
      */
-    protected PersonMapper() {
+    public PersonMapper() {
       
     }
 
@@ -73,7 +73,7 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM person " + "WHERE id= " + personID);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM person WHERE id= " + personID);
 			
 			if(rs.next()) {
 				Person p = new Person();
@@ -149,7 +149,7 @@ public class PersonMapper {
     	
     	try {
 			Statement stm1 = con.createStatement();
-			stm1.executeUpdate("Delete from person Where ('id' =" +person.getId());
+			stm1.executeUpdate("Delete from person Where id= " +person.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
@@ -172,12 +172,12 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT person.id, person.firstname, person.email, person.lastname" 
-					+ "FROM person INNER JOIN membership" + 
-					"ON membership.groupFK =" +groupFK);
+			ResultSet rs = stmt.executeQuery("SELECT person.id, person.firstname, person.email, person.lastname FROM popcorns.person "
+					+ "INNER JOIN membership ON membership.groupFK ='" +groupFK+"'");
 		
 			while (rs.next()) {
 				Person p = new Person();
+				p.setId(rs.getInt("id"));
 				p.setFirstname(rs.getString("firstname"));
 				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
@@ -252,7 +252,7 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM person " + "WHERE eMail= " + mail);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM person WHERE email='" + mail+"'");
 			
 			if(rs.next()) {
 				Person p = new Person();

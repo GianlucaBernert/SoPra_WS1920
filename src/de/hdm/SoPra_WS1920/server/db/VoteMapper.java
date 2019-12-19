@@ -31,7 +31,7 @@ public class VoteMapper {
     /**
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von VoteMapper Objekten verhindert.
      */
-    protected VoteMapper() {
+    public VoteMapper() {
     }
 
     /**
@@ -70,7 +70,7 @@ public class VoteMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM vote " + "WHERE id= " + voteID);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM vote WHERE id= " + voteID);
 			
 			if(rs.next()) {
 				Vote v = new Vote();
@@ -95,11 +95,10 @@ public class VoteMapper {
     	try {
     		Statement stm1 = con.createStatement();
     		
-			stm1.executeUpdate("INSERT INTO vote (id, votingWeight, surveyentryFK, creationTimeStamp) VALUES ('"
+			stm1.executeUpdate("INSERT INTO vote (id, votingWeight, surveyentryFK) VALUES ('"
 								+vote.getId()
 								+"', '"+vote.getVotingWeight()
 								+"', '"+vote.getSurveyEntryFK()
-								+"', '"+vote.getCreationTimestamp()
 								+"')");
 			
     	}
@@ -158,11 +157,14 @@ public class VoteMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT vote.id, vote.votingWeight, vote.surveyEntryFK FROM vote INNER JOIN businessownership" + 
-					"WHERE businessownership.id = vote.id AND businessownership.personFK = "+personFK);
+			ResultSet rs = stmt.executeQuery("SELECT vote.id, vote.votingWeight, vote.surveyEntryFK FROM vote "
+					+ "INNER JOIN businessownership "
+					+ "WHERE businessownership.id = vote.id "
+					+ "AND businessownership.personFK = "+personFK);
 		
 			while (rs.next()) {
 				Vote v = new Vote();
+				v.setId(rs.getInt("id"));
 				v.setVotingWeight(rs.getInt("votingWeight"));
 				v.setSurveyEntryFK(rs.getInt("surveyEntryFK"));
 				result.add(v);
@@ -179,14 +181,14 @@ public class VoteMapper {
      * @param person 
      * @return
      */
-    /**public void deleteVoteByPersonFK(int personFK) {
+ public void deleteVoteByPersonFK(int personFK) {
     	Connection con = DBConnection.connection();
 		
 		try {
 			Statement stm1 = con.createStatement();
-			stm1.executeUpdate("Delete vote FROM vote INNER JOIN businessownership" 
-							+ "ON businessownership.personFK =" + personFK+
-					"AND businessownership.bo_id = popcorns.vote.bo_id");
+			stm1.executeUpdate("Delete vote FROM vote INNER JOIN businessownership "
+					+ "ON businessownership.personFK =" + personFK+
+					"AND businessownership.id = popcorns.vote.id");
 				
 						
 		}
@@ -194,8 +196,7 @@ public class VoteMapper {
 			e.printStackTrace();
 		}        
     }
-    Umsetzung überhaupt nötig?
-    		*/
+ 
 
     /**
      * @param id 
@@ -212,6 +213,7 @@ public class VoteMapper {
 		
 			while (rs.next()) {
 				Vote v = new Vote();
+				v.setId(rs.getInt("id"));
 				v.setVotingWeight(rs.getInt("votingWeight"));
 				v.setSurveyEntryFK(rs.getInt("surveyEntryFK"));
 				result.add(v);
@@ -224,16 +226,7 @@ public class VoteMapper {
         return result;
     }
 
-    /**
-     * @param surveyentry 
-     * @return
-     */
-    /**public void deleteVoteBySurveyEntryFK(Surveyentry surveyentry) {
-        // TODO implement here
-        return null;
-    }
-    Umsetzung überhaupt mötig?
-    */
+
     /**
      * @param surveyentry 
      * @return
@@ -261,14 +254,5 @@ public class VoteMapper {
         return result;
     }
 
-    /**
-     * @param surveyentry 
-     * @return
-     */
-    /**public void deleteVoteByVotingWeight(int vw) {
-        // TODO implement here
-        return null;
-    }
-    Umsetzung überhaupt nötig?
-    */
+
 }

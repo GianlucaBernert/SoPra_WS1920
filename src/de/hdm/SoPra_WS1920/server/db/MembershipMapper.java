@@ -31,7 +31,7 @@ public class MembershipMapper {
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von MembershipMapper Objekten verhindert.
      */
 	
-    protected MembershipMapper() {
+    public MembershipMapper() {
     }
 
     /**
@@ -98,7 +98,7 @@ public class MembershipMapper {
 			Statement stm1 = con.createStatement();
 			
 			stm1.executeUpdate("Delete from popcorns.membership Where groupFK = "+group.getId() 
-			+"AND membership.personFK = "+person.getId());
+			+" AND membership.personFK= "+person.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
