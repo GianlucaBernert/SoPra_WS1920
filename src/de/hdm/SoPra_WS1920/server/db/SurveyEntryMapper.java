@@ -31,7 +31,7 @@ public class SurveyEntryMapper {
 	 * Geschützter Konstruktor, der verhindert, dass mit dem new-Operator
 	 * neue Instanzen der Klasse erstellt werden.
 	 */
-    protected SurveyEntryMapper() {
+    public SurveyEntryMapper() {
     }
     
     /**
@@ -63,7 +63,7 @@ public class SurveyEntryMapper {
         	
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry" + "WHERE surveyentry.id=" + id);
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry WHERE surveyentry.id= " + id);
         	
         	//Es wird geprüft, ob ein Ergebnis vorliegt
         	if(rs.next()) {
@@ -122,12 +122,13 @@ public class SurveyEntryMapper {
     	Connection con = DBConnection.connection();
     	
     	try {
-    		con.setAutoCommit(true);
-    		Statement stmt = con.createStatement();
-    		stmt.executeUpdate("UPDATE surveyentry" + "SET surveyFK=\'" + se.getSurveyFK() 
-    			+ "\", " + "screeningFK=\'" + se.getScreeningFK() + "\", " + "WHERE id=" + se.getId());
-    		
     		con.setAutoCommit(false);
+    		Statement stmt = con.createStatement();
+    		stmt.executeUpdate("UPDATE surveyentry SET surveyFK='"+se.getSurveyFK() 
+    			+"', screeningFK='"+se.getScreeningFK()
+    			+"' WHERE id=" +se.getId());
+    		
+    		con.setAutoCommit(true);
     	}
     	
     	catch(SQLException e2) {
@@ -147,7 +148,7 @@ public class SurveyEntryMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("DELETE FROM surveyentry" + "WHERE id=" + se.getId());
+        	stmt.executeUpdate("DELETE FROM surveyentry WHERE id= "+se.getId());
         }
         catch(SQLException e2) {
         	e2.printStackTrace();
@@ -166,7 +167,8 @@ public class SurveyEntryMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry" + "WHERE screeningFK=" + screeningFK);
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry "
+        			+ "WHERE screeningFK=" + screeningFK);
         	
         	while(rs.next()) {
         		SurveyEntry se = new SurveyEntry();
@@ -193,7 +195,8 @@ public class SurveyEntryMapper {
     	try {
     		Statement stmt = con.createStatement();
     		
-    		stmt.executeUpdate("DELETE FROM surveyentry" + "WHERE screeningFK=" + screeningFK);
+    		stmt.executeUpdate("DELETE FROM surveyentry "
+    				+ "WHERE screeningFK=" + screeningFK);
     	}
     	catch(SQLException e2) {
     		e2.printStackTrace();
@@ -213,7 +216,7 @@ public class SurveyEntryMapper {
     	
     	try {
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry" + "WHERE surveyFK=" + surveyFK);
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry WHERE surveyFK=" + surveyFK);
     		
     		while(rs.next()) {
     			SurveyEntry se = new SurveyEntry();

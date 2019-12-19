@@ -27,7 +27,7 @@ public class MovieMapper {
     /**
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von MovieMapper Objekten verhindert.
      */
-    protected MovieMapper() {
+    public MovieMapper() {
  
     }
 
@@ -166,10 +166,10 @@ public class MovieMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT movie.id, movie.name, movie.genre, movie.description FROM movie" + 
-					"INNER JOIN popcorns.businessownership" + 
-					"ON businessownership.bo_id = movie.id" + 
-					"AND businessownership.personFK = " + personFK);
+			ResultSet rs = stmt.executeQuery("SELECT movie.id, movie.name, movie.genre, movie.description FROM movie "
+					+ "INNER JOIN popcorns.businessownership "
+					+ "ON businessownership.id = movie.id "
+					+ "AND businessownership.personFK ='" + personFK+"'");
 		
 			while (rs.next()) {
 				Movie m = new Movie();
@@ -262,7 +262,7 @@ public class MovieMapper {
      * @param name 
      * @return
      */
-    /**public void deleteMovieByName(String name) {
+    public void deleteMovieByName(String name) {
     	Connection con = DBConnection.connection();
 		
 		try {
@@ -276,7 +276,7 @@ public class MovieMapper {
 			e.printStackTrace();
 		}        
     }
-	Umsetzung überhaupt nötig?/**
+
 	
 	
     /**

@@ -22,10 +22,9 @@ USE `popcorns` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `popcorns`.`businessobject` (
   `id` INT(11) NOT NULL,
-  `creationTimestamp` TIMESTAMP NULL,
+  `creationTimestamp` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -66,18 +65,13 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `popcorns`.`cinema`
+-- Table `popcorns`.`cinemachain`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `popcorns`.`cinema` (
+CREATE TABLE IF NOT EXISTS `popcorns`.`cinemachain` (
   `id` INT(11) NOT NULL,
   `name` VARCHAR(45) NULL DEFAULT NULL,
-  `city` VARCHAR(45) NULL DEFAULT NULL,
-  `postCode` VARCHAR(45) NULL DEFAULT NULL,
-  `street` VARCHAR(45) NULL DEFAULT NULL,
-  `streetNo` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_cinema_businessownership1_idx` (`id` ASC) VISIBLE,
-  CONSTRAINT `fk_cinema_businessownership1`
+  CONSTRAINT `fk_cinemachain_businessownership1`
     FOREIGN KEY (`id`)
     REFERENCES `popcorns`.`businessownership` (`id`))
 ENGINE = InnoDB
@@ -85,15 +79,25 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `popcorns`.`cinemachain`
+-- Table `popcorns`.`cinema`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `popcorns`.`cinemachain` (
+CREATE TABLE IF NOT EXISTS `popcorns`.`cinema` (
   `id` INT(11) NOT NULL,
-  `name` INT(11) NULL DEFAULT NULL,
+  `name` VARCHAR(45) NULL DEFAULT NULL,
+  `city` VARCHAR(45) NULL DEFAULT NULL,
+  `zipCode` VARCHAR(45) NULL DEFAULT NULL,
+  `street` VARCHAR(45) NULL DEFAULT NULL,
+  `streetNo` VARCHAR(45) NULL DEFAULT NULL,
+  `cinemachainFK` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_cinemachain_businessownership1`
+  INDEX `fk_cinema_businessownership1_idx` (`id` ASC) VISIBLE,
+  INDEX `fk_cinemachain_idx` (`cinemachainFK` ASC) VISIBLE,
+  CONSTRAINT `fk_cinema_businessownership1`
     FOREIGN KEY (`id`)
-    REFERENCES `popcorns`.`businessownership` (`id`))
+    REFERENCES `popcorns`.`businessownership` (`id`),
+  CONSTRAINT `fk_cinemachain`
+    FOREIGN KEY (`cinemachainFK`)
+    REFERENCES `popcorns`.`cinemachain` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

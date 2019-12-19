@@ -34,7 +34,7 @@ public class SurveyMapper {
  * neue Instanzen der Klasse erstellt werden.
  */
 	
-	protected SurveyMapper() {
+	public SurveyMapper() {
 		
 	}
 	
@@ -68,7 +68,7 @@ public class SurveyMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM survey" + "WHERE id=" + id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM survey WHERE id= " + id);
 			
 			if(rs.next()) {
 				
@@ -107,7 +107,9 @@ public class SurveyMapper {
 					+ "','"
 					+ s.getStartDate()
 					+ "','"
-					+ s.getEndDate() + "')");
+					+ s.getEndDate() 
+					+ "','"
+					+ s.getGroupFK()+ "')");
 		}
 		catch(SQLException e2) {
 			e2.printStackTrace();
@@ -127,13 +129,14 @@ public class SurveyMapper {
         Connection con = DBConnection.connection();
         
         try {
-        	con.setAutoCommit(true);
+        	con.setAutoCommit(false);
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE survey" + "SET startDate=\'" + s.getStartDate()
-        	+ "\", " + "endDate=\'" + s.getEndDate() +  "\", " + "groupFK=\'" + s.getGroupFK() + "\", " 
-        	+ "WHERE id=" + s.getId());
-        	con.setAutoCommit(false);
+        	stmt.executeUpdate("UPDATE survey SET startDate='"+s.getStartDate()
+        	+ "', endDate='"+s.getEndDate()
+        	+ "', groupFK='"+s.getGroupFK()
+        	+ "' WHERE id=" + s.getId());
+        	con.setAutoCommit(true);
         }
         catch(SQLException e2) {
         e2.printStackTrace();
@@ -152,7 +155,7 @@ public class SurveyMapper {
     	try {
     		Statement stmt = con.createStatement();
     		
-    		stmt.executeUpdate("DELETE FROM survey" + "WHERE id=" + s.getId());
+    		stmt.executeUpdate("DELETE FROM survey WHERE id= "+s.getId());
     		
     	}
     	catch(SQLException e2) {
@@ -174,8 +177,8 @@ public class SurveyMapper {
         
         try {
         	Statement stmt = con.createStatement();
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM survey" 
-        	+ "WHERE startDate= '" + startDate + "'");
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM survey "
+        			+ "WHERE startDate= '" + startDate+"'");
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
         	while(rs.next()) {
         		Survey s = new Survey();
@@ -205,7 +208,8 @@ public class SurveyMapper {
         
         try {
         	Statement stmt = con.createStatement();
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM survey" + "WHERE endDate= '" + endDate + "'");
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM survey "
+        			+ "WHERE endDate= '" + endDate+"'");
         	//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
         	while(rs.next()) {
         		Survey s = new Survey();
@@ -234,8 +238,8 @@ public class SurveyMapper {
     	
     	try {
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM survey"
-    				 + "WHERE survey.groupFK=" + groupFK);
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM survey "
+    				+ "WHERE survey.groupFK=" + groupFK);
     		
     		//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
     		while(rs.next()) {
@@ -284,13 +288,14 @@ public class SurveyMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT survey.startDate, survey.endDate, survey.groupFK" +
-        			"FROM  survey INNER JOIN pocorns.businessownership" + 
-        			"ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK);
+        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK "
+        			+ "FROM survey INNER JOIN popcorns.businessownership "
+        			+ "ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK+"'");
         	
         	//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt zugeordnet
         	while(rs.next()) {
         		Survey s = new Survey();
+        		s.setId(rs.getInt("id"));
         		s.setStartDate(rs.getTimestamp("startDate"));
         		s.setEndDate(rs.getTimestamp("endDate"));
         		s.setGroupFK(rs.getInt("groupFK"));

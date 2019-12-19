@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Survey;
 
 import java.sql.*;
 
@@ -29,7 +30,7 @@ public class GroupMapper {
     /**
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von GroupMapper Objekten verhindert.
      */
-    protected GroupMapper() {
+    public GroupMapper() {
     }
 
     /**
@@ -70,7 +71,7 @@ public class GroupMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.group " + "WHERE id= " + groupID);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.group WHERE id= " + groupID);
 			
 			if(rs.next()) {
 				Group g = new Group();
@@ -161,7 +162,6 @@ public class GroupMapper {
 			while (rs.next()) {
 				Group g = new Group();
 				g.setName(rs.getString("name"));
-				g.setPersonFK(rs.getInt("personFK"));
 				result.add(g);
 			}			
 		}
@@ -188,45 +188,7 @@ public class GroupMapper {
 		}        
     }
     
-    /**
-     * @param survey 
-     * @return
-     */
-    /**public Vector<Survey> findGroupBySurveyFK(Survey survey) {
-    	Connection con = DBConnection.connection();
-		Vector<Survey> result = new Vector<Survey>();
-		
-		try {
-			Statement stmt = con.createStatement();
-			
-			ResultSet rs = stmt.executeQuery("SELECT group.bo_id, group.name"
-					+ " FROM group INNER JOIN survey ON name='" +name+"'");
-		
-			while (rs.next()) {
-				Movie m = new Movie();
-				m.setName(rs.getString("name"));
-				m.setGenre(rs.getString("genre"));
-				m.setDescription(rs.getString("description"));
-				result.add(m);
-				
-			}			
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-        return result;
-    }
-      �berhaupt n�tig?
-    /**
-     * @param survey 
-     * @return
-     
-    public void deleteGroupBySurveyFK(Survey survey) {
-        // TODO implement here
-        return null;
-    }  
-    �berhaupt n�tig?
-    */
+
     /**
      * @param name 
      * @return
