@@ -27,7 +27,7 @@ public class MovieMapper {
     /**
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von MovieMapper Objekten verhindert.
      */
-    public MovieMapper() {
+    protected MovieMapper() {
  
     }
 

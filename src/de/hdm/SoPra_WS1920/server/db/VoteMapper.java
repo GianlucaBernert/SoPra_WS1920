@@ -31,7 +31,7 @@ public class VoteMapper {
     /**
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von VoteMapper Objekten verhindert.
      */
-    public VoteMapper() {
+    protected VoteMapper() {
     }
 
     /**

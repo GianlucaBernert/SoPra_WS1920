@@ -31,7 +31,7 @@ public class CinemaMapper {
 	 * neue Instanzen der Klasse erstellt werden.
 	 */
 
-	public CinemaMapper() {
+	protected CinemaMapper() {
     }
 
     /**
@@ -74,7 +74,7 @@ public class CinemaMapper {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
     			c.setCity(rs.getString("city"));
-    			c.setPostCode(rs.getString("zipCode"));
+    			c.setZipCode(rs.getString("zipCode"));
     			c.setStreet(rs.getString("street"));
     			c.setStreetNo(rs.getString("streetNo"));
     			c.setCinemaChainFK(rs.getInt("cinemachainFK"));
@@ -115,7 +115,7 @@ public class CinemaMapper {
         		+ "','"
         		+ c.getCity() 
         		+ "','"
-        		+ c.getPostCode()
+        		+ c.getZipCode()
         		+ "','"
         		+ c.getStreet()
         		+ "','" 
@@ -151,9 +151,10 @@ public class CinemaMapper {
         	con.setAutoCommit(false);
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE cinema SET name= '" + c.getName()
+        	stmt.executeUpdate("UPDATE cinema SET name= '" 
+        	+ c.getName()
         	+ "', city='"+ c.getCity()
-        	+ "', zipCode='" + c.getPostCode()  
+        	+ "', zipCode='" + c.getZipCode()  
         	+ "', street='" + c.getStreet() 
         	+ "', streetNo='" + c.getStreetNo()
         	+ "' WHERE id=" + c.getId());
@@ -206,7 +207,7 @@ public class CinemaMapper {
         		Cinema c = new Cinema();
         		c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setPostCode(rs.getString("zipCode"));
+        		c.setZipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
@@ -239,7 +240,7 @@ public class CinemaMapper {
         		Cinema c = new Cinema();
         		c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setPostCode(rs.getString("zipCode"));
+        		c.setZipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
@@ -272,7 +273,7 @@ public class CinemaMapper {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
     			c.setCity(rs.getString("city"));
-    			c.setPostCode(rs.getString("zipCode"));
+    			c.setZipCode(rs.getString("zipCode"));
     			c.setStreetNo(rs.getString("streetNo"));
     			c.setCinemaChainFK(rs.getInt("cinemachainFK"));
     			
@@ -300,7 +301,7 @@ public class CinemaMapper {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
     			c.setCity(rs.getString("city"));
-    			c.setPostCode(rs.getString("zipCode"));
+    			c.setZipCode(rs.getString("zipCode"));
     			c.setStreet(rs.getString("street"));
     			c.setStreetNo(rs.getString("streetNo"));
     			c.setCinemaChainFK(rs.getInt("cinemachainFK"));
@@ -357,7 +358,7 @@ public class CinemaMapper {
         	
         	ResultSet rs = stmt.executeQuery("SELECT cinema.id, cinema.name, cinema.city, "
         			+ "cinema.zipCode, cinema.street, cinema.streetNo, cinema.cinemachainFK FROM cinema "
-        			+ "INNER JOIN popcorns.businessownership ON cinema.id= businessownership.id "
+        			+ "INNER JOIN popcorns.businessownership ON cinema.id=businessownership.id "
         			+ "AND businessownership.personFK='" + personFK+"'");
         	
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt zugeordnet
@@ -365,7 +366,7 @@ public class CinemaMapper {
         		Cinema c = new Cinema();
         		c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setPostCode(rs.getString("zipCode"));
+        		c.setZipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));

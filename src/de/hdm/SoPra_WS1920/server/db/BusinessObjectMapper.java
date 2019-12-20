@@ -29,7 +29,7 @@ public class BusinessObjectMapper {
     /**
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von BusinessObjectMapper Objekten verhindert.
      */
-    public BusinessObjectMapper() {
+    protected BusinessObjectMapper() {
     }
 
     /**

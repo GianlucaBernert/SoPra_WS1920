@@ -31,7 +31,7 @@ public class MembershipMapper {
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von MembershipMapper Objekten verhindert.
      */
 	
-    public MembershipMapper() {
+    protected MembershipMapper() {
     }
 
     /**
