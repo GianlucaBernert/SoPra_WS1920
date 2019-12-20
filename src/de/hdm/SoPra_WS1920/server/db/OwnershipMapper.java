@@ -28,7 +28,7 @@ public class OwnershipMapper {
     /**
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von OwnsershipMapper Objekten verhindert.
      */
-    public OwnershipMapper() {
+    protected OwnershipMapper() {
     }
 
     /**

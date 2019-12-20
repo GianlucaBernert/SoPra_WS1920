@@ -33,7 +33,7 @@ public class CinemaChainMapper {
  * neue Instanzen der Klasse erstellt werden.
  */
 	
-	public CinemaChainMapper() {
+	protected CinemaChainMapper() {
 		
 	}
 	

@@ -31,7 +31,7 @@ public class SurveyEntryMapper {
 	 * Geschützter Konstruktor, der verhindert, dass mit dem new-Operator
 	 * neue Instanzen der Klasse erstellt werden.
 	 */
-    public SurveyEntryMapper() {
+    protected SurveyEntryMapper() {
     }
     
     /**

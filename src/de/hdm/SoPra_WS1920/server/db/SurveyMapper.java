@@ -34,7 +34,7 @@ public class SurveyMapper {
  * neue Instanzen der Klasse erstellt werden.
  */
 	
-	public SurveyMapper() {
+	protected SurveyMapper() {
 		
 	}
 	

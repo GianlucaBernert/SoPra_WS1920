@@ -29,7 +29,7 @@ public class PersonMapper {
     /**
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von UserMapper Objekten verhindert.
      */
-    public PersonMapper() {
+    protected PersonMapper() {
       
     }
 

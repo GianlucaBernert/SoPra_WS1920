@@ -30,7 +30,7 @@ public class GroupMapper {
     /**
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von GroupMapper Objekten verhindert.
      */
-    public GroupMapper() {
+    protected GroupMapper() {
     }
 
     /**
