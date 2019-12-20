@@ -153,7 +153,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Screening createScreening(Timestamp screeningDateTime, int cinemaFK, int movieFK, int personFK, Timestamp creationTimestamp) {
+    public Screening createScreening(Date screeningDateTime, int cinemaFK, int movieFK, int personFK, Timestamp creationTimestamp) {
         
     	Screening sc = new Screening();
     	
@@ -535,7 +535,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	
     }
     
-    // Methode updateCinemaId hierzu muss bei einem Vector von ausgewählten Kino Objekten die CinemaChain ID geupdatet werden.
+    // Methode updateCinemaId hierzu muss bei einem Vector von ausgewï¿½hlten Kino Objekten die CinemaChain ID geupdatet werden.
     
     @Override
     public CinemaChain updateCinemaChain(CinemaChain cc) {
@@ -546,7 +546,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     public void deleteCinemaChain(CinemaChain cc) {
     	this.ccMapper.deleteCinemaChain(cc);
     	this.deleteOwnership(this.findOwnership(cc.getId()));
-    	// Löschen der CinemaChainID in den Cinema Objekten notwenig!
+    	// Lï¿½schen der CinemaChainID in den Cinema Objekten notwenig!
     }
     
     @Override
@@ -570,7 +570,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     }
     
     /**
-     * Methode zum Aufrufen aller zugehörigen Cinema Objekte einer CinemaChain
+     * Methode zum Aufrufen aller zugehï¿½rigen Cinema Objekte einer CinemaChain
      * @param cc
      * @return
      */

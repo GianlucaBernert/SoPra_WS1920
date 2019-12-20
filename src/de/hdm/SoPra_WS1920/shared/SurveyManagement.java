@@ -1,6 +1,7 @@
 package de.hdm.SoPra_WS1920.shared;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Vector;
 
 import org.apache.james.mime4j.field.datetime.DateTime;
@@ -10,6 +11,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
+import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
@@ -111,7 +113,7 @@ public interface SurveyManagement extends RemoteService {
      * @param Group g
      * @param Person p
      */
-    public void createMembership(Group g, Person p);
+    public Membership createMembership(Group g, Person p);
     
     /**
      * Methode um eine Mitgliedschaft zu löschen
@@ -161,7 +163,7 @@ public interface SurveyManagement extends RemoteService {
      * @param Timestamp endDate 
      * @return Survey s
      */
-    public Survey createSurvey(int gFK, int pFK, Timestamp startDate, Timestamp endDate);
+    public Survey createSurvey(int gFK, int pFK, Date startDate, Date endDate);
     
     /**
      * Methode um eine Umfrage zu bearbeiten
@@ -209,14 +211,14 @@ public interface SurveyManagement extends RemoteService {
      * @param Timestamp startDate
      * @return Vector<Survey>
      */
-    public Vector<Survey> getSurveyByStartDate(Timestamp startDate);
+    public Vector<Survey> getSurveyByStartDate(Date startDate);
 
     /**
      * Methode um eine Umfrage anhand des ENd Datums zu finden
      * @param Timestamp endDate
      * @return Vector<Survey>
      */
-    public Vector<Survey> getSurveyByEndDate(Timestamp endDate);
+    public Vector<Survey> getSurveyByEndDate(Date endDate);
 
     /**
      * Methode um ein Vote zu erstellen
@@ -286,7 +288,7 @@ public interface SurveyManagement extends RemoteService {
      * Methode um einen Umfrageeintrag zu bearbeiten
      * @param SurveyEntry se
      */
-    public void editSurvey(SurveyEntry se);
+    public void editSurveyEntry(SurveyEntry se);
     
     /**
      * Methode um einen Umfrageeintrag anhand der ID zu finden
