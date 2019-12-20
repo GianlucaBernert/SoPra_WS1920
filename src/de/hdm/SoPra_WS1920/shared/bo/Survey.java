@@ -1,6 +1,7 @@
 package de.hdm.SoPra_WS1920.shared.bo;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author GianlucaBernert
@@ -14,8 +15,8 @@ public class Survey extends Ownership {
      * Variablen der Klasse Survey
      */
     private int groupFK;
-    private Timestamp startDate;
-    private Timestamp endDate;
+    private Date startDate;
+    private Date endDate;
 
     /**
      * Konstruktor der Klasse Survey, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
@@ -43,7 +44,7 @@ public class Survey extends Ownership {
      * Methode um das end Datum einer Umfrage auszugeben
      * @return Timestamp endDate
      */
-    public Timestamp getEndDate() {
+    public Date getEndDate() {
        return endDate;
     }
 
@@ -51,7 +52,7 @@ public class Survey extends Ownership {
      * Methode um das end Datum einer Umfrage zu setzen
      * @param Timestamp endDate 
      */
-    public void setEndDate(Timestamp endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -59,7 +60,7 @@ public class Survey extends Ownership {
 	 * Methode um das start Datum einer Umfrage auszugeben
 	 * @return Timestamp startDate
 	 */
-	public Timestamp getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
@@ -67,7 +68,7 @@ public class Survey extends Ownership {
 	 * Methode um das start Datum einer Umfrage zu setzen
 	 * @param Timesrtamp startDate
 	 */
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	

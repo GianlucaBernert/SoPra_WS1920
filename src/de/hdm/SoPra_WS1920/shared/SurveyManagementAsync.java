@@ -2,6 +2,7 @@ package de.hdm.SoPra_WS1920.shared;
 
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Vector;
 
 import org.apache.james.mime4j.field.datetime.DateTime;
@@ -77,7 +78,7 @@ public interface SurveyManagementAsync {
      * @param AsyncCallback<Survey> callback
      * @return Survey s
      */
-    public void createSurvey(int gFK, int pFK, Timestamp startDate, Timestamp endDate, AsyncCallback<Survey> callback);
+    public void createSurvey(int gFK, int pFK, Date startDate, Date endDate, AsyncCallback<Survey> callback);
     
     /**
      * Methode um eine Umfrage zu bearbeiten
@@ -141,7 +142,7 @@ public interface SurveyManagementAsync {
      * @param Person p
      * @param AsyncCallback<Void> callback
      */
-    void createMembership(Group g, Person p, AsyncCallback<Void> callback);
+    void createMembership(Group g, Person p, AsyncCallback<Membership> callback);
     
     /**
      * Methode um eine Mitgliedschaft zu löschen
@@ -187,7 +188,7 @@ public interface SurveyManagementAsync {
      * @param AsyncCallback<Vector<Survey>> callback
      * @return Vector<Survey>
      */
-    public void getSurveyByStartDate(Timestamp startDate, AsyncCallback<Vector<Survey>> callback);
+    public void getSurveyByStartDate(Date startDate, AsyncCallback<Vector<Survey>> callback);
 
     /**
      * Methode um eine Umfrage anhand des ENd Datums zu finden
@@ -195,7 +196,7 @@ public interface SurveyManagementAsync {
      * @param AsyncCallback<Vector<Survey>> callback
      * @return Vector<Survey>
      */
-    public void getSurveyByEndDate(Timestamp endDate, AsyncCallback<Vector<Survey>> callback);
+    public void getSurveyByEndDate(Date endDate, AsyncCallback<Vector<Survey>> callback);
 
     /**
      * Methode um eine Person anhand der ID zu finden
@@ -377,6 +378,6 @@ public interface SurveyManagementAsync {
      * @param SurveyEntry se
      * @param AsyncCallback<Void> callback
      */
-    public void editSurvey(SurveyEntry se, AsyncCallback<Void> callback);
+    public void editSurveyEntry(SurveyEntry se, AsyncCallback<Void> callback);
 
 }

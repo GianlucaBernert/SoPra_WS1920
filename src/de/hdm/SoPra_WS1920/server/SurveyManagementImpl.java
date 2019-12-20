@@ -2,6 +2,7 @@ package de.hdm.SoPra_WS1920.server;
 
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -275,12 +276,14 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param Group g
      * @param Person p
      * @throws IllegalArgumentException
+     * @return Membership m
      */
-    public void createMembership(Group g, Person p) throws IllegalArgumentException {
+    public Membership createMembership(Group g, Person p) throws IllegalArgumentException {
     	Membership m = new Membership();
     	m.setGroup(g);
     	m.setPerson(p);
         this.meMapper.insertMembership(g, p);
+        return m;
     }
     
     /**
@@ -349,7 +352,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @throws IllegalArgumentException
      * @return Survey s
      */
-    public Survey createSurvey(int gFK, int pFK, Timestamp startDate, Timestamp endDate) throws IllegalArgumentException {
+    public Survey createSurvey(int gFK, int pFK, Date startDate, Date endDate) throws IllegalArgumentException {
     	Ownership os = new Ownership();
         Survey s = new Survey();
         s.setId(os.getId());
@@ -406,7 +409,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param Timestamp startDate
      * @return Vector<Survey>
      */
-    public Vector<Survey> getSurveyByStartDate(Timestamp startDate) {
+    public Vector<Survey> getSurveyByStartDate(Date startDate) {
         return this.sMapper.findSurveyByEndDate(startDate);
     }
 
@@ -415,7 +418,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param Timestamp endDate
      * @return Vector<Survey>
      */
-    public Vector<Survey> getSurveyByEndDate(Timestamp endDate) {
+    public Vector<Survey> getSurveyByEndDate(Date endDate) {
         return this.sMapper.findSurveyByEndDate(endDate);
     }
     
@@ -459,7 +462,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * Methode um einen Umfrageeintrag zu bearbeiten
      * @param SurveyEntry se
      */
-    public void editSurvey(SurveyEntry se) {
+    public void editSurveyEntry(SurveyEntry se) {
         this.seMapper.updateSurveyEntry(se);
     }
     
