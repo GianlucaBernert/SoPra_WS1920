@@ -15,7 +15,7 @@ public class Cinema extends Ownership {
      */
     private String name;
     private String city;
-    private String postCode;
+    private String zipCode;
     private String street;
     private String streetNo;
     
@@ -61,18 +61,18 @@ public class Cinema extends Ownership {
 
     /**
      * Methode um die Postleitzahl eines Kinos auszugeben
-     * @return String postCode
+     * @return String zipCode
      */
-    public String getPostCode() {
-       return postCode;
+    public String getzipCode() {
+       return zipCode;
     }
 
     /**
      * Methode um die Postleitzahl eines Kinos zu setzen
-     * @param String postCode 
+     * @param String zipCode 
      */
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
+    public void setzipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     /**

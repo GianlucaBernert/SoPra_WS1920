@@ -10,6 +10,7 @@ import org.apache.james.mime4j.field.datetime.DateTime;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -33,7 +34,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param postCode 
      * @return
      */
-    Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode, int personFK, Timestamp creationTimestamp);
+    Cinema createCinema(String name, String cityName, String street, String streetNr, String zipCode, int personFK);
 
     /**
      * @param name 
@@ -41,7 +42,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param description 
      * @return
      */                       
-    Movie createMovie(String name, String genre, String description, int personFK, Timestamp creationTimestamp);
+    Movie createMovie(String name, String genre, String description, int personFK);
 
     /**
      * @param screeningDatetime 
@@ -49,7 +50,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param cinemaFK 
      * @return
      */
-    Screening createScreening(Timestamp screeningDateTime, int cinemaFK, int movieFK, int personFK, Timestamp creationTimestamp);
+    Screening createScreening(Timestamp screeningDateTime, int cinemaFK, int movieFK, int personFK);
 
     /**
      * @param cinema 
@@ -154,7 +155,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param isAdmin 
      * @return
      */
-    Person createPerson(String firstName, String lastName, String eMail, Timestamp creationTimestamp);
+    Person createPerson(String firstName, String lastName, String eMail);
 
     /**
      * @param id 
@@ -200,7 +201,7 @@ public interface CinemaAdministration extends RemoteService {
 
 	Vector<SurveyEntry> getSurveyEntryByScreeningFK(int ScreeningFK);
 
-	Vector<Cinema> findCinemasByCinemaChainID(CinemaChain cc);
+	Vector<Cinema> findCinemasByCinemaChain(CinemaChain cc);
 
 	Vector<Cinema> findCinemasByPersonFK(int personFK);
 
@@ -214,7 +215,7 @@ public interface CinemaAdministration extends RemoteService {
 
 	CinemaChain updateCinemaChain(CinemaChain cc);
 
-	CinemaChain createCinemaChain(Cinema c, String name, Timestamp creationTimestamp, int personFK);
+	CinemaChain createCinemaChain(Cinema c, String name, int personFK);
 
 	Vector<Ownership> getOwnershipsbyPersonFK(int personFK);
 
@@ -222,6 +223,10 @@ public interface CinemaAdministration extends RemoteService {
 
 	void deleteOwnership(Ownership ownership);
 
-	Ownership createOwnership(int personFK, Timestamp creationTimestamp, int id);
+	Ownership createOwnership(int personFK);
+
+	void deleteBusinessObject(BusinessObject bo);
+
+	BusinessObject createBusinessObject();
 
 }
