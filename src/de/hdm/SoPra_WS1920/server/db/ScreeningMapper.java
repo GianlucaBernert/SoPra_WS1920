@@ -70,7 +70,7 @@ public class ScreeningMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM screening" + "WHERE id=" + id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM screening WHERE id=" +id);
 			
 			if(rs.next()) {
 				
@@ -128,14 +128,15 @@ public class ScreeningMapper {
         Connection con = DBConnection.connection();
         
         try {
-        	con.setAutoCommit(true);
+        	con.setAutoCommit(false);
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE screening" + "SET screeningDateTime=\'" + sc.getScreeningDateTime()
-        	+ "\", " + "movieFK=\'" + sc.getMovieFK() +  "\", " + "cinemaFK=\'" + sc.getCinemaFK() + "\", " 
-        	+ "WHERE id=" + sc.getId());
+        	stmt.executeUpdate("UPDATE screening SET screeningDateTime='"+sc.getScreeningDateTime()
+        	+ "', movieFK='"+sc.getMovieFK()
+        	+ "', cinemaFK='"+sc.getCinemaFK()
+        	+"' WHERE id="+sc.getId());
         	
-        	con.setAutoCommit(false);
+        	con.setAutoCommit(true);
         	
         }
         catch(SQLException e2) {
@@ -155,7 +156,7 @@ public class ScreeningMapper {
     	try {
     		Statement stmt = con.createStatement();
     		
-    		stmt.executeUpdate("DELETE FROM screening" + "WHERE id=" + sc.getId());
+    		stmt.executeUpdate("DELETE FROM screening WHERE id= " + sc.getId());
     		
     	}
     	catch(SQLException e2) {
@@ -176,8 +177,8 @@ public class ScreeningMapper {
         
         try {
         	Statement stmt = con.createStatement();
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM screening" 
-        	+ "WHERE screeningDateTime= '" + screeningDateTime + "'");
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
+        			+ "WHERE screeningDateTime= '" + screeningDateTime+"'");
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
         	while(rs.next()) {
         		Screening sc = new Screening();
@@ -220,8 +221,8 @@ public class ScreeningMapper {
     	
     	try {
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM screening"
-    				 + "WHERE screening.movieFK=" + movieFK);
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
+    				+ "WHERE movieFK= " + movieFK);
     		
     		//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
     		while(rs.next()) {
@@ -269,8 +270,8 @@ public class ScreeningMapper {
     	
     	try {
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM screening"
-    				 + "WHERE screening.cinemaFK=" + cinemaFK);
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
+    				+ "WHERE screening.cinemaFK=" + cinemaFK);
     		
     		//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
     		while(rs.next()) {
@@ -318,9 +319,9 @@ public class ScreeningMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT screening.screeningDateTime, screening.movieFK, screening.cinemaFK" +
-        			"FROM  screening INNER JOIN pocorns.businessownership" + 
-        			"ON screening.id = businessownership.id AND businessownership.personFK= '" + personFK);
+        	ResultSet rs = stmt.executeQuery("SELECT screening.id, screening.screeningDateTime, screening.movieFK, screening.cinemaFK "
+        			+ "FROM screening INNER JOIN popcorns.businessownership "
+        			+ "ON screening.id = businessownership.id AND businessownership.personFK= '" + personFK+"'");
         	
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt zugeordnet
         	while(rs.next()) {

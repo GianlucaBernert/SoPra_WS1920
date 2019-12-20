@@ -122,7 +122,7 @@ public class BusinessObjectMapper {
     	
     	try {
     		Statement stm1 = con.createStatement();
-    		stm1.executeUpdate("Delete from businessownership Where id = "+businessobject.getId());
+    		stm1.executeUpdate("Delete from businessobject Where id = "+businessobject.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
