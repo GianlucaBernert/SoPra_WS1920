@@ -9,6 +9,7 @@ import org.apache.james.mime4j.field.datetime.DateTime;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -33,7 +34,7 @@ public interface CinemaAdministrationAsync {
      * @param callback 
      * @return
      */
-    void createCinema(String name, String cityName, String street, String streetNr, String postCode, int personFK, Timestamp creationTimestamp, AsyncCallback<Cinema> callback);
+    void createCinema(String name, String cityName, String street, String streetNr, String zipCode, int personFK, AsyncCallback<Cinema> callback);
 
     /**
      * @param name 
@@ -42,7 +43,7 @@ public interface CinemaAdministrationAsync {
      * @param callback 
      * @return
      */
-    void createMovie(String name, String genre, String description,int personFK, Timestamp creationTimestamp, AsyncCallback<Movie> callback);
+    void createMovie(String name, String genre, String description,int personFK, AsyncCallback<Movie> callback);
 
     /**
      * @param screeningDatetime 
@@ -51,7 +52,7 @@ public interface CinemaAdministrationAsync {
      * @param callback 
      * @return
      */
-    void createScreening(Timestamp screeningDateTime, int cinemaFK, int movieFK, int PersonFK, Timestamp creationTimestamp, AsyncCallback<Screening> callback);
+    void createScreening(Timestamp screeningDateTime, int cinemaFK, int movieFK, int PersonFK, AsyncCallback<Screening> callback);
 
     /**
      * @param cinema 
@@ -173,7 +174,7 @@ public interface CinemaAdministrationAsync {
      * @param callback 
      * @return
      */
-    void createPerson(String firstName, String lastName, String eMail, Timestamp creationTimestamp, AsyncCallback<Person> callback);
+    void createPerson(String firstName, String lastName, String eMail, AsyncCallback<Person> callback);
 
     /**
      * @param id 
@@ -225,7 +226,7 @@ public interface CinemaAdministrationAsync {
     
     void getSurveyEntryByScreeningFK(int ScreeningFK, AsyncCallback<Vector<SurveyEntry>> callback);
     
-    void findCinemasByCinemaChainID(CinemaChain cc, AsyncCallback<Vector<Cinema>> callback);
+    void findCinemasByCinemaChain(CinemaChain cc, AsyncCallback<Vector<Cinema>> callback);
     
     void findCinemasByPersonFK(int personFK, AsyncCallback<Vector<Cinema>> callback);
     
@@ -239,7 +240,7 @@ public interface CinemaAdministrationAsync {
     
     void updateCinemaChain(CinemaChain cc, AsyncCallback<CinemaChain> callback);
     
-    void createCinemaChain(Cinema c, String name, Timestamp creationTimestamp, int personFK, AsyncCallback<CinemaChain> callback);
+    void createCinemaChain(Cinema c, String name, int personFK, AsyncCallback<CinemaChain> callback);
     
     void getOwnershipsbyPersonFK(int personFK, AsyncCallback<Vector<Ownership>> callback);
     
@@ -247,6 +248,10 @@ public interface CinemaAdministrationAsync {
     
     void deleteOwnership(Ownership ownership, AsyncCallback<Void> callback);
     
-    void createOwnership(int personFK, Timestamp creationTimestamp, int id, AsyncCallback<Ownership> callback);
+    void createOwnership(int personFK, AsyncCallback<Ownership> callback);
+    
+    void deleteBusinessObject(BusinessObject bo, AsyncCallback<Void> callback);
+    
+    void createBusinessObject(AsyncCallback<BusinessObject> callback);
     
 }
