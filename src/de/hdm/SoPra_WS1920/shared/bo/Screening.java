@@ -17,7 +17,7 @@ public class Screening extends Ownership {
      */
     private int cinemaFK;
     private int movieFK;
-    private Timestamp screeningDateTime;
+    private Date screeningDateTime;
 
     /**
      * Konstruktor der Klasse Screening, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
@@ -65,19 +65,19 @@ public class Screening extends Ownership {
    		return "ScreeningID #SC" + this.getId();
    	}
    	/**
-   	 * Methode um den Zeitpunkt einer Vorführung auszugeben
+   	 * Methode um den Zeitpunkt einer Vorfï¿½hrung auszugeben
    	 * @return Timestamp screeningDateTime
    	 */
 
-	public Timestamp getScreeningDateTime() {
+	public Date getScreeningDateTime() {
 		return screeningDateTime;
 	}
 
    	/**
-   	 * Methode um den Zeitpunkt einer Vorführung zu setzen
+   	 * Methode um den Zeitpunkt einer Vorfï¿½hrung zu setzen
    	 * @param Timestamp screeningDateTime
    	 */	
-	public void setScreeningDateTime(Timestamp screeningDateTime) {
+	public void setScreeningDateTime(Date screeningDateTime) {
 		this.screeningDateTime = screeningDateTime;
 	}
 }

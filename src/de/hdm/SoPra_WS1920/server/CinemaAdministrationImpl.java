@@ -7,27 +7,21 @@ import java.util.*;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.SoPra_WS1920.server.db.BusinessObjectMapper;
 import de.hdm.SoPra_WS1920.server.db.CinemaChainMapper;
 import de.hdm.SoPra_WS1920.server.db.CinemaMapper;
-import de.hdm.SoPra_WS1920.server.db.GroupMapper;
 import de.hdm.SoPra_WS1920.server.db.MovieMapper;
 import de.hdm.SoPra_WS1920.server.db.OwnershipMapper;
 import de.hdm.SoPra_WS1920.server.db.PersonMapper;
 import de.hdm.SoPra_WS1920.server.db.ScreeningMapper;
 import de.hdm.SoPra_WS1920.server.db.SurveyEntryMapper;
-import de.hdm.SoPra_WS1920.server.db.SurveyMapper;
 import de.hdm.SoPra_WS1920.server.db.VoteMapper;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministration;
-import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
-import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
-import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
@@ -67,12 +61,6 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     
     private OwnershipMapper oMapper = null;
     
-    private BusinessObjectMapper boMapper = null;
-    
-    private GroupMapper gMapper = null;
-    
-    private SurveyMapper sMapper = null;
-    
     /**
      * Initialisierung
      */
@@ -87,9 +75,6 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	this.vMapper = VoteMapper.voteMapper();
     	this.ccMapper = CinemaChainMapper.cinemaChainMapper();
     	this.oMapper = OwnershipMapper.ownershipMapper();
-    	this.boMapper = BusinessObjectMapper.BusinessObjectMapper();
-    	this.gMapper = GroupMapper.groupMapper();
-    	this.sMapper = SurveyMapper.surveyMapper();
     	
     }
     
@@ -104,19 +89,21 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Cinema createCinema(String name, String cityName, String street, String streetNr, String zipCode, int personFK) {
+    public Cinema createCinema(String name, String cityName, String street, String streetNr, String postCode, int personFK, Timestamp creationTimestamp) {
     		
-    		Ownership o = this.createOwnership(personFK);
     	
         	Cinema c = new Cinema();
         	
         	c.setName(name);
         	c.setCity(cityName);
         	c.setStreet(street);
-        	c.setPostCode(zipCode);
-        	c.setId(o.getId());
+        	c.setPostCode(postCode);
+        	c.setId(1);
+        	c.setCreationTimestamp(creationTimestamp);
         	
         	this.cMapper.insertCinema(c);
+        	
+        	this.createOwnership(personFK, creationTimestamp, c.getId());
         	
         	return c;
         	
@@ -130,7 +117,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Movie createMovie(String name, String genre, String description, int personFK) {
+    public Movie createMovie(String name, String genre, String description, int personFK, Timestamp creationTimestamp) {
         
     	Vector <Movie> m1 = new Vector <Movie>();
     	m1 = mMapper.findMovieByName(name);
@@ -141,18 +128,16 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 		
 		else {
 			
-		Ownership o = this.createOwnership(personFK);	
-			
 		Movie m	= new Movie();
 		
 		m.setName(name);
 		m.setGenre(genre);
 		m.setDescription(description);
-		m.setId(o.getId());
+		m.setId(1);
 		
 		this.mMapper.insertMovie(m);
 		
-		
+		this.createOwnership(personFK, creationTimestamp, m.getId());
 		
 		return  m;
 			
@@ -168,20 +153,21 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Screening createScreening(Timestamp screeningDateTime, int cinemaFK, int movieFK, int personFK) {
+    public Screening createScreening(Timestamp screeningDateTime, int cinemaFK, int movieFK, int personFK, Timestamp creationTimestamp) {
         
-    	
-    	Ownership o = this.createOwnership(personFK);
-    	
     	Screening sc = new Screening();
     	
     	sc.setCinemaFK(cinemaFK);
     	sc.setMovieFK(movieFK);
     	sc.setScreeningDateTime(screeningDateTime);
-    	sc.setId(o.getId());
-
-    	return this.scMapper.insertScreening(sc);
+    	sc.setId(1);
+    	sc.setCreationTimestamp(creationTimestamp);
+    	
+        this.scMapper.insertScreening(sc);
         
+        this.createOwnership(personFK, creationTimestamp, sc.getId());
+        
+        return sc;
     } 
 
     /**
@@ -200,7 +186,6 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     			this.deleteScreening(s1);
     		}
     	}
-    	//Wenn cc Id -> 
     	
     	//Loeschen des Cinema Object
         this.cMapper.deleteCinema(cinema);
@@ -384,16 +369,15 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Person createPerson(String firstName, String lastName, String eMail) {
+    public Person createPerson(String firstName, String lastName, String eMail, Timestamp creationTimestamp) {
         
-    	BusinessObject bo = this.createBusinessObject();
-    	
     	Person p = new Person();
     	
     	p.setEMail(eMail);
     	p.setFirstname(firstName);
     	p.setLastname(lastName);
-    	p.setId(bo.getId());
+    	p.setId(1);
+    	p.setCreationTimestamp(creationTimestamp);
     	
         return this.pMapper.insertPerson(p);
     }
@@ -438,7 +422,15 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
         return this.pMapper.findPersonByEmail(eMail);
     }
 
-
+    /**
+     * @param person 
+     * @return
+     */
+    @Override
+    public void deletePerson(Person person) {
+        // TODO implement here
+        
+    }
 
     /**
      * @param person 
@@ -478,7 +470,6 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	}
     	
     	this.seMapper.deleteSurveyEntry(surveyEntry);
-    	this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(surveyEntry.getId()));
         
     }
     
@@ -497,14 +488,13 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     }
     
     @Override
-    public Ownership createOwnership(int personFK) {
+    public Ownership createOwnership(int personFK, Timestamp creationTimestamp, int id ) {
     	
-    	BusinessObject bo = this.createBusinessObject();
-    	
-
     	Ownership o = new Ownership();
-    	o.setId(bo.getId());
+    	o.setId(id);
     	o.setPersonFK(personFK);
+    	o.setCreationTimestamp(creationTimestamp);
+    	
     	
     	return this.oMapper.insertOwnership(o);
     }
@@ -512,7 +502,6 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     @Override
     public void deleteOwnership(Ownership ownership) {
     	this.oMapper.deleteOwnership(ownership);
-    	this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(ownership.getId()));
     }
     
     @Override
@@ -526,21 +515,21 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     }
     
     @Override
-    public CinemaChain createCinemaChain(Cinema c , String name, int personFK) {
-    	
-    	
-    	Ownership o = this.createOwnership(personFK);
+    public CinemaChain createCinemaChain(Cinema c , String name, Timestamp creationTimestamp,int personFK) {
     	
     	CinemaChain cc = new CinemaChain();
     	
-    	cc.setId(o.getId());
+    	cc.setId(1);
     	cc.setName(name);
+    	cc.setCreationTimestamp(creationTimestamp);
     	
-    	cc = this.ccMapper.insertCinemaChain(cc);
     	
-    	//c.setId(cc.getId());
-    	//this.updateCinema(c);
+    	this.ccMapper.insertCinemaChain(cc);
     	
+    	c.setId(cc.getId());
+    	this.updateCinema(c);
+    	
+    	this.createOwnership(personFK, creationTimestamp, cc.getId());
     	
     	return cc;
     	
@@ -570,10 +559,10 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	return this.ccMapper.findCinemaChainByPersonFK(personFK);
     }
     
-   @Override
-   public CinemaChain findCinemaChainById(int id) {
-   return this.ccMapper.findCinemaChainByID(id);
-   }
+    @Override
+    public CinemaChain findCinemaChainById(int id) {
+    	return this.ccMapper.findCinemaChainByID(id);
+    }
     
     @Override
     public Vector <Cinema> findCinemasByPersonFK(int personFK){
@@ -586,78 +575,8 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Vector <Cinema> findCinemasByCinemaChain(CinemaChain cc){
-    	return this.cMapper.findCinemaByCinemaChain(cinemachainFK);
-    }
-    
-    @Override
-    public BusinessObject createBusinessObject(){
-    	BusinessObject bo = new BusinessObject();
-    	Timestamp time = new Timestamp(System.currentTimeMillis());
-    	bo.setCreationTimestamp(time);
-    	this.boMapper.insertBusinessObject(bo);
-    	return bo;
-    }
-    
-    @Override
-    public void deleteBusinessObject(BusinessObject bo) {
-    	this.boMapper.deleteBusinessObject(bo);
-    }
-    
-    @Override
-    public void deletePerson(Person p) {
-        Vector<Vote> vOfPerson = this.vMapper.findVoteByPersonFK(p.getId());
-        if (vOfPerson != null) {
-        	for (Vote v : vOfPerson) {
-        		this.vMapper.deleteVote(v);
-        	}
-        }
-        
-        Vector<Survey> sOfPerson = this.sMapper.findSurveyByPersonFK(p.getId());
-        if (sOfPerson != null) {
-        	for (Survey s : sOfPerson) {
-        		this.sMapper.deleteSurvey(s);
-        	}
-        }
-        
-        Vector<Group> gOfPerson = this.gMapper.findGroupByPersonFK(p.getId());
-        if (gOfPerson != null) {
-        	for (Group g : gOfPerson) {
-        		this.gMapper.deleteGroup(g);
-        	}
-        }
-        
-        Vector<Screening> scOfPerson = this.scMapper.findScreeningByPersonFK(p.getId());
-        if (scOfPerson != null) {
-        	for (Screening sc : scOfPerson) {
-        		this.scMapper.deleteScreening(sc);
-        	}
-        }
-        
-        Vector<Cinema> cOfPerson = this.cMapper.findCinemaByPersonFK(p.getId());
-        if (cOfPerson != null) {
-        	for (Cinema c : cOfPerson) {
-        		this.cMapper.deleteCinema(c);
-        	}
-        }
-        
-        Vector<Movie> mOfPerson = this.mMapper.findMovieByPersonFK(p.getId());
-        if (mOfPerson != null) {
-        	for (Movie m : mOfPerson) {
-        		this.mMapper.deleteMovie(m);
-        	}
-        }
-        
-        Vector<Ownership> osOfPerson = this.oMapper.findOwnershipByPersonFK(p.getId());
-        if (osOfPerson != null) {
-        	for (Ownership os : osOfPerson) {
-        		this.oMapper.deleteOwnership(os);
-        	}
-        }
-        
-        this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(p.getId()));
-        
-        this.pMapper.deletePerson(p);
+    public Vector <Cinema> findCinemasByCinemaChainID(CinemaChain cc){
+    	return this.ccMapper.findCinemasByCinemaChainID(cc);
     }
     
 }

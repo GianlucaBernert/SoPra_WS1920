@@ -14,6 +14,7 @@ public class GroupForm extends DialogBox {
 	
 	SurveyManagementHeader header;
 	SurveyContent content;
+	AddGroupMemberForm agmf;
 	
 	Label groupName;
 	Label memberName;
@@ -23,6 +24,8 @@ public class GroupForm extends DialogBox {
 	HorizontalPanel buttonPanel;
 	Button cancel;
 	Image cancelIcon;
+	Image saveIcon;
+	Image addIcon;
 	
 	GroupForm gf;
 	
@@ -56,10 +59,22 @@ public class GroupForm extends DialogBox {
 		cancelIcon = new Image("/Images/001-unchecked.svg");
 		cancelIcon.setStyleName("cancelIcon");
 		cancelIcon.addClickHandler(new CancelClickHandler(this));
+		
+		saveIcon = new Image("/Images/002-checked.svg");
+		saveIcon.setStylePrimaryName("saveIcon");
+		saveIcon.addClickHandler(new SaveClickHandler(this));
+		
+		addIcon = new Image("/Images/003-edit.png");
+		addIcon.setStylePrimaryName("editIcon");
+		addIcon.addClickHandler(new AddClickHandler(this, agmf));
+		
+		
 	
 		main.add(groupName);
 		main.add(groupTextBox);
 		main.add(cancelIcon);
+		main.add(saveIcon);
+		main.add(addIcon);
 		
 		main.add(memberName);
 		main.add(memberTextBox);
@@ -96,5 +111,35 @@ public class GroupForm extends DialogBox {
 		}
 		
 	}
+	
+	class SaveClickHandler implements ClickHandler {
+		
+		public SaveClickHandler(GroupForm gf) {
+			
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	class AddClickHandler implements ClickHandler{
+		
+		public AddClickHandler(GroupForm gf, AddGroupMemberForm agmf) {
+			
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			AddGroupMemberForm agmf = new AddGroupMemberForm();
+			agmf.showAddGroupMemberForm();
+			
+		}
+	}
+	
+	
 	
 }

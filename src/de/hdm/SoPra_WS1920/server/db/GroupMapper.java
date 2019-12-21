@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Survey;
 
 import java.sql.*;
 
@@ -70,7 +71,7 @@ public class GroupMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.group " + "WHERE bo_id= " + groupID);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.group WHERE id= " + groupID);
 			
 			if(rs.next()) {
 				Group g = new Group();
@@ -94,7 +95,7 @@ public class GroupMapper {
     	        
     		Statement stm1 = con.createStatement();
 
-			stm1.executeUpdate("INSERT INTO popcorns.group (bo_id, name) VALUES ('"
+			stm1.executeUpdate("INSERT INTO popcorns.group (id, name) VALUES ('"
 								+group.getId()
 								+"', '"+group.getName()
 								+"')");
@@ -118,7 +119,7 @@ public class GroupMapper {
     	try {
     		Statement stmt = con.createStatement();
     		stmt.executeUpdate("UPDATE popcorns.group Set name='"+group.getName()
-    				+"' Where bo_id="+group.getId());
+    				+"' Where id="+group.getId());
     	}
     		catch(SQLException exc) {
     			exc.printStackTrace();
@@ -137,7 +138,7 @@ public class GroupMapper {
     	try {
 			Statement stm1 = con.createStatement();
 			
-			stm1.executeUpdate("Delete from popcorns.group Where bo_id = "+group.getId());
+			stm1.executeUpdate("Delete from popcorns.group Where id = "+group.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
@@ -155,13 +156,12 @@ public class GroupMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT popcorns.group.bo_id, popcorns.group.name FROM popcorns.group"
+			ResultSet rs = stmt.executeQuery("SELECT popcorns.group.id, popcorns.group.name FROM popcorns.group"
 					+ " INNER JOIN membership ON membership.personFK=" + personFK);
 		
 			while (rs.next()) {
 				Group g = new Group();
 				g.setName(rs.getString("name"));
-				g.setPersonFK(rs.getInt("personFK"));
 				result.add(g);
 			}			
 		}
@@ -188,45 +188,7 @@ public class GroupMapper {
 		}        
     }
     
-    /**
-     * @param survey 
-     * @return
-     */
-    /**public Vector<Survey> findGroupBySurveyFK(Survey survey) {
-    	Connection con = DBConnection.connection();
-		Vector<Survey> result = new Vector<Survey>();
-		
-		try {
-			Statement stmt = con.createStatement();
-			
-			ResultSet rs = stmt.executeQuery("SELECT group.bo_id, group.name"
-					+ " FROM group INNER JOIN survey ON name='" +name+"'");
-		
-			while (rs.next()) {
-				Movie m = new Movie();
-				m.setName(rs.getString("name"));
-				m.setGenre(rs.getString("genre"));
-				m.setDescription(rs.getString("description"));
-				result.add(m);
-				
-			}			
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-        return result;
-    }
-      �berhaupt n�tig?
-    /**
-     * @param survey 
-     * @return
-     
-    public void deleteGroupBySurveyFK(Survey survey) {
-        // TODO implement here
-        return null;
-    }  
-    �berhaupt n�tig?
-    */
+
     /**
      * @param name 
      * @return

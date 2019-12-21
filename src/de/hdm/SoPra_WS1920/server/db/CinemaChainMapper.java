@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Vector;
 
+import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 /**
@@ -66,12 +67,12 @@ public class CinemaChainMapper {
 			
 			try {
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * FROM cinemachain" + "WHERE bo_id=" + id);
+				ResultSet rs = stmt.executeQuery("SELECT * FROM cinemachain WHERE id= " + id);
 				
 				if(rs.next()) {
 					
 					CinemaChain cc = new CinemaChain();
-					cc.setName(rs.getString("name"))
+					cc.setName(rs.getString("name"));
 					
 					return cc;
 				}
@@ -86,7 +87,7 @@ public class CinemaChainMapper {
 		/**
 	     * Einfügen eines <code>CinemaChain</code>-Objekts in die DB.
 	     * Prüfung und ggf. Korrektur des Primärschlüssels
-	     * @param cc das zu speichernde Objekt
+	     * @param cc, das zu speichernde Objekt
 	     * @return das übergebene Objekt, mit ggf. korrigierter <code>id</code>.
 	     */
 		
@@ -94,24 +95,18 @@ public class CinemaChainMapper {
 			Connection con = DBConnection.connection();
 			
 			try {
-				Statement stmt1 = con.createStatement();
-				Statement stmt2 = con.createStatement();
+				Statement stmt = con.createStatement();
 				
-				stmt1.executeUpdate("INSERT INTO businessobject(bo_id, creationTimeStamp)"
+				
+					stmt.executeUpdate("INSERT INTO cinemachain(id, name)"
 						+ "VALUES ('"
 						+ cc.getId()
 						+ "','"
-						+ cc.getCreationTimestamp() + "')");
+						+ cc.getName() + "')");
 				
-				stmt2.executeUpdate("INSERT INTO cinemachain(bo_id, name, creationTimeStamp)"
-						+ "VALUES ('"
-						+ cc.getId()
-						+ "','"
-						+ cc.getName()
-						+ "','"
-						+ cc.getCreationTimestamp() + "')");
 			}
 			catch(SQLException e2) {
+				
 				e2.printStackTrace();
 			}
 			return cc;
@@ -127,10 +122,12 @@ public class CinemaChainMapper {
 	        Connection con = DBConnection.connection();
 	        
 	        try {
+	        	con.setAutoCommit(true);
 	        	Statement stmt = con.createStatement();
 	        	
-	        	stmt.executeUpdate("UPDATE cinemachain" + "SET name=\'" + cc.getName()
-	        	+ "\", " + "WHERE bo_id=" + cc.getId());
+	        	stmt.executeUpdate("UPDATE cinemachain SET name= '" + cc.getName()
+	        	+ "'WHERE id=" + cc.getId());
+	        	con.setAutoCommit(false);
 	        	
 	        }
 	        catch(SQLException e2) {
@@ -148,12 +145,9 @@ public class CinemaChainMapper {
 	    	Connection con = DBConnection.connection();
 	    	
 	    	try {
-	    		Statement stmt1 = con.createStatement();
-	    		Statement stmt2 = con.createStatement();;
+	    		Statement stmt = con.createStatement();
 	    		
-	    		stmt1.executeUpdate("DELETE FROM cinemachain" + "WHERE bo_id=" + cc.getId());
-	    		//Businessobject löschen
-	    		stmt2.executeUpdate("DELETE FROM businessobject WHERE bo_id=" + cc.getId());
+	    		stmt.executeUpdate("DELETE FROM cinemachain WHERE id= " + cc.getId());
 	    		
 	    	}
 	    	catch(SQLException e2) {
@@ -175,9 +169,8 @@ public class CinemaChainMapper {
 	        
 	        try {
 	        	Statement stmt = con.createStatement();
-	        	ResultSet rs = stmt.executeQuery("SELECT * FROM cinemachain" 
-	        	+ "WHERE name= '" + name + "'");
-	        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+	        	ResultSet rs = stmt.executeQuery("SELECT * FROM cinemachain WHERE name= '" + name + "'");
+	        	//Für jeden Eintrag im Suchergebnis wird ein CinemaChain-Objekt erstellt
 	        	while(rs.next()) {
 	        		CinemaChain cc = new CinemaChain();
 	        		cc.setName(rs.getString("name"));
@@ -220,9 +213,7 @@ public class CinemaChainMapper {
 	        try {
 	        	Statement stmt = con.createStatement();
 	        	
-	        	ResultSet rs = stmt.executeQuery("SELECT cinemachain.name" +
-	        			"FROM  cinemachain INNER JOIN pocorns.businessownership" + 
-	        			"ON cinemachain.bo_id = businessownership.bo_id AND businessownership.personFK= '" + personFK);
+	        	ResultSet rs = stmt.executeQuery("SELECT cinemachain.name FROM cinemachain INNER JOIN popcorns.businessownership ON cinemachain.id = businessownership.id AND businessownership.personFK= '" + personFK+ "'");
 	        	
 	        	//Für jeden Eintrag im Suchergebnis wird ein CinemaChain-Objekt zugeordnet
 	        	while(rs.next()) {

@@ -63,7 +63,7 @@ public class OwnershipMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.businessownership " + "WHERE bo_id= " + ownershipID);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.businessownership WHERE id= " + ownershipID);
 			
 			if(rs.next()) {
 				Ownership o = new Ownership();
@@ -87,7 +87,7 @@ public class OwnershipMapper {
     		
     		Statement stm1 = con.createStatement();
     		
-    		stm1.executeUpdate("INSERT INTO businessownership (bo_id, PersonFK) VALUES ('"
+    		stm1.executeUpdate("INSERT INTO businessownership (id, PersonFK) VALUES ('"
     				+ ownership.getId()
 					+ "', '"+ownership.getPersonFK()
 					+"')");
@@ -110,7 +110,7 @@ public class OwnershipMapper {
     		con.setAutoCommit(false);
     		Statement stmt = con.createStatement();
     		stmt.executeUpdate("UPDATE popcorns.businessownership Set personFK='"+ownership.getPersonFK()
-    				+"' Where bo_id="+ownership.getId());
+    				+"' Where id="+ownership.getId());
     		con.setAutoCommit(true);
     	}
     		catch(SQLException exc) {
@@ -128,7 +128,7 @@ public class OwnershipMapper {
     	
     	try {
     		Statement stm1 = con.createStatement();
-    		stm1.executeUpdate("Delete from businessownership Where bo_id = "+ownership.getId());
+    		stm1.executeUpdate("Delete from businessownership Where id = "+ownership.getId());
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();
@@ -147,7 +147,7 @@ public class OwnershipMapper {
 			Statement stmt = con.createStatement();
 			
 			ResultSet rs = stmt.executeQuery("SELECT * FROM businessownership "
-					+ "WHERE businessownership.personFK= "+personFK);
+					+ "WHERE businessownership.personFK= '"+personFK+"'");
 		
 			while (rs.next()) {
 				Ownership o = new Ownership();
