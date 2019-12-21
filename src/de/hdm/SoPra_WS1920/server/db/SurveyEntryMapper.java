@@ -63,16 +63,16 @@ public class SurveyEntryMapper {
         	
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry" + "WHERE surveyentry.bo_id=" + id);
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry WHERE surveyentry.id= " + id);
         	
         	//Es wird geprüft, ob ein Ergebnis vorliegt
         	if(rs.next()) {
         		//Ergebnis-Tupel in Objekt umwandeln
-        		SurveyEntry surveyEntry = new SurveyEntry();
-        		surveyEntry.setSurveyFK(rs.getInt("surveyFK"));
-        		surveyEntry.setScreeningFK(rs.getInt("screeningFK"));
+        		SurveyEntry se = new SurveyEntry();
+        		se.setSurveyFK(rs.getInt("surveyFK"));
+        		se.setScreeningFK(rs.getInt("screeningFK"));
         		
-        		return surveyEntry;
+        		return se;
         	}
         	
         } catch(SQLException e2) {
@@ -90,33 +90,26 @@ public class SurveyEntryMapper {
      * @param surveyEntry das zu speichernde Objekt
      * @return das übergebene Objekt, mit ggf. korrigierter <code>id</code>.
      */
-    public SurveyEntry insertSurveyEntry(SurveyEntry surveyEntry) {
+    public SurveyEntry insertSurveyEntry(SurveyEntry se) {
     	Connection con = DBConnection.connection();
     	
     	try {
-    		Statement stmt1 = con.createStatement();
-    		Statement stmt2 = con.createStatement();
-    		
-    		stmt1.executeUpdate("INSERT INTO businessobject(bo_id, creationTimeStamp)" +
+    		Statement stmt = con.createStatement();
+
+    		stmt.executeUpdate("INSERT INTO surveyentry(id, surveyFK, screeningFK)" +
     		"VALUES ('"
-    		+ surveyEntry.getId()
+    		+ se.getId()
     		+ "','"
-    		+ surveyEntry.getCreationTimestamp() + "')");
+    		+ se.getSurveyFK()
+    		+ "','"
+    		+ se.getScreeningFK() + "')");
     		
-    		stmt2.executeUpdate("INSERT INTO surveyentry(bo_id, surveyFK, screeningFK, creationTimeStamp)" +
-    		"VALUES ('"
-    		+ surveyEntry.getId()
-    		+ "','"
-    		+ surveyEntry.getSurveyFK()
-    		+ "','"
-    		+ surveyEntry.getScreeningFK()
-    		+ "','"
-    		+ surveyEntry.getCreationTimestamp() + "')");
     	}
     	catch(SQLException e2) {
     		e2.printStackTrace();
     	}
-    	 return surveyEntry;
+    	
+    	 return se;
         
     }
 
@@ -125,19 +118,23 @@ public class SurveyEntryMapper {
      * @return
      */
      
-    public SurveyEntry updateSurveyEntry(SurveyEntry surveyEntry) {
+    public SurveyEntry updateSurveyEntry(SurveyEntry se) {
     	Connection con = DBConnection.connection();
     	
     	try {
+    		con.setAutoCommit(false);
     		Statement stmt = con.createStatement();
-    		stmt.executeUpdate("UPDATE surveyentry" + "SET surveyFK=\'" + surveyEntry.getSurveyFK() 
-    			+ "\", " + "screeningFK=\'" + surveyEntry.getScreeningFK() + "\", " + "WHERE bo_id=" + surveyEntry.getId());
+    		stmt.executeUpdate("UPDATE surveyentry SET surveyFK='"+se.getSurveyFK() 
+    			+"', screeningFK='"+se.getScreeningFK()
+    			+"' WHERE id=" +se.getId());
+    		
+    		con.setAutoCommit(true);
     	}
     	
     	catch(SQLException e2) {
     		e2.printStackTrace();
     	}
-        return surveyEntry;
+        return se;
     }
     
 
@@ -145,15 +142,13 @@ public class SurveyEntryMapper {
      * @param surveyEntry 
      * @return
      */
-    public void deleteSurveyEntry(SurveyEntry surveyEntry) {
+    public void deleteSurveyEntry(SurveyEntry se) {
         Connection con = DBConnection.connection();
         
         try {
-        	Statement stmt1 = con.createStatement();
-        	Statement stmt2 = con.createStatement();
+        	Statement stmt = con.createStatement();
         	
-        	stmt1.executeUpdate("DELETE FROM surveyentry WHERE bo_id=" + surveyEntry.getId());
-        	stmt2.executeUpdate("DELETE FROM businessobject WHERE bo_id=" + surveyEntry.getId());
+        	stmt.executeUpdate("DELETE FROM surveyentry WHERE id= "+se.getId());
         }
         catch(SQLException e2) {
         	e2.printStackTrace();
@@ -172,14 +167,15 @@ public class SurveyEntryMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry" + "WHERE screeningFK=" + screeningFK);
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry "
+        			+ "WHERE screeningFK=" + screeningFK);
         	
         	while(rs.next()) {
-        		SurveyEntry surveyEntry = new SurveyEntry();
-        		surveyEntry.setSurveyFK(rs.getInt("surveyFK"));
-        		surveyEntry.setScreeningFK(rs.getInt("screeningFK"));
+        		SurveyEntry se = new SurveyEntry();
+        		se.setSurveyFK(rs.getInt("surveyFK"));
+        		se.setScreeningFK(rs.getInt("screeningFK"));
         		
-        		result.addElement(surveyEntry);
+        		result.addElement(se);
         	}
         	
         }
@@ -199,7 +195,8 @@ public class SurveyEntryMapper {
     	try {
     		Statement stmt = con.createStatement();
     		
-    		stmt.executeUpdate("DELETE FROM surveyentry" + "WHERE screeningFK=" + screeningFK);
+    		stmt.executeUpdate("DELETE FROM surveyentry "
+    				+ "WHERE screeningFK=" + screeningFK);
     	}
     	catch(SQLException e2) {
     		e2.printStackTrace();
@@ -219,14 +216,14 @@ public class SurveyEntryMapper {
     	
     	try {
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry" + "WHERE surveyFK=" + surveyFK);
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry WHERE surveyFK=" + surveyFK);
     		
     		while(rs.next()) {
-    			SurveyEntry surveyEntry = new SurveyEntry();
-    			surveyEntry.setScreeningFK(rs.getInt("screeningFK"));
-    			surveyEntry.setSurveyFK(rs.getInt("surveyFK"));
+    			SurveyEntry se = new SurveyEntry();
+    			se.setScreeningFK(rs.getInt("screeningFK"));
+    			se.setSurveyFK(rs.getInt("surveyFK"));
     			
-    			result.addElement(surveyEntry);
+    			result.addElement(se);
     		}
     	}
     	catch(SQLException e2) {
@@ -239,10 +236,9 @@ public class SurveyEntryMapper {
 
     /**
      * Löschen eines Umfrageeintrags durch (Fremdschlüssel) der Angabe der UmfrageID
-     * @param survey 
-     * @return
+     * @param surveyFK 
      */
-    public void deleteSurveyEntryBySurveyFK(Survey surveyFK) {
+    public void deleteSurveyEntryBySurveyFK(int surveyFK) {
         Connection con = DBConnection.connection();
         
         try {

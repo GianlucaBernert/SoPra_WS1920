@@ -65,7 +65,7 @@ public class CinemaMapper {
     		//Leeres SQL-Statement (JDBC) anlegen
     		Statement stmt = con.createStatement();
     		//Ausfüllen des Statements und als Query an die DB schicken
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM cinema" + "WHERE cinema.bo_id=" + id);
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM cinema " + "WHERE id= " + id);
     		
     		//Da id Primärschlüssel ist, kann nur ein Tupel zurückgegeben werden.
     		//Es wird geprüft, ob ein Ergebnis vorliegt.
@@ -74,10 +74,10 @@ public class CinemaMapper {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
     			c.setCity(rs.getString("city"));
-    			c.setPostCode(rs.getString("postCode"));
+    			c.setZipCode(rs.getString("zipCode"));
     			c.setStreet(rs.getString("street"));
     			c.setStreetNo(rs.getString("streetNo"));
-    			c.setCinemachainFK(rs.getInt("cinemachainFK"));
+    			c.setCinemaChainFK(rs.getInt("cinemachainFK"));
     			
     			
     			return c;
@@ -103,31 +103,11 @@ public class CinemaMapper {
         Connection con = DBConnection.connection();
         
         try {
-        	Statement stmt1 = con.createStatement();
-        	Statement stmt2 = con.createStatement();
-        	/**
-        	 * Prüfen, was der momentan höchste Primärschlüsselwert ist
-        	 */
+        	con.setAutoCommit(false);
+        	Statement stmt = con.createStatement();
         	
-        	 //ResultSet rs = stmt3.executeQuery("SELECT MAX(bo_id) AS maxid" + "FROM cinema");
-        	
-        	//Einzeilige Rückgabe
-        	//if(rs.next()) {
-        		//c erhält den bisher maximalen, um 1 inkrementierten Primärschlüssel.
-        		
-        		//c.setId(rs.getInt("maxid") + 1);
-        		
-        		stmt1 = con.createStatement();
-        		stmt2 = con.createStatement();
-        		//Business-Object
-        		stmt1.executeUpdate("INSERT INTO businessobject(bo_id, creationTimeStamp)"
-        		+ "VALUES ('"
-        		+ c.getId()
-        		+ "','"
-        		+ c.getCreationTimestamp() + "')");
-        		
         		//Tatsächliche Einfügeoperation eines Cinema-Objekts
-        		stmt2.executeUpdate("INSERT INTO cinema(bo_id, name, city, postCode, street, streetNo, creationTimeStamp)" 
+        		stmt.executeUpdate("INSERT INTO cinema(id, name, city, zipCode, street, streetNo, cinemachainFK)" 
         		+ "VALUES ('" 
         		+ c.getId() 
         		+ "','" 
@@ -135,17 +115,18 @@ public class CinemaMapper {
         		+ "','"
         		+ c.getCity() 
         		+ "','"
-        		+ c.getPostCode()
+        		+ c.getZipCode()
         		+ "','"
         		+ c.getStreet()
         		+ "','" 
         		+ c.getStreetNo() 
         		+ "','"
-        		+ c.getCinemachainFK()
-        		+ "','"
-        		+ c.getCreationTimestamp() + "')");
+        		+ c.getCinemaChainFK()
+        		 + "')");
         	
-        }
+        
+        	con.setAutoCommit(true);
+    	}
         catch(SQLException e2) {
         	e2.printStackTrace();
         }
@@ -167,13 +148,18 @@ public class CinemaMapper {
         Connection con = DBConnection.connection();
         
         try {
+        	con.setAutoCommit(false);
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE cinema" + "SET name=\'" + c.getName()
-        	+ "\", " + "city=\'" + c.getCity() + "\", " + "postCode=\'" + c.getPostCode()  
-        			+ "\", " + "street=\'" + c.getStreet() + "\", " + "streetNo=\'" + c.getStreetNo() + "\", " 
-        	+ "WHERE bo_id=" + c.getId());
+        	stmt.executeUpdate("UPDATE cinema SET name= '" 
+        	+ c.getName()
+        	+ "', city='"+ c.getCity()
+        	+ "', zipCode='" + c.getZipCode()  
+        	+ "', street='" + c.getStreet() 
+        	+ "', streetNo='" + c.getStreetNo()
+        	+ "' WHERE id=" + c.getId());
         	
+        	con.setAutoCommit(true);
         }
         catch(SQLException e2) {
         e2.printStackTrace();
@@ -190,12 +176,9 @@ public class CinemaMapper {
     	Connection con = DBConnection.connection();
     	
     	try {
-    		Statement stmt1 = con.createStatement();
-    		Statement stmt2 = con.createStatement();;
+    		Statement stmt = con.createStatement();
     		
-    		stmt1.executeUpdate("DELETE FROM cinema" + "WHERE bo_id=" + c.getId());
-    		//Businessobject löschen
-    		stmt2.executeUpdate("DELETE FROM businessobject WHERE bo_id=" + c.getId());
+    		stmt.executeUpdate("DELETE FROM cinema WHERE id= " + c.getId());
     		
     	}
     	catch(SQLException e2) {
@@ -218,17 +201,16 @@ public class CinemaMapper {
         
         try {
         	Statement stmt = con.createStatement();
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM cinema" 
-        	+ "WHERE name= '" + name + "'");
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM cinema WHERE name='" + name + "'");
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
         	while(rs.next()) {
         		Cinema c = new Cinema();
         		c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setPostCode(rs.getString("postCode"));
+        		c.setZipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
-        		c.setCinemachainFK(rs.getInt("cinemachainFK"));
+        		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
         		
         		//Hinzufügen des neuen Objekts zum Ergebnisvektor
         		result.addElement(c);
@@ -252,16 +234,16 @@ public class CinemaMapper {
         
         try {
         	Statement stmt = con.createStatement();
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM cinema" + "WHERE city= '" + city + "'");
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM cinema WHERE city='" + city+"'");
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
         	while(rs.next()) {
         		Cinema c = new Cinema();
         		c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setPostCode(rs.getString("postCode"));
+        		c.setZipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
-        		c.setCinemachainFK(rs.getInt("cinemachainFK"));
+        		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
         		
         		//Hinzufügen des neuen Objekts zum Ergebnisvektor
         		result.addElement(c);
@@ -278,22 +260,22 @@ public class CinemaMapper {
      * @param postcode 
      * @return Vektor mit Cinema-Objekten
      */
-    public Vector<Cinema> findCinemaByPostCode(String postCode) {
+    public Vector<Cinema> findCinemaByZipCode(String zipCode) {
     	Connection con = DBConnection.connection();
     	Vector<Cinema> result = new Vector<Cinema>();
     	
     	try {
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM cinema" + "WHERE postCode= '" + postCode + "'");
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM cinema WHERE zipCode= '"+ zipCode+"'");
     		
     		//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
     		while(rs.next()) {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
     			c.setCity(rs.getString("city"));
-    			c.setPostCode(rs.getString("postCode"));
+    			c.setZipCode(rs.getString("zipCode"));
     			c.setStreetNo(rs.getString("streetNo"));
-    			c.setCinemachainFK(rs.getInt("cinemachainFK"));
+    			c.setCinemaChainFK(rs.getInt("cinemachainFK"));
     			
     			
     			//Hinzufügen des Objekts zum Ergebnisvektor
@@ -307,22 +289,22 @@ public class CinemaMapper {
         
     }
     
-    public Vector<Cinema> findCinemaByCinemaChain(int cinemachainFK) {
+    public Vector<Cinema> findCinemaByCinemaChainFK(int cinemachainFK) {
     	Connection con = DBConnection.connection();
     	Vector<Cinema> result = new Vector<Cinema>();
     	
     	try {
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM cinema" + "WHERE cinema.cinemachainFK=" + cinemachainFK);
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM cinema WHERE cinema.cinemachainFK=" + cinemachainFK);
     		
     		while(rs.next()) {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
     			c.setCity(rs.getString("city"));
-    			c.setPostCode(rs.getString("postCode"));
+    			c.setZipCode(rs.getString("zipCode"));
     			c.setStreet(rs.getString("street"));
     			c.setStreetNo(rs.getString("streetNo"));
-    			c.setCinemachainFK(rs.getInt("cinemachainFK"));
+    			c.setCinemaChainFK(rs.getInt("cinemachainFK"));
     			
     			result.addElement(c);
     		}
@@ -374,20 +356,20 @@ public class CinemaMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT cinema.bo_id, cinema.name, cinema.city, "
-        			+ "cinema.postCode, cinema.street, cinema.streetNo, cinema.cinemachainFK, businessownership.personFK" +
-        			"FROM  cinema INNER JOIN businessownership" + 
-        			"ON cinema.bo_id = businessownership.bo_id AND businessownership.personFK= '" + personFK);
+        	ResultSet rs = stmt.executeQuery("SELECT cinema.id, cinema.name, cinema.city, "
+        			+ "cinema.zipCode, cinema.street, cinema.streetNo, cinema.cinemachainFK FROM cinema "
+        			+ "INNER JOIN popcorns.businessownership ON cinema.id=businessownership.id "
+        			+ "AND businessownership.personFK='" + personFK+"'");
         	
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt zugeordnet
         	while(rs.next()) {
         		Cinema c = new Cinema();
         		c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setPostCode(rs.getString("postCode"));
+        		c.setZipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
-        		c.setCinemachainFK(rs.getInt("cinemachain"));
+        		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
         		
         		
         		//Hinzufügen des neuen Objekts zum Ergebnisvektor

@@ -53,8 +53,8 @@ public class BusinessObject implements IsSerializable{
      * methode um den Erstellzeitpunkt eines BusinessObjects zu setzen
      * @param Timestamp creationTimestamp
      */
-    public void setCreationTimestamp(Timestamp creationTimestamp) {
-    	this.creationTimestamp = creationTimestamp;
+    public void setCreationTimestamp(Timestamp time) {
+    	this.creationTimestamp = time;
     }
     
     /**
