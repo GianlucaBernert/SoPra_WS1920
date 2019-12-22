@@ -178,11 +178,8 @@ public class SurveyMapper {
 
         	ResultSet rs = stmt.executeQuery("SELECT * FROM survey" 
         	+ "WHERE startDate= '" + startDate + "'");
-        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+        	//F�r jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
 
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM survey "
-        			+ "WHERE startDate= '" + startDate+"'");
-        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
 
         	while(rs.next()) {
         		Survey s = new Survey();
@@ -190,7 +187,7 @@ public class SurveyMapper {
         		s.setEndDate(rs.getTimestamp("endDate"));
         		s.setGroupFK(rs.getInt("groupFK"));
         		
-        		//Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
+        		//Hinzuf�gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(s);
         	}
         }
@@ -214,11 +211,8 @@ public class SurveyMapper {
         	Statement stmt = con.createStatement();
 
         	ResultSet rs = stmt.executeQuery("SELECT * FROM survey" + "WHERE endDate= '" + endDate + "'");
-        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
+        	//F�r jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
 
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM survey "
-        			+ "WHERE endDate= '" + endDate+"'");
-        	//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
 
         	while(rs.next()) {
         		Survey s = new Survey();
@@ -226,13 +220,13 @@ public class SurveyMapper {
         		s.setEndDate(rs.getTimestamp("endDate"));
         		s.setGroupFK(rs.getInt("groupFK"));
         		
-        		//Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
+        		//Hinzuf�gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(s);
         	}
         } catch(SQLException e2) {
         	e2.printStackTrace();
         }
-        //Rï¿½ckgabe des Ergebnisvektors
+        //R�ckgabe des Ergebnisvektors
         return result;
     }
     
@@ -250,7 +244,7 @@ public class SurveyMapper {
     		ResultSet rs = stmt.executeQuery("SELECT * FROM survey "
     				+ "WHERE survey.groupFK=" + groupFK);
     		
-    		//Fï¿½r jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
+    		//F�r jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
     		while(rs.next()) {
     			Survey s = new Survey();
     			s.setStartDate(rs.getTimestamp("startDate"));
@@ -258,19 +252,19 @@ public class SurveyMapper {
     			s.setGroupFK(rs.getInt("groupFK"));
     			
     			
-    			//Hinzufï¿½gen des Objekts zum Ergebnisvektor
+    			//Hinzuf�gen des Objekts zum Ergebnisvektor
     			result.addElement(s);
     		}
     	} catch(SQLException e2) {
     		e2.printStackTrace();
     	}
-    	//Rï¿½ckgabe des Ergebnisvektors
+    	//R�ckgabe des Ergebnisvektors
     	return result;
         
     }
     
     /**
-     * Lï¿½schen einer Umfrage durch den GroupFK(Fremdschlï¿½ssel)
+     * L�schen einer Umfrage durch den GroupFK(Fremdschl�ssel)
      * @param groupFK
      */
     
@@ -299,9 +293,9 @@ public class SurveyMapper {
         	
         	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK "
         			+ "FROM survey INNER JOIN popcorns.businessownership "
-        			+ "ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK+"'");
+        			+ "ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK + "'");
         	
-        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein Survey-Objekt zugeordnet
+        	//F�r jeden Eintrag im Suchergebnis wird ein Survey-Objekt zugeordnet
         	while(rs.next()) {
         		Survey s = new Survey();
         		s.setId(rs.getInt("id"));
@@ -311,7 +305,7 @@ public class SurveyMapper {
         		
         		
         		
-        		//Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
+        		//Hinzuf�gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(s);
         	}
         }
