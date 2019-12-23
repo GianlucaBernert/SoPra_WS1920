@@ -15,14 +15,17 @@ public class SurveyManagementHeader extends FlowPanel {
 	
 	Label headline;
 	Button createBo;
+	Button createSurvey;
 	SearchBox searchBox;
 	
 	GroupForm gf;
+	SurveyForm sf;
 	
 	public void onLoad() {
 		super.onLoad();
 		this.setStylePrimaryName("header");
 		createBo.addClickHandler(new CreateBoClickHandler(this, gf));
+		createSurvey.addClickHandler(new CreateSurveyClickHandler(this, sf));
 		
 	}
 		class CreateBoClickHandler implements ClickHandler{
@@ -38,6 +41,23 @@ public class SurveyManagementHeader extends FlowPanel {
 				
 			}
 		
+		}
+		
+		class CreateSurveyClickHandler implements ClickHandler{
+			
+			public CreateSurveyClickHandler(SurveyManagementHeader header, SurveyForm sf) {
+				
+			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				SurveyForm sf = new SurveyForm();
+				sf.showSurveyForm();
+				
+				
+				
+			}
+			
 		}
 			
 		
@@ -94,7 +114,7 @@ public class SurveyManagementHeader extends FlowPanel {
 			
 			createBo = new Button("+Add Survey");
 			createBo.setStylePrimaryName("createBoButton");
-			createBo.addClickHandler(new CreateBoClickHandler(this, gf));
+			createBo.addClickHandler(new CreateSurveyClickHandler(this, sf));
 			
 			this.add(headline);
 			this.add(createBo);
