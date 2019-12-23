@@ -9,7 +9,7 @@ import java.util.Date;
  * und die die Beziehung zwischen Person und einer Umfrage von der Klasse Ownership erbt, 
  * diese wiederum erbt SerialVersionUID, die ID und den Erstellzeitpunkt von BusinessObject.
  */
-public class Survey extends Ownership {
+public class Survey extends Ownership { 
 
     /**
      * Variablen der Klasse Survey

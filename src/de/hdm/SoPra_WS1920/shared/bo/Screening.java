@@ -78,7 +78,7 @@ public class Screening extends Ownership {
    	 * Methode um den Zeitpunkt einer Vorf�hrung zu setzen
    	 * @param Date screeningDate
    	 */	
-	public void setScreeningDate(Date screeningDate) {
+	public void setScreeningDate(Date screeningDate) { 
 		this.screeningDate = screeningDate;
 	}
 	

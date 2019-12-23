@@ -17,7 +17,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Survey;
  * 
  * @author shila
  */ 
-public class SurveyMapper {
+public class SurveyMapper { 
 	
 /**
  * Die Klasse SurveyMapper wird nur einmal instanziiert (Singleton-Eigenschaft).

@@ -23,7 +23,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Survey;
 * 
 * @author shila
 */ 
-public class ScreeningMapper {
+public class ScreeningMapper { 
 
 	/**
 	 * Die Klasse ScreeningMapper wird nur einmal instanziiert (Singleton-Eigenschaft).
