@@ -1,4 +1,4 @@
-package de.hdm.SoPra_WS1920.client.gui;
+package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import java.util.Date;
 import java.text.ParseException;
@@ -29,7 +29,7 @@ public class Content extends FlowPanel{
 		c = new Cinema();
 		c.setName("Cinemax");
 		c.setCity("Stuttgart");
-		c.setPostCode("70372");
+		c.setzipCode("70372");
 		c.setPersonFK(1);
 		c.setStreet("Deckerstra�e");
 		c.setStreetNo("49");
@@ -71,7 +71,9 @@ public class Content extends FlowPanel{
 	
 	public void showMovies() {
 		this.clear();
-		this.add(new Label("Movies"));
+//		this.add(new Label("Movies"));
+		MovieCard movieCard = new MovieCard(this, m);
+		this.add(movieCard);
 		//Get all movies
 		//for every movie...
 		//create a MovieCard

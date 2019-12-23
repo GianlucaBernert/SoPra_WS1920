@@ -8,9 +8,9 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 
-import de.hdm.SoPra_WS1920.client.gui.MovieCardEdit.CancelClickHandler;
-import de.hdm.SoPra_WS1920.client.gui.MovieCardEdit.DeleteClickHandler;
-import de.hdm.SoPra_WS1920.client.gui.MovieCardEdit.SaveClickHandler;
+import de.hdm.SoPra_WS1920.client.gui.Admin.MovieCardEdit.CancelClickHandler;
+import de.hdm.SoPra_WS1920.client.gui.Admin.MovieCardEdit.DeleteClickHandler;
+import de.hdm.SoPra_WS1920.client.gui.Admin.MovieCardEdit.SaveClickHandler;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 
 
