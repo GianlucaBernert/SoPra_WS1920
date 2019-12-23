@@ -2,7 +2,6 @@ package de.hdm.SoPra_WS1920.server;
 
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -159,6 +158,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         if (vOfPerson != null) {
         	for (Vote v : vOfPerson) {
         		this.vMapper.deleteVote(v);
+        		System.out.println("Vote ok");
         	}
         }
         
@@ -166,6 +166,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         if (sOfPerson != null) {
         	for (Survey s : sOfPerson) {
         		this.sMapper.deleteSurvey(s);
+        		System.out.println("Survey ok");
         	}
         }
         
@@ -173,6 +174,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         if (gOfPerson != null) {
         	for (Group g : gOfPerson) {
         		this.gMapper.deleteGroup(g);
+        		System.out.println("Group ok");
         	}
         }
         
@@ -180,6 +182,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         if (scOfPerson != null) {
         	for (Screening sc : scOfPerson) {
         		this.scMapper.deleteScreening(sc);
+        		System.out.println("Screening ok");
         	}
         }
         
@@ -187,6 +190,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         if (cOfPerson != null) {
         	for (Cinema c : cOfPerson) {
         		this.cMapper.deleteCinema(c);
+        		System.out.println("Cinema ok");
         	}
         }
         
@@ -194,6 +198,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         if (mOfPerson != null) {
         	for (Movie m : mOfPerson) {
         		this.mMapper.deleteMovie(m);
+        		System.out.println("Movie ok");
         	}
         }
         
@@ -201,10 +206,13 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         if (osOfPerson != null) {
         	for (Ownership os : osOfPerson) {
         		this.oMapper.deleteOwnership(os);
+        		System.out.println("Ownership ok");
         	}
         }
         
-        this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(p.getId()));
+//        BusinessObject bo = this.boMapper.findBusinessObjectByID(p.getId());
+//        
+//        this.deleteBusinessObject(bo);
         
         this.pMapper.deletePerson(p);
     }
@@ -257,7 +265,6 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Group g = new Group();
         g.setId(os.getId());
         g.setName(name);
-        g.setPersonFK(pFK);
         g.setCreationTimestamp(os.getCreationTimestamp());
         this.gMapper.insertGroup(g);
         return g;
@@ -284,7 +291,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	m.setPerson(p);
         this.meMapper.insertMembership(g, p);
         return m;
-    }
+     }
     
     /**
      * Methode um eine Mitgliedschaft zu löschen
@@ -309,10 +316,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         	}
         }
         
-        this.deleteOwnership(os);
-        
-    	this.deleteGroup(this.gMapper.findGroupByID(g.getId()));
-    	
+        this.deleteOwnership(os);    	
     	this.gMapper.deleteGroup(g);
     }
     
@@ -352,12 +356,11 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @throws IllegalArgumentException
      * @return Survey s
      */
-    public Survey createSurvey(int gFK, int pFK, Date startDate, Date endDate) throws IllegalArgumentException {
-    	Ownership os = new Ownership();
+    public Survey createSurvey(int gFK, int pFK, Timestamp startDate, Timestamp endDate) throws IllegalArgumentException {
+    	Ownership os = this.createOwnership(pFK);
         Survey s = new Survey();
         s.setId(os.getId());
         s.setGroupFK(gFK);
-        s.setPersonFK(pFK);
         s.setStartDate(startDate);
         s.setEndDate(endDate);
         s.setCreationTimestamp(os.getCreationTimestamp());
@@ -409,7 +412,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param Timestamp startDate
      * @return Vector<Survey>
      */
-    public Vector<Survey> getSurveyByStartDate(Date startDate) {
+    public Vector<Survey> getSurveyByStartDate(Timestamp startDate) {
         return this.sMapper.findSurveyByEndDate(startDate);
     }
 
@@ -418,7 +421,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param Timestamp endDate
      * @return Vector<Survey>
      */
-    public Vector<Survey> getSurveyByEndDate(Date endDate) {
+    public Vector<Survey> getSurveyByEndDate(Timestamp endDate) {
         return this.sMapper.findSurveyByEndDate(endDate);
     }
     
@@ -443,12 +446,13 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     /**
      * Methode um einen Umfrageeintrag zu erstellen
      * @param int scFK
-     * @param in sFK
+     * @param int sFK
+     * @param int pFK
      * @throws IllegalArgumentException
      * @return SurveyEntry se
      */
-    public SurveyEntry createSurveyEntry(int scFK, int sFK) throws IllegalArgumentException {
-    	Ownership os = new Ownership();
+    public SurveyEntry createSurveyEntry(int scFK, int sFK, int pFK) throws IllegalArgumentException {
+    	Ownership os = this.createOwnership(pFK);
         SurveyEntry se = new SurveyEntry();
         se.setId(os.getId());
         se.setScreeningFK(scFK);
@@ -514,12 +518,11 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @return Vote v
      */
     public Vote createVote(int vw, int seFK, int pFK) throws IllegalArgumentException {
-    	Ownership os = new Ownership();
+    	Ownership os = this.createOwnership(pFK);
         Vote v = new Vote();
         v.setId(os.getId());
         v.setVotingWeight(vw);
         v.setSurveyEntryFK(seFK);
-        v.setPersonFK(pFK);
         v.setCreationTimestamp(os.getCreationTimestamp());
         this.vMapper.insertVote(v);
         return v;
@@ -539,11 +542,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      */
     public void deleteVote(Vote v) {
     	Ownership os = this.oMapper.findOwnershipByID(v.getId());
-        
-    	this.deleteVote(this.vMapper.findVoteByID(v.getId()));
-    	
     	this.deleteOwnership(os);
-    	
     	this.vMapper.deleteVote(v);
     }
 

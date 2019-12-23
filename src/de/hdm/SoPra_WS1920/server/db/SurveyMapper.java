@@ -99,15 +99,15 @@ public class SurveyMapper {
 		
 			Statement stmt = con.createStatement();
 			
-				stmt.executeUpdate("INSERT INTO survey(id, startDate, endDate, groupFK)"
+				stmt.executeUpdate("INSERT INTO survey(id, groupFK, startDate, endDate)"
 					+ "VALUES ('"
-					+ s.getId()
+					+ s.getId()	
+					+ "','"
+					+ s.getGroupFK()
 					+ "','"
 					+ s.getStartDate()
 					+ "','"
-					+ s.getEndDate() 
-					+ "','"
-					+ s.getGroupFK()+ "')");
+					+ s.getEndDate()+ "')");
 		}
 		catch(SQLException e2) {
 			e2.printStackTrace();
@@ -176,10 +176,6 @@ public class SurveyMapper {
         try {
         	Statement stmt = con.createStatement();
 
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM survey" 
-        	+ "WHERE startDate= '" + startDate + "'");
-        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
-
         	ResultSet rs = stmt.executeQuery("SELECT * FROM survey "
         			+ "WHERE startDate= '" + startDate+"'");
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
@@ -212,9 +208,6 @@ public class SurveyMapper {
         
         try {
         	Statement stmt = con.createStatement();
-
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM survey" + "WHERE endDate= '" + endDate + "'");
-        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
 
         	ResultSet rs = stmt.executeQuery("SELECT * FROM survey "
         			+ "WHERE endDate= '" + endDate+"'");

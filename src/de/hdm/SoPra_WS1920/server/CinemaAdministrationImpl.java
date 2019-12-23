@@ -104,7 +104,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Cinema createCinema(String name, String cityName, String street, String streetNr, String zipCode, int personFK) {
+    public Cinema createCinema(String name, String cityName, String street, String streetNr, String zipCode, int ccFK, int personFK) {
     		
     		Ownership o = this.createOwnership(personFK);
     	
@@ -113,7 +113,8 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
         	c.setName(name);
         	c.setCity(cityName);
         	c.setStreet(street);
-        	c.setPostCode(zipCode);
+        	c.setzipCode(zipCode);
+        	c.setCinemaChainFK(ccFK);
         	c.setId(o.getId());
         	
         	this.cMapper.insertCinema(c);
@@ -131,15 +132,6 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      */
     @Override
     public Movie createMovie(String name, String genre, String description, int personFK) {
-        
-    	Vector <Movie> m1 = new Vector <Movie>();
-    	m1 = mMapper.findMovieByName(name);
-		
-		if (m1 != null) {
-			return null;
-		}
-		
-		else {
 			
 		Ownership o = this.createOwnership(personFK);	
 			
@@ -158,8 +150,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 			
 		}
     	
-        
-    }
+  
 
     /**
      * @param screeningDateTime 
@@ -345,7 +336,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     @Override
     public Vector<Screening> getScreeningByScreeningDateTime(Timestamp screeningDateTime) {
         
-        return this.scMapper.findScreeningByScreeningDateTime(screeningDateTime);
+        return this.scMapper.findScreeningByScreeningdayTime(screeningDateTime);
     }
 
     /**
@@ -528,7 +519,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     }
     
     @Override
-    public CinemaChain createCinemaChain(Cinema c , String name, int personFK) {
+    public CinemaChain createCinemaChain(String name, int personFK) {
     	
     	
     	Ownership o = this.createOwnership(personFK);
@@ -563,7 +554,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     }
     
     @Override
-    public CinemaChain findCinemaChainByName(String name) {
+    public Vector<CinemaChain> findCinemaChainByName(String name) {
     	return this.ccMapper.findCinemaChainByName(name);
     }
     
@@ -588,8 +579,8 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Vector <Cinema> findCinemasByCinemaChain(CinemaChain cc){
-    	return this.cMapper.findCinemaByCinemaChain(cinemachainFK);
+    public Vector <Cinema> findCinemasByCinemaChainFK(CinemaChain cc){
+    	return this.cMapper.findCinemaByCinemaChainFK(cc.getId());
     }
     
     @Override

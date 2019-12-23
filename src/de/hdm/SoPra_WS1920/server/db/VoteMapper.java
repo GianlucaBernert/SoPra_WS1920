@@ -15,8 +15,8 @@ import de.hdm.SoPra_WS1920.shared.bo.Vote;
  * 
  * 
  * Mit Hilfe der MapperKlasse <code>VoteMapper</code> werden Movie-Objekte auf eine relationale Datenbank abgebildet.
- * Durch das implementieren der Methoden können Vote-Objekte gesucht, erzeugt, modifiziert und
- * gelöscht werden.
+ * Durch das implementieren der Methoden kï¿½nnen Vote-Objekte gesucht, erzeugt, modifiziert und
+ * gelï¿½scht werden.
  * 
  */
 public class VoteMapper {
@@ -55,7 +55,7 @@ public class VoteMapper {
     
     /*
   	 * =============================================================================================
-  	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+  	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezï¿½hlt, die
   	 * in allen Mapper-Klassen existieren.
   	 * 
   	 */	
@@ -76,6 +76,7 @@ public class VoteMapper {
 				Vote v = new Vote();
 				v.setVotingWeight(rs.getInt("votingWeight"));
 				v.setSurveyEntryFK(rs.getInt("surveyentryFK"));
+				v.setId(rs.getInt("id"));
 				return v;
 				
 			}

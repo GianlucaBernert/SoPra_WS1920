@@ -2,10 +2,7 @@ package de.hdm.SoPra_WS1920.shared;
 
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Vector;
-
-import org.apache.james.mime4j.field.datetime.DateTime;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -78,7 +75,7 @@ public interface SurveyManagementAsync {
      * @param AsyncCallback<Survey> callback
      * @return Survey s
      */
-    public void createSurvey(int gFK, int pFK, Date startDate, Date endDate, AsyncCallback<Survey> callback);
+    public void createSurvey(int gFK, int pFK, Timestamp startDate, Timestamp endDate, AsyncCallback<Survey> callback);
     
     /**
      * Methode um eine Umfrage zu bearbeiten
@@ -188,7 +185,7 @@ public interface SurveyManagementAsync {
      * @param AsyncCallback<Vector<Survey>> callback
      * @return Vector<Survey>
      */
-    public void getSurveyByStartDate(Date startDate, AsyncCallback<Vector<Survey>> callback);
+    public void getSurveyByStartDate(Timestamp startDate, AsyncCallback<Vector<Survey>> callback);
 
     /**
      * Methode um eine Umfrage anhand des ENd Datums zu finden
@@ -196,7 +193,7 @@ public interface SurveyManagementAsync {
      * @param AsyncCallback<Vector<Survey>> callback
      * @return Vector<Survey>
      */
-    public void getSurveyByEndDate(Date endDate, AsyncCallback<Vector<Survey>> callback);
+    public void getSurveyByEndDate(Timestamp endDate, AsyncCallback<Vector<Survey>> callback);
 
     /**
      * Methode um eine Person anhand der ID zu finden
@@ -340,7 +337,7 @@ public interface SurveyManagementAsync {
      * @param AsyncCallback<SurveyEntry> callback
      * @return SurveyEntry se
      */
-    public void createSurveyEntry(int scFK, int sFK, AsyncCallback<SurveyEntry> callback);
+    public void createSurveyEntry(int scFK, int sFK, int pFK, AsyncCallback<SurveyEntry> callback);
 
 	/**
 	 * Methode um einen Umfrageeintrag zu aktualisieren

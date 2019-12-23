@@ -15,8 +15,8 @@ public class Survey extends Ownership {
      * Variablen der Klasse Survey
      */
     private int groupFK;
-    private Date startDate;
-    private Date endDate;
+    private Timestamp startDate;
+    private Timestamp endDate;
 
     /**
      * Konstruktor der Klasse Survey, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
@@ -52,7 +52,7 @@ public class Survey extends Ownership {
      * Methode um das end Datum einer Umfrage zu setzen
      * @param Timestamp endDate 
      */
-    public void setEndDate(Date endDate) {
+    public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
     }
 
@@ -60,7 +60,7 @@ public class Survey extends Ownership {
 	 * Methode um das start Datum einer Umfrage auszugeben
 	 * @return Timestamp startDate
 	 */
-	public Date getStartDate() {
+	public Timestamp getStartDate() {
 		return startDate;
 	}
 
@@ -68,7 +68,7 @@ public class Survey extends Ownership {
 	 * Methode um das start Datum einer Umfrage zu setzen
 	 * @param Timesrtamp startDate
 	 */
-	public void setStartDate(Date startDate) {
+	public void setStartDate(Timestamp startDate) {
 		this.startDate = startDate;
 	}
 	

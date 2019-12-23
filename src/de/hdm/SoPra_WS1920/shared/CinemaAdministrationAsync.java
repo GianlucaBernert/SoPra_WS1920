@@ -34,7 +34,7 @@ public interface CinemaAdministrationAsync {
      * @param callback 
      * @return
      */
-    void createCinema(String name, String cityName, String street, String streetNr, String zipCode, int personFK, AsyncCallback<Cinema> callback);
+    void createCinema(String name, String cityName, String street, String streetNr, String zipCode, int ccFK, int personFK, AsyncCallback<Cinema> callback);
 
     /**
      * @param name 
@@ -226,7 +226,7 @@ public interface CinemaAdministrationAsync {
     
     void getSurveyEntryByScreeningFK(int ScreeningFK, AsyncCallback<Vector<SurveyEntry>> callback);
     
-    void findCinemasByCinemaChain(CinemaChain cc, AsyncCallback<Vector<Cinema>> callback);
+    void findCinemasByCinemaChainFK(CinemaChain cc, AsyncCallback<Vector<Cinema>> callback);
     
     void findCinemasByPersonFK(int personFK, AsyncCallback<Vector<Cinema>> callback);
     
@@ -234,13 +234,13 @@ public interface CinemaAdministrationAsync {
     
     void findCinemaChainByPersonFK(int personFK, AsyncCallback<Vector<CinemaChain>> callback);
     
-    void findCinemaChainByName(String name, AsyncCallback<CinemaChain> callback);
+    void findCinemaChainByName(String name, AsyncCallback<Vector<CinemaChain>> callback);
     
     void deleteCinemaChain(CinemaChain cc, AsyncCallback<Void> callback);
     
     void updateCinemaChain(CinemaChain cc, AsyncCallback<CinemaChain> callback);
     
-    void createCinemaChain(Cinema c, String name, int personFK, AsyncCallback<CinemaChain> callback);
+    void createCinemaChain(String name, int personFK, AsyncCallback<CinemaChain> callback);
     
     void getOwnershipsbyPersonFK(int personFK, AsyncCallback<Vector<Ownership>> callback);
     
