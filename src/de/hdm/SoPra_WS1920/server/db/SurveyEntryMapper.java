@@ -71,6 +71,7 @@ public class SurveyEntryMapper {
         		SurveyEntry se = new SurveyEntry();
         		se.setSurveyFK(rs.getInt("surveyFK"));
         		se.setScreeningFK(rs.getInt("screeningFK"));
+        		se.setId(rs.getInt("id"));
         		
         		return se;
         	}
@@ -172,6 +173,7 @@ public class SurveyEntryMapper {
         	
         	while(rs.next()) {
         		SurveyEntry se = new SurveyEntry();
+        		se.setId(rs.getInt("id"));
         		se.setSurveyFK(rs.getInt("surveyFK"));
         		se.setScreeningFK(rs.getInt("screeningFK"));
         		
@@ -220,6 +222,7 @@ public class SurveyEntryMapper {
     		
     		while(rs.next()) {
     			SurveyEntry se = new SurveyEntry();
+    			se.setId(rs.getInt("id"));
     			se.setScreeningFK(rs.getInt("screeningFK"));
     			se.setSurveyFK(rs.getInt("surveyFK"));
     			

@@ -75,9 +75,11 @@ public class ScreeningMapper {
 			if(rs.next()) {
 				
 				Screening sc = new Screening();
+				sc.setId(rs.getInt("id"));
 				sc.setScreeningDateTime(rs.getTimestamp("screeningDateTime"));
 				sc.setMovieFK(rs.getInt("movieFK"));
 				sc.setCinemaFK(rs.getInt("cinemaFK"));
+				sc.setId(rs.getInt("id"));
 				
 				return sc;
 			}
@@ -182,6 +184,7 @@ public class ScreeningMapper {
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
         	while(rs.next()) {
         		Screening sc = new Screening();
+        		sc.setId(rs.getInt("id"));
         		sc.setScreeningDateTime(rs.getTimestamp("screeningDateTime"));
         		sc.setMovieFK(rs.getInt("movieFK"));
         		sc.setCinemaFK(rs.getInt("cinemaFK"));
@@ -227,6 +230,7 @@ public class ScreeningMapper {
     		//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
     		while(rs.next()) {
     			Screening sc = new Screening();
+    			sc.setId(rs.getInt("id"));
     			sc.setScreeningDateTime(rs.getTimestamp("screeningDateTime"));
     			sc.setMovieFK(rs.getInt("movieFK"));
     			sc.setCinemaFK(rs.getInt("cinemaFK"));
@@ -276,6 +280,7 @@ public class ScreeningMapper {
     		//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
     		while(rs.next()) {
     			Screening sc = new Screening();
+    			sc.setId(rs.getInt("id"));
     			sc.setScreeningDateTime(rs.getTimestamp("screeningDateTime"));
     			sc.setMovieFK(rs.getInt("movieFK"));
     			sc.setCinemaFK(rs.getInt("cinemaFK"));
@@ -326,6 +331,7 @@ public class ScreeningMapper {
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt zugeordnet
         	while(rs.next()) {
         		Screening sc = new Screening();
+        		sc.setId(rs.getInt("id"));
         		sc.setScreeningDateTime(rs.getTimestamp("screeningDateTime"));
         		sc.setMovieFK(rs.getInt("movieFK"));
         		sc.setCinemaFK(rs.getInt("cinemaFK"));

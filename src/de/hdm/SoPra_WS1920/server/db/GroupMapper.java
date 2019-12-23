@@ -76,6 +76,7 @@ public class GroupMapper {
 			if(rs.next()) {
 				Group g = new Group();
 				g.setName(rs.getString("name"));
+				g.setId(rs.getInt("id"));
 				return g;
 				
 			}
@@ -162,6 +163,7 @@ public class GroupMapper {
 			while (rs.next()) {
 				Group g = new Group();
 				g.setName(rs.getString("name"));
+				g.setId(rs.getInt("id"));
 				result.add(g);
 			}			
 		}
@@ -205,6 +207,7 @@ public class GroupMapper {
 			while (rs.next()) {
 				Group g = new Group();
 				g.setName(rs.getString("name"));
+				g.setId(rs.getInt("id"));
 				result.add(g);
 				
 			}			
