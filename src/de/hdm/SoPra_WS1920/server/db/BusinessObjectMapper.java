@@ -81,6 +81,7 @@ public class BusinessObjectMapper {
         return null;
     }
 
+    //Methode, die das Einfügen eines BusinessObjects in die Datenbank ermöglicht
     
     public BusinessObject insertBusinessObject(BusinessObject BO) {
     	Connection con = DBConnection.connection();
