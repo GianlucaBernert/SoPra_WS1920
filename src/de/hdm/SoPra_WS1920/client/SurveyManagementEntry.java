@@ -8,8 +8,10 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import de.hdm.SoPra_WS1920.client.gui.NavigationBar;
 import de.hdm.SoPra_WS1920.client.gui.SurveyContent;
 import de.hdm.SoPra_WS1920.client.gui.SurveyManagementHeader;
+import de.hdm.SoPra_WS1920.shared.bo.Group;
 
 
 
@@ -24,11 +26,16 @@ public class SurveyManagementEntry implements EntryPoint {
 	Label groups;
 	Label surveys;
 	
+	Group g;
+	
 	private int menuOpen = 0;
 	
 	
 	@Override
 	public void onModuleLoad() {
+		
+		Group g = new Group();
+		g.setName("Yesin");
 		
 		navbar = new FlowPanel();
 		content = new SurveyContent();
