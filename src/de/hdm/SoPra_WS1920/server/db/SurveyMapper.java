@@ -72,8 +72,8 @@ public class SurveyMapper {
 				
 				Survey s = new Survey();
 				s.setId(rs.getInt("id"));
-				s.setStartDate(rs.getTimestamp("startDate"));
-				s.setEndDate(rs.getTimestamp("endDate"));
+				s.setStartDate(rs.getDate("startDate"));
+				s.setEndDate(rs.getDate("endDate"));
 				s.setGroupFK(rs.getInt("groupFK"));
 				
 				return s;
@@ -186,8 +186,8 @@ public class SurveyMapper {
         	while(rs.next()) {
         		Survey s = new Survey();
         		s.setId(rs.getInt("id"));
-        		s.setStartDate(rs.getTimestamp("startDate"));
-        		s.setEndDate(rs.getTimestamp("endDate"));
+        		s.setStartDate(rs.getDate("startDate"));
+        		s.setEndDate(rs.getDate("endDate"));
         		s.setGroupFK(rs.getInt("groupFK"));
         		
         		//Hinzufügen des neuen Objekts zum Ergebnisvektor
@@ -219,8 +219,8 @@ public class SurveyMapper {
         	while(rs.next()) {
         		Survey s = new Survey();
         		s.setId(rs.getInt("id"));
-        		s.setStartDate(rs.getTimestamp("startDate"));
-        		s.setEndDate(rs.getTimestamp("endDate"));
+        		s.setStartDate(rs.getDate("startDate"));
+        		s.setEndDate(rs.getDate("endDate"));
         		s.setGroupFK(rs.getInt("groupFK"));
         		
         		//Hinzufügen des neuen Objekts zum Ergebnisvektor
@@ -251,8 +251,8 @@ public class SurveyMapper {
     		while(rs.next()) {
     			Survey s = new Survey();
     			s.setId(rs.getInt("id"));
-    			s.setStartDate(rs.getTimestamp("startDate"));
-    			s.setEndDate(rs.getTimestamp("endDate"));
+    			s.setStartDate(rs.getDate("startDate"));
+    			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
     			
     			
@@ -303,8 +303,8 @@ public class SurveyMapper {
         	while(rs.next()) {
         		Survey s = new Survey();
         		s.setId(rs.getInt("id"));
-        		s.setStartDate(rs.getTimestamp("startDate"));
-        		s.setEndDate(rs.getTimestamp("endDate"));
+        		s.setStartDate(rs.getDate("startDate"));
+        		s.setEndDate(rs.getDate("endDate"));
         		s.setGroupFK(rs.getInt("groupFK"));
         		
         		
