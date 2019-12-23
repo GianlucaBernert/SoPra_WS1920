@@ -37,7 +37,7 @@ public class BusinessObjectMapper {
  	 * Sie daf?r sorgt, dass nur eine einzige Instanz von <code>BusinessObjectMapper</code> existiert.
  	 * @return Sie gibt den BusinessObjectMapper zur?ck.
  	 */
-    public static BusinessObjectMapper BusinessObjectMapper() {
+    public static BusinessObjectMapper businessObjectMapper() {
         if(BusinessObjectMapper == null) {
         	BusinessObjectMapper = new BusinessObjectMapper();
         }
