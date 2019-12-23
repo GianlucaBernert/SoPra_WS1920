@@ -9,14 +9,14 @@ import java.util.Date;
  * und die die Beziehung zwischen Person und einer Umfrage von der Klasse Ownership erbt, 
  * diese wiederum erbt SerialVersionUID, die ID und den Erstellzeitpunkt von BusinessObject.
  */
-public class Survey extends Ownership {
+public class Survey extends Ownership { 
 
     /**
      * Variablen der Klasse Survey
      */
     private int groupFK;
-    private Timestamp startDate;
-    private Timestamp endDate;
+    private Date startDate;
+    private Date endDate;
 
     /**
      * Konstruktor der Klasse Survey, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
@@ -52,7 +52,7 @@ public class Survey extends Ownership {
      * Methode um das end Datum einer Umfrage zu setzen
      * @param Timestamp endDate 
      */
-    public void setEndDate(Timestamp endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -60,7 +60,7 @@ public class Survey extends Ownership {
 	 * Methode um das start Datum einer Umfrage auszugeben
 	 * @return Timestamp startDate
 	 */
-	public Timestamp getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
@@ -68,7 +68,7 @@ public class Survey extends Ownership {
 	 * Methode um das start Datum einer Umfrage zu setzen
 	 * @param Timesrtamp startDate
 	 */
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	

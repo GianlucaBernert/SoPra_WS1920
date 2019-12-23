@@ -23,7 +23,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Survey;
 * 
 * @author shila
 */ 
-public class ScreeningMapper {
+public class ScreeningMapper { 
 
 	/**
 	 * Die Klasse ScreeningMapper wird nur einmal instanziiert (Singleton-Eigenschaft).
@@ -76,9 +76,10 @@ public class ScreeningMapper {
 				
 				Screening sc = new Screening();
 				sc.setId(rs.getInt("id"));
-				sc.setScreeningDateTime(rs.getTimestamp("screeningDateTime"));
+				sc.setScreeningDate(rs.getDate("screeningDate"));
+				sc.setScreeningTime(rs.getTime("screeningTime"));
 				sc.setMovieFK(rs.getInt("movieFK"));
-				sc.setCinemaFK(rs.getInt("cinemaFK"));
+				sc.setCinemaFK(rs.getInt("cinemaFK")); 
 				sc.setId(rs.getInt("id"));
 				
 				return sc;
@@ -108,7 +109,9 @@ public class ScreeningMapper {
 					+ "VALUES ('"
 					+ sc.getId()
 					+ "','"
-					+ sc.getScreeningDateTime()
+					+ sc.getScreeningDate()
+					+ "','"
+					+ sc.getScreeningTime()
 					+ "','"
 					+ sc.getMovieFK()
 					+ "','"
@@ -133,7 +136,8 @@ public class ScreeningMapper {
         	con.setAutoCommit(false);
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE screening SET screeningDateTime='"+sc.getScreeningDateTime()
+        	stmt.executeUpdate("UPDATE screening SET screeningDate='"+sc.getScreeningDate() 
+        	+  "', screeningTime='" + sc.getScreeningTime()
         	+ "', movieFK='"+sc.getMovieFK()
         	+ "', cinemaFK='"+sc.getCinemaFK()
         	+"' WHERE id="+sc.getId());
@@ -170,22 +174,23 @@ public class ScreeningMapper {
 
     /**
      * Auslesen der Screening-Objekte mit vorgegebenen Spielzeiten
-     * @param screeningdayTime 
+     * @param screeningDate
      * @return Vektor mit Screening-Objekten
      */
-    public Vector<Screening> findScreeningByScreeningdayTime(Timestamp screeningDateTime) {
+    public Vector<Screening> findScreeningByScreeningDate(Date screeningDate) {
     	Connection con = DBConnection.connection();
         Vector<Screening> result = new Vector<Screening>();
         
         try {
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
-        			+ "WHERE screeningDateTime= '" + screeningDateTime+"'");
+        			+ "WHERE screeningDateTime= '" + screeningDate +"'");
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
         	while(rs.next()) {
         		Screening sc = new Screening();
         		sc.setId(rs.getInt("id"));
-        		sc.setScreeningDateTime(rs.getTimestamp("screeningDateTime"));
+        		sc.setScreeningDate(rs.getDate("screeningDate"));
+        		sc.setScreeningTime(rs.getTime("screeningTime"));
         		sc.setMovieFK(rs.getInt("movieFK"));
         		sc.setCinemaFK(rs.getInt("cinemaFK"));
         		
@@ -200,12 +205,52 @@ public class ScreeningMapper {
         	return result;
     }
     
-    public void deleteByScreeningdayTime(Timestamp screeningDateTime) {
+    public Vector<Screening> findScreeningByScreeningTime(Time screeningTime) {
+    	Connection con = DBConnection.connection();
+        Vector<Screening> result = new Vector<Screening>();
+        
+        try {
+        	Statement stmt = con.createStatement();
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
+        			+ "WHERE screeningTime= '" + screeningTime + "'");
+        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+        	while(rs.next()) {
+        		Screening sc = new Screening();
+        		sc.setId(rs.getInt("id"));
+        		sc.setScreeningDate(rs.getDate("screeningDate"));
+        		sc.setScreeningTime(rs.getTime("screeningTime"));
+        		sc.setMovieFK(rs.getInt("movieFK"));
+        		sc.setCinemaFK(rs.getInt("cinemaFK"));
+        		
+        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+        		result.addElement(sc);
+        	}
+        }
+        	catch(SQLException e2) {
+        		e2.printStackTrace();
+        	}
+        	//Rückgabe des Ergebnisvektors
+        	return result;
+    }
+    
+    public void deleteByScreeningDate(Date screeningDate) {
     	Connection con = DBConnection.connection();
     	
     	try {
     		Statement stmt = con.createStatement();
-    		stmt.executeUpdate("DELETE FROM screening" + "WHERE screeningDateTime=" + screeningDateTime);
+    		stmt.executeUpdate("DELETE FROM screening" + "WHERE screeningDate=" + screeningDate);
+    	}
+    	catch(SQLException e2) {
+    		e2.printStackTrace();
+    	}
+    }
+    
+    public void deleteByScreeningTime(Time screeningTime) {
+    	Connection con = DBConnection.connection();
+    	
+    	try {
+    		Statement stmt = con.createStatement();
+    		stmt.executeUpdate("DELETE FROM screening" + "WHERE screeningTime=" + screeningTime);
     	}
     	catch(SQLException e2) {
     		e2.printStackTrace();
@@ -231,7 +276,8 @@ public class ScreeningMapper {
     		while(rs.next()) {
     			Screening sc = new Screening();
     			sc.setId(rs.getInt("id"));
-    			sc.setScreeningDateTime(rs.getTimestamp("screeningDateTime"));
+    			sc.setScreeningDate(rs.getDate("screeningDate"));
+    			sc.setScreeningTime(rs.getTime("screeningTime"));
     			sc.setMovieFK(rs.getInt("movieFK"));
     			sc.setCinemaFK(rs.getInt("cinemaFK"));
     			
@@ -281,7 +327,8 @@ public class ScreeningMapper {
     		while(rs.next()) {
     			Screening sc = new Screening();
     			sc.setId(rs.getInt("id"));
-    			sc.setScreeningDateTime(rs.getTimestamp("screeningDateTime"));
+    			sc.setScreeningDate(rs.getDate("screeningDate"));
+    			sc.setScreeningTime(rs.getTime("screeningTime"));
     			sc.setMovieFK(rs.getInt("movieFK"));
     			sc.setCinemaFK(rs.getInt("cinemaFK"));
     			
@@ -324,7 +371,7 @@ public class ScreeningMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT screening.id, screening.screeningDateTime, screening.movieFK, screening.cinemaFK "
+        	ResultSet rs = stmt.executeQuery("SELECT screening.id, screening.screeningDate, screening.screeningTime, screening.movieFK, screening.cinemaFK "
         			+ "FROM screening INNER JOIN popcorns.businessownership "
         			+ "ON screening.id = businessownership.id AND businessownership.personFK= '" + personFK+"'");
         	
@@ -332,7 +379,8 @@ public class ScreeningMapper {
         	while(rs.next()) {
         		Screening sc = new Screening();
         		sc.setId(rs.getInt("id"));
-        		sc.setScreeningDateTime(rs.getTimestamp("screeningDateTime"));
+        		sc.setScreeningDate(rs.getDate("screeningDate"));
+        		sc.setScreeningTime(rs.getTime("screeningTime"));
         		sc.setMovieFK(rs.getInt("movieFK"));
         		sc.setCinemaFK(rs.getInt("cinemaFK"));
         		
