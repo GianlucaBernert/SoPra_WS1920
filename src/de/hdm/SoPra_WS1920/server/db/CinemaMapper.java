@@ -78,7 +78,7 @@ public class CinemaMapper {
     			c.setStreet(rs.getString("street"));
     			c.setStreetNo(rs.getString("streetNo"));
     			c.setCinemaChainFK(rs.getInt("cinemachainFK"));
-    			
+    			c.setId(rs.getInt("id"));
     			
     			return c;
     		}
@@ -211,6 +211,7 @@ public class CinemaMapper {
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
+        		c.setId(rs.getInt("id"));
         		
         		//Hinzuf�gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(c);
@@ -244,6 +245,7 @@ public class CinemaMapper {
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
+        		c.setId(rs.getInt("id"));
         		
         		//Hinzuf�gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(c);
@@ -272,10 +274,12 @@ public class CinemaMapper {
     		while(rs.next()) {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
-    			c.setCity(rs.getString("city"));
-    			c.setzipCode(rs.getString("zipCode"));
-    			c.setStreetNo(rs.getString("streetNo"));
-    			c.setCinemaChainFK(rs.getInt("cinemachainFK"));
+        		c.setCity(rs.getString("city"));
+        		c.setzipCode(rs.getString("zipCode"));
+        		c.setStreet(rs.getString("street"));
+        		c.setStreetNo(rs.getString("streetNo"));
+        		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
+        		c.setId(rs.getInt("id"));
     			
     			
     			//Hinzuf�gen des Objekts zum Ergebnisvektor
@@ -300,11 +304,12 @@ public class CinemaMapper {
     		while(rs.next()) {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
-    			c.setCity(rs.getString("city"));
-    			c.setzipCode(rs.getString("zipCode"));
-    			c.setStreet(rs.getString("street"));
-    			c.setStreetNo(rs.getString("streetNo"));
-    			c.setCinemaChainFK(rs.getInt("cinemachainFK"));
+        		c.setCity(rs.getString("city"));
+        		c.setzipCode(rs.getString("zipCode"));
+        		c.setStreet(rs.getString("street"));
+        		c.setStreetNo(rs.getString("streetNo"));
+        		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
+        		c.setId(rs.getInt("id"));
     			
     			result.addElement(c);
     		}
@@ -370,6 +375,7 @@ public class CinemaMapper {
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
+        		c.setId(rs.getInt("id"));
         		
         		
         		//Hinzuf�gen des neuen Objekts zum Ergebnisvektor

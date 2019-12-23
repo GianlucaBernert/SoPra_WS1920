@@ -70,6 +70,7 @@ public class BusinessObjectMapper {
 			if(rs.next()) {
 				BusinessObject o = new BusinessObject();
 				o.setCreationTimestamp(rs.getTimestamp("CreationTimestamp"));
+				o.setId(rs.getInt("id"));
 				return o;
 				
 			}

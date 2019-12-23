@@ -80,6 +80,7 @@ public class PersonMapper {
 				p.setFirstname(rs.getString("firstname"));
 				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
+				p.setId(rs.getInt("id"));
 				return p;
 				
 			}
@@ -209,6 +210,7 @@ public class PersonMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM person Where firstname='" + firstname+"'");		
 			while(rs.next()) {
 				Person p = new Person();
+				p.setId(rs.getInt("id"));
 				p.setFirstname(rs.getString("firstname"));
 				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
@@ -232,6 +234,7 @@ public class PersonMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM person Where lastname='" + lastname+"'");		
 			while(rs.next()) {
 				Person p = new Person();
+				p.setId(rs.getInt("id"));
 				p.setFirstname(rs.getString("firstname"));
 				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
@@ -256,6 +259,7 @@ public class PersonMapper {
 			
 			if(rs.next()) {
 				Person p = new Person();
+				p.setId(rs.getInt("id"));
 				p.setFirstname(rs.getString("firstname"));
 				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));
@@ -282,6 +286,7 @@ public class PersonMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM person Where isAdmin='" + isAdmin+"'");		
 			while(rs.next()) {
 				Person p = new Person();
+				p.setId(rs.getInt("id"));
 				p.setFirstname(rs.getString("firstname"));
 				p.setLastname(rs.getString("lastname"));
 				p.setEMail(rs.getString("eMail"));

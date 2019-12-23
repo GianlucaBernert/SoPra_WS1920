@@ -243,6 +243,7 @@ public class VoteMapper {
 		
 			while (rs.next()) {
 				Vote v = new Vote();
+				v.setId(rs.getInt("id"));
 				v.setVotingWeight(rs.getInt("votingWeight"));
 				v.setSurveyEntryFK(rs.getInt("surveyEntryFK"));
 				result.add(v);

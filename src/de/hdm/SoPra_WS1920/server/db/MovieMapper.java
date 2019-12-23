@@ -177,6 +177,7 @@ public class MovieMapper {
 				m.setName(rs.getString("name"));
 				m.setGenre(rs.getString("genre"));
 				m.setDescription(rs.getString("description"));
+				m.setId(rs.getInt("id"));
 				result.add(m);
 				
 			}			
@@ -219,6 +220,7 @@ public class MovieMapper {
             m.setName(rs.getString("name"));
             m.setGenre(rs.getString("genre"));
             m.setDescription(rs.getString("description"));
+            m.setId(rs.getInt("id"));
 
             // Hinzufügen des neuen Objekts zum Ergebnisvektor
             result.addElement(m);
@@ -249,6 +251,7 @@ public class MovieMapper {
 				m.setName(rs.getString("name"));
 				m.setGenre(rs.getString("genre"));
 				m.setDescription(rs.getString("description"));
+				m.setId(rs.getInt("id"));
 				result.add(m);
 				
 			}			
@@ -298,6 +301,7 @@ public class MovieMapper {
 				m.setName(rs.getString("name"));
 				m.setGenre(rs.getString("genre"));
 				m.setDescription(rs.getString("description"));
+				m.setId(rs.getInt("id"));
 				result.add(m);
 				
 			}			

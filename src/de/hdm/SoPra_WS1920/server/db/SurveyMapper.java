@@ -71,6 +71,7 @@ public class SurveyMapper {
 			if(rs.next()) {
 				
 				Survey s = new Survey();
+				s.setId(rs.getInt("id"));
 				s.setStartDate(rs.getTimestamp("startDate"));
 				s.setEndDate(rs.getTimestamp("endDate"));
 				s.setGroupFK(rs.getInt("groupFK"));
@@ -184,6 +185,7 @@ public class SurveyMapper {
 
         	while(rs.next()) {
         		Survey s = new Survey();
+        		s.setId(rs.getInt("id"));
         		s.setStartDate(rs.getTimestamp("startDate"));
         		s.setEndDate(rs.getTimestamp("endDate"));
         		s.setGroupFK(rs.getInt("groupFK"));
@@ -216,6 +218,7 @@ public class SurveyMapper {
 
         	while(rs.next()) {
         		Survey s = new Survey();
+        		s.setId(rs.getInt("id"));
         		s.setStartDate(rs.getTimestamp("startDate"));
         		s.setEndDate(rs.getTimestamp("endDate"));
         		s.setGroupFK(rs.getInt("groupFK"));
@@ -247,6 +250,7 @@ public class SurveyMapper {
     		//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
     		while(rs.next()) {
     			Survey s = new Survey();
+    			s.setId(rs.getInt("id"));
     			s.setStartDate(rs.getTimestamp("startDate"));
     			s.setEndDate(rs.getTimestamp("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));

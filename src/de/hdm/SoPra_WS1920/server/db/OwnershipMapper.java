@@ -68,6 +68,7 @@ public class OwnershipMapper {
 			if(rs.next()) {
 				Ownership o = new Ownership();
 				o.setPersonFK(rs.getInt("personFK"));
+				o.setId(rs.getInt("id"));
 				return o;
 				
 			}
@@ -152,6 +153,7 @@ public class OwnershipMapper {
 			while (rs.next()) {
 				Ownership o = new Ownership();
 				o.setPersonFK(rs.getInt("personFK"));
+				o.setId(rs.getInt("id"));
 				result.add(o);
 				
 			}			

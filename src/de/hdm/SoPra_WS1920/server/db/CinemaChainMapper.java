@@ -73,6 +73,7 @@ public class CinemaChainMapper {
 					
 					CinemaChain cc = new CinemaChain();
 					cc.setName(rs.getString("name"));
+					cc.setId(rs.getInt("id"));
 					
 					return cc;
 				}
@@ -174,6 +175,7 @@ public class CinemaChainMapper {
 	        	while(rs.next()) {
 	        		CinemaChain cc = new CinemaChain();
 	        		cc.setName(rs.getString("name"));
+	        		cc.setId(rs.getInt("id"));
 	        		
 	        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
 	        		result.addElement(cc);
@@ -219,6 +221,7 @@ public class CinemaChainMapper {
 	        	while(rs.next()) {
 	        		CinemaChain cc = new CinemaChain();
 	        		cc.setName(rs.getString("name"));
+	        		cc.setId(rs.getInt("id"));
 	        		
 	        	        		
 	        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
