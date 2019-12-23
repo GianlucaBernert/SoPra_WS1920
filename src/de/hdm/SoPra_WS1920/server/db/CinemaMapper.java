@@ -11,8 +11,8 @@ import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 /**
  * Mapper-Klasse, die <code>Cinema</code>-Objekte auf relationale Datenbank abbildet.
- * Anhand von den Methoden können Objekte gesucht, erzeugt, bearbeitet und gelöscht werden.
- * Objekte können in DB-Strukturen umgewandelt werden und DB-Strukturen in Objekte.
+ * Anhand von den Methoden kï¿½nnen Objekte gesucht, erzeugt, bearbeitet und gelï¿½scht werden.
+ * Objekte kï¿½nnen in DB-Strukturen umgewandelt werden und DB-Strukturen in Objekte.
  * 
  * @author shila
  */
@@ -20,14 +20,14 @@ public class CinemaMapper {
 
     /**
      * Die Klasse CinemaMapper wird nur einmal instanziiert (Singleton-Eigenschaft).
-     * Die folgende Variable ist durch den Bezeichner <code>static</code> nur einmal für 
+     * Die folgende Variable ist durch den Bezeichner <code>static</code> nur einmal fï¿½r 
      * alle Instanzen der Klasse vorhanden. Die einzige Instanz dieser Klasse wird darin gespeichert.
      */
      
 	private static CinemaMapper cinemaMapper = null;
 
 	/**
-	 * Geschützter Konstruktor, der verhindert, dass mit dem new-Operator
+	 * Geschï¿½tzter Konstruktor, der verhindert, dass mit dem new-Operator
 	 * neue Instanzen der Klasse erstellt werden.
 	 */
 
@@ -36,7 +36,7 @@ public class CinemaMapper {
 
     /**
      *Folgende statische Methode sichert die Singleton-Eigenschaft.
-     * Es wird dafür gesorgt, dass nur eine einzige Instanz von
+     * Es wird dafï¿½r gesorgt, dass nur eine einzige Instanz von
      * <code>CinemaMapper</code> existiert.
      * SurveyMapper wird durch den Aufruf dieser statischen Methode instanziiert, 
      * nicht durch den new-Operator.
@@ -53,8 +53,8 @@ public class CinemaMapper {
     }
     
     /**
-     * @param id (Primärschlüssel-Attribut)
-     * @return Cinema-Objekt, das dem übergebenen Schlüssel entspricht, null
+     * @param id (Primï¿½rschlï¿½ssel-Attribut)
+     * @return Cinema-Objekt, das dem ï¿½bergebenen Schlï¿½ssel entspricht, null
      * bei nicht vorhandenem DB-Tupel.
      */
     public Cinema findCinemaByID(int id) {//Oder cinemaID?
@@ -64,17 +64,17 @@ public class CinemaMapper {
     	try {
     		//Leeres SQL-Statement (JDBC) anlegen
     		Statement stmt = con.createStatement();
-    		//Ausfüllen des Statements und als Query an die DB schicken
+    		//Ausfï¿½llen des Statements und als Query an die DB schicken
     		ResultSet rs = stmt.executeQuery("SELECT * FROM cinema " + "WHERE id= " + id);
     		
-    		//Da id Primärschlüssel ist, kann nur ein Tupel zurückgegeben werden.
-    		//Es wird geprüft, ob ein Ergebnis vorliegt.
+    		//Da id Primï¿½rschlï¿½ssel ist, kann nur ein Tupel zurï¿½ckgegeben werden.
+    		//Es wird geprï¿½ft, ob ein Ergebnis vorliegt.
     		if(rs.next()) {
     			//Ergebnis-Tupel in Objekt umwandeln
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
     			c.setCity(rs.getString("city"));
-    			c.setZipCode(rs.getString("zipCode"));
+    			c.setzipCode(rs.getString("zipCode"));
     			c.setStreet(rs.getString("street"));
     			c.setStreetNo(rs.getString("streetNo"));
     			c.setCinemaChainFK(rs.getInt("cinemachainFK"));
@@ -94,10 +94,10 @@ public class CinemaMapper {
     }
 
     /**
-     * Einfügen eines <code>Cinema</code>-Objekts in die DB.
-     * Prüfung und ggf. Korrektur des Primärschlüssels
+     * Einfï¿½gen eines <code>Cinema</code>-Objekts in die DB.
+     * Prï¿½fung und ggf. Korrektur des Primï¿½rschlï¿½ssels
      * @param survey das zu speichernde Objekt
-     * @return das übergebene Objekt, mit ggf. korrigierter <code>id</code>.
+     * @return das ï¿½bergebene Objekt, mit ggf. korrigierter <code>id</code>.
      */
     public Cinema insertCinema(Cinema c) {
         Connection con = DBConnection.connection();
@@ -106,7 +106,7 @@ public class CinemaMapper {
         	con.setAutoCommit(false);
         	Statement stmt = con.createStatement();
         	
-        		//Tatsächliche Einfügeoperation eines Cinema-Objekts
+        		//Tatsï¿½chliche Einfï¿½geoperation eines Cinema-Objekts
         		stmt.executeUpdate("INSERT INTO cinema(id, name, city, zipCode, street, streetNo, cinemachainFK)" 
         		+ "VALUES ('" 
         		+ c.getId() 
@@ -115,11 +115,11 @@ public class CinemaMapper {
         		+ "','"
         		+ c.getCity() 
         		+ "','"
-        		+ c.getZipCode()
-        		+ "','"
         		+ c.getStreet()
         		+ "','" 
         		+ c.getStreetNo() 
+        		+ "','"
+        		+ c.getzipCode()
         		+ "','"
         		+ c.getCinemaChainFK()
         		 + "')");
@@ -131,7 +131,7 @@ public class CinemaMapper {
         	e2.printStackTrace();
         }
         /**
-         * Rückgabe des evtl. korrigierten Kinos
+         * Rï¿½ckgabe des evtl. korrigierten Kinos
          */
         return c;
     }
@@ -142,7 +142,7 @@ public class CinemaMapper {
      * Ein Objekt wird wiederholt in die DB geschrieben.
      * 
      * @param c, das Objekt, das in die DB geschrieben werden soll
-     * @return das Objekt, das als Parameter übergeben wird -> c
+     * @return das Objekt, das als Parameter ï¿½bergeben wird -> c
      */
     public Cinema updateCinema(Cinema c) {
         Connection con = DBConnection.connection();
@@ -154,7 +154,7 @@ public class CinemaMapper {
         	stmt.executeUpdate("UPDATE cinema SET name= '" 
         	+ c.getName()
         	+ "', city='"+ c.getCity()
-        	+ "', zipCode='" + c.getZipCode()  
+        	+ "', zipCode='" + c.getzipCode()  
         	+ "', street='" + c.getStreet() 
         	+ "', streetNo='" + c.getStreetNo()
         	+ "' WHERE id=" + c.getId());
@@ -169,8 +169,8 @@ public class CinemaMapper {
     }
     
     /**
-     * Löschen von Daten eines <code>Cinema</code>-Objekts aus der Datenbank
-     * @param c, das zu löschende Objekt 
+     * Lï¿½schen von Daten eines <code>Cinema</code>-Objekts aus der Datenbank
+     * @param c, das zu lï¿½schende Objekt 
      */
     public void deleteCinema(Cinema c) {
     	Connection con = DBConnection.connection();
@@ -202,24 +202,24 @@ public class CinemaMapper {
         try {
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery("SELECT * FROM cinema WHERE name='" + name + "'");
-        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
         	while(rs.next()) {
         		Cinema c = new Cinema();
         		c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setZipCode(rs.getString("zipCode"));
+        		c.setzipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
         		
-        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+        		//Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(c);
         	}
         }
         	catch(SQLException e2) {
         		e2.printStackTrace();
         	}
-        	//Rückgabe des Ergebnisvektors
+        	//Rï¿½ckgabe des Ergebnisvektors
         	return result;
         }
 
@@ -235,23 +235,23 @@ public class CinemaMapper {
         try {
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery("SELECT * FROM cinema WHERE city='" + city+"'");
-        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
         	while(rs.next()) {
         		Cinema c = new Cinema();
         		c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setZipCode(rs.getString("zipCode"));
+        		c.setzipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
         		
-        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+        		//Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(c);
         	}
         } catch(SQLException e2) {
         	e2.printStackTrace();
         }
-        //Rückgabe des Ergebnisvektors
+        //Rï¿½ckgabe des Ergebnisvektors
         return result;
     }
 
@@ -268,23 +268,23 @@ public class CinemaMapper {
     		Statement stmt = con.createStatement();
     		ResultSet rs = stmt.executeQuery("SELECT * FROM cinema WHERE zipCode= '"+ zipCode+"'");
     		
-    		//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+    		//Fï¿½r jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
     		while(rs.next()) {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
     			c.setCity(rs.getString("city"));
-    			c.setZipCode(rs.getString("zipCode"));
+    			c.setzipCode(rs.getString("zipCode"));
     			c.setStreetNo(rs.getString("streetNo"));
     			c.setCinemaChainFK(rs.getInt("cinemachainFK"));
     			
     			
-    			//Hinzufügen des Objekts zum Ergebnisvektor
+    			//Hinzufï¿½gen des Objekts zum Ergebnisvektor
     			result.addElement(c);
     		}
     	} catch(SQLException e2) {
     		e2.printStackTrace();
     	}
-    	//Rückgabe des Ergebnisvektors
+    	//Rï¿½ckgabe des Ergebnisvektors
     	return result;
         
     }
@@ -301,7 +301,7 @@ public class CinemaMapper {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
     			c.setCity(rs.getString("city"));
-    			c.setZipCode(rs.getString("zipCode"));
+    			c.setzipCode(rs.getString("zipCode"));
     			c.setStreet(rs.getString("street"));
     			c.setStreetNo(rs.getString("streetNo"));
     			c.setCinemaChainFK(rs.getInt("cinemachainFK"));
@@ -361,18 +361,18 @@ public class CinemaMapper {
         			+ "INNER JOIN popcorns.businessownership ON cinema.id=businessownership.id "
         			+ "AND businessownership.personFK='" + personFK+"'");
         	
-        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt zugeordnet
+        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein Cinema-Objekt zugeordnet
         	while(rs.next()) {
         		Cinema c = new Cinema();
         		c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setZipCode(rs.getString("zipCode"));
+        		c.setzipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
         		
         		
-        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+        		//Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(c);
         	}
         }

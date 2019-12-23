@@ -163,7 +163,7 @@ public interface SurveyManagement extends RemoteService {
      * @param Timestamp endDate 
      * @return Survey s
      */
-    public Survey createSurvey(int gFK, int pFK, Date startDate, Date endDate);
+    public Survey createSurvey(int gFK, int pFK, Timestamp startDate, Timestamp endDate);
     
     /**
      * Methode um eine Umfrage zu bearbeiten
@@ -211,14 +211,14 @@ public interface SurveyManagement extends RemoteService {
      * @param Timestamp startDate
      * @return Vector<Survey>
      */
-    public Vector<Survey> getSurveyByStartDate(Date startDate);
+    public Vector<Survey> getSurveyByStartDate(Timestamp startDate);
 
     /**
      * Methode um eine Umfrage anhand des ENd Datums zu finden
      * @param Timestamp endDate
      * @return Vector<Survey>
      */
-    public Vector<Survey> getSurveyByEndDate(Date endDate);
+    public Vector<Survey> getSurveyByEndDate(Timestamp endDate);
 
     /**
      * Methode um ein Vote zu erstellen
@@ -282,7 +282,7 @@ public interface SurveyManagement extends RemoteService {
      * @param in sFK
      * @return SurveyEntry se
      */
-    public SurveyEntry createSurveyEntry(int scFK, int sFK);
+    public SurveyEntry createSurveyEntry(int scFK, int sFK, int pFK);
     
     /**
      * Methode um einen Umfrageeintrag zu bearbeiten

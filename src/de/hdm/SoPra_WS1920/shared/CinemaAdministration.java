@@ -34,7 +34,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param postCode 
      * @return
      */
-    Cinema createCinema(String name, String cityName, String street, String streetNr, String zipCode, int personFK);
+    Cinema createCinema(String name, String cityName, String street, String streetNr, String zipCode, int ccFK, int personFK);
 
     /**
      * @param name 
@@ -201,7 +201,7 @@ public interface CinemaAdministration extends RemoteService {
 
 	Vector<SurveyEntry> getSurveyEntryByScreeningFK(int ScreeningFK);
 
-	Vector<Cinema> findCinemasByCinemaChain(CinemaChain cc);
+	Vector<Cinema> findCinemasByCinemaChainFK(CinemaChain cc);
 
 	Vector<Cinema> findCinemasByPersonFK(int personFK);
 
@@ -209,13 +209,13 @@ public interface CinemaAdministration extends RemoteService {
 
 	Vector<CinemaChain> findCinemaChainByPersonFK(int personFK);
 
-	CinemaChain findCinemaChainByName(String name);
+	Vector<CinemaChain> findCinemaChainByName(String name);
 
 	void deleteCinemaChain(CinemaChain cc);
 
 	CinemaChain updateCinemaChain(CinemaChain cc);
 
-	CinemaChain createCinemaChain(Cinema c, String name, int personFK);
+	CinemaChain createCinemaChain(String name, int personFK);
 
 	Vector<Ownership> getOwnershipsbyPersonFK(int personFK);
 

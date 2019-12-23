@@ -73,7 +73,7 @@ public class Person extends BusinessObject {
 	 * @return String id + firstname + lastname
 	 */
 	public String toString() {
-		return "PersonID #P" + super.getId() + " " + this.firstname + " " + this.lastname;
+		return "PersonID #P" + this.getId() + " " + this.firstname + " " + this.lastname;
 	}
 
 }
