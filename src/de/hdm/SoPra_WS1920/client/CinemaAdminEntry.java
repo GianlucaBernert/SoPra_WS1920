@@ -12,10 +12,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
-import de.hdm.SoPra_WS1920.client.gui.Content;
-import de.hdm.SoPra_WS1920.client.gui.Header;
-import de.hdm.SoPra_WS1920.client.gui.MovieCard;
-import de.hdm.SoPra_WS1920.client.gui.NavigationBar;
+import de.hdm.SoPra_WS1920.client.gui.Admin.Content;
+import de.hdm.SoPra_WS1920.client.gui.Admin.Header;
+import de.hdm.SoPra_WS1920.client.gui.Admin.MovieCard;
+import de.hdm.SoPra_WS1920.client.gui.Admin.NavigationBar;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 
 /**

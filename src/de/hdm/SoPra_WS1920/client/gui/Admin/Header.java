@@ -1,4 +1,4 @@
-package de.hdm.SoPra_WS1920.client.gui;
+package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

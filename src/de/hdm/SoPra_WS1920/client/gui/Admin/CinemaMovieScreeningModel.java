@@ -1,4 +1,4 @@
-package de.hdm.SoPra_WS1920.client.gui;
+package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import java.util.List;
 
