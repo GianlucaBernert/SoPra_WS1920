@@ -81,6 +81,8 @@ public class Content extends FlowPanel{
 	
 	public void showMovies() {
 		this.clear();
+		MovieCard movieCard = new MovieCard(this, m);
+		this.add(movieCard);
 //		this.add(new Label("Movies"));
 		//Get all movies
 		//for every movie...

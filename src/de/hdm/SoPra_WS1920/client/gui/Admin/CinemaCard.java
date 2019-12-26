@@ -15,7 +15,7 @@ public class CinemaCard extends FlowPanel{
 	
 	public void onLoad() {
 		super.onLoad();
-		this.setStyleName("cinemacard");
+		this.setStyleName("Card");
 		this.showCinemaCardView(cinemaToShow);
 		cinemaCardView = new CinemaCardView(this, cinemaToShow);
 	}
@@ -28,14 +28,17 @@ public class CinemaCard extends FlowPanel{
 	public void showCinemaCardEdit(Cinema cinemaToShow) {
 		this.cinemaToShow=cinemaToShow;
 		this.clear();
-//		this.add(new CinemaCardEdit(this,cinemaToShow));
+		this.add(new CinemaCardEdit(this,cinemaToShow));
 	}
 		
 	public void showCinemaCardView(Cinema cinemaToShow) {
 		this.cinemaToShow=cinemaToShow;
+		this.clear();
 		this.add(new CinemaCardView(this,cinemaToShow));
 	}
-//	public void remove() {
-//		content.remove(this);
-//	}
+
+	public void remove() {
+		content.remove(this);
+		
+	}
 }

@@ -1,5 +1,7 @@
 package de.hdm.SoPra_WS1920.client.gui.Admin;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -52,6 +54,7 @@ public class CinemaCardView extends FlowPanel{
 		edit.setStyleName("invisibleButton");
 		editIcon = new Image("/Images/png/006-pen.png");
 		editIcon.setStyleName("icon");
+		editIcon.addClickHandler(new EditClickHandler());
 		
 		streetRow.add(street);
 		streetRow.add(streetNr);
@@ -63,6 +66,16 @@ public class CinemaCardView extends FlowPanel{
 		this.add(cityRow);
 		this.add(edit); //Without this, the clickable icon doesn't work
 		this.add(editIcon);
+		
+	}
+	class EditClickHandler implements ClickHandler{
+		
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			parentCard.showCinemaCardEdit(cinemaToShow);
+		}
 		
 	}
 }

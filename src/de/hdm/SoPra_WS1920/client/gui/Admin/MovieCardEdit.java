@@ -37,15 +37,15 @@ public class MovieCardEdit extends FlowPanel{
 		super.onLoad();
 
 		nameLabel = new Label("Title");
-		nameLabel.setStyleName("inputLabel");
+		nameLabel.setStyleName("InputLabel");
 		name=new TextBox();
 		name.setStyleName("inputTextBox");
 		genreLabel = new Label("Genre");
-		genreLabel.setStyleName("inputLabel");
+		genreLabel.setStyleName("InputLabel");
 		genre=new TextBox();
 		genre.setStyleName("inputTextBox");
 		descriptionLabel = new Label("Description");
-		descriptionLabel.setStyleName("inputLabel");
+		descriptionLabel.setStyleName("InputLabel");
 		description=new TextArea();
 		description.setStyleName("inputTextArea");
 		save=new Button("SAVE");
