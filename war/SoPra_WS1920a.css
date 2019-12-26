@@ -241,7 +241,7 @@ body{
 	margin-left: 30px;
 }
 
-.cinemacard {
+.Card {
   	position: relative;
 	float:left;
 	width: calc(100% - 40px);
@@ -253,10 +253,10 @@ body{
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 	overflow-x: hidden; 
 }
-.cinemacard:hover {
+.Card:hover {
 	box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.cinemacard button {
+.Cinemacard button {
 	display: none;
 	width: 33.33%;
 	border: none;	
@@ -350,7 +350,7 @@ body{
 	cursor: pointer;
 	margin-left: 30px;
 }
-.cancelIcon {
+.CancelIcon {
 	position: absolute;
     float: right;
     width: 10px;

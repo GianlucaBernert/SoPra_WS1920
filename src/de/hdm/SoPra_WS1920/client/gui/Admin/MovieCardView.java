@@ -36,7 +36,7 @@ public class MovieCardView extends FlowPanel{
 		description.setStyleName("description");
 		edit=new Button("");
 		edit.setStyleName("invisibleButton");
-		editIcon = new Image("/Images/004-edit.svg");
+		editIcon = new Image("/Images/png/006-pen.png");
 		editIcon.setStyleName("icon");
 		editIcon.addClickHandler(new EditClickHandler(this));
 		

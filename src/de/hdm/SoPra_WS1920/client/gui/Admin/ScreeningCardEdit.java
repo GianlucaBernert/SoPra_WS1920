@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -24,6 +25,7 @@ public class ScreeningCardEdit extends FlowPanel {
 	Label date;
 	DateBox datePicker;
 	Label time;
+	TextBox timePicker;
 	
 	Button save;
 	Button cancel;
@@ -46,10 +48,14 @@ public class ScreeningCardEdit extends FlowPanel {
 	public void onLoad() {
 		super.onLoad();
 		
+		movieSuggestBox = new SuggestBox();
+		allCinemas = new ListBox();
+		datePicker = new DateBox();
+		timePicker = new TextBox();
 		
-		
-		save=new Button("");
+		save=new Button("Save");
 		save.setStyleName("InvisibleButton");
+		save.addClickHandler(new SaveClickHandler());
 		cancel=new Button("");
 		cancel.setStyleName("InvisibleButton");
 		delete=new Button("");
@@ -57,7 +63,7 @@ public class ScreeningCardEdit extends FlowPanel {
 
 //		saveIcon = new Image("/Images/002-checked.svg");
 //		saveIcon.setStyleName("saveIcon");
-		saveIcon.addClickHandler(new SaveClickHandler());
+
 		
 		cancelIcon = new Image("/Images/png/007-close.png");
 		cancelIcon.setStyleName("cancelIcon");
@@ -80,7 +86,10 @@ public class ScreeningCardEdit extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			
+			//screeningToShow.setMovieFK(proxy.findMovieByName(movieSuggestBox.getText()));
+			//screeningToShow.setCinemaFK(proxy.findCinemaByName(allCinemas.getText()));
+			//screeningToShow.setDate(datePicker.getDate());
+			//screeningToShow.setTime(timePicker.getText());
 		}
 		
 	}
@@ -90,7 +99,7 @@ public class ScreeningCardEdit extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			
+			parentCard.showScreeningCardView(screeningToShow);
 		}
 		
 	}
@@ -100,6 +109,7 @@ public class ScreeningCardEdit extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
+			parentCard.remove();
 			
 		}
 		

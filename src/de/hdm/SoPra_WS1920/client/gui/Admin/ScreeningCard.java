@@ -37,4 +37,9 @@ public class ScreeningCard extends FlowPanel{
 		this.clear();
 		this.add(new ScreeningCardEdit(this, screening));
 	}
+
+	public void remove() {
+		// TODO Auto-generated method stub
+		content.remove(this);
+	}
 }
