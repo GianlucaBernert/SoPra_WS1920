@@ -6,7 +6,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
-import de.hdm.SoPra_WS1920.shared.bo.Movie;
 
 public class CinemaCardView extends FlowPanel{
 
@@ -30,7 +29,7 @@ public class CinemaCardView extends FlowPanel{
 
 	public void onLoad() {
 		super.onLoad();
-
+		this.setStyleName("view");
 		streetRow = new FlowPanel();
 		streetRow.setStyleName("streetrow-inline");
 		cityRow = new FlowPanel();
@@ -44,7 +43,7 @@ public class CinemaCardView extends FlowPanel{
 		street.setStyleName("street");
 		streetNr = new Label(cinemaToShow.getStreetNo());
 		streetNr.setStyleName("street");
-		//zipCode = new Label(cinemaToShow.getPostCode());
+		zipCode = new Label(cinemaToShow.getzipCode());
 		zipCode.setStyleName("city");
 		city = new Label(cinemaToShow.getCity());
 		city.setStyleName("city");
@@ -54,15 +53,14 @@ public class CinemaCardView extends FlowPanel{
 		editIcon = new Image("/Images/png/006-pen.png");
 		editIcon.setStyleName("icon");
 		
-
-		this.add(name);
-		this.add(cinemaChain);
-		this.add(streetRow);		
-		this.add(cityRow);
 		streetRow.add(street);
 		streetRow.add(streetNr);
 		cityRow.add(zipCode);
 		cityRow.add(city);
+		this.add(name);
+		this.add(cinemaChain);
+		this.add(streetRow);		
+		this.add(cityRow);
 		this.add(edit); //Without this, the clickable icon doesn't work
 		this.add(editIcon);
 		

@@ -1,9 +1,5 @@
 package de.hdm.SoPra_WS1920.client.gui.Admin;
 
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.datepicker.client.DatePicker;
@@ -29,7 +25,7 @@ public class Content extends FlowPanel{
 		c = new Cinema();
 		c.setName("Cinemax");
 		c.setCity("Stuttgart");
-		//c.setPostCode("70372");
+		c.setzipCode("70372");
 		c.setPersonFK(1);
 		c.setStreet("Deckerstra�e");
 		c.setStreetNo("49");
@@ -43,6 +39,20 @@ public class Content extends FlowPanel{
 				+ "paints for his day job as a clown, and the guise he projects in a futile attempt "
 				+ "to feel like he's part of the world around him.");
 		m.setId(1);
+		
+//		s = new Screening();
+//		s.setCinemaFK(c.getId());
+//		s.setMovieFK(m.getId());
+//		s.setPersonFK(1);
+//		String s = "24.12.2019";
+//		SimpleDateFormat dt = new SimpleDateFormat("dd.mm.yyyy");
+//		try {
+//			Date d = dt.parse(s);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 //		
 //		s = new Screening();
 //		try {
@@ -71,7 +81,7 @@ public class Content extends FlowPanel{
 	
 	public void showMovies() {
 		this.clear();
-		this.add(new Label("Movies"));
+//		this.add(new Label("Movies"));
 		//Get all movies
 		//for every movie...
 		//create a MovieCard
@@ -79,7 +89,7 @@ public class Content extends FlowPanel{
 
 	public void showScreenings() {
 		this.clear();
-		this.add(new Label("Screenings"));
+//		this.add(new Label("Screenings"));
 		//Get all screenings of the all cinemas where user is permitted to
 		//for every screening...
 		//create a new ScreeningCard

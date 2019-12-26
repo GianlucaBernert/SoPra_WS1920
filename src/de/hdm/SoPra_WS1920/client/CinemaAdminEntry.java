@@ -1,20 +1,11 @@
 package de.hdm.SoPra_WS1920.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.datepicker.client.DateBox;
+
 
 import de.hdm.SoPra_WS1920.client.gui.Admin.Content;
 import de.hdm.SoPra_WS1920.client.gui.Admin.Header;
-import de.hdm.SoPra_WS1920.client.gui.Admin.MovieCard;
 import de.hdm.SoPra_WS1920.client.gui.Admin.NavigationBar;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 
@@ -43,10 +34,10 @@ public class CinemaAdminEntry implements EntryPoint{
 	@Override
 	public void onModuleLoad() {
 		// TODO Auto-generated method stub
-		Movie m = new Movie();
-		m.setName("Joker");
-		m.setGenre("Drama");
-		m.setDescription("A Movie about a clown");
+//		Movie m = new Movie();
+//		m.setName("Joker");
+//		m.setGenre("Drama");
+//		m.setDescription("A Movie about a clown");
 		/*
 		 * Navbar Widgets
 		 */

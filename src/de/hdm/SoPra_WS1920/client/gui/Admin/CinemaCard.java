@@ -3,27 +3,25 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
-import de.hdm.SoPra_WS1920.shared.bo.Movie;
 
 
 public class CinemaCard extends FlowPanel{
 	
 	Cinema cinemaToShow;
-	FlowPanel main;
+	Content content;
 	
 	CinemaCardView cinemaCardView;
 //	CinemaCardEdit cinemaCardEdit;
 	
 	public void onLoad() {
 		super.onLoad();
-		this.setStylePrimaryName("cinemacard");
+		this.setStyleName("cinemacard");
 		this.showCinemaCardView(cinemaToShow);
 		cinemaCardView = new CinemaCardView(this, cinemaToShow);
-		this.showCinemaCardView(cinemaToShow);
 	}
 	
-	public CinemaCard(FlowPanel main, Cinema cinemaToShow) {
-		this.main=main;
+	public CinemaCard(Content content, Cinema cinemaToShow) {
+		this.content=content;
 		this.cinemaToShow=cinemaToShow;
 		}
 
@@ -35,10 +33,9 @@ public class CinemaCard extends FlowPanel{
 		
 	public void showCinemaCardView(Cinema cinemaToShow) {
 		this.cinemaToShow=cinemaToShow;
-		this.clear();
 		this.add(new CinemaCardView(this,cinemaToShow));
 	}
-	public void remove() {
-		main.remove(this);
-	}
+//	public void remove() {
+//		content.remove(this);
+//	}
 }
