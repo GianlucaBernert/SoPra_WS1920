@@ -74,7 +74,7 @@ public class CinemaMapper {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
     			c.setCity(rs.getString("city"));
-    			c.setzipCode(rs.getString("zipCode"));
+    			c.setZipCode(rs.getString("zipCode"));
     			c.setStreet(rs.getString("street"));
     			c.setStreetNo(rs.getString("streetNo"));
     			c.setCinemaChainFK(rs.getInt("cinemachainFK"));
@@ -119,7 +119,7 @@ public class CinemaMapper {
         		+ "','" 
         		+ c.getStreetNo() 
         		+ "','"
-        		+ c.getzipCode()
+        		+ c.getZipCode()
         		+ "','"
         		+ c.getCinemaChainFK()
         		 + "')");
@@ -154,7 +154,7 @@ public class CinemaMapper {
         	stmt.executeUpdate("UPDATE cinema SET name= '" 
         	+ c.getName()
         	+ "', city='"+ c.getCity()
-        	+ "', zipCode='" + c.getzipCode()  
+        	+ "', zipCode='" + c.getZipCode()  
         	+ "', street='" + c.getStreet() 
         	+ "', streetNo='" + c.getStreetNo()
         	+ "' WHERE id=" + c.getId());
@@ -207,7 +207,7 @@ public class CinemaMapper {
         		Cinema c = new Cinema();
         		c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setzipCode(rs.getString("zipCode"));
+        		c.setZipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
@@ -241,7 +241,7 @@ public class CinemaMapper {
         		Cinema c = new Cinema();
         		c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setzipCode(rs.getString("zipCode"));
+        		c.setZipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
@@ -275,7 +275,7 @@ public class CinemaMapper {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setzipCode(rs.getString("zipCode"));
+        		c.setZipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
@@ -305,7 +305,7 @@ public class CinemaMapper {
     			Cinema c = new Cinema();
     			c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setzipCode(rs.getString("zipCode"));
+        		c.setZipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
@@ -371,7 +371,7 @@ public class CinemaMapper {
         		Cinema c = new Cinema();
         		c.setName(rs.getString("name"));
         		c.setCity(rs.getString("city"));
-        		c.setzipCode(rs.getString("zipCode"));
+        		c.setZipCode(rs.getString("zipCode"));
         		c.setStreet(rs.getString("street"));
         		c.setStreetNo(rs.getString("streetNo"));
         		c.setCinemaChainFK(rs.getInt("cinemachainFK"));
