@@ -46,8 +46,9 @@ public class CinemaAdminEntry implements EntryPoint{
 //			MovieCard moviecard = new MovieCard(m);
 //		}
 //		
-		header = new Header();
+		
 		content = new Content();
+		header = new Header(content);
 		navBar = new NavigationBar(header,content);
 		
 //		navbar.setStyleName("navbar");

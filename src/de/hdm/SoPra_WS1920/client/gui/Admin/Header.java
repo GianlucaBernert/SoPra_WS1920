@@ -2,13 +2,13 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Header extends FlowPanel{
 	
@@ -16,16 +16,21 @@ public class Header extends FlowPanel{
 	Button createBo;
 	SearchBox searchBox;
 	PopupPanel pPanel;
-	Label cinema;
-	Label cinemaChain;
-	VerticalPanel vPanel;
+
+	Content content;
 	
+	public Header(Content content) {
+		// TODO Auto-generated constructor stub
+		this.content=content;
+		
+	}
+
 	public void onLoad() {
 		super.onLoad();
-		this.setStyleName("header");
-		vPanel = new VerticalPanel();
-		cinema = new Label("New Cinema");
-		cinemaChain = new Label("New CinemaChain");
+		this.setStyleName("Header");
+//		vPanel = new VerticalPanel();
+//		cinema = new Label("New Cinema");
+//		cinemaChain = new Label("New CinemaChain");
 //		vPanel.add(cinema);
 //		vPanel.add(cinemaChain);
 //		
@@ -33,19 +38,20 @@ public class Header extends FlowPanel{
 	}
 	
 	class CreateBoClickHandler implements ClickHandler{
-
-		public CreateBoClickHandler(Header header) {
-			
+		Header header;
+		Content content;
+		public CreateBoClickHandler(Header header, Content content) {
+			this.header = header;
+			this.content = content;
 		}
 
 		@Override
 		public void onClick(ClickEvent event) {
+			CreateBoDialogbox createBoDialogbox = new CreateBoDialogbox(header, content);
+			createBoDialogbox.showMovieCardEdit();
+			createBoDialogbox.center();
+			createBoDialogbox.show();
 			
-//			pPanel = new PopupPanel(true);
-//			pPanel.setStyleName("PopUpPanel");
-//			
-//			pPanel.add(vPanel);
-//			pPanel.show();
 		}
 		
 	}
@@ -58,19 +64,19 @@ public class Header extends FlowPanel{
 		
 		public void onLoad(){
 			super.onLoad();
-			this.setStyleName("searchBox");
+			this.setStyleName("SearchBox");
 			
 			searchText = new TextBox();
-			searchText.setStyleName("searchText");
+			searchText.setStyleName("SearchText");
 			searchText.getElement().setPropertyString("placeholder", "Search...");
 			
 			submitSearch = new Button();
 
 			searchSubmitIcon = new Image("/Images/png/009-arrow-pointing-to-right-1.png");
-			searchSubmitIcon.setStyleName("searchSubmitIcon");
+			searchSubmitIcon.setStyleName("SearchSubmitIcon");
 			
 			searchIcon = new Image("/Images/png/003-search.png");
-			searchIcon.setStyleName("searchIcon");
+			searchIcon.setStyleName("SearchIcon");
 
 			this.add(searchIcon);
 			this.add(searchText);
@@ -83,13 +89,13 @@ public class Header extends FlowPanel{
 		//Set the Header to Cinemas
 		this.clear();
 		headline=new Label("Cinemas");
-		headline.setStyleName("headline");
+		headline.setStyleName("Headline");
 		
 		searchBox = new SearchBox();
 		
 		createBo = new Button("+Add Cinema");
-		createBo.setStyleName("createBoButton");
-		createBo.addClickHandler(new CreateBoClickHandler(this));
+		createBo.setStyleName("CreateBoButton");
+		createBo.addClickHandler(new CreateBoClickHandler(this,content));
 		
 		this.add(headline);
 		this.add(createBo);
@@ -103,13 +109,13 @@ public class Header extends FlowPanel{
 		//add the respective clickhandler to the createBo button
 		this.clear();
 		headline=new Label("Movies");
-		headline.setStyleName("headline");
+		headline.setStyleName("Headline");
 		
 		searchBox = new SearchBox();
 		
 		createBo = new Button("+Add Movie");
-		createBo.setStyleName("createBoButton");
-		createBo.addClickHandler(new CreateBoClickHandler(this));
+		createBo.setStyleName("CreateBoButton");
+		createBo.addClickHandler(new CreateBoClickHandler(this,content));
 		
 		this.add(headline);
 		this.add(createBo);
@@ -120,13 +126,13 @@ public class Header extends FlowPanel{
 		//Set the Header to Screenings
 		this.clear();
 		headline=new Label("Screenings");
-		headline.setStyleName("headline");
+		headline.setStyleName("Headline");
 		
 		searchBox = new SearchBox();
 		
 		createBo = new Button("+Add Screening");
-		createBo.setStyleName("createBoButton");
-		createBo.addClickHandler(new CreateBoClickHandler(this));
+		createBo.setStyleName("CreateBoButton");
+		createBo.addClickHandler(new CreateBoClickHandler(this,content));
 		
 		this.add(headline);
 		this.add(createBo);
