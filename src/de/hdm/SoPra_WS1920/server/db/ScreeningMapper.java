@@ -94,7 +94,7 @@ public class ScreeningMapper {
 	/**
      * Einfügen eines <code>Screening</code>-Objekts in die DB.
      * Prüfung und ggf. Korrektur des Primärschlüssels
-     * @param screening das zu speichernde Objekt
+     * @param screening das zu speichernde Objekt.
      * @return das übergebene Objekt, mit ggf. korrigierter <code>id</code>.
      */
 	
@@ -191,7 +191,7 @@ public class ScreeningMapper {
         		sc.setScreeningDate(rs.getDate("screeningDate"));
         		sc.setScreeningTime(rs.getTime("screeningTime"));
         		sc.setMovieFK(rs.getInt("movieFK"));
-        		sc.setCinemaFK(rs.getInt("cinemaFK"));
+        		sc.setCinemaFK(rs.getInt("cinemaFK")); 
         		
         		//Hinzufügen des neuen Objekts zum Ergebnisvektor
         		result.addElement(sc);
