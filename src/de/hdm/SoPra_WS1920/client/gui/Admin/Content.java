@@ -14,7 +14,10 @@ public class Content extends FlowPanel{
 	Screening s;
 	Movie m;
 	DatePicker dP;
+	Header h;
 	
+	public Content() {
+	}
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("content");

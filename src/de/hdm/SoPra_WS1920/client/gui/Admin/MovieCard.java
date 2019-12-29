@@ -7,7 +7,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Movie;
 public class MovieCard extends FlowPanel{
 		
 	Movie movieToShow;
-	FlowPanel main;
+	Content content;
 	MovieCardView movieCardView;
 	MovieCardEdit movieCardEdit;
 		
@@ -18,8 +18,8 @@ public class MovieCard extends FlowPanel{
 		movieCardView = new MovieCardView(this, movieToShow);
 	}
 		
-	public MovieCard(FlowPanel main, Movie movieToShow) {
-		this.main=main;
+	public MovieCard(Content content, Movie movieToShow) {
+		this.content = content;
 		this.movieToShow=movieToShow;
 		}
 
@@ -35,7 +35,7 @@ public class MovieCard extends FlowPanel{
 		this.add(new MovieCardView(this,movieToShow));
 	}
 	public void remove() {
-		main.remove(this);
+		content.remove(this);
 	}
 		
 		
