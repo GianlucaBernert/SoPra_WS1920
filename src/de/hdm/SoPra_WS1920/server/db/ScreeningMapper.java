@@ -1,12 +1,11 @@
 package de.hdm.SoPra_WS1920.server.db;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Vector;
 
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
@@ -95,7 +94,7 @@ public class ScreeningMapper {
 	/**
      * Einfügen eines <code>Screening</code>-Objekts in die DB.
      * Prüfung und ggf. Korrektur des Primärschlüssels
-     * @param screening das zu speichernde Objekt
+     * @param screening das zu speichernde Objekt.
      * @return das übergebene Objekt, mit ggf. korrigierter <code>id</code>.
      */
 	
@@ -105,7 +104,7 @@ public class ScreeningMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			stmt.executeUpdate("INSERT INTO screening(id, screeningDateTime, movieFK, cinemaFK)"
+			stmt.executeUpdate("INSERT INTO screening(id, screeningDate, screeningTime, movieFK, cinemaFK)"
 					+ "VALUES ('"
 					+ sc.getId()
 					+ "','"
@@ -177,14 +176,14 @@ public class ScreeningMapper {
      * @param screeningDate
      * @return Vektor mit Screening-Objekten
      */
-    public Vector<Screening> findScreeningByScreeningDate(Date screeningDate) {
+    public Vector<Screening> findScreeningByScreeningDateTime(Date screeningDate, Time screeningTime) {
     	Connection con = DBConnection.connection();
         Vector<Screening> result = new Vector<Screening>();
         
         try {
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
-        			+ "WHERE screeningDateTime= '" + screeningDate +"'");
+        			+ "WHERE screeningDate= '" + screeningDate + "AND screeningTime='" + screeningTime + "'");
         	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
         	while(rs.next()) {
         		Screening sc = new Screening();
@@ -192,7 +191,7 @@ public class ScreeningMapper {
         		sc.setScreeningDate(rs.getDate("screeningDate"));
         		sc.setScreeningTime(rs.getTime("screeningTime"));
         		sc.setMovieFK(rs.getInt("movieFK"));
-        		sc.setCinemaFK(rs.getInt("cinemaFK"));
+        		sc.setCinemaFK(rs.getInt("cinemaFK")); 
         		
         		//Hinzufügen des neuen Objekts zum Ergebnisvektor
         		result.addElement(sc);
@@ -205,33 +204,6 @@ public class ScreeningMapper {
         	return result;
     }
     
-    public Vector<Screening> findScreeningByScreeningTime(Time screeningTime) {
-    	Connection con = DBConnection.connection();
-        Vector<Screening> result = new Vector<Screening>();
-        
-        try {
-        	Statement stmt = con.createStatement();
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
-        			+ "WHERE screeningTime= '" + screeningTime + "'");
-        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
-        	while(rs.next()) {
-        		Screening sc = new Screening();
-        		sc.setId(rs.getInt("id"));
-        		sc.setScreeningDate(rs.getDate("screeningDate"));
-        		sc.setScreeningTime(rs.getTime("screeningTime"));
-        		sc.setMovieFK(rs.getInt("movieFK"));
-        		sc.setCinemaFK(rs.getInt("cinemaFK"));
-        		
-        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
-        		result.addElement(sc);
-        	}
-        }
-        	catch(SQLException e2) {
-        		e2.printStackTrace();
-        	}
-        	//Rückgabe des Ergebnisvektors
-        	return result;
-    }
     
     public void deleteByScreeningDate(Date screeningDate) {
     	Connection con = DBConnection.connection();
@@ -245,12 +217,13 @@ public class ScreeningMapper {
     	}
     }
     
-    public void deleteByScreeningTime(Time screeningTime) {
+    public void deleteByScreeningDateTime(Date screeningDate, Time screeningTime) {
     	Connection con = DBConnection.connection();
     	
     	try {
     		Statement stmt = con.createStatement();
-    		stmt.executeUpdate("DELETE FROM screening" + "WHERE screeningTime=" + screeningTime);
+    		stmt.executeUpdate("DELETE FROM screening" + "WHERE screeningTime=" + screeningTime
+    					+ "AND screeningDate='" + screeningDate + "'");
     	}
     	catch(SQLException e2) {
     		e2.printStackTrace();
