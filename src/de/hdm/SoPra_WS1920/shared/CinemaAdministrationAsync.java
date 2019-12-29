@@ -52,7 +52,7 @@ public interface CinemaAdministrationAsync {
      * @param callback 
      * @return
      */
-    void createScreening(Timestamp screeningDateTime, int cinemaFK, int movieFK, int PersonFK, AsyncCallback<Screening> callback);
+    void createScreening(Date screeningDate, Time screeningTime, int cinemaFK, int movieFK, int PersonFK, AsyncCallback<Screening> callback);
 
     /**
      * @param cinema 
@@ -128,6 +128,7 @@ public interface CinemaAdministrationAsync {
      * @param id 
      * @param callback 
      * @return
+     * 
      */
     void getScreeningById(int id, AsyncCallback<Screening> callback);
 
@@ -143,7 +144,7 @@ public interface CinemaAdministrationAsync {
      * @param callback 
      * @return
      */
-    void getScreeningByScreeningDateTime(Timestamp screeningDateTime, AsyncCallback<Vector<Screening>> callback);
+    //void getScreeningByScreeningDateTime(Timestamp screeningDateTime, AsyncCallback<Vector<Screening>> callback);
 
     /**
      * @param cinema 
@@ -253,5 +254,10 @@ public interface CinemaAdministrationAsync {
     void deleteBusinessObject(BusinessObject bo, AsyncCallback<Void> callback);
     
     void createBusinessObject(AsyncCallback<BusinessObject> callback);
+    
+    void getScreeningByScreeningTime(Time screeningTime, AsyncCallback<Vector<Screening>> callback);
+    
+    void getScreeningByScreeningDate(Date screeningDate, AsyncCallback<Vector<Screening>> callback);		
+    
     
 }

@@ -31,7 +31,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param cityName 
      * @param street 
      * @param streetNr 
-     * @param postCode 
+     * @param ZipCode 
      * @return
      */
     Cinema createCinema(String name, String cityName, String street, String streetNr, String zipCode, int ccFK, int personFK);
@@ -50,7 +50,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param cinemaFK 
      * @return
      */
-    Screening createScreening(Timestamp screeningDateTime, int cinemaFK, int movieFK, int personFK);
+    Screening createScreening(Date screeningDate, Time screeningTime, int cinemaFK, int movieFK, int personFK);
 
     /**
      * @param cinema 
@@ -128,7 +128,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param screeningDateTime 
      * @return
      */
-    Vector<Screening> getScreeningByScreeningDateTime(Timestamp screeningDateTime);
+    //Vector<Screening> getScreeningByScreeningDateTime(Timestamp screeningDateTime);
 
     /**
      * @param cinema 
@@ -228,5 +228,9 @@ public interface CinemaAdministration extends RemoteService {
 	void deleteBusinessObject(BusinessObject bo);
 
 	BusinessObject createBusinessObject();
+
+	Vector<Screening> getScreeningByScreeningTime(Time screeningTime);
+
+	Vector<Screening> getScreeningByScreeningDate(Date screeningDate);
 
 }
