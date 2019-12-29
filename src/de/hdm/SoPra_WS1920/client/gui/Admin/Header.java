@@ -37,20 +37,63 @@ public class Header extends FlowPanel{
 //		this.add(pPanel);
 	}
 	
-	class CreateBoClickHandler implements ClickHandler{
+	class CreateCinemaClickHandler implements ClickHandler{
 		Header header;
 		Content content;
-		public CreateBoClickHandler(Header header, Content content) {
+		public CreateCinemaClickHandler(Header header, Content content) {
 			this.header = header;
 			this.content = content;
 		}
 
 		@Override
 		public void onClick(ClickEvent event) {
-			CreateBoDialogbox createBoDialogbox = new CreateBoDialogbox(header, content);
-			createBoDialogbox.showMovieCardEdit();
-			createBoDialogbox.center();
-			createBoDialogbox.show();
+			
+//			CreateBoDialogbox createBoDialogbox = new CreateBoDialogbox(header, content);
+//			createBoDialogbox.showMovieCardEdit();
+//			createBoDialogbox.center();
+//			createBoDialogbox.show();
+			
+		}
+		
+	}
+	
+	class CreateMovieClickHandler implements ClickHandler{
+		Header header;
+		Content content;
+		public CreateMovieClickHandler(Header header, Content content) {
+			this.header = header;
+			this.content = content;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			MovieCardEdit movieCardEdit = new MovieCardEdit(header, content);
+			movieCardEdit.center();
+			movieCardEdit.show();
+//			CreateBoDialogbox createBoDialogbox = new CreateBoDialogbox(header, content);
+//			createBoDialogbox.showMovieCardEdit();
+//			createBoDialogbox.center();
+//			createBoDialogbox.show();
+			
+		}
+		
+	}
+	
+	class CreateScreeningClickHandler implements ClickHandler{
+		Header header;
+		Content content;
+		public CreateScreeningClickHandler(Header header, Content content) {
+			this.header = header;
+			this.content = content;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+//			CreateBoDialogbox createBoDialogbox = new CreateBoDialogbox(header, content);
+//			createBoDialogbox.showMovieCardEdit();
+//			createBoDialogbox.center();
+//			createBoDialogbox.show();
 			
 		}
 		
@@ -95,7 +138,7 @@ public class Header extends FlowPanel{
 		
 		createBo = new Button("+Add Cinema");
 		createBo.setStyleName("CreateBoButton");
-		createBo.addClickHandler(new CreateBoClickHandler(this,content));
+		createBo.addClickHandler(new CreateCinemaClickHandler(this,content));
 		
 		this.add(headline);
 		this.add(createBo);
@@ -115,7 +158,7 @@ public class Header extends FlowPanel{
 		
 		createBo = new Button("+Add Movie");
 		createBo.setStyleName("CreateBoButton");
-		createBo.addClickHandler(new CreateBoClickHandler(this,content));
+		createBo.addClickHandler(new CreateMovieClickHandler(this,content));
 		
 		this.add(headline);
 		this.add(createBo);
@@ -132,7 +175,7 @@ public class Header extends FlowPanel{
 		
 		createBo = new Button("+Add Screening");
 		createBo.setStyleName("CreateBoButton");
-		createBo.addClickHandler(new CreateBoClickHandler(this,content));
+		createBo.addClickHandler(new CreateScreeningClickHandler(this,content));
 		
 		this.add(headline);
 		this.add(createBo);

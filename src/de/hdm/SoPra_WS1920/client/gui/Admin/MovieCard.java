@@ -23,10 +23,17 @@ public class MovieCard extends FlowPanel{
 		this.movieToShow=movieToShow;
 		}
 
+	public MovieCard() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void showMovieCardEdit(Movie movieToShow) {
 		this.movieToShow=movieToShow;
-		this.clear();
-		this.add(new MovieCardEdit(this,movieToShow));
+//		this.clear();
+		MovieCardEdit movieCardEdit = new MovieCardEdit(this,movieToShow);
+		movieCardEdit.center();
+		movieCardEdit.show();
+//		this.add(new MovieCardEdit(this,movieToShow));
 	}
 		
 	public void showMovieCardView(Movie movieToShow) {
