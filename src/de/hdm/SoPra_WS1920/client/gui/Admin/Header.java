@@ -47,7 +47,9 @@ public class Header extends FlowPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			
+			CinemaCardEdit cinemaCardEdit = new CinemaCardEdit(header, content);
+			cinemaCardEdit.center();
+			cinemaCardEdit.show();
 //			CreateBoDialogbox createBoDialogbox = new CreateBoDialogbox(header, content);
 //			createBoDialogbox.showMovieCardEdit();
 //			createBoDialogbox.center();
