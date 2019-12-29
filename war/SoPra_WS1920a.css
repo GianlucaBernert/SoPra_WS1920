@@ -317,6 +317,12 @@ body{
 	border-radius: 5px;
 	float: right;
 	display: block;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.CreateBoButton:hover{
+	background-color: #6A52D0;
 }
 
 .Content{
@@ -434,6 +440,7 @@ body{
 }
 
 .CardTextBox {
+	margin-bottom: 10px;
 	font-family: Roboto;
 	width: 100%;
 	box-sizing: border-box;
@@ -447,6 +454,7 @@ body{
 }
 
 .CardTextArea {
+	margin-bottom: 10px;
 	font-family: Roboto;
     width: 100%;
     box-sizing: border-box;
@@ -494,8 +502,40 @@ body{
     margin-top: 20px;
     /* border-bottom-left-radius: 10px; */
     /* border-bottom-right-radius: 10px;*/
+	transition: background-color 0.2s;
 }
 
+.SaveButton:hover{
+	background-color: #6A52D0;
+}
+.CardListBox {
+	margin-bottom: 10px;
+	font-family: Roboto;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #04101A;
+    color: #71889C;
+    border: none !important;
+    padding: 10px 10px !important;
+    outline-style: none;
+    font-size: 12px;
+}
+
+.select {
+	background: #04101A;
+}
+
+select option {
+	border: none;
+    width: 100%;
+    padding: 0 !important;
+    outline: none;
+    text-decoration: none;
+    border-style: none;
+    text-shadow: none !important;
+    border-spacing: unset;
+}
 
 .CreateBoDialogBox {
 	width: calc(100% - 40px);
@@ -521,6 +561,7 @@ body{
   	margin-top: 16px;
   	margin-right: 8px;
   	float:left;
+  	margin-bottom: 0px !important;
 }
 
 .cityrow-inline {
@@ -537,8 +578,12 @@ body{
   	margin-top: 16px;
   	margin-right: 8px;
   	float:left;
+  	margin-bottom: 0px !important;
 }
 
+.CinemaCardView{
+	height: 150px !important;
+}
 
 
 .inputLabel {

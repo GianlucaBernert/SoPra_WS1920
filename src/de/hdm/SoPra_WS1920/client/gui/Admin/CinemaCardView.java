@@ -31,29 +31,29 @@ public class CinemaCardView extends FlowPanel{
 
 	public void onLoad() {
 		super.onLoad();
-		this.setStyleName("view");
+//		this.setStyleName("view");
 		streetRow = new FlowPanel();
 		streetRow.setStyleName("streetrow-inline");
 		cityRow = new FlowPanel();
 		cityRow.setStyleName("cityrow-inline");
 		
 		name = new Label(cinemaToShow.getName());
-		name.setStyleName("title");
-		cinemaChain = new Label("Cinema Chain");
-		cinemaChain.setStyleName("subtitle");
+		name.setStyleName("CardViewTitle");
+		cinemaChain = new Label("");
+		cinemaChain.setStyleName("CardViewSubTitle");
 		street = new Label(cinemaToShow.getStreet());
-		street.setStyleName("street");
+		street.setStyleName("CardViewParagraph street");
 		streetNr = new Label(cinemaToShow.getStreetNo());
-		streetNr.setStyleName("street");
+		streetNr.setStyleName("CardViewParagraph street");
 		zipCode = new Label(cinemaToShow.getzipCode());
-		zipCode.setStyleName("city");
+		zipCode.setStyleName("CardViewParagraph city");
 		city = new Label(cinemaToShow.getCity());
-		city.setStyleName("city");
+		city.setStyleName("CardViewParagraph city");
 		
 		edit=new Button("");
-		edit.setStyleName("invisibleButton");
+		edit.setStyleName("InvisibleButton");
 		editIcon = new Image("/Images/png/006-pen.png");
-		editIcon.setStyleName("icon");
+		editIcon.setStyleName("EditIcon");
 		editIcon.addClickHandler(new EditClickHandler());
 		
 		streetRow.add(street);
@@ -68,8 +68,7 @@ public class CinemaCardView extends FlowPanel{
 		this.add(editIcon);
 		
 	}
-	class EditClickHandler implements ClickHandler{
-		
+	class EditClickHandler implements ClickHandler{	
 
 		@Override
 		public void onClick(ClickEvent event) {
