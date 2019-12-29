@@ -125,6 +125,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     }
     
     /**
+     * Methode zur Erstellung eines Movie Objects
      * @param name 
      * @param genre 
      * @param description 

@@ -48,7 +48,7 @@ public class BusinessObjectMapper {
      * @param BusinessObject
      *           Prim?rschl?sselattribut (->DB)
 	 * @return BusinessObject-Objekt, das dem ?bergebenen Schl?ssel entspricht, null bei
-	 *         nicht vorhandenem DB
+	 *         nicht vorhandenem DB.
 	 *        
 	 */
     

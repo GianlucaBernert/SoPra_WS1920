@@ -128,6 +128,7 @@ public interface CinemaAdministrationAsync {
      * @param id 
      * @param callback 
      * @return
+     * 
      */
     void getScreeningById(int id, AsyncCallback<Screening> callback);
 

@@ -31,7 +31,7 @@ public interface CinemaAdministration extends RemoteService {
      * @param cityName 
      * @param street 
      * @param streetNr 
-     * @param postCode 
+     * @param ZipCode 
      * @return
      */
     Cinema createCinema(String name, String cityName, String street, String streetNr, String zipCode, int ccFK, int personFK);

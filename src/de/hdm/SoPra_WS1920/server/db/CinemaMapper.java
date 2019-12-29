@@ -170,7 +170,7 @@ public class CinemaMapper {
     
     /**
      * L�schen von Daten eines <code>Cinema</code>-Objekts aus der Datenbank
-     * @param c, das zu l�schende Objekt 
+     * @param c, das zu l�schende Objekt. 
      */
     public void deleteCinema(Cinema c) {
     	Connection con = DBConnection.connection();
