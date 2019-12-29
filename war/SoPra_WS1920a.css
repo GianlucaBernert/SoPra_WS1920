@@ -334,10 +334,30 @@ body{
 	border-radius: 10px;
 	background-image: linear-gradient(to bottom right, #0D1D2D, #112D49);
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-	overflow-x: hidden; 
+	overflow-x: hidden;
+	margin: 0px 20px 20px 0px; 
+	height: 200px;
 }
+
+.EditCard {
+
+	float:left;
+	width: calc(100% - 40px);
+	min-width: 250px;
+	max-width: 350px;
+	padding: 20px;
+	border-radius: 10px;
+	background-image: linear-gradient(to bottom right, #0D1D2D, #112D49);
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	min-height: 350px;
+}
+
 .Card:hover {
 	box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.EditCard table{
+	width: 100% !important;
 }
 
 .CardViewTitle {
@@ -445,7 +465,7 @@ body{
 	float: left;
     margin-top: 20px;
     width: 11px;
-    margin: 16px 0px;
+    margin-top: 16px;
     margin-right: 2px;
     cursor: pointer;
 }
@@ -454,16 +474,16 @@ body{
 	font-weight: bold;
     color: #FF6172;
     float: left;
-    margin: 15px 0px 30px 0px;
+    margin-top: 15px;
     vertical-align: middle;
     cursor: pointer;
 }
 
 .SaveButton {
-	position: absolute;
+	/*position: absolute;*/
     width: 100%;
     padding: 12px;
-    /* border-radius: 5px; */
+    border-radius: 5px;
     background-color: #9278FF;
     color: #ffffff;
     outline: none;
@@ -471,6 +491,9 @@ body{
     cursor: pointer;
     bottom: 0;
     left: 0;
+    margin-top: 20px;
+    /* border-bottom-left-radius: 10px; */
+    /* border-bottom-right-radius: 10px;*/
 }
 
 
