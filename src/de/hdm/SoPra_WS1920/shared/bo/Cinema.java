@@ -64,7 +64,7 @@ public class Cinema extends Ownership {
      * Methode um die Postleitzahl eines Kinos auszugeben
      * @return String zipCode
      */
-    public String getzipCode() {
+    public String getZipCode() {
        return zipCode;
     }
 
@@ -72,7 +72,7 @@ public class Cinema extends Ownership {
      * Methode um die Postleitzahl eines Kinos zu setzen
      * @param String zipCode 
      */
-    public void setzipCode(String zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 
