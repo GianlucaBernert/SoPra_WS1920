@@ -60,6 +60,10 @@ public class NavigationBar extends FlowPanel {
 		settings.setStyleName("navbar-element bottom");
 		settings.addClickHandler(new SettingsClickHandler());
 		
+		logOut = new Label("Logout");
+		logOut.setStyleName("navbar-element logout");
+		logOut.addClickHandler(new LogOutClickHandler());
+		
 //		createIcon = new Image("/Images/png/001-add-button.png");
 //		createIcon.setStyleName("createIcon");
 //		createIcon.addClickHandler(new CreateBoClickHandler(header, content));
@@ -72,6 +76,7 @@ public class NavigationBar extends FlowPanel {
 		this.add(movies);	 //Add Item 2 to Menu
 		this.add(screenings); //Add Item 3 to Menu
 		this.add(settings);
+		this.add(logOut);
 	}
 //	class MenuClickHandler implements ClickHandler{
 //
@@ -264,6 +269,16 @@ public class NavigationBar extends FlowPanel {
 			UserSettingsForm userSettingsForm = new UserSettingsForm(header, content);
 			userSettingsForm.center();
 			userSettingsForm.show();
+		}
+		
+	}
+	
+	class LogOutClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			Window.alert("Successfully logged out!");
+			
 		}
 		
 	}

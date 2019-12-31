@@ -122,7 +122,7 @@ public class UserSettingsForm extends DialogBox{
 			personToShow.setFirstname(firstNameTextBox.getText());
 			personToShow.setLastname(lastNameTextBox.getText());
 			personToShow.setEMail(eMailTextBox.getText());
-			Window.alert("Successfully changed accout");
+			Window.alert("Successfully changed profile.");
 			userSettingsForm.hide();
 			}
 			
