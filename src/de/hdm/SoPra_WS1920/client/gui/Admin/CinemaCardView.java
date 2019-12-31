@@ -45,7 +45,7 @@ public class CinemaCardView extends FlowPanel{
 		street.setStyleName("CardViewParagraph street");
 		streetNr = new Label(cinemaToShow.getStreetNo());
 		streetNr.setStyleName("CardViewParagraph street");
-		zipCode = new Label(cinemaToShow.getzipCode());
+		zipCode = new Label(cinemaToShow.getZipCode());
 		zipCode.setStyleName("CardViewParagraph city");
 		city = new Label(cinemaToShow.getCity());
 		city.setStyleName("CardViewParagraph city");

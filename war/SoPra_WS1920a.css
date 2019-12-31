@@ -58,6 +58,11 @@ body{
 	display: none;
 }
 
+.bottom{
+	position: absolute !important;
+	bottom: 60px !important;
+}
+
 .navbar-show{
 	width: calc(100% - 40px);
 	height: auto;

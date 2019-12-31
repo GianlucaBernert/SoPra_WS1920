@@ -53,7 +53,7 @@ public class CinemaCardEdit extends DialogBox{
 		c.setCinemaChainFK(1);
 		c.setStreet("");
 		c.setStreetNo("");
-		c.setzipCode("");
+		c.setZipCode("");
 		c.setCity("");
 		cinemaToShow = c;
 	}
@@ -101,7 +101,7 @@ public class CinemaCardEdit extends DialogBox{
 		nameTextBox.setText(cinemaToShow.getName());
 		streetTextBox.setText(cinemaToShow.getStreet());
 		streetNrTextBox.setText(cinemaToShow.getStreetNo());
-		zipCodeTextBox.setText(cinemaToShow.getzipCode());
+		zipCodeTextBox.setText(cinemaToShow.getZipCode());
 		cityTextBox.setText(cinemaToShow.getCity());
 		
 		formWrapper.add(cardDescription);
@@ -138,7 +138,7 @@ public class CinemaCardEdit extends DialogBox{
 		cinemaToShow.setCinemaChainFK(1);
 		cinemaToShow.setStreet(streetTextBox.getText());
 		cinemaToShow.setStreetNo(streetNrTextBox.getText());
-		cinemaToShow.setzipCode(zipCodeTextBox.getText());
+		cinemaToShow.setZipCode(zipCodeTextBox.getText());
 		cinemaToShow.setCity(cityTextBox.getText());
 		
 //		formWrapper.add(cardDescription);
@@ -173,7 +173,7 @@ public class CinemaCardEdit extends DialogBox{
 			cinemaToShow.setCinemaChainFK(1);
 			cinemaToShow.setStreet(streetTextBox.getText());
 			cinemaToShow.setStreetNo(streetNrTextBox.getText());
-			cinemaToShow.setzipCode(zipCodeTextBox.getText());
+			cinemaToShow.setZipCode(zipCodeTextBox.getText());
 			cinemaToShow.setCity(cityTextBox.getText());
 			
 			if(parentCard==null) {

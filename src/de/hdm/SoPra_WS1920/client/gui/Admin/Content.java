@@ -49,7 +49,7 @@ public class Content extends FlowPanel{
 		c = new Cinema();
 		c.setName("Cinemax");
 		c.setCity("Stuttgart");
-		c.setzipCode("70372");
+		c.setZipCode("70372");
 		c.setPersonFK(1);
 		c.setStreet("Deckerstra�e");
 		c.setStreetNo("49");
