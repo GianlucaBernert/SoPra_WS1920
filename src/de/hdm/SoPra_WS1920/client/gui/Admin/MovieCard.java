@@ -15,7 +15,7 @@ public class MovieCard extends FlowPanel{
 		super.onLoad();
 		this.setStyleName("Card");
 		this.showMovieCardView(movieToShow);
-		movieCardView = new MovieCardView(this, movieToShow);
+//		movieCardView = new MovieCardView(this, movieToShow);
 	}
 		
 	public MovieCard(Content content, Movie movieToShow) {

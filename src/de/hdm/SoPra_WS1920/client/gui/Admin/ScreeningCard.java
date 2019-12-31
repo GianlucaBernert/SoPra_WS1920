@@ -18,24 +18,29 @@ public class ScreeningCard extends FlowPanel{
 		this.content=content;
 		this.screeningToShow = screeningToShow;
 	}
+	public ScreeningCard() {
+		
+	}
 	
 	public void onLoad() {
 		super.onLoad();
-		this.setStyleName("Card");
+		this.setStyleName("Card ScreeningCardView");
 		this.showScreeningCardView(screeningToShow);
 		
 	}
 	
-	public void showScreeningCardView(Screening screening) {
-		this.screeningToShow=screening;
+	public void showScreeningCardView(Screening screeningToShow) {
+		this.screeningToShow=screeningToShow;
 		this.clear();
-		this.add(new ScreeningCardView(this, screening));
+		this.add(new ScreeningCardView(this, screeningToShow));
 	}
 	
-	public void showScreeningCardEdit(Screening screening) {
-		this.screeningToShow=screening;
-		this.clear();
-		this.add(new ScreeningCardEdit(this, screening));
+	public void showScreeningCardEdit(Screening screeningToShow) {
+		this.screeningToShow=screeningToShow;
+		ScreeningCardEdit screeningCardEdit = new ScreeningCardEdit(this,screeningToShow);
+		screeningCardEdit.center();
+		screeningCardEdit.show();
+//		this.add(new ScreeningCardEdit(this, screening));
 	}
 
 	public void remove() {
