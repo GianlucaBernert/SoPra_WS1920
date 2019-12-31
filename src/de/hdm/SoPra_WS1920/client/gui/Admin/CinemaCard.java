@@ -17,7 +17,7 @@ public class CinemaCard extends FlowPanel{
 		super.onLoad();
 		this.setStyleName("Card CinemaCardView");
 		this.showCinemaCardView(cinemaToShow);
-		cinemaCardView = new CinemaCardView(this, cinemaToShow);
+//		cinemaCardView = new CinemaCardView(this, cinemaToShow);
 	}
 	
 	public CinemaCard(Content content, Cinema cinemaToShow) {

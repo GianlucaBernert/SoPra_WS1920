@@ -81,6 +81,7 @@ public class MovieCardEdit extends DialogBox{
 		descriptionLabel.setStyleName("TextBoxLabel");
 		descriptionTextArea=new TextArea();
 		descriptionTextArea.setStyleName("CardTextArea");
+		descriptionTextArea.getElement().setAttribute("maxlength", "350");
 		
 		formWrapper.add(cardDescription);
 		formWrapper.add(cancelIcon);

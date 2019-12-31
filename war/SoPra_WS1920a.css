@@ -469,6 +469,65 @@ body{
     font-size: 12px;
 }
 
+.CardSuggestBox{
+	margin-bottom: 10px;
+	font-family: Roboto;
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 5px;
+	background-color:#04101A;
+	color: #71889C;
+	border: none !important;
+	padding: 10px 10px !important;
+	outline-style: none;
+	font-size: 12px;
+}
+
+.CardDatePicker {
+	margin-bottom: 10px;
+	font-family: Roboto;
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 5px;
+	background-color:#04101A;
+	color: #71889C;
+	border: none !important;
+	padding: 10px 10px !important;
+	outline-style: none;
+	font-size: 12px;
+}
+
+.CardTimePicker {
+	margin-bottom: 10px;
+	font-family: Roboto;
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 5px;
+	background-color:#04101A;
+	color: #71889C;
+	border: none !important;
+	padding: 10px 10px !important;
+	outline-style: none;
+	font-size: 12px;
+}
+
+.TimePickerSuggestBox {
+	background: transparent;
+    color: #71889C;
+    border: none !important;
+    /* float: left; */
+    width: 25px;
+    display: inline-block;
+}
+
+.TimePickerLabel {
+	background: transparent;
+    display: inline-block;
+    color: #71889C;
+    border: none !important;
+    width: 10px;
+}
+
 .DeleteIcon {
 	float: left;
     margin-top: 20px;
@@ -585,6 +644,13 @@ select option {
 	height: 150px !important;
 }
 
+.ScreeningCardView{
+	height: 150px;
+}
+
+.ScreeningCardView .CardViewParagraph{
+	margin: 20px 0px 15px !important;
+}
 
 .inputLabel {
 	width:100%;
