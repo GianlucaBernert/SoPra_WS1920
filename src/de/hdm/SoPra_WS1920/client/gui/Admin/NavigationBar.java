@@ -20,6 +20,9 @@ public class NavigationBar extends FlowPanel {
 	Label cinemas;
 	Label movies;
 	Label screenings;
+	Label settings;
+	Label switchToEditor;
+	Label logOut;
 	Button b;
 //	private int menuOpen = 0;
 	
@@ -53,6 +56,14 @@ public class NavigationBar extends FlowPanel {
 		screenings.setStyleName("navbar-element");
 		screenings.addClickHandler(new ShowScreeningsClickHandler(header, content, this));
 		
+		settings = new Label("Settings");
+		settings.setStyleName("navbar-element bottom");
+		settings.addClickHandler(new SettingsClickHandler());
+		
+		logOut = new Label("Logout");
+		logOut.setStyleName("navbar-element logout");
+		logOut.addClickHandler(new LogOutClickHandler());
+		
 //		createIcon = new Image("/Images/png/001-add-button.png");
 //		createIcon.setStyleName("createIcon");
 //		createIcon.addClickHandler(new CreateBoClickHandler(header, content));
@@ -64,6 +75,8 @@ public class NavigationBar extends FlowPanel {
 		this.add(cinemas); //Add Item 1 to Menu
 		this.add(movies);	 //Add Item 2 to Menu
 		this.add(screenings); //Add Item 3 to Menu
+		this.add(settings);
+		this.add(logOut);
 	}
 //	class MenuClickHandler implements ClickHandler{
 //
@@ -244,7 +257,31 @@ public class NavigationBar extends FlowPanel {
 		}
 		
 	}
+	class SettingsClickHandler implements ClickHandler{
+
+		public SettingsClickHandler() {
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			UserSettingsForm userSettingsForm = new UserSettingsForm(header, content);
+			userSettingsForm.center();
+			userSettingsForm.show();
+		}
+		
+	}
 	
+	class LogOutClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			Window.alert("Successfully logged out!");
+			
+		}
+		
+	}
 //	class CreateBoClickHandler implements ClickHandler{
 //		Header h;
 //		Content c;
