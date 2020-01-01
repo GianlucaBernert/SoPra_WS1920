@@ -1,47 +1,47 @@
 package de.hdm.SoPra_WS1920.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.SoPra_WS1920.client.gui.NavigationBar;
 import de.hdm.SoPra_WS1920.client.gui.SurveyContent;
 import de.hdm.SoPra_WS1920.client.gui.SurveyManagementHeader;
-import de.hdm.SoPra_WS1920.shared.bo.Group;
+
 
 
 
 public class SurveyManagementEntry implements EntryPoint {
 	
-	FlowPanel navbar;
+	NavigationBar navBar;
 	SurveyManagementHeader header;
 	SurveyContent content;
 	
-	Image menuIcon;
-	Label movies;
-	Label groups;
-	Label surveys;
+	//Image menuIcon;
+	//Label movies;
+	//Label groups;
+	//Label surveys;
 	
-	Group g;
+	//Group g;
 	
-	private int menuOpen = 0;
+	//private int menuOpen = 0;
 	
 	
 	@Override
 	public void onModuleLoad() {
 		
-		Group g = new Group();
-		g.setName("Yesin");
+		//Group g = new Group();
+		//g.setName("Yesin");
 		
-		navbar = new FlowPanel();
+		navBar = new NavigationBar(header, content);
 		content = new SurveyContent();
 		header = new SurveyManagementHeader();
 		
-		navbar.setStylePrimaryName("navbar");
+		RootPanel.get().add(navBar);
+		RootPanel.get().add(header);
+		RootPanel.get().add(content);
+	}
+		
+		/*navbar.setStylePrimaryName("navbar");
 		
 		menuIcon = new Image("/Images/menu.png");
 		menuIcon.setStyleName("menuIcon");
@@ -67,7 +67,7 @@ public class SurveyManagementEntry implements EntryPoint {
 		
 		RootPanel.get().add(navbar);
 		RootPanel.get().add(header);
-		RootPanel.get().add(content);;
+		RootPanel.get().add(content);
 		
 	}
 	
@@ -133,12 +133,12 @@ public class SurveyManagementEntry implements EntryPoint {
 		public void onClick(ClickEvent event) {
 			header.showMoviesHeader();
 			
-		}
+		}*/
 	
 		
 	}		
 		
-	}
+
 		
 		
 	

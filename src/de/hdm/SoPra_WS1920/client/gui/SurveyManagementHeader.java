@@ -21,18 +21,32 @@ public class SurveyManagementHeader extends FlowPanel {
 	GroupForm gf;
 	SurveyForm sf;
 	
+	SurveyContent content;
+	
+	public SurveyManagementHeader(SurveyContent content) {
+		this.content = content;
+	}
+	
+	
 	public void onLoad() {
 		super.onLoad();
 		this.setStylePrimaryName("header");
-		createBo.addClickHandler(new CreateBoClickHandler(this, gf));
-		createSurvey.addClickHandler(new CreateSurveyClickHandler(this, sf));
+		//createBo.addClickHandler(new CreateBoClickHandler(this, gf));
+		//createSurvey.addClickHandler(new CreateSurveyClickHandler(this, sf));
 		
 	}
 		class CreateBoClickHandler implements ClickHandler{
+			SurveyManagementHeader header;
+			SurveyContent content;
+			//GroupForm gf;
 			
-			public CreateBoClickHandler(SurveyManagementHeader header, GroupForm gf) {
-				
+			public CreateBoClickHandler(SurveyManagementHeader header, SurveyContent content) {
+				this.header = header;
+				this.content = content;
+						
 			}
+			
+		
 
 			@Override
 			public void onClick(ClickEvent event) {
