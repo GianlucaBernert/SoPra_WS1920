@@ -2,17 +2,12 @@ package de.hdm.SoPra_WS1920.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.http.client.Header;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
-
-import de.hdm.SoPra_WS1920.client.gui.Admin.Content;
-import de.hdm.SoPra_WS1920.client.gui.Admin.DeleteClickHandler;
-import de.hdm.SoPra_WS1920.client.gui.Admin.UserSettingsForm.SaveClickHandler;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 public class UserSettingsForm extends DialogBox {
@@ -66,7 +61,7 @@ public class UserSettingsForm extends DialogBox {
 		cardDescription.setStylePrimaryName("CardDescription");
 		cancelIcon = new Image("/Images/png/007-close.png");
 		cancelIcon.setStylePrimaryName("cancelIcon");
-		cancelIcon.addClickHandler(new ClickHandler(this));
+		cancelIcon.addClickHandler(new CancelClickHandler(this));
 		
 		invisibleButton = new Button();
 		invisibleButton.setStyleName("InvisibleButton");
@@ -97,16 +92,16 @@ public class UserSettingsForm extends DialogBox {
 		
 		deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
 		deleteIcon.setStyleName("DeleteIcon");
-		deleteIcon.addClickHandler(new DeleteClickHandler(this));
+		deleteIcon.addClickHandler(new CancelClickHandler(this));
 		
 		deleteLabel = new Label("Delete Profile");
 		deleteLabel.setStyleName("DeleteLabel");
-		deleteLabel.addClickHandler(new DeleteClickHandler(this));
+		//deleteLabel.addClickHandler(new DeleteClickHandler(this));
 		formWrapper.add(deleteIcon);
 		formWrapper.add(deleteLabel);
 		
 		saveButton = new Button("Save");
-		saveButton.addClickHandler(new SaveClickHandler(this));
+		//saveButton.addClickHandler(new SaveClickHandler(this));
 		saveButton.setStyleName("SaveButton");
 		
 		firstNameTextBox.setText(personToShow.getFirstname());
@@ -130,11 +125,26 @@ public class UserSettingsForm extends DialogBox {
 			
 		}
 		
+	class DeleteClickHandler implements ClickHandler{
+		UserSettingsForm userSettingsForm;
 		
-	
-	
+		public DeleteClickHandler(UserSettingsForm userSettingsForm) {
+			this.userSettingsForm = userSettingsForm;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			userSettingsForm.hide();
+			
+		}
 		
+	}
+	}
 	
 }
+		
+	
+	
+		
+	
 
-	}
