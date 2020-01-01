@@ -34,7 +34,7 @@ public class SurveyManagementEntry implements EntryPoint {
 		
 		navBar = new NavigationBar(header, content);
 		content = new SurveyContent();
-		header = new SurveyManagementHeader();
+		header = new SurveyManagementHeader(content);
 		
 		RootPanel.get().add(navBar);
 		RootPanel.get().add(header);

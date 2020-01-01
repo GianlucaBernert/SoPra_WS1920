@@ -38,11 +38,12 @@ public class SurveyManagementHeader extends FlowPanel {
 		class CreateBoClickHandler implements ClickHandler{
 			SurveyManagementHeader header;
 			SurveyContent content;
-			//GroupForm gf;
+			GroupForm gf;
 			
-			public CreateBoClickHandler(SurveyManagementHeader header, SurveyContent content) {
+			public CreateBoClickHandler(SurveyManagementHeader header, SurveyContent content, GroupForm gf) {
 				this.header = header;
 				this.content = content;
+				this.gf = gf;
 						
 			}
 			
@@ -110,7 +111,7 @@ public class SurveyManagementHeader extends FlowPanel {
 			
 			createBo = new Button("+Add Group");
 			createBo.setStylePrimaryName("createBoButton");
-			createBo.addClickHandler(new CreateBoClickHandler(this, gf));
+			createBo.addClickHandler(new CreateBoClickHandler(this, content, gf));
 			
 			this.add(headline);
 			this.add(createBo);
@@ -128,7 +129,7 @@ public class SurveyManagementHeader extends FlowPanel {
 			
 			createBo = new Button("+Add Survey");
 			createBo.setStylePrimaryName("createBoButton");
-			createBo.addClickHandler(new CreateSurveyClickHandler(this, sf));
+		//	createBo.addClickHandler(new CreateSurveyClickHandler(this, content));
 			
 			this.add(headline);
 			this.add(createBo);
