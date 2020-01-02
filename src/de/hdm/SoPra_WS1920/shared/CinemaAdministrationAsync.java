@@ -2,6 +2,7 @@ package de.hdm.SoPra_WS1920.shared;
 
 
 import java.sql.Time;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -227,15 +228,15 @@ public interface CinemaAdministrationAsync {
     
     void getSurveyEntryByScreeningFK(int ScreeningFK, AsyncCallback<Vector<SurveyEntry>> callback);
     
-    void findCinemasByCinemaChainFK(CinemaChain cc, AsyncCallback<Vector<Cinema>> callback);
+    void getCinemasByCinemaChainFK(CinemaChain cc, AsyncCallback<Vector<Cinema>> callback);
     
-    void findCinemasByPersonFK(int personFK, AsyncCallback<Vector<Cinema>> callback);
+    void getCinemasByPersonFK(int personFK, AsyncCallback<Vector<Cinema>> callback);
     
-    void findCinemaChainById(int id, AsyncCallback<CinemaChain> callback);
+    void getCinemaChainById(int id, AsyncCallback<CinemaChain> callback);
     
-    void findCinemaChainByPersonFK(int personFK, AsyncCallback<Vector<CinemaChain>> callback);
+    void getCinemaChainByPersonFK(int personFK, AsyncCallback<Vector<CinemaChain>> callback);
     
-    void findCinemaChainByName(String name, AsyncCallback<Vector<CinemaChain>> callback);
+    void getCinemaChainByName(String name, AsyncCallback<Vector<CinemaChain>> callback);
     
     void deleteCinemaChain(CinemaChain cc, AsyncCallback<Void> callback);
     
@@ -245,7 +246,7 @@ public interface CinemaAdministrationAsync {
     
     void getOwnershipsbyPersonFK(int personFK, AsyncCallback<Vector<Ownership>> callback);
     
-    void findOwnership(int id, AsyncCallback<Ownership> callback);
+    void getOwnership(int id, AsyncCallback<Ownership> callback);
     
     void deleteOwnership(Ownership ownership, AsyncCallback<Void> callback);
     
@@ -255,9 +256,13 @@ public interface CinemaAdministrationAsync {
     
     void createBusinessObject(AsyncCallback<BusinessObject> callback);
     
-    void getScreeningByScreeningTime(Time screeningTime, AsyncCallback<Vector<Screening>> callback);
+    void getScreeningByScreeningDateTime(Date screeningDateTime, Time screeningTime, AsyncCallback<Vector<Screening>> callback);
     
-    void getScreeningByScreeningDate(Date screeningDate, AsyncCallback<Vector<Screening>> callback);		
+    void getScreeningByScreeningDate(Date screeningDate, AsyncCallback<Vector<Screening>> callback);
+    
+    void getScreeningsByPersonFK(int personFK, AsyncCallback<Vector<Screening>> callback);
+
+	void getAllMovies(AsyncCallback<Vector<Movie>> callback);
     
     
 }
