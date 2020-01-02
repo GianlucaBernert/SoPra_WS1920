@@ -20,7 +20,7 @@
   <!-- Other module inherits                                      -->
 
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='de.hdm.SoPra_WS1920.client.SurveyManagementEntry'/>
+  <entry-point class='de.hdm.SoPra_WS1920.client.CinemaAdminEntry'/>
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='shared'/>
