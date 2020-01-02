@@ -2,6 +2,7 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -26,10 +27,10 @@ public class ScreeningCardView extends FlowPanel{
 	
 	ScreeningCard parentCard;
 
-	public ScreeningCardView(ScreeningCard screeningCard, Screening screening) {
+	public ScreeningCardView(ScreeningCard screeningCard, Screening screeningToShow) {
 		// TODO Auto-generated constructor stub
 		this.parentCard= screeningCard;
-		this.screeningToShow = screening;
+		this.screeningToShow = screeningToShow;
 	}
 
 	public void onLoad() {
@@ -37,19 +38,19 @@ public class ScreeningCardView extends FlowPanel{
 		
 		//movieOfScreening = cinemaAdminImpl.getMovieById(screening.getMovieFK)
 		movie = new Label("Joker");//parameter would be movieOfScreening.getName();
-		movie.setStyleName("Title");
+		movie.setStyleName("CardViewTitle");
 		//cinemaOfScreening= cinemaAdminImpl.getCinemaById(screening.getCinemaFK)
-		cinema = new Label();//parameter would be cinemaOfScreening.getName();
-		cinema.setStyleName("Subtitle");
-		date = new Label(screeningToShow.getScreeningDate().toString());
-		date.setStyleName("Paragraph");
+		cinema = new Label("Cinemax");//parameter would be cinemaOfScreening.getName();
+		cinema.setStyleName("CardViewSubTitle");
+		date = new Label(DateTimeFormat.getFormat("dd.MM.yyyy").format(screeningToShow.getScreeningDate()));
+		date.setStyleName("CardViewParagraph");
 		time = new Label(screeningToShow.getScreeningTime().toString());
-		time.setStyleName("Paragraph");
+		time.setStyleName("CardViewParagraph");
 		
 		edit=new Button("");
 		edit.setStyleName("InvisibleButton");
 		editIcon = new Image("/Images/png/006-pen.png");
-		editIcon.setStyleName("Icon");
+		editIcon.setStyleName("EditIcon");
 		editIcon.addClickHandler(new EditClickHandler());
 		
 		this.add(movie);

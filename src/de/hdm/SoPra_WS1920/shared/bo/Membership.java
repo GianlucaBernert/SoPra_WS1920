@@ -14,8 +14,8 @@ public class Membership extends Ownership{
 	/**
 	 * Variable der Klasse Membership
 	 */
-	private Person p;
-	private Group g;
+	private int pFK;
+	private int gFK;
 	
 	/**
 	 * Konstruktor der Klasse Gruppe, welche beim Aufruf dieser eine Instanz seiner selbst erzeugt
@@ -28,32 +28,32 @@ public class Membership extends Ownership{
 	 * Methode um die Gruppe einer Membership zu setzen
 	 * @param Group g
 	 */
-	public void setGroup(Group g) {
-		this.g = g;
+	public void setGroupFK(int gFK) {
+		this.gFK = gFK;
 	}
 	
 	/**
 	 * Methode um die Gruppe einer Membership auszugeben
 	 * @return Person p
 	 */
-	public Group getGroup() {
-		return g;
+	public int getGroupFK() {
+		return gFK;
 	}
 	
 	/**
 	 * Methode um die Person einer Membership zu setzen
 	 * @param Person p
 	 */
-	public void setPerson(Person p) {
-		this.p = p;
+	public void setPersonFK(int pFK) {
+		this.pFK = pFK;
 	}
 	
 	/**
 	 * Methode um die Person einer Membership auszugeben
 	 * @return Person p
 	 */
-	public Person getPerson() {
-		return p;
+	public int getPersonFK() {
+		return pFK;
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class Membership extends Ownership{
 	 * @return
 	 */
 	public String toString() {
-		return "MembershipID #Me" + this.getId() + " " + this.getGroup() + " " + this.getPerson();
+		return "MembershipID #Me" + this.getId() + " GroupFK " + this.getGroupFK() + " PersonFK " + this.getPersonFK();
 	}
 
 }

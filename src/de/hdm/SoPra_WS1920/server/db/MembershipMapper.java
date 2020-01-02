@@ -3,8 +3,10 @@ package de.hdm.SoPra_WS1920.server.db;
 import java.util.Vector;
 
 import de.hdm.SoPra_WS1920.shared.bo.Group;
+import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
+import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 
 import java.sql.*;
 
@@ -13,8 +15,8 @@ import java.sql.*;
  * 
  * 
  * Mit Hilfe der MapperKlasse <code>MembershipMapper</code> werden Membership-Objekte auf eine relationale Datenbank abgebildet.
- * Durch das implementieren der Methoden können Membership-Objekte gesucht, erzeugt, modifiziert und
- * gelöscht werden.
+ * Durch das implementieren der Methoden kï¿½nnen Membership-Objekte gesucht, erzeugt, modifiziert und
+ * gelï¿½scht werden.
  * 
  */
 public class MembershipMapper {
@@ -57,14 +59,14 @@ public class MembershipMapper {
     
     /*
 	 * =============================================================================================
-	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezï¿½hlt, die
 	 * in allen Mapper-Klassen existieren.
 	 * 
 	 */	
     
 
     
-    public Group insertMembership(Group group, Person person) {
+    public Membership insertMembership(Membership me) {
     	Connection con = DBConnection.connection();
 
     	try {
@@ -72,8 +74,8 @@ public class MembershipMapper {
     		Statement stm1 = con.createStatement();
     		
     		stm1.executeUpdate("INSERT INTO membership (groupFK, personFK) VALUES ('"
-    							+group.getId()
-    							+ "', '"+person.getId()
+    							+me.getGroupFK()
+    							+ "', '"+me.getPersonFK()
     							+"')");
     		con.setAutoCommit(true);
 		}
@@ -81,24 +83,55 @@ public class MembershipMapper {
 				exc.printStackTrace();
 			
 			}
-        return group;
+        return me;
     }
+    
+    /**
+     * @param groupID 
+     * @return
+     */
+    public Vector<Membership> findMembershipByGroupFK(int gFK) {
+        Connection con = DBConnection.connection();
+        Vector<Membership> result = new Vector<Membership>();
+        
+        try {
+        	Statement stmt = con.createStatement();
+        	
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM membership "
+        			+ "WHERE groupFK=" + gFK);
+        	
+        	while(rs.next()) {
+        		Membership me = new Membership();
+        		me.setId(rs.getInt("id"));
+        		me.setGroupFK(rs.getInt("groupFK"));
+        		me.setPersonFK(rs.getInt("personFK"));
+        		
+        		result.addElement(me);
+        	}
+        	
+        }
+        catch(SQLException e2) {
+        	e2.printStackTrace();
+        }
+        return result;
+    }
+
 
     
 
     /**
-	 * Methode, die das Loeschen eines Membership-Objekts aus der Datenbank ermöglicht
+	 * Methode, die das Loeschen eines Membership-Objekts aus der Datenbank ermï¿½glicht
 	 * @param membership
 	 */
     
-    public void deleteMembership(Group group, Person person) {
+    public void deleteMembership(int gFK, int pFK) {
     	Connection con = DBConnection.connection();
     	
     	try {
 			Statement stm1 = con.createStatement();
 			
-			stm1.executeUpdate("Delete from popcorns.membership Where groupFK = "+group.getId() 
-			+" AND membership.personFK= "+person.getId());
+			stm1.executeUpdate("Delete from popcorns.membership Where groupFK = "+gFK 
+			+" AND membership.personFK= "+pFK);
 			
 		}catch(SQLException e2) {
 			e2.printStackTrace();

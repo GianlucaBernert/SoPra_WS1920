@@ -29,16 +29,16 @@ public class MovieCardView extends FlowPanel{
 		super.onLoad();
 		
 		name=new Label(movieToShow.getName());
-		name.setStyleName("title");
+		name.setStyleName("CardViewTitle");
 		genre=new Label(movieToShow.getGenre());
-		genre.setStyleName("subtitle");
+		genre.setStyleName("CardViewSubTitle");
 		description=new Label(movieToShow.getDescription());
-		description.setStyleName("description");
+		description.setStyleName("CardViewParagraph");
 		edit=new Button("");
-		edit.setStyleName("invisibleButton");
+		edit.setStyleName("InvisibleButton");
 		editIcon = new Image("/Images/png/006-pen.png");
-		editIcon.setStyleName("icon");
-		editIcon.addClickHandler(new EditClickHandler(this));
+		editIcon.setStyleName("EditIcon");
+		editIcon.addClickHandler(new EditClickHandler());
 		
 		this.add(name);
 		this.add(genre);
@@ -49,11 +49,6 @@ public class MovieCardView extends FlowPanel{
 	}
 	
 	class EditClickHandler implements ClickHandler{
-		MovieCardView movieCardView;
-		public EditClickHandler(MovieCardView movieCardView) {
-			// TODO Auto-generated constructor stub
-			this.movieCardView=movieCardView;
-		}
 
 		@Override
 		public void onClick(ClickEvent event) {

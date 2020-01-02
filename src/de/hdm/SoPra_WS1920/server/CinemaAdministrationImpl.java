@@ -87,7 +87,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	this.vMapper = VoteMapper.voteMapper();
     	this.ccMapper = CinemaChainMapper.cinemaChainMapper();
     	this.oMapper = OwnershipMapper.ownershipMapper();
-    	this.boMapper = BusinessObjectMapper.BusinessObjectMapper();
+    	this.boMapper = BusinessObjectMapper.businessObjectMapper();
     	this.gMapper = GroupMapper.groupMapper();
     	this.sMapper = SurveyMapper.surveyMapper();
     	
@@ -113,7 +113,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
         	c.setName(name);
         	c.setCity(cityName);
         	c.setStreet(street);
-        	c.setzipCode(zipCode);
+        	c.setZipCode(zipCode);
         	c.setCinemaChainFK(ccFK);
         	c.setId(o.getId());
         	
@@ -125,6 +125,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     }
     
     /**
+     * Methode zur Erstellung eines Movie Objects
      * @param name 
      * @param genre 
      * @param description 
@@ -160,7 +161,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      */
     @Override
 
-    public Screening createScreening(Timestamp screeningDateTime, int cinemaFK, int movieFK, int personFK) {
+    public Screening createScreening(Date screeningDate, Time screeningTime, int cinemaFK, int movieFK, int personFK) {
 
         
     	
@@ -170,7 +171,8 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	
     	sc.setCinemaFK(cinemaFK);
     	sc.setMovieFK(movieFK);
-    	sc.setScreeningDateTime(screeningDateTime);
+    	sc.setScreeningDate(screeningDate);
+    	sc.setScreeningTime(screeningTime);
     	sc.setId(o.getId());
 
     	return this.scMapper.insertScreening(sc);
@@ -334,10 +336,17 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Vector<Screening> getScreeningByScreeningDateTime(Timestamp screeningDateTime) {
+    public Vector<Screening> getScreeningByScreeningDate(Date screeningDate) {
         
-        return this.scMapper.findScreeningByScreeningdayTime(screeningDateTime);
+        return this.scMapper.findScreeningByScreeningDate(screeningDate);
     }
+    
+    @Override
+    public Vector<Screening> getScreeningByScreeningTime(Time screeningTime){
+    	
+    	return this.scMapper.findScreeningByScreeningTime(screeningTime);
+    }
+    
 
     /**
      * @param cinema 

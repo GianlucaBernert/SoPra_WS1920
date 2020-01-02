@@ -24,7 +24,7 @@ public class BusinessObjectMapper {
      * Durch einem sogeannten <b>Singleton<b> kann die Klasse BusinessObjectMapper nur einmal instantiiert werden.
 	 * Mit Hilfe von <code>static</code> wird dies umgesetzt.
      */
-    private static BusinessObjectMapper BusinessObjectMapper = null;
+    private static BusinessObjectMapper businessObjectMapper = null;
 
     /**
      * Ein gesch?tzter Konstruktor der weitere Instanzierungen von BusinessObjectMapper Objekten verhindert.
@@ -38,17 +38,17 @@ public class BusinessObjectMapper {
  	 * @return Sie gibt den BusinessObjectMapper zur?ck.
  	 */
     public static BusinessObjectMapper businessObjectMapper() {
-        if(BusinessObjectMapper == null) {
-        	BusinessObjectMapper = new BusinessObjectMapper();
+        if(businessObjectMapper == null) {
+        	businessObjectMapper = new BusinessObjectMapper();
         }
-        return BusinessObjectMapper;
+        return businessObjectMapper;
     }
 
     /**
      * @param BusinessObject
      *           Prim?rschl?sselattribut (->DB)
 	 * @return BusinessObject-Objekt, das dem ?bergebenen Schl?ssel entspricht, null bei
-	 *         nicht vorhandenem DB
+	 *         nicht vorhandenem DB.
 	 *        
 	 */
     

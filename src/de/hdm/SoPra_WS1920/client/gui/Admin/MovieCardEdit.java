@@ -3,100 +3,160 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
-
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 
 //Edit Mode of a MovieCard
-public class MovieCardEdit extends FlowPanel{
-	Label nameLabel;
-	TextBox name;
-	Label genreLabel;
-	TextBox genre;
-	Label descriptionLabel;
-	TextArea description;
-	Button save;
-	Button cancel;
-	Button delete;
-	Movie movieToShow;
+public class MovieCardEdit extends DialogBox{
+	
+	FlowPanel formWrapper;
 	MovieCard parentCard;
-	Image saveIcon;
+	Movie movieToShow;
+	
+	Label cardDescription;
 	Image cancelIcon;
+	Button invisibleButton;
+	
+	Label nameLabel;
+	TextBox nameTextBox;
+	Label genreLabel;
+	TextBox genreTextBox;
+	Label descriptionLabel;
+	TextArea descriptionTextArea;
+	
+	Button cancel;
+	Label deleteLabel;
 	Image deleteIcon;
+	Button saveButton;
+	
+	Header header;
+	Content content;
+	
 	public MovieCardEdit(MovieCard movieCard, Movie movieToShow) {
 		// TODO Auto-generated constructor stub
 		this.parentCard=movieCard;
 		this.movieToShow=movieToShow;
 	}
 
+	public MovieCardEdit(Header header, Content content) {
+		this.header = header;
+		this.content = content;
+		
+		Movie m = new Movie();
+		m.setName("");
+		m.setGenre("");
+		m.setDescription("");
+		movieToShow = m;
+	}
+
 	public void onLoad() {
 		super.onLoad();
-
-		nameLabel = new Label("Title");
-		nameLabel.setStyleName("InputLabel");
-		name=new TextBox();
-		name.setStyleName("inputTextBox");
-		genreLabel = new Label("Genre");
-		genreLabel.setStyleName("InputLabel");
-		genre=new TextBox();
-		genre.setStyleName("inputTextBox");
-		descriptionLabel = new Label("Description");
-		descriptionLabel.setStyleName("InputLabel");
-		description=new TextArea();
-		description.setStyleName("inputTextArea");
-		save=new Button("SAVE");
-		save.setStyleName("invisibleButton");
-		cancel=new Button("CANCEL");
-		cancel.setStyleName("invisibleButton");
-		delete=new Button("Delete");
-		delete.setStyleName("invisibleButton");
-		name.setText(movieToShow.getName());
-		genre.setText(movieToShow.getGenre());
-		description.setText(movieToShow.getDescription());
+		this.setStyleName("EditCard");
+		formWrapper = new FlowPanel();
 		
-		saveIcon = new Image("/Images/002-checked.svg");
-		saveIcon.setStyleName("saveIcon");
-		saveIcon.addClickHandler(new SaveClickHandler());
-		
-		cancelIcon = new Image("/Images/001-unchecked.svg");
-		cancelIcon.setStyleName("cancelIcon");
+		cardDescription = new Label("Add Movie");
+		cardDescription.setStyleName("CardDescription");
+		cancelIcon = new Image("/Images/png/007-close.png");
+		cancelIcon.setStyleName("CancelIcon");
 		cancelIcon.addClickHandler(new CancelClickHandler(this));
+		invisibleButton = new Button();
+		invisibleButton.setStyleName("InvisibleButton");
 		
-		deleteIcon = new Image("/Images/003-delete.svg");
-		deleteIcon.setStyleName("deleteIcon");
-		deleteIcon.addClickHandler(new DeleteClickHandler(this));
+		nameLabel = new Label("Title");
+		nameLabel.setStyleName("TextBoxLabel");
+		nameTextBox=new TextBox();
+		nameTextBox.setStyleName("CardTextBox");
+		nameTextBox.getElement().setPropertyString("placeholder", "Title");
+		genreLabel = new Label("Genre");
+		genreLabel.setStyleName("TextBoxLabel");
+		genreTextBox=new TextBox();
+		genreTextBox.setStyleName("CardTextBox");
+		genreTextBox.getElement().setPropertyString("placeholder", "Genre");
+		descriptionLabel = new Label("Description");
+		descriptionLabel.setStyleName("TextBoxLabel");
+		descriptionTextArea=new TextArea();
+		descriptionTextArea.setStyleName("CardTextArea");
+		descriptionTextArea.getElement().setAttribute("maxlength", "350");
 		
-		this.add(nameLabel);
-		this.add(name);
-		this.add(genreLabel);
-		this.add(genre);
-		this.add(descriptionLabel);
-		this.add(description);
-		this.add(save);
-		this.add(cancel);
-		this.add(delete);
-		this.add(saveIcon);
-		this.add(cancelIcon);
-		this.add(deleteIcon);
+		formWrapper.add(cardDescription);
+		formWrapper.add(cancelIcon);
+		formWrapper.add(nameLabel);
+		formWrapper.add(nameTextBox);
+		formWrapper.add(genreLabel);
+		formWrapper.add(genreTextBox);
+		formWrapper.add(descriptionLabel);
+		formWrapper.add(descriptionTextArea);
+		
+		if(parentCard!=null) {
+			cardDescription.setText("Edit Movie");
+			deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
+			deleteIcon.setStyleName("DeleteIcon");
+			deleteIcon.addClickHandler(new DeleteClickHandler(this));
+			
+			deleteLabel = new Label("Delete");
+			deleteLabel.setStyleName("DeleteLabel");
+			deleteLabel.addClickHandler(new DeleteClickHandler(this));
+			formWrapper.add(deleteIcon);
+			formWrapper.add(deleteLabel);
+		}
+//		deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
+//		deleteIcon.setStyleName("DeleteIcon");
+//		deleteIcon.addClickHandler(new DeleteClickHandler(this));
+//		
+//		deleteLabel = new Label("Delete");
+//		deleteLabel.setStyleName("DeleteLabel");
+//		deleteLabel.addClickHandler(new DeleteClickHandler(this));
+		
+		saveButton = new Button("Save");
+		saveButton.addClickHandler(new SaveClickHandler(this));
+		saveButton.setStyleName("SaveButton");
+		
+		nameTextBox.setText(movieToShow.getName());
+		genreTextBox.setText(movieToShow.getGenre());
+		descriptionTextArea.setText(movieToShow.getDescription());
+		
+//		formWrapper.add(cardDescription);
+//		formWrapper.add(cancelIcon);
+//		formWrapper.add(nameLabel);
+//		formWrapper.add(nameTextBox);
+//		formWrapper.add(genreLabel);
+//		formWrapper.add(genreTextBox);
+//		formWrapper.add(descriptionLabel);
+//		formWrapper.add(descriptionTextArea);
+//		formWrapper.add(deleteIcon);
+//		formWrapper.add(deleteLabel);
+		formWrapper.add(saveButton);
+		this.add(formWrapper);
 	}
 	class SaveClickHandler implements ClickHandler{
-//		MovieCardEdit movieCardEdit;
-//		public SaveClickHandler(MovieCardEdit movieCardEdit) {
-//			// TODO Auto-generated constructor stub
-//			this.movieCardEdit=movieCardEdit;
-//		}
-		
+		MovieCardEdit movieCardEdit;
+		public SaveClickHandler(MovieCardEdit movieCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.movieCardEdit = movieCardEdit;
+		}
+
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			movieToShow.setName(name.getText());
-			movieToShow.setGenre(genre.getText());
-			movieToShow.setDescription(description.getText());
-			parentCard.showMovieCardView(movieToShow);
+			movieToShow.setName(nameTextBox.getText());
+			movieToShow.setGenre(genreTextBox.getText());
+			movieToShow.setDescription(descriptionTextArea.getText());
+			
+			if(parentCard==null) {
+				parentCard = new MovieCard(content,movieToShow);
+				parentCard.showMovieCardView(movieToShow);
+				content.add(parentCard);
+				movieCardEdit.hide();
+			}else {
+				parentCard.showMovieCardView(movieToShow);
+				movieCardEdit.hide();
+			}
+			
 		}
 		
 	}
@@ -105,13 +165,20 @@ public class MovieCardEdit extends FlowPanel{
 		MovieCardEdit movieCardEdit;
 		public CancelClickHandler(MovieCardEdit movieCardEdit) {
 			// TODO Auto-generated constructor stub
-			this.movieCardEdit=movieCardEdit;
+			this.movieCardEdit = movieCardEdit;
 		}
 
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			parentCard.showMovieCardView(movieToShow);
+			
+			if(parentCard==null) {
+				movieCardEdit.hide();
+			}else {
+				parentCard.showMovieCardView(movieToShow);
+				movieCardEdit.hide();
+			}
+			
 		}
 		
 	}
@@ -120,14 +187,16 @@ public class MovieCardEdit extends FlowPanel{
 		MovieCardEdit movieCardEdit;
 		public DeleteClickHandler(MovieCardEdit movieCardEdit) {
 			// TODO Auto-generated constructor stub
-			this.movieCardEdit=movieCardEdit;
+			this.movieCardEdit = movieCardEdit;
 		}
 
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
+			movieCardEdit.hide();
 			parentCard.remove();
 		}
 		
 	}
+
 }

@@ -7,7 +7,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Movie;
 public class MovieCard extends FlowPanel{
 		
 	Movie movieToShow;
-	FlowPanel main;
+	Content content;
 	MovieCardView movieCardView;
 	MovieCardEdit movieCardEdit;
 		
@@ -15,18 +15,25 @@ public class MovieCard extends FlowPanel{
 		super.onLoad();
 		this.setStyleName("Card");
 		this.showMovieCardView(movieToShow);
-		movieCardView = new MovieCardView(this, movieToShow);
+//		movieCardView = new MovieCardView(this, movieToShow);
 	}
 		
-	public MovieCard(FlowPanel main, Movie movieToShow) {
-		this.main=main;
+	public MovieCard(Content content, Movie movieToShow) {
+		this.content = content;
 		this.movieToShow=movieToShow;
 		}
 
+	public MovieCard() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void showMovieCardEdit(Movie movieToShow) {
 		this.movieToShow=movieToShow;
-		this.clear();
-		this.add(new MovieCardEdit(this,movieToShow));
+//		this.clear();
+		MovieCardEdit movieCardEdit = new MovieCardEdit(this,movieToShow);
+		movieCardEdit.center();
+		movieCardEdit.show();
+//		this.add(new MovieCardEdit(this,movieToShow));
 	}
 		
 	public void showMovieCardView(Movie movieToShow) {
@@ -35,7 +42,7 @@ public class MovieCard extends FlowPanel{
 		this.add(new MovieCardView(this,movieToShow));
 	}
 	public void remove() {
-		main.remove(this);
+		content.remove(this);
 	}
 		
 		

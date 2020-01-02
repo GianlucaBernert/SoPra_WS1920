@@ -73,7 +73,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	this.vMapper = VoteMapper.voteMapper();
     	this.oMapper = OwnershipMapper.ownershipMapper();
     	this.meMapper = MembershipMapper.membershipMapper();
-    	this.boMapper = BusinessObjectMapper.BusinessObjectMapper();
+    	this.boMapper = BusinessObjectMapper.businessObjectMapper();
     }
     
     /**
@@ -118,6 +118,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param Ownership os
      */
     public void deleteOwnership(Ownership os) {
+    	this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(os.getId()));
     	this.oMapper.deleteOwnership(os);
     }
     
@@ -210,9 +211,9 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         	}
         }
         
-//        BusinessObject bo = this.boMapper.findBusinessObjectByID(p.getId());
-//        
-//        this.deleteBusinessObject(bo);
+        BusinessObject bo = this.boMapper.findBusinessObjectByID(p.getId());
+        
+        this.deleteBusinessObject(bo);
         
         this.pMapper.deletePerson(p);
     }
@@ -287,9 +288,9 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      */
     public Membership createMembership(Group g, Person p) throws IllegalArgumentException {
     	Membership m = new Membership();
-    	m.setGroup(g);
-    	m.setPerson(p);
-        this.meMapper.insertMembership(g, p);
+    	m.setGroupFK(g.getId());
+    	m.setPersonFK(p.getId());
+        this.meMapper.insertMembership(m);
         return m;
      }
     
@@ -299,7 +300,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param Person p
      */
     public void deleteMembership(Group g, Person p) {    	
-        this.meMapper.deleteMembership(g, p);
+        this.meMapper.deleteMembership(g.getId(), p.getId());
     }
     
     /**
@@ -313,6 +314,13 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         if (sOfGroups != null) {
         	for (Survey s : sOfGroups) {
         		this.sMapper.deleteSurvey(s);
+        	}
+        }
+        
+        Vector<Membership> mOfGroup = this.meMapper.findMembershipByGroupFK(g.getId());
+        if (mOfGroup != null) {
+        	for (Membership me : mOfGroup) {
+        		this.meMapper.deleteMembership(me.getGroupFK(), me.getPersonFK());
         	}
         }
         
@@ -392,8 +400,6 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         }
         
         this.deleteOwnership(os);
-        
-        this.deleteSurvey(this.sMapper.findSurveyByID(s.getId()));
         
         this.sMapper.deleteSurvey(s);
     }
@@ -485,8 +491,6 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         }
         
         this.deleteOwnership(os);
-        
-        this.deleteSurveyEntry(this.seMapper.findSurveyEntryByID(se.getId()));
         
         this.seMapper.deleteSurveyEntry(se);
     }

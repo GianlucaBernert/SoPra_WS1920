@@ -58,6 +58,23 @@ body{
 	display: none;
 }
 
+.bottom{
+	position: absolute !important;
+	bottom: 80px !important;
+}
+
+.logout{
+	position: absolute !important;
+	bottom: 40px !important;
+	color: #FF6172 !important;
+}
+.logout:hover{
+		text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2) !important;
+		border-left: solid #FF6172 !important;
+		padding: 15px 30px 15px 48px !important;
+		
+}
+
 .navbar-show{
 	width: calc(100% - 40px);
 	height: auto;
@@ -230,7 +247,7 @@ body{
   	margin-top: 16px;
 }
 
-.icon {
+.Icon {
 	position: absolute;
 	float:right;
 	width: 15px;
@@ -241,27 +258,370 @@ body{
 	margin-left: 30px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+.Header{
+	margin-left: 250px;
+	padding: 20px;
+	overflow: hidden;
+}
+
+.Headline{
+	color: #9278FF;
+	font-weight: bold;
+	font-size: 24px;
+	float: left;
+	padding-bottom: 20px;
+	display:block;
+}
+
+.SearchBox{
+	display: block;
+	background-color: #0C1C2C;
+	border-radius: 5px; /*Round corners for the searchbox*/
+	float: left;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);/*Sets a shadow to the box*/
+    width: 100%;
+    padding: 5px 0px;
+
+}
+
+.SearchText{
+	border-style: none;	/*Erases the default border of a textbox*/
+	outline: none; /*Prevents the textbox to get a blue outline when selected*/
+    outline-style: none;
+    margin-left: 5px;
+    width: calc(100% - 80px);
+    background-color: #0C1C2C;
+    color:#71889C;
+}
+
+::placeholder {
+  color: #71889C;
+}
+
+.SearchIcon{
+	margin: 5px 5px 5px 15px;
+	height: 15px;
+	vertical-align: middle;
+}
+
+.SearchSubmitIcon {
+	height: 15px;
+	float: right;
+	margin: 5px 15px 5px 5px;
+}
+
+.CreateBoButton{
+	padding: 7px 20px;
+	outline: none;
+	border: none;
+	color: white;
+	font-size: 14px;
+/* 	background-color:#FE2851; */
+	background-color: #9278FF;
+	border-radius: 5px;
+	float: right;
+	display: block;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.CreateBoButton:hover{
+	background-color: #6A52D0;
+}
+
+.Content{
+	padding:20px;
+	overflow: hidden;
+}
+
 .Card {
   	position: relative;
 	float:left;
 	width: calc(100% - 40px);
 	min-width: 250px;
-	max-width: 400px;
+	max-width: 350px;
+	padding: 20px;
+	border-radius: 10px;
+	background-image: linear-gradient(to bottom right, #0D1D2D, #112D49);
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	overflow-x: hidden;
+	margin: 0px 20px 20px 0px; 
+	height: 200px;
+}
+
+.EditCard {
+
+	float:left;
+	width: calc(100% - 40px);
+	min-width: 250px;
+	max-width: 350px;
+	padding: 20px;
+	border-radius: 10px;
+	background-image: linear-gradient(to bottom right, #0D1D2D, #112D49);
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	min-height: 350px;
+}
+
+.Card:hover {
+	box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.EditCard table{
+	width: 100% !important;
+}
+
+.CardViewTitle {
+	width: calc(100% - 40px);
+	font-weight: bold;
+	font-size: 20px;
+	color: #7A93B0;
+  	display: block;
+  	text-decoration: none;
+}
+
+.CardViewSubTitle {
+	width: calc(100% - 40px);
+  	text-decoration: none;
+  	font-size: 16px;
+  	color: #7A93B0;
+  	display: block;
+  	text-decoration: none;
+	margin-top: 16px;
+}
+
+.CardViewParagraph {
+	/*width: calc(100% - 40px); */
+    text-decoration: none;
+    font-size: 12px;
+    color: #7A93B0;
+    display: block;
+    text-decoration: none;
+    margin: 20px 0px 30px;
+    line-height: 1.5;
+}
+
+.EditIcon {
+	position: absolute;
+	float:right;
+	width: 15px;
+	height: 15px;
+	bottom: 20px;
+	right: 20px;
+	cursor: pointer;
+
+}
+
+.CardDescription {
+	font-size: 20px;
+	color:  #7A93B0;
+	padding: 10px 0px;
+}
+
+.CancelIcon {
+	position: absolute;
+    float: right;
+    width: 10px;
+    height: 10px;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    padding: 10px 0px;
+}
+
+.TextBoxLabel {
+	width:100%;
+	font-size: 12px;
+	color: #6483A1;
+	margin-top:10px;
+	margin-bottom: 5px;
+}
+
+.InvisibleButton {
+	display: none;
+	border: none;	
+	outline: none;
+    outline-style: none;
+}
+
+.CardTextBox {
+	margin-bottom: 10px;
+	font-family: Roboto;
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 5px;
+	background-color:#04101A;
+	color: #71889C;
+	border: none !important;
+	padding: 10px 10px !important;
+	outline-style: none;
+	font-size: 12px;
+}
+
+.CardTextArea {
+	margin-bottom: 10px;
+	font-family: Roboto;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #04101A;
+    color: #71889C;
+    border: none !important;
+    padding: 10px 10px !important;
+    outline-style: none;
+    resize: vertical;
+    height: 100px;
+    font-size: 12px;
+}
+
+.CardSuggestBox{
+	margin-bottom: 10px;
+	font-family: Roboto;
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 5px;
+	background-color:#04101A;
+	color: #71889C;
+	border: none !important;
+	padding: 10px 10px !important;
+	outline-style: none;
+	font-size: 12px;
+}
+
+.CardDatePicker {
+	margin-bottom: 10px;
+	font-family: Roboto;
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 5px;
+	background-color:#04101A;
+	color: #71889C;
+	border: none !important;
+	padding: 10px 10px !important;
+	outline-style: none;
+	font-size: 12px;
+}
+
+.CardTimePicker {
+	margin-bottom: 10px;
+	font-family: Roboto;
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 5px;
+	background-color:#04101A;
+	color: #71889C;
+	border: none !important;
+	padding: 10px 10px !important;
+	outline-style: none;
+	font-size: 12px;
+}
+
+.TimePickerSuggestBox {
+	background: transparent;
+    color: #71889C;
+    border: none !important;
+    /* float: left; */
+    width: 25px;
+    display: inline-block;
+}
+
+.TimePickerLabel {
+	background: transparent;
+    display: inline-block;
+    color: #71889C;
+    border: none !important;
+    width: 10px;
+}
+
+.DeleteIcon {
+	float: left;
+    margin-top: 20px;
+    width: 11px;
+    margin-top: 16px;
+    margin-right: 2px;
+    cursor: pointer;
+}
+
+.DeleteLabel {
+	font-weight: bold;
+    color: #FF6172;
+    float: left;
+    margin-top: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.SaveButton {
+	/*position: absolute;*/
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    background-color: #9278FF;
+    color: #ffffff;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    bottom: 0;
+    left: 0;
+    margin-top: 20px;
+    /* border-bottom-left-radius: 10px; */
+    /* border-bottom-right-radius: 10px;*/
+	transition: background-color 0.2s;
+}
+
+.SaveButton:hover{
+	background-color: #6A52D0;
+}
+.CardListBox {
+	margin-bottom: 10px;
+	font-family: Roboto;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #04101A;
+    color: #71889C;
+    border: none !important;
+    padding: 10px 10px !important;
+    outline-style: none;
+    font-size: 12px;
+}
+
+.select {
+	background: #04101A;
+}
+
+select option {
+	border: none;
+    width: 100%;
+    padding: 0 !important;
+    outline: none;
+    text-decoration: none;
+    border-style: none;
+    text-shadow: none !important;
+    border-spacing: unset;
+}
+
+.CreateBoDialogBox {
+	width: calc(100% - 40px);
+	min-width: 250px;
+	max-width: 350px;
 	padding: 20px;
 	border-radius: 10px;
 	background-image: linear-gradient(to bottom right, #0D1D2D, #112D49);
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 	overflow-x: hidden; 
-}
-.Card:hover {
-	box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.Cinemacard button {
-	display: none;
-	width: 33.33%;
-	border: none;	
-	outline: none;
-    outline-style: none;
 }
 
 .streetrow-inline {
@@ -277,6 +637,7 @@ body{
   	margin-top: 16px;
   	margin-right: 8px;
   	float:left;
+  	margin-bottom: 0px !important;
 }
 
 .cityrow-inline {
@@ -293,9 +654,20 @@ body{
   	margin-top: 16px;
   	margin-right: 8px;
   	float:left;
+  	margin-bottom: 0px !important;
 }
 
+.CinemaCardView{
+	height: 150px !important;
+}
 
+.ScreeningCardView{
+	height: 150px;
+}
+
+.ScreeningCardView .CardViewParagraph{
+	margin: 20px 0px 15px !important;
+}
 
 .inputLabel {
 	width:100%;
@@ -350,15 +722,7 @@ body{
 	cursor: pointer;
 	margin-left: 30px;
 }
-.CancelIcon {
-	position: absolute;
-    float: right;
-    width: 10px;
-    height: 10px;
-    top: 20px;
-    right: 20px;
-    cursor: pointer;
-}
+
 .deleteIcon {
 	position: absolute;
 	float:right;
@@ -380,8 +744,8 @@ body{
 	.navbar{
 		margin: 0;
 		padding: 0;
-	 	width: 200px;
-		background-image: linear-gradient(to bottom right, #302F2F, #101010);
+	 	width: 250px;
+	 	background-color: #0C1C2C;
 	 	position: fixed;
 		height: 100%;
 		overflow: auto;
@@ -393,22 +757,22 @@ body{
 
 	.navbar-element{
 		display: block;
-		color: #ffffff;
-	    padding: 15px 20px 15px 30px;
+		color: #7A93B0;
+	    padding: 15px 30px 15px 50px;
 	    font-size: 16px;
 	    cursor: pointer;
 	    text-decoration: none;
 	}
 
 	.navbar-element:hover{
-		color: #FE2851;
+		color: #9278FF;
 		text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-		border-left: solid #FE2851;;
-		padding: 15px 20px 15px 28px;
+		border-left: solid #9278FF;
+		padding: 15px 30px 15px 48px;
 	}
 
 	.header{
-		margin-left: 200px;
+		margin-left: 250px;
 		padding: 16px;
 	}
 	
@@ -421,8 +785,7 @@ body{
 	}
 	
 	.content{
-	margin-top: 16px;
-	margin-left: 200px;
+	margin-left: 250px;
 	height: 100%;
 	}
 	.moviecard {

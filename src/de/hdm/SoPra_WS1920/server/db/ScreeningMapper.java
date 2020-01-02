@@ -94,7 +94,7 @@ public class ScreeningMapper {
 	/**
      * Einfügen eines <code>Screening</code>-Objekts in die DB.
      * Prüfung und ggf. Korrektur des Primärschlüssels
-     * @param screening das zu speichernde Objekt
+     * @param screening das zu speichernde Objekt.
      * @return das übergebene Objekt, mit ggf. korrigierter <code>id</code>.
      */
 	
@@ -173,7 +173,7 @@ public class ScreeningMapper {
 
     /**
      * Auslesen der Screening-Objekte mit vorgegebenen Spielzeiten
-     * @param screeningDate
+     * @param screeningDate, screeningTime
      * @return Vektor mit Screening-Objekten
      */
     public Vector<Screening> findScreeningByScreeningDateTime(Date screeningDate, Time screeningTime) {
@@ -191,7 +191,40 @@ public class ScreeningMapper {
         		sc.setScreeningDate(rs.getDate("screeningDate"));
         		sc.setScreeningTime(rs.getTime("screeningTime"));
         		sc.setMovieFK(rs.getInt("movieFK"));
-        		sc.setCinemaFK(rs.getInt("cinemaFK"));
+        		sc.setCinemaFK(rs.getInt("cinemaFK")); 
+        		
+        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+        		result.addElement(sc);
+        	}
+        }
+        	catch(SQLException e2) {
+        		e2.printStackTrace();
+        	}
+        	//Rückgabe des Ergebnisvektors
+        	return result;
+    }
+    
+    /**
+     * Auslesen der Screening-Objekte mit vorgegebenen Spielzeiten
+     * @param screeningDate
+     * @return Vektor mit Screening-Objekten
+     */
+    public Vector<Screening> findScreeningByScreeningDate(Date screeningDate, Time screeningTime) {
+    	Connection con = DBConnection.connection();
+        Vector<Screening> result = new Vector<Screening>();
+        
+        try {
+        	Statement stmt = con.createStatement();
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
+        			+ "WHERE screeningDate= '" + screeningDate + "'");
+        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+        	while(rs.next()) {
+        		Screening sc = new Screening();
+        		sc.setId(rs.getInt("id"));
+        		sc.setScreeningDate(rs.getDate("screeningDate"));
+        		sc.setScreeningTime(rs.getTime("screeningTime"));
+        		sc.setMovieFK(rs.getInt("movieFK"));
+        		sc.setCinemaFK(rs.getInt("cinemaFK")); 
         		
         		//Hinzufügen des neuen Objekts zum Ergebnisvektor
         		result.addElement(sc);
