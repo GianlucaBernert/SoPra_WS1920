@@ -2,6 +2,8 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -10,6 +12,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 
+import de.hdm.SoPra_WS1920.client.ClientsideSettings;
+import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 
 public class CinemaCardEdit extends DialogBox{
@@ -39,6 +43,8 @@ public class CinemaCardEdit extends DialogBox{
 	Header header;
 	Content content;
 	
+	CinemaAdministrationAsync cinemaAdministration;
+	
 	public CinemaCardEdit(CinemaCard cinemaCard, Cinema cinema) {
 		this.parentCard=cinemaCard;
 		this.cinemaToShow=cinema;
@@ -53,7 +59,7 @@ public class CinemaCardEdit extends DialogBox{
 		c.setCinemaChainFK(1);
 		c.setStreet("");
 		c.setStreetNo("");
-		c.setzipCode("");
+		c.setZipCode("");
 		c.setCity("");
 		cinemaToShow = c;
 	}
@@ -62,6 +68,8 @@ public class CinemaCardEdit extends DialogBox{
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("EditCard");
+		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
+		
 		formWrapper = new FlowPanel();
 		
 		cardDescription = new Label("Add Cinema");
@@ -101,7 +109,7 @@ public class CinemaCardEdit extends DialogBox{
 		nameTextBox.setText(cinemaToShow.getName());
 		streetTextBox.setText(cinemaToShow.getStreet());
 		streetNrTextBox.setText(cinemaToShow.getStreetNo());
-		zipCodeTextBox.setText(cinemaToShow.getzipCode());
+		zipCodeTextBox.setText(cinemaToShow.getZipCode());
 		cityTextBox.setText(cinemaToShow.getCity());
 		
 		formWrapper.add(cardDescription);
@@ -138,7 +146,7 @@ public class CinemaCardEdit extends DialogBox{
 		cinemaToShow.setCinemaChainFK(1);
 		cinemaToShow.setStreet(streetTextBox.getText());
 		cinemaToShow.setStreetNo(streetNrTextBox.getText());
-		cinemaToShow.setzipCode(zipCodeTextBox.getText());
+		cinemaToShow.setZipCode(zipCodeTextBox.getText());
 		cinemaToShow.setCity(cityTextBox.getText());
 		
 //		formWrapper.add(cardDescription);
@@ -161,6 +169,7 @@ public class CinemaCardEdit extends DialogBox{
 	
 	class SaveClickHandler implements ClickHandler{
 		CinemaCardEdit cinemaCardEdit;
+		
 		public SaveClickHandler(CinemaCardEdit cinemaCardEdit) {
 			this.cinemaCardEdit = cinemaCardEdit;
 		}
@@ -168,12 +177,20 @@ public class CinemaCardEdit extends DialogBox{
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-
+			cinemaAdministration.createCinema(
+					nameTextBox.getText(), 
+					cityTextBox.getText(), 
+					streetTextBox.getText(), 
+					streetNrTextBox.getText(), 
+					zipCodeTextBox.getText(), 
+					3, 
+					1, 
+					new CreateCinemaCallback());
 			cinemaToShow.setName(nameTextBox.getText());
 			cinemaToShow.setCinemaChainFK(1);
 			cinemaToShow.setStreet(streetTextBox.getText());
 			cinemaToShow.setStreetNo(streetNrTextBox.getText());
-			cinemaToShow.setzipCode(zipCodeTextBox.getText());
+			cinemaToShow.setZipCode(zipCodeTextBox.getText());
 			cinemaToShow.setCity(cityTextBox.getText());
 			
 			if(parentCard==null) {
@@ -185,6 +202,37 @@ public class CinemaCardEdit extends DialogBox{
 				parentCard.showCinemaCardView(cinemaToShow);
 				cinemaCardEdit.hide();
 			}
+		}
+		class CreateCinemaCallback implements AsyncCallback<Cinema>{
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("Problem with the Callback!");
+			}
+
+			@Override
+			public void onSuccess(Cinema result) {
+				// TODO Auto-generated method stub
+				cinemaToShow=result;
+//				cinemaToShow.setName(nameTextBox.getText());
+//				cinemaToShow.setCinemaChainFK(1);
+//				cinemaToShow.setStreet(streetTextBox.getText());
+//				cinemaToShow.setStreetNo(streetNrTextBox.getText());
+//				cinemaToShow.setZipCode(zipCodeTextBox.getText());
+//				cinemaToShow.setCity(cityTextBox.getText());
+				
+				if(parentCard==null) {
+					parentCard = new CinemaCard(content,cinemaToShow);
+					parentCard.showCinemaCardView(cinemaToShow);
+					content.add(parentCard);
+					cinemaCardEdit.hide();
+				}else {
+					parentCard.showCinemaCardView(cinemaToShow);
+					cinemaCardEdit.hide();
+				}
+			}
+			
 		}
 		
 	}

@@ -29,7 +29,7 @@
   
 <servlet-mapping>
     <servlet-name>CinemaAdministrationImpl</servlet-name>
-    <url-pattern>/sopra_ws1920a/CinemaAdministrationImpl</url-pattern>
+    <url-pattern>/sopra_ws1920a/cinemaAdministration</url-pattern>
 </servlet-mapping>  
 
 <servlet>

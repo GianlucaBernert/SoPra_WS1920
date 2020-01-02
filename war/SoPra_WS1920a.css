@@ -58,6 +58,23 @@ body{
 	display: none;
 }
 
+.bottom{
+	position: absolute !important;
+	bottom: 80px !important;
+}
+
+.logout{
+	position: absolute !important;
+	bottom: 40px !important;
+	color: #FF6172 !important;
+}
+.logout:hover{
+		text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2) !important;
+		border-left: solid #FF6172 !important;
+		padding: 15px 30px 15px 48px !important;
+		
+}
+
 .navbar-show{
 	width: calc(100% - 40px);
 	height: auto;
@@ -750,7 +767,7 @@ select option {
 	.navbar-element:hover{
 		color: #9278FF;
 		text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-		border-left: solid #7A93B0;
+		border-left: solid #9278FF;
 		padding: 15px 30px 15px 48px;
 	}
 
