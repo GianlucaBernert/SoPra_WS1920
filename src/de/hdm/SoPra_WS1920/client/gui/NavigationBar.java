@@ -151,9 +151,9 @@ public class NavigationBar extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			//UserSettingsForm userSettingsForm = new UserSettingsForm(header, content);
-			//userSettingsForm.center();
-			//userSettingsForm.show();
+			UserSettingsForm userSettingsForm = new UserSettingsForm(header, content);
+			userSettingsForm.center();
+			userSettingsForm.show();
 		}
 		
 	}
