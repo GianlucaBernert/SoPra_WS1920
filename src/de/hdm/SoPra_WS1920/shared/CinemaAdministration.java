@@ -2,6 +2,7 @@ package de.hdm.SoPra_WS1920.shared;
 
 
 import java.sql.Time;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -201,15 +202,15 @@ public interface CinemaAdministration extends RemoteService {
 
 	Vector<SurveyEntry> getSurveyEntryByScreeningFK(int ScreeningFK);
 
-	Vector<Cinema> findCinemasByCinemaChainFK(CinemaChain cc);
+	Vector<Cinema> getCinemasByCinemaChainFK(CinemaChain cc);
 
-	Vector<Cinema> findCinemasByPersonFK(int personFK);
+	Vector<Cinema> getCinemasByPersonFK(int personFK);
 
-	CinemaChain findCinemaChainById(int id);
+	CinemaChain getCinemaChainById(int id);
 
-	Vector<CinemaChain> findCinemaChainByPersonFK(int personFK);
+	Vector<CinemaChain> getCinemaChainByPersonFK(int personFK);
 
-	Vector<CinemaChain> findCinemaChainByName(String name);
+	Vector<CinemaChain> getCinemaChainByName(String name);
 
 	void deleteCinemaChain(CinemaChain cc);
 
@@ -219,7 +220,7 @@ public interface CinemaAdministration extends RemoteService {
 
 	Vector<Ownership> getOwnershipsbyPersonFK(int personFK);
 
-	Ownership findOwnership(int id);
+	Ownership getOwnership(int id);
 
 	void deleteOwnership(Ownership ownership);
 
@@ -229,8 +230,12 @@ public interface CinemaAdministration extends RemoteService {
 
 	BusinessObject createBusinessObject();
 
-	Vector<Screening> getScreeningByScreeningTime(Time screeningTime);
+	Vector<Screening> getScreeningByScreeningDateTime(Date screeningDate, Time screeningTime);
 
 	Vector<Screening> getScreeningByScreeningDate(Date screeningDate);
+
+	Vector<Screening> getScreeningsByPersonFK(int personFK);
+
+	Vector<Movie> getAllMovies();
 
 }
