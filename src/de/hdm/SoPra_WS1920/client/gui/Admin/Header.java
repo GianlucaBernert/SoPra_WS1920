@@ -10,6 +10,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
+import de.hdm.SoPra_WS1920.client.ClientsideSettings;
+import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
+
 public class Header extends FlowPanel{
 	
 	Label headline;
@@ -18,6 +21,8 @@ public class Header extends FlowPanel{
 	PopupPanel pPanel;
 
 	Content content;
+	CinemaAdministrationAsync cinemaAdministration;
+	
 	
 	public Header(Content content) {
 		// TODO Auto-generated constructor stub
@@ -28,6 +33,7 @@ public class Header extends FlowPanel{
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("Header");
+		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
 //		vPanel = new VerticalPanel();
 //		cinema = new Label("New Cinema");
 //		cinemaChain = new Label("New CinemaChain");
@@ -47,6 +53,7 @@ public class Header extends FlowPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
+			
 			CinemaCardEdit cinemaCardEdit = new CinemaCardEdit(header, content);
 			cinemaCardEdit.center();
 			cinemaCardEdit.show();
