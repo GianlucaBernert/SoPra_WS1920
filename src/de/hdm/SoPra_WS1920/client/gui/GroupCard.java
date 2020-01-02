@@ -7,26 +7,21 @@ import de.hdm.SoPra_WS1920.shared.bo.Group;
 public class GroupCard extends FlowPanel {
 	
 	Group groupToShow;
-	FlowPanel main;
+	SurveyContent content;
+	
 	GroupCardView groupCardView;
 	GroupCardEdit groupCardEdit;
 	
 	public void onLoad() {
 		super.onLoad();
-		this.setStylePrimaryName("moviecard");
+		this.setStylePrimaryName("Card CinemaCardView");
 		this.showGroupCardView(groupToShow);
-		groupCardView = new GroupCardView(this, groupToShow);
-		this.showGroupCardView(groupToShow);
-	}
-	
-	public GroupCard(Group groupToShow) {
-		this.groupToShow = groupToShow;
 		
 	}
 	
-	public GroupCard(FlowPanel main,Group groupToShow) {
-		this.main = main;
+	public GroupCard(SurveyContent content, Group groupToShow) {
 		this.groupToShow = groupToShow;
+		this.content = content;
 	}
 	
 	public void showGroupCardView(Group groupToShow) {
@@ -37,12 +32,13 @@ public class GroupCard extends FlowPanel {
 	
 	public void showGroupCardEdit(Group groupToShow) {
 		this.groupToShow = groupToShow;
-		this.clear();
-		this.add(new GroupCardEdit(this, groupToShow));
+		GroupCardEdit groupCardEdit = new GroupCardEdit(this, groupToShow);
+		groupCardEdit.center();
+		groupCardEdit.show();
 	}
 	
 	public void remove() {
-		main.remove(this);
+		content.remove(this);
 	}
 	
 
