@@ -120,7 +120,7 @@ public interface SurveyManagement extends RemoteService {
      * @param Group g
      * @param Person p
      */
-    public void deleteMembership(Group g, Person p);
+    public void deleteMembership(int gFK, int pFK);
     
     /**
      * Methode um eine Gruppe zu bearbeiten

@@ -209,7 +209,7 @@ public class ScreeningMapper {
      * @param screeningDate
      * @return Vektor mit Screening-Objekten
      */
-    public Vector<Screening> findScreeningByScreeningDate(Date screeningDate, Time screeningTime) {
+    public Vector<Screening> findScreeningByScreeningDate(Date screeningDate) {
     	Connection con = DBConnection.connection();
         Vector<Screening> result = new Vector<Screening>();
         
