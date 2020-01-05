@@ -44,7 +44,7 @@ public class SurveyCardEdit extends DialogBox {
 	
 	Button invisibleButton;
 	Button addScreenings;
-	Button cancel;
+	Button cancel; 
 	Image cancelIcon;
 	
 	
@@ -74,7 +74,7 @@ public class SurveyCardEdit extends DialogBox {
 		this.surveyToShow = survey;
 	}
 	
-	//macht diese Darstellung bei surveys Sinn (überschneidung mit David und Shila?)
+	
 	public SurveyCardEdit(SurveyContent content, SurveyManagementHeader header) {
 		this.content = content;
 		this.header = header;
@@ -193,8 +193,30 @@ public class SurveyCardEdit extends DialogBox {
 		}
 	}
 	
-	
-	
+	public void onLoad2() {
+		super.onLoad();
+		
+		this.setStyleName("EditCard");
+		formWrapper = new FlowPanel();
+		
+		cardDescription2 = new Label("Create Survey 1/2");
+		cardDescription2.setStyleName("CardDescription");
+		cancelIcon = new Image("/Images/png/007-close.png");
+		cancelIcon.setStyleName("CancelIcon");
+		
+		//TO DO BEfüllung der Label mit INhalt der vorherigen Auswahl
+		
+		selectedMovie = new Label("Movie:");
+		selectedMovie.setStyleName("TextBoxLabel");
+		selectedGroup = new Label ("Group:");
+		selectedGroup.setStyleName("TextBoxLabel");
+		selectedCity = new Label ("City:");
+		selectedCity.setStyleName("TextBoxLabel");
+		selectedPeriod = new Label ("selected Period");
+		selectedPeriod.setStyleName("TextBoxLabel");
+		
+		
+	}
 	
 	
 	
