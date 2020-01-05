@@ -237,6 +237,39 @@ public class ScreeningMapper {
         	return result;
     }
     
+    /**
+     * Auslesen der Screening-Objekte mit vorgegebenen Spielzeiten
+     * @param screeningTime
+     * @return Vektor mit Screening-Objekten
+     */
+    public Vector<Screening> findScreeningByScreeningTime(Time screeningTime) {
+    	Connection con = DBConnection.connection();
+        Vector<Screening> result = new Vector<Screening>();
+        
+        try {
+        	Statement stmt = con.createStatement();
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
+        			+ "WHERE screeningTime= '" + screeningTime + "'");
+        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+        	while(rs.next()) {
+        		Screening sc = new Screening();
+        		sc.setId(rs.getInt("id"));
+        		sc.setScreeningDate(rs.getDate("screeningDate"));
+        		sc.setScreeningTime(rs.getTime("screeningTime"));
+        		sc.setMovieFK(rs.getInt("movieFK"));
+        		sc.setCinemaFK(rs.getInt("cinemaFK")); 
+        		
+        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+        		result.addElement(sc);
+        	}
+        }
+        	catch(SQLException e2) {
+        		e2.printStackTrace();
+        	}
+        	//Rückgabe des Ergebnisvektors
+        	return result;
+    }
+    
     
     public void deleteByScreeningDate(Date screeningDate) {
     	Connection con = DBConnection.connection();
@@ -244,6 +277,18 @@ public class ScreeningMapper {
     	try {
     		Statement stmt = con.createStatement();
     		stmt.executeUpdate("DELETE FROM screening" + "WHERE screeningDate=" + screeningDate);
+    	}
+    	catch(SQLException e2) {
+    		e2.printStackTrace();
+    	}
+    }
+    
+    public void deleteByScreeningTime(Time screeningTime) {
+    	Connection con = DBConnection.connection();
+    	
+    	try {
+    		Statement stmt = con.createStatement();
+    		stmt.executeUpdate("DELETE FROM screening" + "WHERE screeningTime=" + screeningTime);
     	}
     	catch(SQLException e2) {
     		e2.printStackTrace();
