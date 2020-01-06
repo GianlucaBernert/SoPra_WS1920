@@ -8,23 +8,31 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
+
+import de.hdm.SoPra_WS1920.client.gui.Admin.MovieCard;
+import de.hdm.SoPra_WS1920.shared.bo.Group;
 
 public class GroupForm extends DialogBox {
 	
 	SurveyManagementHeader header;
 	SurveyContent content;
 	AddGroupMemberForm agmf;
+	Group groupToShow;
+	GroupCard parentCard;
 	
 	Label groupName;
 	Label memberName;
+	Label cardDescription;
 	TextBox groupTextBox;
-	TextBox memberTextBox;
+	ListBox memberListBox;
 	FlowPanel main;
 	HorizontalPanel buttonPanel;
 	Button cancel;
 	Image cancelIcon;
-	Image saveIcon;
+	Button saveButton;
+	Button addMember;
 	Image addIcon;
 	
 	GroupForm gf;
@@ -39,45 +47,56 @@ public class GroupForm extends DialogBox {
 		super.onLoad();
 		
 		FlowPanel main = new FlowPanel();
-		this.setStylePrimaryName("moviecard");
+		this.setStylePrimaryName("EditCard");
+		
+		cardDescription = new Label("Add Group");
+		cardDescription.setStyleName("CardDescription");
+		
 		groupName = new Label("Gruppenname:");
-		groupName.setStylePrimaryName("inputLabel");
+		groupName.setStylePrimaryName("TextBoxLabel");
 		
 		memberName = new Label("Gruppenmitglied:");
-		memberName.setStylePrimaryName("inputLabel");
+		memberName.setStylePrimaryName("TextBoxLabel");
 		
 		
 		groupTextBox = new TextBox();
-		groupTextBox.setStylePrimaryName("inputTextBox");
+		groupTextBox.setStylePrimaryName("CardTextBox");
 		
-		memberTextBox = new TextBox();
-		memberTextBox.setStylePrimaryName("inputTextBox");
+		
+		memberListBox = new ListBox();
+		memberListBox.setStylePrimaryName("CardTextBox");
+		memberListBox.addItem("Yesin");
+		memberListBox.addItem("Sebi");
 		
 		//cancel = new Button("cancel");
 		//cancel.setStylePrimaryName("createBoButton");
 		
 		cancelIcon = new Image("/Images/001-unchecked.svg");
-		cancelIcon.setStyleName("cancelIcon");
+		cancelIcon.setStyleName("CancelIcon");
 		cancelIcon.addClickHandler(new CancelClickHandler(this));
 		
-		saveIcon = new Image("/Images/002-checked.svg");
-		saveIcon.setStylePrimaryName("saveIcon");
-		saveIcon.addClickHandler(new SaveClickHandler(this));
+		saveButton = new Button("Save");
+		saveButton.setStylePrimaryName("SaveButton");
+		saveButton.addClickHandler(new SaveClickHandler(this));
 		
-		addIcon = new Image("/Images/003-edit.png");
-		addIcon.setStylePrimaryName("editIcon");
-		addIcon.addClickHandler(new AddClickHandler(this, agmf));
+		addMember = new Button("Add Member");
+		addMember.setStylePrimaryName("SaveButton");
+		addMember.addClickHandler(new AddMemberClickHandler(this, agmf));
+		
+		//addIcon = new Image("/Images/003-edit.png");
+		//addIcon.setStylePrimaryName("editIcon");
+		//addIcon.addClickHandler(new AddClickHandler(this, agmf));
 		
 		
-	
+		main.add(cardDescription);
 		main.add(groupName);
 		main.add(groupTextBox);
 		main.add(cancelIcon);
-		main.add(saveIcon);
-		main.add(addIcon);
-		
+		//main.add(addIcon);
 		main.add(memberName);
-		main.add(memberTextBox);
+		main.add(memberListBox);
+		main.add(addMember);
+		main.add(saveButton);
 		
 		//main.add(cancel);
 		
@@ -113,22 +132,39 @@ public class GroupForm extends DialogBox {
 	}
 	
 	class SaveClickHandler implements ClickHandler {
+		GroupForm gf;
 		
 		public SaveClickHandler(GroupForm gf) {
+			this.gf = gf;
 			
 		}
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
+			groupToShow.setName(groupTextBox.getValue());
+			groupToShow.setName(memberListBox.getValue(0));
+			
+			
+			if(parentCard==null) {
+				parentCard = new GroupCard(content,groupToShow);
+				parentCard.showGroupCardView(groupToShow);
+				content.add(parentCard);
+				gf.hide();
+			}else {
+				parentCard.showGroupCardView(groupToShow);
+				gf.hide();
+			}
+			
+		}
+		
 			
 		}
 		
 	}
 	
-	class AddClickHandler implements ClickHandler{
+	class AddMemberClickHandler implements ClickHandler{
 		
-		public AddClickHandler(GroupForm gf, AddGroupMemberForm agmf) {
+		public AddMemberClickHandler(GroupForm gf, AddGroupMemberForm agmf) {
 			
 		}
 
@@ -142,4 +178,4 @@ public class GroupForm extends DialogBox {
 	
 	
 	
-}
+
