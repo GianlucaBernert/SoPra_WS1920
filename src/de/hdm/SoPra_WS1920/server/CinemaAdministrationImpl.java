@@ -590,7 +590,16 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	return this.scMapper.findScreeningByScreeningDateTime(screeningDate, screeningTime);
     }
     
-
+    /**
+     * Methode zum Aufrufen von Screening Objects anhand der Uhrzeit der Vorstellung.
+     * @param screeningTime
+     * @return
+     */
+    @Override
+    public Vector<Screening> getScreeningByScreeningTime(Time screeningTime) throws IllegalArgumentException{
+    	
+    	return this.scMapper.findScreeningByScreeningTime(screeningTime);
+    }
 
     /**
      * Methode zur Aktualisierung eines Schreening Objects.
