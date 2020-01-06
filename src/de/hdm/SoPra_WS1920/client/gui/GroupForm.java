@@ -25,13 +25,14 @@ public class GroupForm extends DialogBox {
 	Label groupName;
 	Label memberName;
 	Label cardDescription;
-	ListBox groupListBox;
+	TextBox groupTextBox;
 	ListBox memberListBox;
 	FlowPanel main;
 	HorizontalPanel buttonPanel;
 	Button cancel;
 	Image cancelIcon;
 	Button saveButton;
+	Button addMember;
 	Image addIcon;
 	
 	GroupForm gf;
@@ -58,10 +59,9 @@ public class GroupForm extends DialogBox {
 		memberName.setStylePrimaryName("TextBoxLabel");
 		
 		
-		groupListBox = new ListBox();
-		groupListBox.setStylePrimaryName("CardTextBox");
-		groupListBox.addItem("Popcorns");
-		groupListBox.addItem("Friends");
+		groupTextBox = new TextBox();
+		groupTextBox.setStylePrimaryName("CardTextBox");
+		
 		
 		memberListBox = new ListBox();
 		memberListBox.setStylePrimaryName("CardTextBox");
@@ -79,6 +79,10 @@ public class GroupForm extends DialogBox {
 		saveButton.setStylePrimaryName("SaveButton");
 		saveButton.addClickHandler(new SaveClickHandler(this));
 		
+		addMember = new Button("Add Member");
+		addMember.setStylePrimaryName("SaveButton");
+		addMember.addClickHandler(new AddMemberClickHandler(this, agmf));
+		
 		//addIcon = new Image("/Images/003-edit.png");
 		//addIcon.setStylePrimaryName("editIcon");
 		//addIcon.addClickHandler(new AddClickHandler(this, agmf));
@@ -86,11 +90,12 @@ public class GroupForm extends DialogBox {
 		
 		main.add(cardDescription);
 		main.add(groupName);
-		main.add(groupListBox);
+		main.add(groupTextBox);
 		main.add(cancelIcon);
 		//main.add(addIcon);
 		main.add(memberName);
 		main.add(memberListBox);
+		main.add(addMember);
 		main.add(saveButton);
 		
 		//main.add(cancel);
@@ -136,7 +141,7 @@ public class GroupForm extends DialogBox {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			groupToShow.setName(groupListBox.getValue(1));
+			groupToShow.setName(groupTextBox.getValue());
 			groupToShow.setName(memberListBox.getValue(0));
 			
 			
@@ -157,9 +162,9 @@ public class GroupForm extends DialogBox {
 		
 	}
 	
-	class AddClickHandler implements ClickHandler{
+	class AddMemberClickHandler implements ClickHandler{
 		
-		public AddClickHandler(GroupForm gf, AddGroupMemberForm agmf) {
+		public AddMemberClickHandler(GroupForm gf, AddGroupMemberForm agmf) {
 			
 		}
 
