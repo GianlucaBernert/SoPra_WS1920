@@ -22,7 +22,7 @@ public class AddGroupMemberForm extends DialogBox {
 		super.onLoad();
 		
 		FlowPanel main = new FlowPanel();
-		this.setStylePrimaryName("moviecard");
+		this.setStylePrimaryName("EditCard");
 		
 		memberTextBox = new TextBox();
 		memberTextBox.setStylePrimaryName("inputTextBox");
@@ -30,7 +30,7 @@ public class AddGroupMemberForm extends DialogBox {
 		check = new CheckBox();
 		
 		cancelIcon = new Image("/Images/001-unchecked.svg");
-		cancelIcon.setStyleName("cancelIcon");
+		cancelIcon.setStyleName("CancelIcon");
 		cancelIcon.addClickHandler(new CancelClickHandler(this));
 		
 		
