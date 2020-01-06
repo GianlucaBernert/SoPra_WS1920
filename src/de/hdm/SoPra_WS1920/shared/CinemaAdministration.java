@@ -238,4 +238,6 @@ public interface CinemaAdministration extends RemoteService {
 
 	Vector<Movie> getAllMovies();
 
+	Vector<Screening> getScreeningByScreeningTime(Time screeningTime) throws IllegalArgumentException;
+
 }
