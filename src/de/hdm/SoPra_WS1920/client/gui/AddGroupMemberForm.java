@@ -7,6 +7,8 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.SoPra_WS1920.client.gui.GroupForm.CancelClickHandler;
@@ -17,6 +19,9 @@ public class AddGroupMemberForm extends DialogBox {
 	FlowPanel main;
 	CheckBox check;
 	Image cancelIcon;
+	Label memberLabel;
+	ListBox memberListBox;
+	Button saveButton;
 	
 	public void onLoad() {
 		super.onLoad();
@@ -24,26 +29,36 @@ public class AddGroupMemberForm extends DialogBox {
 		FlowPanel main = new FlowPanel();
 		this.setStylePrimaryName("EditCard");
 		
-		memberTextBox = new TextBox();
+		memberLabel = new Label("Member");
+		memberLabel.setStylePrimaryName("TextBoxLabel");
+		
+		memberListBox = new ListBox();
+		memberListBox.addItem("Yesin");
+		memberListBox.addItem("Sebi");
+		memberListBox.addItem("David");
+		memberListBox.addItem("Shila");
+		memberListBox.addItem("Gianluca");
 		memberTextBox.setStylePrimaryName("inputTextBox");
 		
-		check = new CheckBox();
+		saveButton = new Button("Save");
+		saveButton.setStylePrimaryName("SaveButton");
 		
 		cancelIcon = new Image("/Images/001-unchecked.svg");
 		cancelIcon.setStyleName("CancelIcon");
 		cancelIcon.addClickHandler(new CancelClickHandler(this));
-		
-		
+	
 		
 		main.add(cancelIcon);
-		main.add(check);
-		main.add(memberTextBox);
+		main.add(memberLabel);
+		main.add(memberListBox);
+		main.add(saveButton);
 		this.add(main);
 		this.show();
 
 }
 	public void showAddGroupMemberForm() {
 		this.show();
+		this.center();
 	
 		
 	}
