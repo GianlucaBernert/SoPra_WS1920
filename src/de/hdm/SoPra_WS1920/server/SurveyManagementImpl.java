@@ -50,6 +50,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
 	private OwnershipMapper oMapper = null;
 	private MembershipMapper meMapper = null;
 	private BusinessObjectMapper boMapper = null;
+	private CinemaAdministrationImpl Admin = null;
 	
     /**
      * Default constructor
@@ -74,6 +75,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	this.oMapper = OwnershipMapper.ownershipMapper();
     	this.meMapper = MembershipMapper.membershipMapper();
     	this.boMapper = BusinessObjectMapper.businessObjectMapper();
+    	this.Admin = new CinemaAdministrationImpl();
     }
     
     /**
@@ -158,7 +160,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Vote> vOfPerson = this.vMapper.findVoteByPersonFK(p.getId());
         if (vOfPerson != null) {
         	for (Vote v : vOfPerson) {
-        		this.vMapper.deleteVote(v);
+        		this.deleteVote(v);
         		System.out.println("Vote ok");
         	}
         }
@@ -166,7 +168,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Survey> sOfPerson = this.sMapper.findSurveyByPersonFK(p.getId());
         if (sOfPerson != null) {
         	for (Survey s : sOfPerson) {
-        		this.sMapper.deleteSurvey(s);
+        		this.deleteSurvey(s);
         		System.out.println("Survey ok");
         	}
         }
@@ -174,7 +176,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Group> gOfPerson = this.gMapper.findGroupByPersonFK(p.getId());
         if (gOfPerson != null) {
         	for (Group g : gOfPerson) {
-        		this.gMapper.deleteGroup(g);
+        		this.deleteGroup(g);
         		System.out.println("Group ok");
         	}
         }
@@ -182,7 +184,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Screening> scOfPerson = this.scMapper.findScreeningByPersonFK(p.getId());
         if (scOfPerson != null) {
         	for (Screening sc : scOfPerson) {
-        		this.scMapper.deleteScreening(sc);
+        		Admin.deleteScreening(sc);
         		System.out.println("Screening ok");
         	}
         }
@@ -190,7 +192,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Cinema> cOfPerson = this.cMapper.findCinemaByPersonFK(p.getId());
         if (cOfPerson != null) {
         	for (Cinema c : cOfPerson) {
-        		this.cMapper.deleteCinema(c);
+        		Admin.deleteCinema(c);
         		System.out.println("Cinema ok");
         	}
         }
@@ -198,7 +200,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Movie> mOfPerson = this.mMapper.findMovieByPersonFK(p.getId());
         if (mOfPerson != null) {
         	for (Movie m : mOfPerson) {
-        		this.mMapper.deleteMovie(m);
+        		Admin.deleteMovie(m);
         		System.out.println("Movie ok");
         	}
         }
@@ -206,7 +208,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Ownership> osOfPerson = this.oMapper.findOwnershipByPersonFK(p.getId());
         if (osOfPerson != null) {
         	for (Ownership os : osOfPerson) {
-        		this.oMapper.deleteOwnership(os);
+        		this.deleteOwnership(os);
         		System.out.println("Ownership ok");
         	}
         }
@@ -299,8 +301,8 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param Group g
      * @param Person p
      */
-    public void deleteMembership(Group g, Person p) {    	
-        this.meMapper.deleteMembership(g.getId(), p.getId());
+    public void deleteMembership(int gFK, int pFK) {    	
+        this.meMapper.deleteMembership(gFK, pFK);
     }
     
     /**
@@ -313,14 +315,14 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	Vector<Survey> sOfGroups = this.sMapper.findSurveyByGroupFK(g.getId());
         if (sOfGroups != null) {
         	for (Survey s : sOfGroups) {
-        		this.sMapper.deleteSurvey(s);
+        		this.deleteSurvey(s);
         	}
         }
         
         Vector<Membership> mOfGroup = this.meMapper.findMembershipByGroupFK(g.getId());
         if (mOfGroup != null) {
         	for (Membership me : mOfGroup) {
-        		this.meMapper.deleteMembership(me.getGroupFK(), me.getPersonFK());
+        		this.deleteMembership(me.getGroupFK(), me.getPersonFK());
         	}
         }
         
@@ -486,7 +488,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	Vector<Vote> vOfSurveyEntry = this.vMapper.findVoteBySurveyEntryFK(se.getId());
         if (vOfSurveyEntry != null) {
         	for (Vote v : vOfSurveyEntry) {
-        		this.vMapper.deleteVote(v);
+        		this.deleteVote(v);
         	}
         }
         

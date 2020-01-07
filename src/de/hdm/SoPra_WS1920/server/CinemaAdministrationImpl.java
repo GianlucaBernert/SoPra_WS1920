@@ -2,6 +2,7 @@ package de.hdm.SoPra_WS1920.server;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.*;
 
 
@@ -45,7 +46,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 	/**
      * Default constructor
      */
-    public CinemaAdministrationImpl() {
+    public CinemaAdministrationImpl() throws IllegalArgumentException {
     }
 
     /**
@@ -95,290 +96,8 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     
     
     
-
     /**
-     * @param name 
-     * @param cityName 
-     * @param street 
-     * @param postCode 
-     * @return
-     */
-    @Override
-    public Cinema createCinema(String name, String cityName, String street, String streetNr, String zipCode, int ccFK, int personFK) {
-    		
-    		Ownership o = this.createOwnership(personFK);
-    	
-        	Cinema c = new Cinema();
-        	
-        	c.setName(name);
-        	c.setCity(cityName);
-        	c.setStreet(street);
-        	c.setZipCode(zipCode);
-        	c.setCinemaChainFK(ccFK);
-        	c.setId(o.getId());
-        	
-        	this.cMapper.insertCinema(c);
-        	
-        	return c;
-        	
-        
-    }
-    
-    /**
-     * Methode zur Erstellung eines Movie Objects
-     * @param name 
-     * @param genre 
-     * @param description 
-     * @return
-     */
-    @Override
-    public Movie createMovie(String name, String genre, String description, int personFK) {
-			
-		Ownership o = this.createOwnership(personFK);	
-			
-		Movie m	= new Movie();
-		
-		m.setName(name);
-		m.setGenre(genre);
-		m.setDescription(description);
-		m.setId(o.getId());
-		
-		this.mMapper.insertMovie(m);
-		
-		
-		
-		return  m;
-			
-		}
-    	
-  
-
-    /**
-     * @param screeningDateTime 
-     * @param cinemaFK 
-     * @param movieFK 
-     * @return
-     */
-    @Override
-
-    public Screening createScreening(Date screeningDate, Time screeningTime, int cinemaFK, int movieFK, int personFK) {
-
-        
-    	
-    	Ownership o = this.createOwnership(personFK);
-    	
-    	Screening sc = new Screening();
-    	
-    	sc.setCinemaFK(cinemaFK);
-    	sc.setMovieFK(movieFK);
-    	sc.setScreeningDate(screeningDate);
-    	sc.setScreeningTime(screeningTime);
-    	sc.setId(o.getId());
-
-    	return this.scMapper.insertScreening(sc);
-        
-    } 
-
-    /**
-     * @param cinema 
-     * @return
-     */
-    @Override
-    public void deleteCinema(Cinema cinema) {
-    	
-    	//Loeschen aller Screenings eines Kinos
-        
-    	Vector<Screening> s = this.getScreeningByCinemaFK(cinema.getId());
-    	
-    	if (s != null) {
-    		for(Screening s1 : s) {
-    			this.deleteScreening(s1);
-    		}
-    	}
-    	//Wenn cc Id -> 
-    	
-    	//Loeschen des Cinema Object
-        this.cMapper.deleteCinema(cinema);
-        this.deleteOwnership(this.findOwnership(cinema.getId()));
-    }
-
-    /**
-     * @param movie 
-     * @return
-     */
-    @Override
-    public void deleteMovie(Movie movie) {
-        
-    	Vector<Screening> screenings = this.getScreeningByMovieFK(movie.getId());
-    	
-    	if(screenings != null) {
-    		for(Screening s : screenings) {
-    			this.deleteScreening(s);
-    		}
-    	}
-    	
-       this.mMapper.deleteMovie(movie); 
-       this.deleteOwnership(this.findOwnership(movie.getId()));
-    }
-
-    /**
-     * @param screening 
-     * @return
-     */
-    @Override
-    public void deleteScreening(Screening screening) {
-        
-    	Vector<SurveyEntry> ses = this.getSurveyEntryByScreeningFK(screening.getId());
-    	
-    	if (ses != null) {
-    		for (SurveyEntry se : ses) {
-    			this.deleteSurveyEntry(se);
-    		}
-    	}
-    	
-        this.scMapper.deleteScreening(screening);
-        this.deleteOwnership(this.findOwnership(screening.getId()));
-    }
-
-    /**
-     * @param id 
-     * @return
-     */
-    @Override
-    public Cinema getCinemaById(int id) {
-        
-    	
-        return this.cMapper.findCinemaByID(id);
-    }
-
-    /**
-     * @param name 
-     * @return
-     */
-    @Override
-    public Vector<Cinema> getCinemaByName(String name) {
-        
-        return this.cMapper.findCinemaByName(name);
-    }
-
-    /**
-     * @param cityName 
-     * @return
-     */
-    @Override
-    public Vector<Cinema> getCinemaByCity(String cityName) {
-        
-        return this.cMapper.findCinemaByCity(cityName);
-    }
-
-    /**
-     * @param id 
-     * @return
-     */
-    @Override
-    public Movie getMovieById(int id) {
-        
-        return this.mMapper.findMovieByID(id);
-    }
-
-    /**
-     * @param name 
-     * @return
-     */
-    @Override
-    public Vector<Movie> getMoviesByName(String name) {
-       
-        return this.mMapper.findMovieByName(name);
-    }
-
-    /**
-     * @param genre 
-     * @return
-     */
-    @Override
-    public Vector<Movie> getMovieByGenre(String genre) {
-        
-        return this.mMapper.findMovieByGenre(genre);
-    }
-
-    /**
-     * @param id 
-     * @return
-     */
-    @Override
-    public Screening getScreeningById(int id) {
-        
-        return this.scMapper.findScreeningByID(id);
-    }
-
-    /**
-     * @param cinemaFK 
-     * @return
-     */
-    @Override
-    public Vector<Screening> getScreeningByCinemaFK(int cinemaFK) {
-        
-        return this.scMapper.findScreeningByCinemaFK(cinemaFK);
-    }
-
-    /**
-     * @param movieFK 
-     * @return
-     */
-    @Override
-    public Vector<Screening> getScreeningByMovieFK(int movieFK) {
-        
-        return this.scMapper.findScreeningByMovieFK(movieFK);
-    }
-
-    /**
-     * @param screeningDateTime 
-     * @return
-     */
-    @Override
-    public Vector<Screening> getScreeningByScreeningDate(Date screeningDate) {
-        
-        return this.scMapper.findScreeningByScreeningDate(screeningDate);
-    }
-    
-    @Override
-    public Vector<Screening> getScreeningByScreeningTime(Time screeningTime){
-    	
-    	return this.scMapper.findScreeningByScreeningTime(screeningTime);
-    }
-    
-
-    /**
-     * @param cinema 
-     * @return
-     */
-    @Override
-    public Cinema updateCinema(Cinema cinema) {
-        
-        return this.cMapper.updateCinema(cinema);
-    }
-
-    /**
-     * @param movie 
-     * @return
-     */
-    @Override
-    public Movie updateMovie(Movie movie) {
-        
-        return this.mMapper.updateMovie(movie);
-    }
-
-    /**
-     * @param screening
-     */
-    @Override
-    public Screening updateScreening(Screening screening) {
-		
-    	return this.scMapper.updateScreening(screening);
-     
-    }
-
-    /**
+     * Methode zum Erstellen eines person Objects.
      * @param firstName 
      * @param lastName 
      * @param eMail 
@@ -386,7 +105,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
      * @return
      */
     @Override
-    public Person createPerson(String firstName, String lastName, String eMail) {
+    public Person createPerson(String firstName, String lastName, String eMail) throws IllegalArgumentException {
         
     	BusinessObject bo = this.createBusinessObject();
     	
@@ -399,43 +118,50 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	
         return this.pMapper.insertPerson(p);
     }
+    
 
     /**
+     * Methode zur Suche eines Person Objects nach dessen id.
      * @param id 
      * @return
      */
     @Override
-    public Person getPersonById(int id) {
+    public Person getPersonById(int id) throws IllegalArgumentException {
         
         return this.pMapper.findPersonByID(id);
     }
+    
 
     /**
+     * Methode zur Suche eines Person Objects nach dessen Vornamen.
      * @param firstName 
      * @return
      */
     @Override
-    public Vector<Person> getPersonByFirstName(String firstName) {
+    public Vector<Person> getPersonByFirstName(String firstName) throws IllegalArgumentException {
         
         return this.pMapper.findPersonByFirstname(firstName);
     }
-
+    
+    
     /**
+     * Methode zur Suche eines Person Objects nach dessen Nachnamen.
      * @param lastName 
      * @return
      */
     @Override
-    public Vector<Person> getPersonByLastName(String lastName) {
+    public Vector<Person> getPersonByLastName(String lastName) throws IllegalArgumentException {
         
         return this.pMapper.findPersonByLastname(lastName);
     }
 
     /**
+     * Methode zur Suche eines Person Objects nach dessen eMail.
      * @param eMail 
      * @return
      */
     @Override
-    public Person getPersonByEMail(String eMail) {
+    public Person getPersonByEMail(String eMail) throws IllegalArgumentException {
         
         return this.pMapper.findPersonByEmail(eMail);
     }
@@ -443,171 +169,23 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 
 
     /**
+     * Methode zur  Aktualisierung eines Person Objects.
      * @param person 
      * @return
      */
     @Override
-    public Person updatePerson(Person person) {
+    public Person updatePerson(Person person) throws IllegalArgumentException {
         
         return this.pMapper.updatePerson(person);
     }
     
     /**
-     * @param vote 
-     * @return
+     * Methode zum Löschen von Personen Objekten und allen zugehörigen Businessobjekten
+     * @param p
      */
-    @Override
-    public void deleteVote(Vote vote) {
-        
-    	this.vMapper.deleteVote(vote);
-    	this.deleteOwnership(this.findOwnership(vote.getId()));
-        
-    }
-
-    /**
-     * @param surveyentry 
-     * @return
-     */
-    @Override
-    public void deleteSurveyEntry(SurveyEntry surveyEntry) {
-        
-    	Vector<Vote> votes = this.getVotesBySurveyEntryFK(surveyEntry.getId());
-    	
-    	if(votes != null) {
-    		for(Vote v : votes) {
-    			this.deleteVote(v);
-    		}
-    	}
-    	
-    	this.seMapper.deleteSurveyEntry(surveyEntry);
-    	this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(surveyEntry.getId()));
-        
-    }
-    
     
     @Override
-    public Vector<Vote> getVotesBySurveyEntryFK(int surveyEntryFK){
-    	
-    	return this.vMapper.findVoteBySurveyEntryFK(surveyEntryFK);
-    }
-    
-    
-    @Override
-    public Vector<SurveyEntry> getSurveyEntryByScreeningFK(int screeningFK){
-    	
-    	return this.seMapper.findSurveyEntryByScreeningFK(screeningFK);
-    }
-    
-    @Override
-    public Ownership createOwnership(int personFK) {
-    	
-    	BusinessObject bo = this.createBusinessObject();
-    	
-
-    	Ownership o = new Ownership();
-    	o.setId(bo.getId());
-    	o.setPersonFK(personFK);
-    	
-    	return this.oMapper.insertOwnership(o);
-    }
-    
-    @Override
-    public void deleteOwnership(Ownership ownership) {
-    	this.oMapper.deleteOwnership(ownership);
-    	this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(ownership.getId()));
-    }
-    
-    @Override
-    public Ownership findOwnership(int id) {
-    	return this.oMapper.findOwnershipByID(id);
-    }
-    
-    @Override
-    public Vector <Ownership> getOwnershipsbyPersonFK(int personFK){
-    	return this.oMapper.findOwnershipByPersonFK(personFK);
-    }
-    
-    @Override
-    public CinemaChain createCinemaChain(String name, int personFK) {
-    	
-    	
-    	Ownership o = this.createOwnership(personFK);
-    	
-    	CinemaChain cc = new CinemaChain();
-    	
-    	cc.setId(o.getId());
-    	cc.setName(name);
-    	
-    	cc = this.ccMapper.insertCinemaChain(cc);
-    	
-    	//c.setId(cc.getId());
-    	//this.updateCinema(c);
-    	
-    	
-    	return cc;
-    	
-    }
-    
-    // Methode updateCinemaId hierzu muss bei einem Vector von ausgewï¿½hlten Kino Objekten die CinemaChain ID geupdatet werden.
-    
-    @Override
-    public CinemaChain updateCinemaChain(CinemaChain cc) {
-    	return this.ccMapper.updateCinemaChain(cc);
-    }
-    
-    @Override
-    public void deleteCinemaChain(CinemaChain cc) {
-    	this.ccMapper.deleteCinemaChain(cc);
-    	this.deleteOwnership(this.findOwnership(cc.getId()));
-    	// Lï¿½schen der CinemaChainID in den Cinema Objekten notwenig!
-    }
-    
-    @Override
-    public Vector<CinemaChain> findCinemaChainByName(String name) {
-    	return this.ccMapper.findCinemaChainByName(name);
-    }
-    
-    @Override
-    public Vector <CinemaChain> findCinemaChainByPersonFK(int personFK){
-    	return this.ccMapper.findCinemaChainByPersonFK(personFK);
-    }
-    
-   @Override
-   public CinemaChain findCinemaChainById(int id) {
-   return this.ccMapper.findCinemaChainByID(id);
-   }
-    
-    @Override
-    public Vector <Cinema> findCinemasByPersonFK(int personFK){
-    	return this.cMapper.findCinemaByPersonFK(personFK);
-    }
-    
-    /**
-     * Methode zum Aufrufen aller zugehï¿½rigen Cinema Objekte einer CinemaChain
-     * @param cc
-     * @return
-     */
-    @Override
-    public Vector <Cinema> findCinemasByCinemaChainFK(CinemaChain cc){
-    	return this.cMapper.findCinemaByCinemaChainFK(cc.getId());
-    }
-    
-    @Override
-    public BusinessObject createBusinessObject(){
-    	BusinessObject bo = new BusinessObject();
-    	Timestamp time = new Timestamp(System.currentTimeMillis());
-    	bo.setCreationTimestamp(time);
-    	this.boMapper.insertBusinessObject(bo);
-    	return bo;
-    }
-    
-    @Override
-    public void deleteBusinessObject(BusinessObject bo) {
-    	this.boMapper.deleteBusinessObject(bo);
-    }
-    
-    @Override
-    public void deletePerson(Person p) {
+    public void deletePerson(Person p) throws IllegalArgumentException{
         Vector<Vote> vOfPerson = this.vMapper.findVoteByPersonFK(p.getId());
         if (vOfPerson != null) {
         	for (Vote v : vOfPerson) {
@@ -615,9 +193,11 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
         	}
         }
         
+        
         Vector<Survey> sOfPerson = this.sMapper.findSurveyByPersonFK(p.getId());
         if (sOfPerson != null) {
         	for (Survey s : sOfPerson) {
+        		// surveyEntrys löschen
         		this.sMapper.deleteSurvey(s);
         	}
         }
@@ -643,6 +223,8 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
         	}
         }
         
+        // CinemaChains löschen
+        
         Vector<Movie> mOfPerson = this.mMapper.findMovieByPersonFK(p.getId());
         if (mOfPerson != null) {
         	for (Movie m : mOfPerson) {
@@ -657,9 +239,588 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
         	}
         }
         
-        this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(p.getId()));
         
         this.pMapper.deletePerson(p);
+        
+        this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(p.getId()));
     }
     
+    
+    /**
+     * Methode zum Erstellen von Kino Objekten.
+     * @param name 
+     * @param cityName 
+     * @param street 
+     * @param postCode 
+     * @return
+     */
+    @Override
+    public Cinema createCinema(String name, String cityName, String street, String streetNr, String zipCode, int ccFK, int personFK) 
+    		throws IllegalArgumentException{ 
+    	
+    		Ownership o = this.createOwnership(personFK);
+    	
+        	Cinema c = new Cinema();
+        	
+        	c.setName(name);
+        	c.setCity(cityName);
+        	c.setStreet(street);
+        	c.setZipCode(zipCode);
+        	c.setId(o.getId());
+        	c.setCinemaChainFK(ccFK);
+        		
+        	
+        	this.cMapper.insertCinema(c);
+        	
+        	return c;
+        	
+        
+    }
+    
+
+    /**
+     * Methode zur Aktualisierung eines Kino Objekts.
+     * @param cinema 
+     * @return
+     */
+    @Override
+    public Cinema updateCinema(Cinema cinema) throws IllegalArgumentException{
+        
+        return this.cMapper.updateCinema(cinema);
+    }
+
+    
+
+    /**
+     * Methode zum Löschen eines KinoObjects und zugehörigen BusinessObjects.
+     * @param cinema 
+     * @return
+     */
+    @Override
+    public void deleteCinema(Cinema cinema) throws IllegalArgumentException {
+    	
+    	//Loeschen aller Screenings eines Kinos
+        
+    	Vector<Screening> s = this.getScreeningByCinemaFK(cinema.getId());
+    	
+    	if (s != null) {
+    		for(Screening s1 : s) {
+    			this.deleteScreening(s1);
+    		}
+    	}
+    	//Wenn cc Id -> 
+    	
+    	//Loeschen des Cinema Object
+        this.cMapper.deleteCinema(cinema);
+        this.deleteOwnership(this.getOwnership(cinema.getId()));
+    }
+
+
+    /**
+     * Methode zum Aufrufen eines Kino Objekts anhand dessen Id
+     * @param id 
+     * @return
+     */
+    @Override
+    public Cinema getCinemaById(int id) throws IllegalArgumentException{
+        
+    	
+        return this.cMapper.findCinemaByID(id);
+    }
+
+    /**
+     * Methode zum Aufrufen eines Kino Objekts anhand dessen Namen.
+     * @param name 
+     * @return
+     */
+    @Override
+    public Vector<Cinema> getCinemaByName(String name) {
+        
+        return this.cMapper.findCinemaByName(name);
+    }
+
+    /**
+     * Methode zum Aufrufen von Kino Objekten anhand deren Stadt.
+     * @param cityName 
+     * @return
+     */
+    @Override
+    public Vector<Cinema> getCinemaByCity(String cityName) throws IllegalArgumentException {
+        
+        return this.cMapper.findCinemaByCity(cityName);
+    }
+    
+    
+    /**
+     * Methode zum Aufrufen aller Kinos einer Person.
+     * @param personFK
+     * @return
+     */
+    @Override
+    public Vector <Cinema> getCinemasByPersonFK(int personFK) throws IllegalArgumentException{
+    	return this.cMapper.findCinemaByPersonFK(personFK);
+    }
+    
+    
+    /**
+     * Methode zum Aufrufen aller zugehï¿½rigen Cinema Objekte einer CinemaChain
+     * @param cc
+     * @return
+     */
+    @Override
+    public Vector <Cinema> getCinemasByCinemaChainFK(CinemaChain cc) throws IllegalArgumentException{
+    	return this.cMapper.findCinemaByCinemaChainFK(cc.getId());
+    }
+
+    
+    
+    /**
+     * Methode zur Erstellung eines Movie Objects
+     * @param name 
+     * @param genre 
+     * @param description 
+     * @return
+     */
+    @Override
+    public Movie createMovie(String name, String genre, String description, int personFK) throws IllegalArgumentException {
+			
+		Ownership o = this.createOwnership(personFK);	
+			
+		Movie m	= new Movie();
+		
+		m.setName(name);
+		m.setGenre(genre);
+		m.setDescription(description);
+		m.setId(o.getId());
+		
+		this.mMapper.insertMovie(m);
+		
+		
+		
+		return  m;
+			
+		}
+    	
+    /**
+     * Methode zum Löschen eines Kino Objects.
+     * @param movie 
+     * @return
+     */
+    @Override
+    public void deleteMovie(Movie movie) throws IllegalArgumentException {
+        
+    	Vector<Screening> screenings = this.getScreeningByMovieFK(movie.getId());
+    	
+    	if(screenings != null) {
+    		for(Screening s : screenings) {
+    			this.deleteScreening(s);
+    		}
+    	}
+    	
+       this.mMapper.deleteMovie(movie); 
+       this.deleteOwnership(this.getOwnership(movie.getId()));
+    }
+    
+    
+    /**
+     * Methode zum Aufrufen aller MOvie Objects
+     * @return
+     * @throws IllegalArgumentException
+     */
+    @Override
+    public Vector <Movie> getAllMovies() throws IllegalArgumentException{
+    	
+    	return this.mMapper.findAll();
+    }
+    
+    
+    /**
+     * Methode zum Aufrufen eines Movies nach dessen Id
+     * @param id 
+     * @return
+     */
+    @Override
+    public Movie getMovieById(int id) throws IllegalArgumentException {
+        
+        return this.mMapper.findMovieByID(id);
+    }
+
+    /**
+     * Methode zum Aufrufen von MOvies nach deren Namen.
+     * @param name 
+     * @return
+     */
+    @Override
+    public Vector<Movie> getMoviesByName(String name) throws IllegalArgumentException{
+       
+        return this.mMapper.findMovieByName(name);
+    }
+
+    /**
+     * Methode zum Aufrufen von Movies nach Genre.
+     * @param genre 
+     * @return
+     */
+    @Override
+    public Vector<Movie> getMovieByGenre(String genre) throws IllegalArgumentException {
+        
+        return this.mMapper.findMovieByGenre(genre);
+    }
+    
+
+    /**
+     * Methode zur Aktualisierung eines Movie Objects.
+     * @param movie 
+     * @return
+     */
+    @Override
+    public Movie updateMovie(Movie movie) throws IllegalArgumentException{
+        
+        return this.mMapper.updateMovie(movie);
+    }
+    
+    
+    
+    
+
+    /**
+     * Methode zur Erstellung eines Screenig Objects.
+     * @param screeningDateTime 
+     * @param cinemaFK 
+     * @param movieFK 
+     * @return
+     */
+    @Override
+
+    public Screening createScreening(Date screeningDate, Time screeningTime, int cinemaFK, int movieFK, int personFK)
+    		throws IllegalArgumentException{
+
+        
+    	
+    	Ownership o = this.createOwnership(personFK);
+    	
+    	Screening sc = new Screening();
+    	
+    	sc.setCinemaFK(cinemaFK);
+    	sc.setMovieFK(movieFK);
+    	sc.setScreeningDate(screeningDate);
+    	sc.setScreeningTime(screeningTime);
+    	sc.setId(o.getId());
+
+    	return this.scMapper.insertScreening(sc);
+        
+    } 
+
+  
+    /**
+     * Methode zum Löschen eines Screening Objects und dazugehörigen Business Objects.
+     * @param screening 
+     * @return
+     */
+    @Override
+    public void deleteScreening(Screening screening) throws IllegalArgumentException {
+        
+    	Vector<SurveyEntry> ses = this.getSurveyEntryByScreeningFK(screening.getId());
+    	
+    	if (ses != null) {
+    		for (SurveyEntry se : ses) {
+    			this.deleteSurveyEntry(se);
+    		}
+    	}
+    	
+        this.scMapper.deleteScreening(screening);
+        this.deleteOwnership(this.getOwnership(screening.getId()));
+    }
+
+  
+    /**
+     * Methode zum Aufrufen eines Screening Objects anhand dessen Id.
+     * @param id 
+     * @return
+     */
+    @Override
+    public Screening getScreeningById(int id) throws IllegalArgumentException {
+        
+        return this.scMapper.findScreeningByID(id);
+    }
+
+    
+    /**
+     * Methode zum Aufrufen von Screening Objects anhand des cinemaFK.
+     * @param cinemaFK 
+     * @return
+     */
+    @Override
+    public Vector<Screening> getScreeningByCinemaFK(int cinemaFK) throws IllegalArgumentException {
+        
+        return this.scMapper.findScreeningByCinemaFK(cinemaFK);
+    }
+
+    /**
+     * Methode zum Aufrufen von Screening Objects anhand des movieFK.
+     * @param movieFK 
+     * @return
+     */
+    @Override
+    public Vector<Screening> getScreeningByMovieFK(int movieFK) throws IllegalArgumentException {
+        
+        return this.scMapper.findScreeningByMovieFK(movieFK);
+    }
+
+    /**
+     * Methode zum Aufrufen von Screening Objects anhand des Datums.
+     * @param screeningDate
+     * @return
+     */
+    @Override
+    public Vector<Screening> getScreeningByScreeningDate(Date screeningDate) throws IllegalArgumentException {
+        
+        return this.scMapper.findScreeningByScreeningDate(screeningDate);
+    }
+    
+    /**
+     * Methode zum Aufrufen von Screening Objects anhand der Zeit und dem Datum der Vorstellung.
+     * @param screeningDate
+     * @param screeningTime
+     * @return
+     */
+    @Override
+    public Vector<Screening> getScreeningByScreeningDateTime(Date screeningDate, Time screeningTime) throws IllegalArgumentException{
+    	
+    	return this.scMapper.findScreeningByScreeningDateTime(screeningDate, screeningTime);
+    }
+    
+    /**
+     * Methode zum Aufrufen von Screening Objects anhand der Uhrzeit der Vorstellung.
+     * @param screeningTime
+     * @return
+     */
+    @Override
+    public Vector<Screening> getScreeningByScreeningTime(Time screeningTime) throws IllegalArgumentException{
+    	
+    	return this.scMapper.findScreeningByScreeningTime(screeningTime);
+    }
+
+    /**
+     * Methode zur Aktualisierung eines Schreening Objects.
+     * @param screening
+     * @return
+     */
+    @Override
+    public Screening updateScreening(Screening screening) throws IllegalArgumentException {
+		
+    	return this.scMapper.updateScreening(screening);
+     
+    }
+    
+    /**
+     * Methode zum Aufrufen aller Screening Objects einer Person
+     */
+    @Override
+    public Vector <Screening> getScreeningsByPersonFK(int personFK){
+    	
+    	return this.scMapper.findScreeningByPersonFK(personFK);
+    }
+    
+    /**
+     * Methode zur Erstellung eines CinemaChain Objects.
+     */
+    
+    @Override
+    public CinemaChain createCinemaChain(String name, int personFK) throws IllegalArgumentException {
+    	
+    	
+    	Ownership o = this.createOwnership(personFK);
+    	
+    	CinemaChain cc = new CinemaChain();
+    	
+    	cc.setId(o.getId());
+    	cc.setName(name);
+    	
+    	cc = this.ccMapper.insertCinemaChain(cc);
+
+    	return cc;
+    	
+    }
+    
+    /**
+     * Methode updateCinemaId hierzu muss bei einem Vector von ausgewï¿½hlten Kino Objekten die CinemaChain ID geupdatet werden.
+     */
+    
+    @Override
+    public CinemaChain updateCinemaChain(CinemaChain cc) throws IllegalArgumentException{
+    	return this.ccMapper.updateCinemaChain(cc);
+    }
+    
+    
+    /**
+     * Methode zum Löschen einer CinemaChain und zurücksetzen der ccId in den betroffenen Cinema Objects
+     */
+    @Override
+    public void deleteCinemaChain(CinemaChain cc) throws IllegalArgumentException {
+    	Vector <Cinema> vc = this.getCinemasByCinemaChainFK(cc);
+    	if(vc != null) {
+    		for (Cinema c : vc) {
+    			c.setId(1);
+    			this.updateCinema(c);
+    		}
+    	}
+    	this.ccMapper.deleteCinemaChain(cc);
+    	this.deleteOwnership(this.getOwnership(cc.getId()));
+    	// Lï¿½schen der CinemaChainID in den Cinema Objekten notwenig!
+    }
+    
+    
+    /**
+     * Methode zum Suchen eines CinemaChain Objects nach dessen Namen.
+     */
+    @Override
+    public Vector<CinemaChain> getCinemaChainByName(String name) throws IllegalArgumentException {
+    	return this.ccMapper.findCinemaChainByName(name);
+    }
+    
+    
+    /**
+     * Methode zum Aufrufen von CinemaChain Objects anhand eines PersonFK.
+     */
+    @Override
+    public Vector <CinemaChain> getCinemaChainByPersonFK(int personFK) throws IllegalArgumentException{
+    	return this.ccMapper.findCinemaChainByPersonFK(personFK);
+    }
+    
+   
+    /**
+    * Methode zum Aufrufen eines CinemaChain Objects nach dessen Id. 
+    */
+    @Override
+    public CinemaChain getCinemaChainById(int id) throws IllegalArgumentException {
+    return this.ccMapper.findCinemaChainByID(id);
+    }
+   
+   
+
+    /**
+    * Methode zum aufrufen von Vote Objects anhand eines Umfrageeintrags (SurveyEntry)
+    */
+    @Override
+    public Vector<Vote> getVotesBySurveyEntryFK(int surveyEntryFK) throws IllegalArgumentException{
+   	
+   	return this.vMapper.findVoteBySurveyEntryFK(surveyEntryFK);
+    }
+       
+
+    /**
+     * Methode zum Löschen eines Vote Objects
+     * @param vote 
+     * @return
+     */
+    @Override
+    public void deleteVote(Vote vote) throws IllegalArgumentException{
+        
+    	this.vMapper.deleteVote(vote);
+    	this.deleteOwnership(this.getOwnership(vote.getId()));
+        
+    }
+
+    /**
+     * Methode zum Löschen eines SurveyEntry Objects,
+     * @param surveyEntry 
+     * @return
+     */
+    @Override
+    public void deleteSurveyEntry(SurveyEntry surveyEntry) throws IllegalArgumentException{
+        
+    	Vector<Vote> votes = this.getVotesBySurveyEntryFK(surveyEntry.getId());
+    	
+    	if(votes != null) {
+    		for(Vote v : votes) {
+    			this.deleteVote(v);
+    		}
+    	}
+    	
+    	this.seMapper.deleteSurveyEntry(surveyEntry);
+    	this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(surveyEntry.getId()));
+        
+    }
+   
+    
+    /**
+     * Methode zum Aufrufen eines SurveyEntrys anhand des ScreeningFK
+     */
+    @Override
+    public Vector<SurveyEntry> getSurveyEntryByScreeningFK(int screeningFK) throws IllegalArgumentException{
+    	
+    	return this.seMapper.findSurveyEntryByScreeningFK(screeningFK);
+    }
+    
+    
+    /**
+     * Methode zur Erstellung eines Ownership Objects
+     * @param personFK
+     * @return
+     */
+    @Override
+    public Ownership createOwnership(int personFK) throws IllegalArgumentException{
+    	
+    	BusinessObject bo = this.createBusinessObject();
+    	
+
+    	Ownership o = new Ownership();
+    	o.setId(bo.getId());
+    	o.setPersonFK(personFK);
+    	
+    	return this.oMapper.insertOwnership(o);
+    }
+    
+    
+    /**
+     * Methode zum Löschen eines Ownership Objects.
+     * @param ownership
+     */
+    @Override
+    public void deleteOwnership(Ownership ownership) throws IllegalArgumentException{
+    	this.oMapper.deleteOwnership(ownership);
+    	this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(ownership.getId()));
+    }
+    
+    
+    /**
+     * Methode zum Aufrufen eines Ownership Objects anhand dessen ID.
+     */
+    @Override
+    public Ownership getOwnership(int id) throws IllegalArgumentException {
+    	return this.oMapper.findOwnershipByID(id);
+    }
+    
+    
+    /**
+     * Methode zum Aufrufen von OwnershipObjects anhand deren personFK
+     */
+    @Override
+    public Vector <Ownership> getOwnershipsbyPersonFK(int personFK) throws IllegalArgumentException{
+    	return this.oMapper.findOwnershipByPersonFK(personFK);
+    }
+    
+    
+    /**
+     * Methode zur Erstellung eines BusinessObjects.
+     */
+    @Override
+    public BusinessObject createBusinessObject() throws IllegalArgumentException{
+    	BusinessObject bo = new BusinessObject();
+    	Timestamp time = new Timestamp(System.currentTimeMillis());
+    	bo.setCreationTimestamp(time);
+    	this.boMapper.insertBusinessObject(bo);
+    	return bo;
+    }
+    
+    
+    /**
+     * Methode zum Löschen von BusinessObjects.
+     */
+    @Override
+    public void deleteBusinessObject(BusinessObject bo) throws IllegalArgumentException {
+    	this.boMapper.deleteBusinessObject(bo);
+    }
+        
 }

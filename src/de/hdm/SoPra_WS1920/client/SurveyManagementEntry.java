@@ -32,13 +32,15 @@ public class SurveyManagementEntry implements EntryPoint {
 		//Group g = new Group();
 		//g.setName("Yesin");
 		
-		navBar = new NavigationBar(header, content);
+		
 		content = new SurveyContent();
 		header = new SurveyManagementHeader(content);
+		navBar = new NavigationBar(header, content);
 		
 		RootPanel.get().add(navBar);
 		RootPanel.get().add(header);
 		RootPanel.get().add(content);
+		
 	}
 		
 		/*navbar.setStylePrimaryName("navbar");
