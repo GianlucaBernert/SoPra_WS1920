@@ -46,7 +46,6 @@ public class GroupForm extends DialogBox {
 	
 	public GroupForm() {
 		
-		
 	}
 	
 	
@@ -59,10 +58,10 @@ public class GroupForm extends DialogBox {
 		cardDescription = new Label("Add Group");
 		cardDescription.setStyleName("CardDescription");
 		
-		groupName = new Label("Gruppenname:");
+		groupName = new Label("Goupname:");
 		groupName.setStylePrimaryName("TextBoxLabel");
 		
-		memberName = new Label("Gruppenmitglied:");
+		memberName = new Label("Groupmember:");
 		memberName.setStylePrimaryName("TextBoxLabel");
 		
 		
@@ -117,15 +116,16 @@ public class GroupForm extends DialogBox {
 		//main.add(cancel);
 		
 		this.add(main);
-		
+		this.center();
 		this.show();
 		
 
 	}
 	
 	public void showGroupForm() {
-		this.show();
 		this.center();
+		this.show();
+	
 		
 
 }
