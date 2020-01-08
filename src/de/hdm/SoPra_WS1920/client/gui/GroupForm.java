@@ -1,5 +1,7 @@
 package de.hdm.SoPra_WS1920.client.gui;
 
+import java.util.Vector;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -9,13 +11,15 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
-import de.hdm.SoPra_WS1920.client.gui.Admin.MovieCard;
+
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
-import javafx.scene.control.cell.CheckBoxListCell;
+
 
 public class GroupForm extends DialogBox {
 	
@@ -24,36 +28,102 @@ public class GroupForm extends DialogBox {
 	AddGroupMemberForm agmf;
 	Group groupToShow;
 	GroupCard parentCard;
+	GroupForm gf;
+	
+	FlowPanel main;
+	HorizontalPanel buttonPanel;
+	Button cancel;
 
 	
 	Label groupName;
 	Label memberName;
 	Label cardDescription;
 	Label addedMembers;
+	
 	TextArea listedMembersTextArea;
+	
 	TextBox groupTextBox;
-	ListBox memberListBox;
-	FlowPanel main;
-	HorizontalPanel buttonPanel;
-	Button cancel;
-	Image cancelIcon;
+	
+	MultiWordSuggestOracle allMembers;
+	SuggestBox memberSuggestBox;
+	
 	Button saveButton;
 	Button addMember;
 	Button add;
-	Image addIcon;
 	
-	GroupForm gf;
+	Image cancelIcon;
+	Image addIcon;
+	Image searchIcon;
+	
+	FlowPanel memberPanel;
+	Vector<Person> groupMembers;
+	
+	
 	
 	public GroupForm() {
 		
 	}
 	
+	public void showMembers() {
+		memberPanel.clear();
+		for(Person p: groupMembers) {
+			MemberRow memberRow = new MemberRow(memberPanel,p);
+			memberPanel.add(memberRow);
+		}
+		
+	}
+	
+	class MemberRow extends FlowPanel{
+		Image deleteIcon;
+		Label fullNameLabel;
+		
+		Person p;
+		FlowPanel memberPanel;
+		
+		public MemberRow(FlowPanel memberPanel, Person p) {
+			this.memberPanel = memberPanel;
+			this.p = p;
+		}
+		
+		public void onLoad() {
+			super.onLoad();
+			deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
+			deleteIcon.setStyleName("DeleteIcon");
+			deleteIcon.addClickHandler(new DeleteMemberClickHandler(this));
+			
+			fullNameLabel = new Label(p.getFirstname()+ " "+p.getLastname());
+			
+			this.add(deleteIcon);
+			this.add(fullNameLabel);
+		}
+		
+		class DeleteMemberClickHandler implements ClickHandler{
+			MemberRow memberRow;
+			
+			public DeleteMemberClickHandler(MemberRow memberRow) {
+				// TODO Auto-generated constructor stub
+				this.memberRow = memberRow;
+			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				memberPanel.remove(memberRow);
+			}
+			
+		}
+	}
 	
 	public void onLoad() {
 		super.onLoad();
 		
+		groupMembers = new Vector<Person>();
+		
 		FlowPanel main = new FlowPanel();
 		this.setStylePrimaryName("EditCard");
+		
+		memberPanel = new FlowPanel();
+//		this.setStylePrimaryName(style);
 		
 		cardDescription = new Label("Add Group");
 		cardDescription.setStyleName("CardDescription");
@@ -61,25 +131,36 @@ public class GroupForm extends DialogBox {
 		groupName = new Label("Goupname:");
 		groupName.setStylePrimaryName("TextBoxLabel");
 		
-		memberName = new Label("Groupmember:");
+		memberName = new Label(" Add Group Member:");
 		memberName.setStylePrimaryName("TextBoxLabel");
 		
 		
 		groupTextBox = new TextBox();
 		groupTextBox.setStylePrimaryName("CardTextBox");
 		
+
+		searchIcon = new Image("/Images/png/003-search.png");
+		searchIcon.setStyleName("SearchIcon");
+		searchIcon.addClickHandler(new AddMemberClickHandler(this));
+
 		
-		memberListBox = new ListBox();
-		memberListBox.setStylePrimaryName("CardTextBox");
-		memberListBox.addItem("Yesin");
-		memberListBox.addItem("Sebi");
+		
+		
+		allMembers = new MultiWordSuggestOracle();
+		allMembers.add("Yesin");
+		allMembers.add("Sebi");
+		allMembers.add("Matthias");
+		memberSuggestBox = new SuggestBox(allMembers);
+		memberSuggestBox.setStylePrimaryName("CardTextBox");
+		
+		
 		
 		addedMembers = new Label("Added Members");
 		addedMembers.setStylePrimaryName("TextBoxLabel");
 		
-		listedMembersTextArea =new TextArea();
-		listedMembersTextArea.setStyleName("CardTextArea");
-		listedMembersTextArea.getElement().setAttribute("maxlength", "350");
+		//listedMembersTextArea =new TextArea();
+		//listedMembersTextArea.setStyleName("CardTextArea");
+		//listedMembersTextArea.getElement().setAttribute("maxlength", "350");
 		
 		//cancel = new Button("cancel");
 		//cancel.setStylePrimaryName("createBoButton");
@@ -94,7 +175,7 @@ public class GroupForm extends DialogBox {
 		
 		addMember = new Button("Add Member");
 		addMember.setStylePrimaryName("SaveButton");
-		addMember.addClickHandler(new AddMemberClickHandler(this, agmf));
+		addMember.addClickHandler(new AddMemberClickHandler(this));
 		
 		//addIcon = new Image("/Images/003-edit.png");
 		//addIcon.setStylePrimaryName("editIcon");
@@ -107,10 +188,12 @@ public class GroupForm extends DialogBox {
 		main.add(cancelIcon);
 		//main.add(addIcon);
 		main.add(memberName);
-		main.add(memberListBox);
+		main.add(memberSuggestBox);
+		main.add(searchIcon);
 		main.add(addedMembers);
-		main.add(listedMembersTextArea);
-		main.add(addMember);
+		//main.add(listedMembersTextArea);
+//		main.add(addMember);
+		main.add(memberPanel);
 		main.add(saveButton);
 		
 		//main.add(cancel);
@@ -158,7 +241,7 @@ public class GroupForm extends DialogBox {
 		@Override
 		public void onClick(ClickEvent event) {
 			groupToShow.setName(groupTextBox.getValue());
-			groupToShow.setName(memberListBox.getValue(0));
+			
 			
 			
 			if(parentCard==null) {
@@ -174,27 +257,28 @@ public class GroupForm extends DialogBox {
 		}
 		
 			
-		}
-
-	
-		
-	}
-	
+	}	
 	class AddMemberClickHandler implements ClickHandler{
+		GroupForm gf;
 		
-		public AddMemberClickHandler(GroupForm gf, AddGroupMemberForm agmf) {
+		public AddMemberClickHandler(GroupForm gf) {
+			this.gf = gf;
 			
 		}
 
 		@Override
 		public void onClick(ClickEvent event) {
-			AddGroupMemberForm agmf = new AddGroupMemberForm();
-			agmf.showAddGroupMemberForm();
+			Person p = new Person();
+			p.setFirstname(gf.memberSuggestBox.getValue());
+			gf.groupMembers.add(p);
+			gf.showMembers();
+			
 			
 		}
 		
 
 	}
+}
 	class AddClickHandler implements ClickHandler{
 		GroupForm gf;
 	
@@ -211,7 +295,16 @@ public class GroupForm extends DialogBox {
 			
 			
 		}
+	
+		
+	public void showAddedGroupMembers(String m, Group g) {
+		
 	}
+	
+	}
+	
+	
+
 	
 	
 	
