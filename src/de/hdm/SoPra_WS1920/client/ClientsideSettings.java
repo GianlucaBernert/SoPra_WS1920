@@ -8,6 +8,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministration;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.CommonSettings;
+import de.hdm.SoPra_WS1920.shared.SurveyManagement;
+import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 
 /**
  * Klasse mit Eigenschaften und Diensten, die für alle Client-seitigen Klassen
@@ -23,6 +25,7 @@ public class ClientsideSettings extends CommonSettings {
    */
 
   private static CinemaAdministrationAsync cinemaAdministration = null;
+  private static SurveyManagementAsync surveyManagement = null;
 
 
   /**
@@ -37,6 +40,17 @@ public class ClientsideSettings extends CommonSettings {
     }
 
     return cinemaAdministration;
+  }
+  
+  public static SurveyManagementAsync getSurveyManagement() {
+	  
+	  if(surveyManagement == null) {
+		  surveyManagement = GWT.create(SurveyManagement.class);
+	  }
+	  
+	  return surveyManagement;
+	  
+	  
   }
   
 }
