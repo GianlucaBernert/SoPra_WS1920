@@ -2,6 +2,8 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -9,6 +11,9 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
+
+import de.hdm.SoPra_WS1920.client.ClientsideSettings;
+import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 
 //Edit Mode of a MovieCard
@@ -36,6 +41,7 @@ public class MovieCardEdit extends DialogBox{
 	
 	Header header;
 	Content content;
+	CinemaAdministrationAsync cinemaAdministration;
 	
 	public MovieCardEdit(MovieCard movieCard, Movie movieToShow) {
 		// TODO Auto-generated constructor stub
@@ -57,6 +63,8 @@ public class MovieCardEdit extends DialogBox{
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("EditCard");
+		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
+		
 		formWrapper = new FlowPanel();
 		
 		cardDescription = new Label("Add Movie");
@@ -148,18 +156,70 @@ public class MovieCardEdit extends DialogBox{
 			movieToShow.setDescription(descriptionTextArea.getText());
 			
 			if(parentCard==null) {
-				parentCard = new MovieCard(content,movieToShow);
-				parentCard.showMovieCardView(movieToShow);
-				content.add(parentCard);
-				movieCardEdit.hide();
+				
+				cinemaAdministration.createMovie(nameTextBox.getText(), genreTextBox.getText(),descriptionTextArea.getText(), 1, new NewMovieCallback(movieCardEdit));
+				
+				
 			}else {
-				parentCard.showMovieCardView(movieToShow);
-				movieCardEdit.hide();
+				cinemaAdministration.updateMovie(movieToShow, new UpdateMovieCallback(movieCardEdit));
+				
 			}
+			
 			
 		}
 		
 	}
+	
+	class UpdateMovieCallback implements AsyncCallback<Movie>{
+		
+		MovieCardEdit movieCardEdit;
+		
+		public UpdateMovieCallback(MovieCardEdit movieCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.movieCardEdit = movieCardEdit;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the connection.");
+		}
+
+		@Override
+		public void onSuccess(Movie result) {
+			// TODO Auto-generated method stub
+			parentCard.showMovieCardView(movieToShow);
+			movieCardEdit.hide();
+			
+		}
+		
+	}
+	
+	class NewMovieCallback implements AsyncCallback<Movie>{
+		MovieCardEdit movieCardEdit;
+		public NewMovieCallback(MovieCardEdit movieCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.movieCardEdit = movieCardEdit;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the connection");
+		}
+
+		@Override
+		public void onSuccess(Movie result) {
+			// TODO Auto-generated method stub
+			parentCard = new MovieCard(content,result);
+			parentCard.showMovieCardView(result);
+			content.add(parentCard);
+			movieCardEdit.hide();
+		}
+		
+	}
+	
+	
 	
 	class CancelClickHandler implements ClickHandler{
 		MovieCardEdit movieCardEdit;
@@ -192,6 +252,27 @@ public class MovieCardEdit extends DialogBox{
 
 		@Override
 		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			cinemaAdministration.deleteMovie(movieToShow, new DeleteMovieCallback(movieCardEdit));
+		}
+		
+	}
+	class DeleteMovieCallback implements AsyncCallback<Void>{
+		MovieCardEdit movieCardEdit;
+		
+		public DeleteMovieCallback(MovieCardEdit movieCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.movieCardEdit = movieCardEdit;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the Callback");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
 			// TODO Auto-generated method stub
 			movieCardEdit.hide();
 			parentCard.remove();
