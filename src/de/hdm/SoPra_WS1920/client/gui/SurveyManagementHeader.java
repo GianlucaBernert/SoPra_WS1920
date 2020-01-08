@@ -116,7 +116,7 @@ public class SurveyManagementHeader extends FlowPanel {
 			searchBox = new SearchBox();
 			
 			createBo = new Button("+Add Group");
-			createBo.setStylePrimaryName("createBoButton");
+			createBo.setStylePrimaryName("CreateBoButton");
 			createBo.addClickHandler(new CreateBoClickHandler(this, content, gf));
 			
 			this.add(headline);
@@ -134,7 +134,7 @@ public class SurveyManagementHeader extends FlowPanel {
 			searchBox = new SearchBox();
 			
 			createBo = new Button("+Add Survey");
-			createBo.setStylePrimaryName("createBoButton");
+			createBo.setStylePrimaryName("CreateBoButton");
 			createBo.addClickHandler(new CreateSurveyClickHandler(this, se));
 			
 			this.add(headline);
