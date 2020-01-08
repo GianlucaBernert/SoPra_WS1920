@@ -1,12 +1,13 @@
 package de.hdm.SoPra_WS1920.client.gui;
 
-import java.util.Date;
 import java.util.Vector;
+import java.sql.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -94,8 +95,8 @@ public class SurveyCardEdit extends DialogBox {
 		Survey s = new Survey();
 		s.setId(1);
 		s.setGroupFK(1);
-		s.setStartDate(DateTimeFormat.getFormat("dd.MM.yyyy").parse("30.12.2019"));
-		s.setEndDate(DateTimeFormat.getFormat("dd.MM.yyyy").parse("31.12.2019"));
+		s.setStartDate(DateTimeFormat.getFormat("yyyy.mm.dd").parse("2019.12.19"));
+		s.setEndDate(DateTimeFormat.getFormat("yyyy.mm.dd").parse("2019.12.19"));
 		
 	}
 	
@@ -116,19 +117,20 @@ public class SurveyCardEdit extends DialogBox {
 		movieLabel = new Label("Movie");
 		movieLabel.setStyleName("TextBoxLabel");
 		allMovies = new MultiWordSuggestOracle();
-		allMovies.add("MovieToAdd");
+		allMovies.add("Joker");
 		movieSuggestBox = new SuggestBox(allMovies);
 		movieSuggestBox.setStyleName("CardSuggestBox");
 		
 		groupLabel =  new Label("Group");
-		groupLabel.setStyleName("TextboxLabel");
+		groupLabel.setStyleName("TextBoxLabel");
 		allGroups = new ListBox();
+		allGroups.addItem("Popcorns");
 		allGroups.setStyleName("CardSuggestBox");
 		
 		cityLabel = new Label("City");
 		cityLabel.setStyleName("TextBoxLabel");
 		allCities = new MultiWordSuggestOracle();
-		allCities.add("CityToAdd");
+		allCities.add("Stuggi");
 		citySuggestBox = new SuggestBox(allCities);
 		citySuggestBox.setStyleName("CardSuggestBox");
 		
@@ -148,6 +150,7 @@ public class SurveyCardEdit extends DialogBox {
 		endDateBox.setFormat(
 				new DateBox.DefaultFormat(
 						DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
+				
 		
 		//setValue, setText notwendig?
 		
@@ -167,21 +170,60 @@ public class SurveyCardEdit extends DialogBox {
 		// Editieren wie edit or delte notwendig??
 		
 		//addScreenings Button im SaveButtonStyle. ok?
-//		addScreenings = new Button("Save");
-//		addScreenings.setStyleName("SaveButton");
-//		addScreenings.addClickHandler(new addScreeningsClickHandler(this));
+		addScreenings = new Button("Add Screenings");
+		addScreenings.setStyleName("SaveButton");
+		addScreenings.addClickHandler(new AddScreeningsClickHandler(this));
 //		
 //		
-//		formWrapper.add(addScreenings);
+		formWrapper.add(addScreenings);
 		this.add(formWrapper);
 //		
 //		
 	}
 	
-//	class addScreeningsClickHandler implements ClickHandler{
-//		//Clickhandler muss CreateScreening2/2 aufrufen und eingetragene Werte übernehmen
-//	}
 	
+	//Clickhandler muss CreateScreening2/2 aufrufen und eingetragene Werte übernehmen
+	class AddScreeningsClickHandler implements ClickHandler{
+		SurveyCardEdit surveyCardEdit;
+		public AddScreeningsClickHandler(SurveyCardEdit surveyCardEdit) {
+		
+		this.surveyCardEdit = surveyCardEdit;
+	}
+		@Override
+		
+		public void onClick(ClickEvent event) {
+		
+		// Als Übergabe reicht startDate, endDate, Vector<Sreenings> zum Testen erstelle ich 
+		// vorerst objekte manuell	
+		Movie m = new Movie();
+		m.setName(movieSuggestBox.getText());
+		m.setId(1);
+		Group g = new Group();
+		g.setName(allGroups.getSelectedItemText());
+		String c = new String();
+		c = citySuggestBox.getText();
+		
+		Date sd =(Date) startDateBox.getValue();
+		Date ed =(Date) endDateBox.getValue();
+		
+		
+		
+			
+//			
+//			if(movieSuggestBox.getText() == null || allGroups.getSelectedItemText() == null
+//					|| citySuggestBox.getText() == null ||
+//					startDateBox == null || endDateBox == null ) {
+//				Window.alert("Fill in required fields");
+//			}else {
+				
+				surveyCardEdit.clear();
+				surveyCardEdit.showAddScreenings(m, g, c, sd, ed);
+				
+				
+//		}
+			
+		}
+	}
 	
 	
 	class CancelClickHandler implements ClickHandler{
@@ -204,13 +246,18 @@ public class SurveyCardEdit extends DialogBox {
 		}
 	}
 	
-	public void showAddScreenings(Movie m, Group g, String c, Date startDate, Date endDate ) {
+	public void showAddScreenings(Movie m, Group g, String c, Date sd, Date ed) {
 		
-		this.clear();
-		
+		Screening testScreening = new Screening();
+		testScreening.setCinemaFK(1);
+	//	testScreening.setScreeningDate(screeningDate);
+		testScreening.setId(2);
 		Vector <Screening> sv = new Vector();
+		sv.add(testScreening);
+		Screening testScreening1 = new Screening();
+		testScreening1.setId(3);
 		//s = this.getScreeningBy..(m, c, startDate, endDate);
-		
+		sv.add(testScreening1);
 		
 		this.setStyleName("EditCard");
 		formWrapper = new FlowPanel();
@@ -218,6 +265,7 @@ public class SurveyCardEdit extends DialogBox {
 		cardDescription2.setStyleName("CardDescription");
 		cancelIcon = new Image("/Images/png/007-close.png");
 		cancelIcon.setStyleName("CancelIcon");
+		cancelIcon.addClickHandler(new CancelClickHandler(this));
 		
 		//TO DO BEfüllung der Label mit INhalt der vorherigen Auswahl
 		
@@ -225,9 +273,9 @@ public class SurveyCardEdit extends DialogBox {
 		selectedMovie.setStyleName("TextBoxLabel");
 		selectedGroup = new Label ("Group:" + g.getName());
 		selectedGroup.setStyleName("TextBoxLabel");
-		selectedCity = new Label ("City:" + citySuggestBox.getText());
+		selectedCity = new Label ("City:" + c);
 		selectedCity.setStyleName("TextBoxLabel");
-		selectedPeriod = new Label ("selected Period" + startDate.getDate() + endDate.getDate());
+		selectedPeriod = new Label ("selected Period: ");// + sd.toString() + " - " + ed.toString());
 		selectedPeriod.setStyleName("TextBoxLabel");
 		
 		cinemaFilter = new Label("City Filter");
@@ -247,8 +295,9 @@ public class SurveyCardEdit extends DialogBox {
 		//Methode zur Erstellung der Screening Elemente sowie Befüllung der ScreeningSelectionBox
 		
 		for (Screening s : sv) {
-			//Cinema cinema = getCinemaById;
-			screeningToSelect = new CheckBox("Cinema" + s.getScreeningDate() + s.getScreeningTime());
+			Cinema cinema = new Cinema();
+			cinema.setName("Gloria");
+			screeningToSelect = new CheckBox("Cinema" + s.getId());
 		    screeningToSelect.setStyleName("TextBoxLabel");
 		    screeningSelection.add(screeningToSelect);
 		    }
@@ -257,22 +306,19 @@ public class SurveyCardEdit extends DialogBox {
 		showSelected = new Label("Show All Screenings");
 		
 		formWrapper.add(cardDescription2);
-	//	formWrapper.add()
-		
-		
+		formWrapper.add(cancelIcon);
+		formWrapper.add(selectedMovie);
+		formWrapper.add(selectedGroup);
+		formWrapper.add(selectedCity);
+		formWrapper.add(selectedPeriod);
+		formWrapper.add(screeningSelection);
 		
 		createSurvey = new Button("Create Survey");
+		createSurvey.setStyleName("SaveButton");
+		//createSurvey.addClickHandler(new AddScreeningsClickHandler(this));
 		
-		
-	}
+		formWrapper.add(createSurvey);
+		this.add(formWrapper);
+	}	
 	
-	
-	
-
-	
-	
-	
-	
-	
-
 }

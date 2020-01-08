@@ -9,10 +9,13 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.SoPra_WS1920.client.gui.Admin.MovieCard;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
+import javafx.scene.control.cell.CheckBoxListCell;
 
 public class GroupForm extends DialogBox {
 	
@@ -21,10 +24,13 @@ public class GroupForm extends DialogBox {
 	AddGroupMemberForm agmf;
 	Group groupToShow;
 	GroupCard parentCard;
+
 	
 	Label groupName;
 	Label memberName;
 	Label cardDescription;
+	Label addedMembers;
+	TextArea listedMembersTextArea;
 	TextBox groupTextBox;
 	ListBox memberListBox;
 	FlowPanel main;
@@ -33,12 +39,12 @@ public class GroupForm extends DialogBox {
 	Image cancelIcon;
 	Button saveButton;
 	Button addMember;
+	Button add;
 	Image addIcon;
 	
 	GroupForm gf;
 	
 	public GroupForm() {
-		
 		
 	}
 	
@@ -52,10 +58,10 @@ public class GroupForm extends DialogBox {
 		cardDescription = new Label("Add Group");
 		cardDescription.setStyleName("CardDescription");
 		
-		groupName = new Label("Gruppenname:");
+		groupName = new Label("Goupname:");
 		groupName.setStylePrimaryName("TextBoxLabel");
 		
-		memberName = new Label("Gruppenmitglied:");
+		memberName = new Label("Groupmember:");
 		memberName.setStylePrimaryName("TextBoxLabel");
 		
 		
@@ -67,6 +73,13 @@ public class GroupForm extends DialogBox {
 		memberListBox.setStylePrimaryName("CardTextBox");
 		memberListBox.addItem("Yesin");
 		memberListBox.addItem("Sebi");
+		
+		addedMembers = new Label("Added Members");
+		addedMembers.setStylePrimaryName("TextBoxLabel");
+		
+		listedMembersTextArea =new TextArea();
+		listedMembersTextArea.setStyleName("CardTextArea");
+		listedMembersTextArea.getElement().setAttribute("maxlength", "350");
 		
 		//cancel = new Button("cancel");
 		//cancel.setStylePrimaryName("createBoButton");
@@ -95,21 +108,24 @@ public class GroupForm extends DialogBox {
 		//main.add(addIcon);
 		main.add(memberName);
 		main.add(memberListBox);
+		main.add(addedMembers);
+		main.add(listedMembersTextArea);
 		main.add(addMember);
 		main.add(saveButton);
 		
 		//main.add(cancel);
 		
 		this.add(main);
-		
+		this.center();
 		this.show();
 		
 
 	}
 	
 	public void showGroupForm() {
-		this.show();
 		this.center();
+		this.show();
+	
 		
 
 }
@@ -159,6 +175,8 @@ public class GroupForm extends DialogBox {
 		
 			
 		}
+
+	
 		
 	}
 	
@@ -174,7 +192,28 @@ public class GroupForm extends DialogBox {
 			agmf.showAddGroupMemberForm();
 			
 		}
+		
+
 	}
+	class AddClickHandler implements ClickHandler{
+		GroupForm gf;
+	
+		
+		public AddClickHandler(GroupForm gf) {
+			
+			
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			
+			
+			
+		}
+	}
+	
+	
 	
 	
 	
