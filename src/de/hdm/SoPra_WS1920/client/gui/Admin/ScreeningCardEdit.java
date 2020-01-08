@@ -73,7 +73,7 @@ public class ScreeningCardEdit extends DialogBox {
 		s.setCinemaFK(0);
 		s.setMovieFK(0);
 		s.setPersonFK(0);
-		s.setScreeningDate(DateTimeFormat.getFormat("dd.MM.yyyy").parse("30.12.2019"));
+		s.setScreeningDate((Date) DateTimeFormat.getFormat("dd.MM.yyyy").parse("30.12.2019"));
 		Time t = new Time(DateTimeFormat.getFormat("hh:mm").parse("02:30").getTime());
 		s.setScreeningTime(t);
 		screeningToShow = s;
@@ -183,7 +183,7 @@ public class ScreeningCardEdit extends DialogBox {
 			}
 			screeningToShow.setCinemaFK(0);
 			screeningToShow.setMovieFK(0);
-			screeningToShow.setScreeningDate(datePicker.getValue());
+			screeningToShow.setScreeningDate((Date) datePicker.getValue());
 			Time t = new Time(DateTimeFormat.getFormat("hh:mm").parse(timePicker.hourPicker.getText()+":"+timePicker.minutePicker.getText()).getTime());
 			screeningToShow.setScreeningTime(t);
 			// TODO Auto-generated method stub

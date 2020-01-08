@@ -27,6 +27,7 @@ import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
 
 public class Content extends FlowPanel{
@@ -40,6 +41,7 @@ public class Content extends FlowPanel{
 	DateBox dB;
 	TextBox textBox;
 	SuggestBox box;
+	Person user;
 	
 	CinemaAdministrationAsync cinemaAdministration;
 	
@@ -55,33 +57,39 @@ public class Content extends FlowPanel{
 //		this.add(dP);
 		
 		//Example Objects for testing the GUI. Those objects will be deleted as soon as the backend is attached to the frontend
-		c = new Cinema();
-		c.setName("Cinemax");
-		c.setCity("Stuttgart");
-		c.setZipCode("70372");
-		c.setPersonFK(1);
-		c.setStreet("Deckerstra�e");
-		c.setStreetNo("49");
-		c.setId(1);
+		user = new Person();
+		user.setEMail("sebi.hermann95@t-online.de");
+		user.setFirstname("Sebastian");
+		user.setLastname("Hermann");
+		user.setId(1);
 		
-		m = new Movie();
-		m.setName("Joker");
-		m.setGenre("Drama");
-		m.setDescription("Forever alone in a crowd, failed comedian Arthur Fleck seeks connection "
-				+ "as he walks the streets of Gotham City. Arthur wears two masks -- the one he "
-				+ "paints for his day job as a clown, and the guise he projects in a futile attempt "
-				+ "to feel like he's part of the world around him.");
-		m.setId(1);
-		
-		s=new Screening();
-		s = new Screening();
-		s.setCinemaFK(c.getId());
-		s.setMovieFK(m.getId());
-		s.setPersonFK(1);
-		Date d = (Date) DateTimeFormat.getFormat("dd.MM.yyyy").parse("31.12.2019");
-		s.setScreeningDate(d);
-		Time t = new Time(DateTimeFormat.getFormat("hh:mm").parse("02:30").getTime());
-		s.setScreeningTime(t);
+//		c = new Cinema();
+//		c.setName("Cinemax");
+//		c.setCity("Stuttgart");
+//		c.setZipCode("70372");
+//		c.setPersonFK(1);
+//		c.setStreet("Deckerstra�e");
+//		c.setStreetNo("49");
+//		c.setId(1);
+//		
+//		m = new Movie();
+//		m.setName("Joker");
+//		m.setGenre("Drama");
+//		m.setDescription("Forever alone in a crowd, failed comedian Arthur Fleck seeks connection "
+//				+ "as he walks the streets of Gotham City. Arthur wears two masks -- the one he "
+//				+ "paints for his day job as a clown, and the guise he projects in a futile attempt "
+//				+ "to feel like he's part of the world around him.");
+//		m.setId(1);
+//		
+//		s=new Screening();
+//		s = new Screening();
+//		s.setCinemaFK(c.getId());
+//		s.setMovieFK(m.getId());
+//		s.setPersonFK(1);
+//		Date d = (Date) DateTimeFormat.getFormat("dd.MM.yyyy").parse("31.12.2019");
+//		s.setScreeningDate(d);
+//		Time t = new Time(DateTimeFormat.getFormat("hh:mm").parse("02:30").getTime());
+//		s.setScreeningTime(t);
 //		String s2 = "00:30";
 //		String d2 = "2020-02-12";
 ////		s.setScreeningTime(this.getTimeFromString(s2));
@@ -165,19 +173,19 @@ public class Content extends FlowPanel{
 	public void showCinemas() {
 		this.clear();
 //		this.add(new Label("Cinemas"));
-		cinemaAdministration.getCinemaByName("Cinemax", new GetCinemasByNameCallback(this));
+		cinemaAdministration.getCinemasByPersonFK(1, new GetCinemasByPersonCallback(this));
 		
-		CinemaCard cinemaCard = new CinemaCard(this, c);
-		this.add(cinemaCard);
+//		CinemaCard cinemaCard = new CinemaCard(this, c);
+//		this.add(cinemaCard);
 		
 		//Get all cinemas where user is permitted to
 		//for every cinema...
 		//create a new CinemaCard
 	}
 	
-	class GetCinemasByNameCallback implements AsyncCallback<Vector<Cinema>>{
+	class GetCinemasByPersonCallback implements AsyncCallback<Vector<Cinema>>{
 		Content content;
-		public GetCinemasByNameCallback(Content content) {
+		public GetCinemasByPersonCallback(Content content) {
 			// TODO Auto-generated constructor stub
 			this.content = content;
 		}
@@ -202,14 +210,12 @@ public class Content extends FlowPanel{
 	
 	public void showMovies() {
 		this.clear();
-		cinemaAdministration.getMoviesByName("Joker", new GetMoviesByNameCallback(this));
-		MovieCard movieCard = new MovieCard(this, m);
-		this.add(movieCard);
+		cinemaAdministration.getAllMovies(new GetMoviesCallback(this));
 
 	}
-	class GetMoviesByNameCallback implements AsyncCallback<Vector<Movie>>{
+	class GetMoviesCallback implements AsyncCallback<Vector<Movie>>{
 		Content content;
-		public GetMoviesByNameCallback(Content content) {
+		public GetMoviesCallback(Content content) {
 			// TODO Auto-generated constructor stub
 			this.content = content;
 		}
@@ -233,8 +239,7 @@ public class Content extends FlowPanel{
 
 	public void showScreenings() {
 		this.clear();
-		ScreeningCard screeningCard = new ScreeningCard(this,s);
-		this.add(screeningCard);
+		
 //		this.add(new Label("Screenings"));
 		//Get all screenings of the all cinemas where user is permitted to
 		//for every screening...

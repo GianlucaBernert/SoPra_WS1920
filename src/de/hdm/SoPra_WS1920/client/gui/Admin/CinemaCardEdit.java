@@ -268,6 +268,29 @@ public class CinemaCardEdit extends DialogBox{
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
 			//proxy.deleteCinema()
+			cinemaAdministration.deleteCinema(cinemaToShow, new DeleteCinemaCallback(cinemaCardEdit));
+			
+		}
+		
+	}
+	
+	class DeleteCinemaCallback implements AsyncCallback<Void>{
+		CinemaCardEdit cinemaCardEdit;
+		
+		public DeleteCinemaCallback(CinemaCardEdit cinemaCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.cinemaCardEdit = cinemaCardEdit;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the Callback");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
 			cinemaCardEdit.hide();
 			parentCard.remove();
 		}
