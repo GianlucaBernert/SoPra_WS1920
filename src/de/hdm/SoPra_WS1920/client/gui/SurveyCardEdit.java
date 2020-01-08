@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -19,6 +20,7 @@ import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
+import de.hdm.SoPra_WS1920.server.SurveyManagementImpl;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -74,12 +76,17 @@ public class SurveyCardEdit extends DialogBox {
 	FlowPanel screeningSelection;
 	CheckBox screeningToSelect;
 	
+	Vector <ScreeningRow> screeningRowVector;
+	Vector <Screening> screeningVector;
+	
 	Label showSelected;
 	Button createSurvey;
 	
 	
 	SurveyManagementHeader header;
 	SurveyContent content;
+	
+	
 	
 	
 	public SurveyCardEdit(SurveyCard surveyCard, Survey survey) {
@@ -292,15 +299,26 @@ public class SurveyCardEdit extends DialogBox {
 		
 		screeningSelection = new FlowPanel();
 		
+		screeningRowVector = new Vector <ScreeningRow>();
+		
+		
 		//Methode zur Erstellung der Screening Elemente sowie Befüllung der ScreeningSelectionBox
 		
+		
 		for (Screening s : sv) {
-			Cinema cinema = new Cinema();
-			cinema.setName("Gloria");
-			screeningToSelect = new CheckBox("Cinema" + s.getId());
-		    screeningToSelect.setStyleName("TextBoxLabel");
-		    screeningSelection.add(screeningToSelect);
+			ScreeningRow sr = new ScreeningRow(s);
+			screeningRowVector.add(sr);
+			screeningSelection.add(sr);
+			
+			
+//			Cinema cinema = new Cinema();
+//			cinema.setName("Gloria");
+//			screeningToSelect = new CheckBox(cinema.getName() + s);
+//		    screeningToSelect.setStyleName("TextBoxLabel");
+//		    screeningSelection.add(screeningToSelect);
+//		    screeningCheckBoxVector.add(screeningToSelect);
 		    }
+		
 		
 		
 		showSelected = new Label("Show All Screenings");
@@ -315,10 +333,61 @@ public class SurveyCardEdit extends DialogBox {
 		
 		createSurvey = new Button("Create Survey");
 		createSurvey.setStyleName("SaveButton");
-		//createSurvey.addClickHandler(new AddScreeningsClickHandler(this));
+		createSurvey.addClickHandler(new CreateSurveyClickHandler(this));
 		
 		formWrapper.add(createSurvey);
 		this.add(formWrapper);
 	}	
 	
+	class CreateSurveyClickHandler implements ClickHandler{
+		SurveyCardEdit surveyCardEdit;
+		public CreateSurveyClickHandler(SurveyCardEdit surveyCardEdit) {
+		
+		this.surveyCardEdit = surveyCardEdit;
+	}
+		@Override
+		
+		public void onClick(ClickEvent event) {
+			
+			screeningVector = new Vector <Screening>();
+			
+			for(ScreeningRow sr: screeningRowVector) {
+				if(sr.cb.getValue() == true) {
+					screeningVector.add(sr.s);
+				}
+			}
+			
+			Window.alert(screeningVector.size() +" checkboxes selected");
+			
+			Survey s = new Survey();
+//			s = SurveyManagementImpl.
+//			for(CheckBox selectedCheckBox : screeningCheckBoxVector) {
+//		/		if(selectedCheckBox.getValue() == true) {
+//					Screening screen = new Screening();
+//				}
+//			}
+		
+			
+			
+		}
+		}
+	
+	class ScreeningRow extends FlowPanel{
+		
+		CheckBox cb;
+		Screening s;
+		public ScreeningRow(Screening s) {
+			this.s = s;
+		}
+		
+		
+		public void onLoad() {
+			super.onLoad();
+		
+		cb = new CheckBox("CineMax " + " 20.01.2020" +" 20:15 " + s.getId());
+		this.add(cb);		
+			
+		}
+		
+	}
 }
