@@ -147,7 +147,7 @@ public interface SurveyManagementAsync {
      * @param Person p
      * @param AsyncCallback<Void> callback
      */
-    public void deleteMembership(Group g, Person p, AsyncCallback<Void> callback);
+    public void deleteMembership(int gFK, int pFK, AsyncCallback<Void> callback);
     
     /**
      * Methode um eine Gruppe zu bearbeiten

@@ -85,7 +85,7 @@ public class NavigationBar extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
 //			headerLabel.setText("Movies");
-			header.showMoviesHeader();
+			header.showSurveyHeader();
 //			content.showCinemas();
 //			navigationBar.add(createIcon);
 			navigationBar.setStyleName("navbar");
