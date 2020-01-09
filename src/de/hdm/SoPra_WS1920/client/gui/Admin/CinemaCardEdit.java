@@ -351,7 +351,9 @@ public class CinemaCardEdit extends DialogBox{
 				continue;
 			}
 			cinemaChain = cH;
+			
 		}
+		Window.alert("Selected CinemaChain: "+cinemaChain.getId());
 		return cinemaChain.getId();
 		
 	}

@@ -157,6 +157,7 @@ public class CinemaMapper {
         	+ "', zipCode='" + c.getZipCode()  
         	+ "', street='" + c.getStreet() 
         	+ "', streetNo='" + c.getStreetNo()
+        	+ "', cinemachainFK='" + c.getCinemaChainFK()
         	+ "' WHERE id=" + c.getId());
         	
         	con.setAutoCommit(true);
