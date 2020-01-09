@@ -107,19 +107,19 @@ public class CinemaMapper {
         	Statement stmt = con.createStatement();
         	
         		//Tats�chliche Einf�geoperation eines Cinema-Objekts
-        		stmt.executeUpdate("INSERT INTO cinema(id, name, city, zipCode, street, streetNo, cinemachainFK)" 
+        		stmt.executeUpdate("INSERT INTO cinema(id, name, zipCode, city, street, streetNo, cinemachainFK)" 
         		+ "VALUES ('" 
         		+ c.getId() 
         		+ "','" 
         		+ c.getName()
+        		+ "','"
+        		+ c.getZipCode()
         		+ "','"
         		+ c.getCity() 
         		+ "','"
         		+ c.getStreet()
         		+ "','" 
         		+ c.getStreetNo() 
-        		+ "','"
-        		+ c.getZipCode()
         		+ "','"
         		+ c.getCinemaChainFK()
         		 + "')");
