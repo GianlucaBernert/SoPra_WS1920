@@ -180,7 +180,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     }
     
     /**
-     * Methode zum Löschen von Personen Objekten und allen zugehörigen Businessobjekten
+     * Methode zum Lï¿½schen von Personen Objekten und allen zugehï¿½rigen Businessobjekten
      * @param p
      */
     
@@ -197,7 +197,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
         Vector<Survey> sOfPerson = this.sMapper.findSurveyByPersonFK(p.getId());
         if (sOfPerson != null) {
         	for (Survey s : sOfPerson) {
-        		// surveyEntrys löschen
+        		// surveyEntrys lï¿½schen
         		this.sMapper.deleteSurvey(s);
         	}
         }
@@ -223,7 +223,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
         	}
         }
         
-        // CinemaChains löschen
+        // CinemaChains lï¿½schen
         
         Vector<Movie> mOfPerson = this.mMapper.findMovieByPersonFK(p.getId());
         if (mOfPerson != null) {
@@ -265,6 +265,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
         	c.setName(name);
         	c.setCity(cityName);
         	c.setStreet(street);
+        	c.setStreetNo(streetNr);
         	c.setZipCode(zipCode);
         	c.setId(o.getId());
         	c.setCinemaChainFK(ccFK);
@@ -292,7 +293,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     
 
     /**
-     * Methode zum Löschen eines KinoObjects und zugehörigen BusinessObjects.
+     * Methode zum Lï¿½schen eines KinoObjects und zugehï¿½rigen BusinessObjects.
      * @param cinema 
      * @return
      */
@@ -402,7 +403,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 		}
     	
     /**
-     * Methode zum Löschen eines Kino Objects.
+     * Methode zum Lï¿½schen eines Kino Objects.
      * @param movie 
      * @return
      */
@@ -513,7 +514,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 
   
     /**
-     * Methode zum Löschen eines Screening Objects und dazugehörigen Business Objects.
+     * Methode zum Lï¿½schen eines Screening Objects und dazugehï¿½rigen Business Objects.
      * @param screening 
      * @return
      */
@@ -654,7 +655,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     
     
     /**
-     * Methode zum Löschen einer CinemaChain und zurücksetzen der ccId in den betroffenen Cinema Objects
+     * Methode zum Lï¿½schen einer CinemaChain und zurï¿½cksetzen der ccId in den betroffenen Cinema Objects
      */
     @Override
     public void deleteCinemaChain(CinemaChain cc) throws IllegalArgumentException {
@@ -710,7 +711,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
        
 
     /**
-     * Methode zum Löschen eines Vote Objects
+     * Methode zum Lï¿½schen eines Vote Objects
      * @param vote 
      * @return
      */
@@ -723,7 +724,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     }
 
     /**
-     * Methode zum Löschen eines SurveyEntry Objects,
+     * Methode zum Lï¿½schen eines SurveyEntry Objects,
      * @param surveyEntry 
      * @return
      */
@@ -774,7 +775,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     
     
     /**
-     * Methode zum Löschen eines Ownership Objects.
+     * Methode zum Lï¿½schen eines Ownership Objects.
      * @param ownership
      */
     @Override
@@ -816,7 +817,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     
     
     /**
-     * Methode zum Löschen von BusinessObjects.
+     * Methode zum Lï¿½schen von BusinessObjects.
      */
     @Override
     public void deleteBusinessObject(BusinessObject bo) throws IllegalArgumentException {
