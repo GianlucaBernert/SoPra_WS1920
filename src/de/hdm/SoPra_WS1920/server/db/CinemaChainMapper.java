@@ -12,8 +12,8 @@ import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 /**
  * Mapper-Klasse, die <code>CinemaChain</code>-Objekte auf relationale Datenbank abbildet.
- * Anhand von den Methoden können Objekte gesucht, erzeugt, bearbeitet und gelöscht werden. 
- * Objekte können in DB-Strukturen umgewandelt werden und DB-Strukturen in Objekte.
+ * Anhand von den Methoden kï¿½nnen Objekte gesucht, erzeugt, bearbeitet und gelï¿½scht werden. 
+ * Objekte kï¿½nnen in DB-Strukturen umgewandelt werden und DB-Strukturen in Objekte.
  * 
  * @author shila
  */
@@ -22,14 +22,14 @@ public class CinemaChainMapper {
 	
 /**
  * Die Klasse CinemaChainMapper wird nur einmal instanziiert (Singleton-Eigenschaft).
- * Die folgende Variable ist durch den Bezeichner <code>static</code> nur einmal für 
+ * Die folgende Variable ist durch den Bezeichner <code>static</code> nur einmal fï¿½r 
  * alle Instanzen der Klasse vorhanden. Die einzige Instanz dieser Klasse wird darin gespeichert. 
  */
 	
 	private static CinemaChainMapper cinemaChainMapper = null;
 	
 /**
- * Geschützter Konstruktor, der verhindert, dass mit dem new-Operator
+ * Geschï¿½tzter Konstruktor, der verhindert, dass mit dem new-Operator
  * neue Instanzen der Klasse erstellt werden.
  */
 	
@@ -39,7 +39,7 @@ public class CinemaChainMapper {
 	
 /**
  * Folgende statische Methode sichert die Singleton-Eigenschaft.
- * Es wird dafür gesorgt, dass nur eine einzige Instanz von
+ * Es wird dafï¿½r gesorgt, dass nur eine einzige Instanz von
  * <code>CinemaChainMapper</code> existiert.
  * SurveyMapper wird durch den Aufruf dieser statischen Methode instanziiert, 
  * nicht durch den new-Operator.
@@ -57,8 +57,8 @@ public class CinemaChainMapper {
 		}
 		
 /**
- * @param id (Primärschlüssel-Attribut)
- * @return CinemaChain-Objekt, das dem übergebenen Schlüssel entspricht, null
+ * @param id (Primï¿½rschlï¿½ssel-Attribut)
+ * @return CinemaChain-Objekt, das dem ï¿½bergebenen Schlï¿½ssel entspricht, null
  * bei nicht vorhandenem DB-Tupel.
  */
 		
@@ -86,10 +86,10 @@ public class CinemaChainMapper {
 		}
 	
 		/**
-	     * Einfügen eines <code>CinemaChain</code>-Objekts in die DB.
-	     * Prüfung und ggf. Korrektur des Primärschlüssels
+	     * Einfï¿½gen eines <code>CinemaChain</code>-Objekts in die DB.
+	     * Prï¿½fung und ggf. Korrektur des Primï¿½rschlï¿½ssels
 	     * @param cc, das zu speichernde Objekt
-	     * @return das übergebene Objekt, mit ggf. korrigierter <code>id</code>.
+	     * @return das ï¿½bergebene Objekt, mit ggf. korrigierter <code>id</code>.
 	     */
 		
 		public CinemaChain insertCinemaChain(CinemaChain cc) {
@@ -117,7 +117,7 @@ public class CinemaChainMapper {
 	     * Ein Objekt wird wiederholt in die DB geschrieben.
 	     * 
 	     * @param cc, das Objekt, das in die DB geschrieben werden soll
-	     * @return das Objekt, das als Parameter übergeben wird -> cc
+	     * @return das Objekt, das als Parameter ï¿½bergeben wird -> cc
 	     */
 	    public CinemaChain updateCinemaChain(CinemaChain cc) {
 	        Connection con = DBConnection.connection();
@@ -139,8 +139,8 @@ public class CinemaChainMapper {
 	    }
 	    
 	    /**
-	     * Löschen von Daten eines <code>CinemaChain</code>-Objekts aus der Datenbank
-	     * @param cc, das zu löschende Objekt 
+	     * Lï¿½schen von Daten eines <code>CinemaChain</code>-Objekts aus der Datenbank
+	     * @param cc, das zu lï¿½schende Objekt 
 	     */
 	    public void deleteCinemaChain(CinemaChain cc) {
 	    	Connection con = DBConnection.connection();
@@ -171,25 +171,25 @@ public class CinemaChainMapper {
 	        try {
 	        	Statement stmt = con.createStatement();
 	        	ResultSet rs = stmt.executeQuery("SELECT * FROM cinemachain WHERE name= '" + name + "'");
-	        	//Für jeden Eintrag im Suchergebnis wird ein CinemaChain-Objekt erstellt
+	        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein CinemaChain-Objekt erstellt
 	        	while(rs.next()) {
 	        		CinemaChain cc = new CinemaChain();
 	        		cc.setName(rs.getString("name"));
 	        		cc.setId(rs.getInt("id"));
 	        		
-	        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+	        		//Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
 	        		result.addElement(cc);
 	        	}
 	        }
 	        	catch(SQLException e2) {
 	        		e2.printStackTrace();
 	        	}
-	        	//Rückgabe des Ergebnisvektors
+	        	//Rï¿½ckgabe des Ergebnisvektors
 	        	return result;
 	        }
 	    
 	    /**
-	     * Löschen einer Kinokette anhand des Namens
+	     * Lï¿½schen einer Kinokette anhand des Namens
 	     * @param name
 	     */
 	    public void deleteCinemaChainByName(String name) {
@@ -215,16 +215,16 @@ public class CinemaChainMapper {
 	        try {
 	        	Statement stmt = con.createStatement();
 	        	
-	        	ResultSet rs = stmt.executeQuery("SELECT cinemachain.name FROM cinemachain INNER JOIN popcorns.businessownership ON cinemachain.id = businessownership.id AND businessownership.personFK= '" + personFK+ "'");
+	        	ResultSet rs = stmt.executeQuery("SELECT cinemachain.name, cinemachain.id FROM cinemachain INNER JOIN popcorns.businessownership ON cinemachain.id = businessownership.id AND businessownership.personFK= '" + personFK+ "'");
 	        	
-	        	//Für jeden Eintrag im Suchergebnis wird ein CinemaChain-Objekt zugeordnet
+	        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein CinemaChain-Objekt zugeordnet
 	        	while(rs.next()) {
 	        		CinemaChain cc = new CinemaChain();
 	        		cc.setName(rs.getString("name"));
 	        		cc.setId(rs.getInt("id"));
 	        		
 	        	        		
-	        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+	        		//Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
 	        		result.addElement(cc);
 	        	}
 	        }

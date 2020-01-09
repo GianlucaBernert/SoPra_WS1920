@@ -18,6 +18,7 @@ public class NavigationBar extends FlowPanel {
 //	Image createIcon;
 //	Label headerLabel;
 	Label cinemas;
+	Label cinemaChains;
 	Label movies;
 	Label screenings;
 	Label settings;
@@ -48,6 +49,10 @@ public class NavigationBar extends FlowPanel {
 		cinemas.setStyleName("navbar-element");
 		cinemas.addClickHandler(new ShowCinemasClickHandler(header, content, this));
 		
+		cinemaChains = new Label("Cinema Chains");	//Menu Item 1
+		cinemaChains.setStyleName("navbar-element");
+		cinemaChains.addClickHandler(new ShowCinemaChainsClickHandler(header, content, this));
+		
 		movies = new Label("Movie"); //Menu Item 2
 		movies.setStyleName("navbar-element");
 		movies.addClickHandler(new ShowMoviesClickHandler(header, content, this));
@@ -73,6 +78,7 @@ public class NavigationBar extends FlowPanel {
 //		this.add(headerLabel);
 //		this.add(createIcon);
 		this.add(cinemas); //Add Item 1 to Menu
+		this.add(cinemaChains);
 		this.add(movies);	 //Add Item 2 to Menu
 		this.add(screenings); //Add Item 3 to Menu
 		this.add(settings);
@@ -202,6 +208,29 @@ public class NavigationBar extends FlowPanel {
 //			headerLabel.setText("Cinemas");
 			header.showCinemaHeader();
 			content.showCinemas();
+//			navigationBar.add(createIcon);
+			navigationBar.setStyleName("navbar");
+//			menuIcon.setStyleName("menuIcon");
+			cinemas.setStyleName("navbar-element");
+			movies.setStyleName("navbar-element");
+			screenings.setStyleName("navbar-element");
+//			menuOpen=0;
+		}
+		
+	}
+	
+	class ShowCinemaChainsClickHandler implements ClickHandler{
+		NavigationBar navigationBar;
+		public ShowCinemaChainsClickHandler(Header header, Content content, NavigationBar navigationBar) {
+			this.navigationBar=navigationBar;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+//			headerLabel.setText("Cinemas");
+			header.showCinemaChainHeader();
+			content.showCinemaChains();
 //			navigationBar.add(createIcon);
 			navigationBar.setStyleName("navbar");
 //			menuIcon.setStyleName("menuIcon");

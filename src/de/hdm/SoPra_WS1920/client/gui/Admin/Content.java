@@ -26,6 +26,7 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
@@ -272,4 +273,36 @@ public class Content extends FlowPanel{
 //		    }
 //		 
 //		}
+
+	public void showCinemaChains() {
+		// TODO Auto-generated method stub
+		this.clear();
+		cinemaAdministration.getCinemaChainByPersonFK(user.getId(), new CinemaChainCallback(this));
+	}
+	
+	class CinemaChainCallback implements AsyncCallback<Vector<CinemaChain>>{
+		Content content;
+		public CinemaChainCallback(Content content) {
+			this.content = content;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<CinemaChain> result) {
+			for(CinemaChain cC: result) {
+				CinemaChainCard cinemaChainCard = new CinemaChainCard(content,cC);
+				content.add(cinemaChainCard);
+			}
+			
+		}
+
+		
+		
+		
+	}
 }
