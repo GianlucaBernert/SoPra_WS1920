@@ -43,6 +43,32 @@ public class Header extends FlowPanel{
 //		this.add(pPanel);
 	}
 	
+	class CreateCinemaChainClickHandler implements ClickHandler{
+		Header header;
+		Content content;
+		public CreateCinemaChainClickHandler(Header header, Content content) {
+			this.header = header;
+			this.content = content;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+//			CinemaChainCardEdit cinemaChainCardEdit = new CinemaChainCardEdit(header, content);
+//			cinemaCardEdit.center();
+//			cinemaCardEdit.show();
+//			CreateBoDialogbox createBoDialogbox = new CreateBoDialogbox(header, content);
+//			createBoDialogbox.showMovieCardEdit();
+//			createBoDialogbox.center();
+//			createBoDialogbox.show();
+			CinemaChainForm cinemaChainForm = new CinemaChainForm(header, content);
+			cinemaChainForm.center();
+			cinemaChainForm.show();
+			
+		}
+		
+	}
+	
 	class CreateCinemaClickHandler implements ClickHandler{
 		Header header;
 		Content content;
@@ -158,6 +184,8 @@ public class Header extends FlowPanel{
 		
 	}
 	
+	
+	
 	public void showMovieHeader() {
 		//Set the Header to Movies
 		//add the respective clickhandler to the createBo button
@@ -192,5 +220,22 @@ public class Header extends FlowPanel{
 		this.add(createBo);
 		this.add(searchBox);
 		//add the respective clickhandler to the createBo button
+	}
+
+	public void showCinemaChainHeader() {
+		// TODO Auto-generated method stub
+		this.clear();
+		headline=new Label("Cinema Chains");
+		headline.setStyleName("Headline");
+		
+		searchBox = new SearchBox();
+		
+		createBo = new Button("+Add CinemaChain");
+		createBo.setStyleName("CreateBoButton");
+		createBo.addClickHandler(new CreateCinemaChainClickHandler(this,content));
+		
+		this.add(headline);
+		this.add(createBo);
+		this.add(searchBox);
 	}
 }
