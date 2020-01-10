@@ -49,9 +49,9 @@ public class SurveyCardView extends FlowPanel {
 		
 		//Vector surveyEntrysOfSurvey = SurveyManagementImpl.getSurveyEntryBySurveyFK(surveyToShow.getId());
 		
-		//surveyEntrysOfSurvey = SurveyManagementImpl.getSurveyEntryBySurveyFK(surveyToShow.getId)
-		//screeningOfSurvey = CinemaAdminImpl.getScreeningById(surveyentry.getScreeningFK)
-		//movieOfSurvey = cinemaAdminImpl.getMovieById(screening.getMovieFK)
+		//surveyEntrysOfSurvey = SurveyManagementImpl.getSurveyEntryBySurveyFK(surveyToShow.getId());
+		//screeningOfSurvey = CinemaAdminImpl.getScreeningById(surveyEntryOfSurvey.getScreeningFK)
+		//movieOfSurvey = cinemaAdminImpl.getMovieById(screeningOfSurvey.getMovieFK)
 		movie = new Label("Joker");
 		movie.setStyleName("CardViewTitle");
 		

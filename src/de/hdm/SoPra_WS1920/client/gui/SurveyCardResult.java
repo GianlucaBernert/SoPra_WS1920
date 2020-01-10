@@ -50,9 +50,6 @@ public class SurveyCardResult extends FlowPanel {
 		group = new Label("Friends");
 		group.setStyleName("CardViewSubtitle");
 		
-		status = new Label("Status: Active");
-		status.setStyleName("CardViewParagraph");
-		
 		newSurvey = new Button("Results");
 		newSurvey.setStyleName("InvisibleButton");
 		//newSurvey.addClickHandler(new NewSurveyClickHandler());
