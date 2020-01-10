@@ -323,6 +323,12 @@ body{
 	margin: 5px 15px 5px 5px;
 }
 
+.DeleteMemberIcon {
+	height: 15px;
+	float: left;
+	margin: 5px 15px 5px 5px;
+}
+
 .CreateBoButton{
 	padding: 7px 20px;
 	outline: none;
@@ -448,6 +454,16 @@ body{
 	margin-top:10px;
 	margin-bottom: 5px;
 }
+
+.MemberTextBoxLabel {
+
+	width:100%;
+	font-size: 22px;
+	color: #6483A1;
+	margin-top:10px;
+	margin-bottom: 5px;
+
+}	
 
 .InvisibleButton {
 	display: none;
