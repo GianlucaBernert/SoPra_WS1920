@@ -88,10 +88,13 @@ public class GroupForm extends DialogBox {
 		public void onLoad() {
 			super.onLoad();
 			deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
-			deleteIcon.setStyleName("DeleteIcon");
+			deleteIcon.setStyleName("searchSubmitIcon");
 			deleteIcon.addClickHandler(new DeleteMemberClickHandler(this));
 			
+			
 			fullNameLabel = new Label(p.getFirstname()+ " "+p.getLastname());
+			fullNameLabel.setStyleName("MemberTextBoxLabel");
+			
 			
 			this.add(deleteIcon);
 			this.add(fullNameLabel);
