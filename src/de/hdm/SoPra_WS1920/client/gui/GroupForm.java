@@ -222,6 +222,7 @@ public class GroupForm extends DialogBox {
 //			main.add(deleteLabel);
 //		
 //		
+		
 		this.add(main);
 		this.center();
 		this.show();
