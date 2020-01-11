@@ -170,6 +170,33 @@ public class ScreeningMapper {
         
         
     }
+    
+    public Vector<Screening> findScreeningForSurveyCreation(Date startDate, Date endDate, int movieFK, String city) {
+    	Connection con = DBConnection.connection();
+    	Vector<Screening> result = new Vector<Screening>();
+    	
+    	try {
+    		Statement stmt = con.createStatement();
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM screening INNER JOIN cinema" 
+    				+ "WHERE screeningDate BETWEEN" + startDate + "AND" + endDate + "AND" 
+    				+ "AND cinema.city=" + city + "AND movieFK=" + movieFK);
+    		
+    		while(rs.next()) {
+    			Screening sc = new Screening();
+    			sc.setId(rs.getInt("id"));
+    			sc.setScreeningDate(rs.getDate("screeningDate"));
+    			sc.setScreeningTime(rs.getTime("screeningTime"));
+    			sc.setMovieFK(rs.getInt("movieFK"));
+    			sc.setCinemaFK(rs.getInt("cinemaFK"));
+    			
+    			result.addElement(sc);
+    		}
+    	}
+    	catch(SQLException e2) {
+    		e2.printStackTrace();
+    	}
+    	return result;
+    }
 
     /**
      * Auslesen der Screening-Objekte mit vorgegebenen Spielzeiten
@@ -217,7 +244,7 @@ public class ScreeningMapper {
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
         			+ "WHERE screeningDate= '" + screeningDate + "'");
-        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+        	//Für jeden Eintrag im Suchergebnis wird ein Screening-Objekt erstellt
         	while(rs.next()) {
         		Screening sc = new Screening();
         		sc.setId(rs.getInt("id"));
