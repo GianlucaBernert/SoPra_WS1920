@@ -8,6 +8,8 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 
+import de.hdm.SoPra_WS1920.shared.bo.Group;
+
 
 
 
@@ -20,6 +22,8 @@ public class SurveyManagementHeader extends FlowPanel {
 	
 	GroupForm gf;
 	SurveyCardEdit se;
+	GroupCard groupCard;
+	Group groupToShow;
 	
 	SurveyContent content;
 	
@@ -35,15 +39,15 @@ public class SurveyManagementHeader extends FlowPanel {
 		//createSurvey.addClickHandler(new CreateSurveyClickHandler(this, sf));
 		
 	}
-		class CreateBoClickHandler implements ClickHandler{
+		class CreateGroupClickHandler implements ClickHandler{
 			SurveyManagementHeader header;
 			SurveyContent content;
 			GroupForm gf;
 			
-			public CreateBoClickHandler(SurveyManagementHeader header, SurveyContent content, GroupForm gf) {
+			public CreateGroupClickHandler(SurveyManagementHeader header, SurveyContent content) {
 				this.header = header;
 				this.content = content;
-				this.gf = gf;
+				
 						
 			}
 			
@@ -51,8 +55,9 @@ public class SurveyManagementHeader extends FlowPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				GroupForm gf = new GroupForm();
-				gf.showGroupForm();
+				GroupForm gf = new GroupForm(header, content);
+				gf.show();
+				gf.center();
 				
 			}
 		
@@ -117,7 +122,7 @@ public class SurveyManagementHeader extends FlowPanel {
 			
 			createBo = new Button("+Add Group");
 			createBo.setStylePrimaryName("CreateBoButton");
-			createBo.addClickHandler(new CreateBoClickHandler(this, content, gf));
+			createBo.addClickHandler(new CreateGroupClickHandler(this, content));
 			
 			this.add(headline);
 			this.add(createBo);
