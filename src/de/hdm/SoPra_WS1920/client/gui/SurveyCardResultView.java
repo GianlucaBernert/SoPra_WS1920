@@ -60,7 +60,7 @@ public class SurveyCardResultView extends FlowPanel {
 		
 		results = new Button("Results");
 		results.setStyleName("SaveButton");
-		results.addClickHandler(new ResultClickHandler());
+		//results.addClickHandler(new ResultClickHandler());
 	
 		this.add(movie);
 		this.add(group);
@@ -70,14 +70,14 @@ public class SurveyCardResultView extends FlowPanel {
 		this.add(results);
 	
 	}
-	class ResultClickHandler implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
-			parentCard.showSurveyCardResult(surveyToShow);
-		}
-	}
+//	class ResultClickHandler implements ClickHandler{
+//
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			// TODO Auto-generated method stub
+//			parentCard.showSurveyCardResult(surveyToShow);
+//		}
+//	}
 	
 	
 

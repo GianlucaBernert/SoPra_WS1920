@@ -92,14 +92,14 @@ public class SurveyCardView extends FlowPanel {
 		this.add(vote);
 	
 	}
-//	class EditClickHandler implements ClickHandler{
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			// TODO Auto-generated method stub
-//			parentCard.showSurveyCardEdit(surveyToShow);
-//		}
-//	}
+	class EditClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			parentCard.showSurveyCardEdit(surveyToShow);
+		}
+	}
 //	class VoteClickHandler implements ClickHandler{
 //
 //		@Override

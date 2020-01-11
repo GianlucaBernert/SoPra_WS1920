@@ -61,13 +61,13 @@ public class SurveyCardResult extends FlowPanel {
 		this.add(result);
 	
 	}
-////	class NewSurveyClickHandler implements ClickHandler{
-////
-////		@Override
-////		public void onClick(ClickEvent event) {
-////			 TODO Auto-generated method stub
-////			parentCard.showSurveyCardCreate(surveyToShow);
-////		}
+//	class NewSurveyClickHandler implements ClickHandler{
+//
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			 //TODO Auto-generated method stub
+//			parentCard.showSurveyCardEdit(surveyToShow);
+//		}
 //	}
 	
 	
