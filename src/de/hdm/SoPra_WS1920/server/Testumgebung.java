@@ -17,6 +17,10 @@ public class Testumgebung {
 		SurveyManagementImpl implSurveyManagement = new SurveyManagementImpl();
 		implSurveyManagement.init();
 		
+		//implSurveyManagement.createPerson("Yesin","Soufi", "ys018@hdm-stuttgart.de");
+		
+		implAdmin.createPerson("Yesin", "Soufi", "ys018@hdm-stuttgart.de");
+		
 		/*
 		 * Erstellen einer Person
 		 * implSurveyManagement.createPerson(1, "Yesin", "Soufi", "ys018@hdm-stuttgart.de", true, "2019-11-22 16:47,08.128");

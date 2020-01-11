@@ -97,7 +97,7 @@ public class SurveyCardView extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			parentCard.showSurveyCardEdit(surveyToShow);
+			//parentCard.showSurveyCardEdit(surveyToShow);
 		}
 	}
 //	class VoteClickHandler implements ClickHandler{
