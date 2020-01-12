@@ -1,5 +1,7 @@
 package de.hdm.SoPra_WS1920.client.gui.Admin;
 
+import java.util.Vector;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -15,6 +17,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 
 public class CinemaCardEdit extends DialogBox{
 	
@@ -39,6 +42,7 @@ public class CinemaCardEdit extends DialogBox{
 	Label deleteLabel;
 	Image deleteIcon;
 	Button saveButton;
+	Vector<CinemaChain> chinemaChainsOfUser;
 	
 	Header header;
 	Content content;
@@ -88,8 +92,7 @@ public class CinemaCardEdit extends DialogBox{
 		cinemaChainLabel = new Label("Cinema Chain");
 		cinemaChainLabel.setStyleName("TextBoxLabel");
 		cinemaChainListBox = new ListBox();
-		cinemaChainListBox.addItem("Cinemax");
-		cinemaChainListBox.addItem("Cinemax2");
+		cinemaAdministration.getCinemaChainByPersonFK(1, new CinemaChainCallback());
 		cinemaChainListBox.setStyleName("CardListBox");
 		adressLabel = new Label("Adress");
 		adressLabel.setStyleName("TextBoxLabel");
@@ -141,14 +144,14 @@ public class CinemaCardEdit extends DialogBox{
 		saveButton.setStyleName("SaveButton");
 		saveButton.addClickHandler(new SaveClickHandler(this));
 		
-		cinemaToShow.setName(nameTextBox.getText());
-//		Logic required for mapping the cinema chain name to the Id/FK
-		cinemaToShow.setCinemaChainFK(1);
-		cinemaToShow.setStreet(streetTextBox.getText());
-		cinemaToShow.setStreetNo(streetNrTextBox.getText());
-		cinemaToShow.setZipCode(zipCodeTextBox.getText());
-		cinemaToShow.setCity(cityTextBox.getText());
-		
+//		cinemaToShow.setName(nameTextBox.getText());
+////		Logic required for mapping the cinema chain name to the Id/FK
+//		cinemaToShow.setCinemaChainFK();
+//		cinemaToShow.setStreet(streetTextBox.getText());
+//		cinemaToShow.setStreetNo(streetNrTextBox.getText());
+//		cinemaToShow.setZipCode(zipCodeTextBox.getText());
+//		cinemaToShow.setCity(cityTextBox.getText());
+//		
 //		formWrapper.add(cardDescription);
 //		formWrapper.add(cancelIcon);
 //		formWrapper.add(nameLabel);
@@ -167,6 +170,26 @@ public class CinemaCardEdit extends DialogBox{
 		
 	}
 	
+	class CinemaChainCallback implements AsyncCallback<Vector<CinemaChain>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<CinemaChain> result) {
+			// TODO Auto-generated method stub
+			chinemaChainsOfUser = result;
+			for(CinemaChain cinemaChain:result) {
+				cinemaChainListBox.addItem(cinemaChain.getName());
+			}
+		}
+
+		
+	}
+	
 	class SaveClickHandler implements ClickHandler{
 		CinemaCardEdit cinemaCardEdit;
 		
@@ -177,32 +200,64 @@ public class CinemaCardEdit extends DialogBox{
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			cinemaAdministration.createCinema(
-					nameTextBox.getText(), 
-					cityTextBox.getText(), 
-					streetTextBox.getText(), 
-					streetNrTextBox.getText(), 
-					zipCodeTextBox.getText(), 
-					3, 
-					1, 
-					new CreateCinemaCallback());
-			cinemaToShow.setName(nameTextBox.getText());
-			cinemaToShow.setCinemaChainFK(1);
-			cinemaToShow.setStreet(streetTextBox.getText());
-			cinemaToShow.setStreetNo(streetNrTextBox.getText());
-			cinemaToShow.setZipCode(zipCodeTextBox.getText());
-			cinemaToShow.setCity(cityTextBox.getText());
+//			cinemaAdministration.createCinema(
+//					nameTextBox.getText(), 
+//					cityTextBox.getText(), 
+//					streetTextBox.getText(), 
+//					streetNrTextBox.getText(), 
+//					zipCodeTextBox.getText(), 
+//					cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()),
+//					1, 
+//					new CreateCinemaCallback());
+			
+//			cinemaToShow.setName(nameTextBox.getText());
+//			cinemaToShow.setCinemaChainFK(1);
+//			cinemaToShow.setStreet(streetTextBox.getText());
+//			cinemaToShow.setStreetNo(streetNrTextBox.getText());
+//			cinemaToShow.setZipCode(zipCodeTextBox.getText());
+//			cinemaToShow.setCity(cityTextBox.getText());
 			
 			if(parentCard==null) {
-				parentCard = new CinemaCard(content,cinemaToShow);
-				parentCard.showCinemaCardView(cinemaToShow);
-				content.add(parentCard);
-				cinemaCardEdit.hide();
+				Window.alert("Create");
+				cinemaAdministration.createCinema(nameTextBox.getText(), cityTextBox.getText(), streetTextBox.getText(), streetNrTextBox.getText(), zipCodeTextBox.getText(), cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()), 1, 
+						new CreateCinemaCallback());
+//				Window.alert("before dataBase: "+streetNrTextBox.getText());
+//				parentCard = new CinemaCard(content,cinemaToShow);
+//				parentCard.showCinemaCardView(cinemaToShow);
+//				content.add(parentCard);
+//				cinemaCardEdit.hide();
 			}else {
-				parentCard.showCinemaCardView(cinemaToShow);
-				cinemaCardEdit.hide();
+//				parentCard.showCinemaCardView(cinemaToShow);
+//				cinemaCardEdit.hide();
+				Window.alert("Update");
+				cinemaToShow.setName(nameTextBox.getText());
+				cinemaToShow.setCity(cityTextBox.getText()); 
+				cinemaToShow.setStreet(streetTextBox.getText()); 
+				cinemaToShow.setStreetNo(streetNrTextBox.getText()); 
+				cinemaToShow.setZipCode(zipCodeTextBox.getText()); 
+				cinemaToShow.setCinemaChainFK(cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()));
+				cinemaToShow.setPersonFK(1);
+				cinemaAdministration.updateCinema(cinemaToShow, new UpdateCinemaCinemaCallback());
 			}
 		}
+		
+		class UpdateCinemaCinemaCallback implements AsyncCallback<Cinema>{
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("Problem with the connection");
+			}
+
+			@Override
+			public void onSuccess(Cinema result) {
+				// TODO Auto-generated method stub
+				parentCard.showCinemaCardView(result);
+				cinemaCardEdit.hide();
+			}
+			
+		}
+		
 		class CreateCinemaCallback implements AsyncCallback<Cinema>{
 
 			@Override
@@ -215,22 +270,13 @@ public class CinemaCardEdit extends DialogBox{
 			public void onSuccess(Cinema result) {
 				// TODO Auto-generated method stub
 				cinemaToShow=result;
-//				cinemaToShow.setName(nameTextBox.getText());
-//				cinemaToShow.setCinemaChainFK(1);
-//				cinemaToShow.setStreet(streetTextBox.getText());
-//				cinemaToShow.setStreetNo(streetNrTextBox.getText());
-//				cinemaToShow.setZipCode(zipCodeTextBox.getText());
-//				cinemaToShow.setCity(cityTextBox.getText());
+//				Window.alert("after dataBase result: "+result.getStreetNo());
+//				Window.alert("after dataBase cinemaToShow: "+cinemaToShow.getStreetNo());
+				parentCard = new CinemaCard(content, result);
+				parentCard.showCinemaCardView(result);
+				content.add(parentCard);
+				cinemaCardEdit.hide();
 				
-				if(parentCard==null) {
-					parentCard = new CinemaCard(content,cinemaToShow);
-					parentCard.showCinemaCardView(cinemaToShow);
-					content.add(parentCard);
-					cinemaCardEdit.hide();
-				}else {
-					parentCard.showCinemaCardView(cinemaToShow);
-					cinemaCardEdit.hide();
-				}
 			}
 			
 		}
@@ -294,6 +340,21 @@ public class CinemaCardEdit extends DialogBox{
 			cinemaCardEdit.hide();
 			parentCard.remove();
 		}
+		
+	}
+
+	public int getSelectedCinemaChain(String selectedValue) {
+		// TODO Auto-generated method stub
+		CinemaChain cinemaChain = null;
+		for(CinemaChain cH: chinemaChainsOfUser) {
+			if(!selectedValue.equals(cH.getName())) {
+				continue;
+			}
+			cinemaChain = cH;
+			
+		}
+		Window.alert("Selected CinemaChain: "+cinemaChain.getId());
+		return cinemaChain.getId();
 		
 	}
 

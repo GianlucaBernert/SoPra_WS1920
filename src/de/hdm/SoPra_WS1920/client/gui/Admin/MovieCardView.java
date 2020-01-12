@@ -55,6 +55,5 @@ public class MovieCardView extends FlowPanel{
 			// TODO Auto-generated method stub
 			parentCard.showMovieCardEdit(movieToShow);
 		}
-		
 	}
 }

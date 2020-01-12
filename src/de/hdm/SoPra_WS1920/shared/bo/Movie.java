@@ -75,5 +75,25 @@ public class Movie extends BusinessObject {
    	public String toString() {
    		return "MovieID #M" + this.getId() + " " + this.getName();
    	}
+   	
+   	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Movie) {
+			Movie m = (Movie) obj;
+			if((this.getId()== m.getId())){				
+				return true;	
+			}
+			else {
+				return false;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = this.getId();
+		return result;
+	}
 
 }
