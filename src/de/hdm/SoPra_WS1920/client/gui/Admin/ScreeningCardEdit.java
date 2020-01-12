@@ -3,6 +3,7 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -11,6 +12,7 @@ import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -23,6 +25,8 @@ import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
+import de.hdm.SoPra_WS1920.client.ClientsideSettings;
+import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
@@ -56,28 +60,33 @@ public class ScreeningCardEdit extends DialogBox {
 	Image deleteIcon;
 	Button saveButton;
 	
+	Vector<Movie> listOfMovies;
+	Vector<Cinema> listOfCinemas;
+	
+	Movie selectedMovie;
+	Cinema selectedCinema;
+	
 	Header header;
 	Content content;
 
-	public ScreeningCardEdit(ScreeningCard screeningCard, Screening screeningToShow) {
+	CinemaAdministrationAsync cinemaAdministration;
+	
+	public ScreeningCardEdit(ScreeningCard screeningCard, Screening screeningToShow, Movie movieOfScreening, Cinema cinemaOfScreening) {
 		// TODO Auto-generated constructor stub
 		this.parentCard=screeningCard;
 		this.screeningToShow=screeningToShow;
+		this.movieOfScreening=movieOfScreening;
+		this.cinemaOfScreening=cinemaOfScreening;
 	}
 	
 	public ScreeningCardEdit(Header header, Content content) {
 		this.header = header;
 		this.content = content;
 		
-		Screening s = new Screening();
-		s.setCinemaFK(0);
-		s.setMovieFK(0);
-		s.setPersonFK(0);
-		s.setScreeningDate((Date) DateTimeFormat.getFormat("dd.MM.yyyy").parse("30.12.2019"));
-		Time t = new Time(DateTimeFormat.getFormat("hh:mm").parse("02:30").getTime());
-		s.setScreeningTime(t);
-		screeningToShow = s;
-		
+		screeningToShow = new Screening();
+		selectedMovie = new Movie();
+		selectedCinema = new Cinema();
+
 	}
 	
 	//Method for mapping the suggestbox items to the respective IDs
@@ -86,6 +95,10 @@ public class ScreeningCardEdit extends DialogBox {
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("EditCard");
+		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
+		
+		
+		
 		formWrapper = new FlowPanel();
 		
 		cardDescription = new Label("Add Screening");
@@ -99,39 +112,37 @@ public class ScreeningCardEdit extends DialogBox {
 		movieLabel = new Label("Movie");
 		movieLabel.setStyleName("TextBoxLabel");
 		allMovies = new MultiWordSuggestOracle();
-		allMovies.add("Joker");
-		
+		listOfMovies = new Vector<Movie>();
+		cinemaAdministration.getAllMovies(new AllMoviesCallback());
+
 		movieSuggestBox = new SuggestBox(allMovies);
 		movieSuggestBox.setStyleName("CardSuggestBox");
-		
-		
 		
 		cinemaLabel = new Label("Cinema");
 		cinemaLabel.setStyleName("TextBoxLabel");
 		allCinemas = new ListBox();
+//		allCinemas.setItemText(0, cinemaOfScreening.getName());
 		allCinemas.setStyleName("CardListBox");
+		listOfCinemas = new Vector<Cinema>();
+		cinemaAdministration.getCinemasByPersonFK(1,new CinemasOfPersonCallback());
+		
 		
 		dateLabel = new Label("Date");
 		dateLabel.setStyleName("TextBoxLabel");
 		datePicker = new DateBox();
+		datePicker.setValue(screeningToShow.getScreeningDate());
 		datePicker.setStyleName("CardDatePicker");
 		datePicker.setFormat(
 				new DateBox.DefaultFormat(
 						DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
 		
+//		datePicker.setValue(screeningToShow.getScreeningDate());
 		timeLabel = new Label("Time");
 		timeLabel.setStyleName("TextBoxLabel");
-//		hourTimePicker = new TextBox();
-//		hourTimePicker.setStyleName("CardTimePicker");
-//		minuteTimePicker = new TextBox();
-//		minuteTimePicker.setStyleName("CardTimePicker");
-		timePicker = new TimePicker();
-		
-		movieSuggestBox.setText("Joker");
-		datePicker.setValue(screeningToShow.getScreeningDate());
-//		hourTimePicker.setText(screeningToShow.getScreeningTime().toString().substring(0, 2));
-//		minuteTimePicker.setText(screeningToShow.getScreeningTime().toString().substring(3, 5));
-//		
+		timePicker = new TimePicker(this);
+//		timePicker.hourPicker.setText(screeningToShow.getScreeningTime().toString().substring(0, 2));
+//		timePicker.minutePicker.setText(screeningToShow.getScreeningTime().toString().substring(2, 4));
+
 		formWrapper.add(cardDescription);
 		formWrapper.add(cancelIcon);
 		formWrapper.add(movieLabel);
@@ -142,12 +153,18 @@ public class ScreeningCardEdit extends DialogBox {
 		formWrapper.add(datePicker);
 		formWrapper.add(timeLabel);
 		formWrapper.add(timePicker);
-//		formWrapper.add(hourTimePicker);
-//		formWrapper.add(minuteTimePicker);
-		
-		
+
 		if(parentCard!=null) {
 			cardDescription.setText("Edit Screening");
+			movieSuggestBox.setText(movieOfScreening.getName());
+			
+			datePicker.setValue(screeningToShow.getScreeningDate());
+//			Window.alert(timePicker.hourPicker.getText());
+//			timePicker.hourPicker.setText(screeningToShow.getScreeningTime().toString().substring(0, 2));
+//			Window.alert("minutePicker");
+//			timePicker.minutePicker.setText(screeningToShow.getScreeningTime().toString().substring(2, 4));
+//			timePicker.setHourText(screeningToShow);
+//			timePicker.setMinuteText(screeningToShow);
 			deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
 			deleteIcon.setStyleName("DeleteIcon");
 			deleteIcon.addClickHandler(new DeleteClickHandler(this));
@@ -170,6 +187,119 @@ public class ScreeningCardEdit extends DialogBox {
 		this.add(formWrapper);
 	}
 	
+	class TimePicker extends FlowPanel{
+		ScreeningCardEdit screeningCardEdit;
+		SuggestBox hourPicker;
+		SuggestBox minutePicker;
+		Label colon;
+		MultiWordSuggestOracle hourOptions;
+		MultiWordSuggestOracle minuteOptions;
+		
+		public TimePicker(ScreeningCardEdit screeningCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.screeningCardEdit = screeningCardEdit;
+		}
+
+		public void onLoad() {
+			super.onLoad();
+			this.setStyleName("CardTimePicker");
+			
+			hourOptions = new MultiWordSuggestOracle();
+			   for(int i=0;i<24;i++) {
+				   String s = "";
+				   if(i<10) {
+				   s = "0"+Integer.toString(i);
+				   }else {
+				   s = Integer.toString(i);   
+				   }
+				   hourOptions.add(s);
+			 }
+			   hourPicker = new SuggestBox(hourOptions);
+			   hourPicker.setStyleName("TimePickerSuggestBox");
+			   hourPicker.getElement().setPropertyString("placeholder", "hh");
+			   hourPicker.addKeyPressHandler(new KeyPressHandler() {
+				    @Override
+				    public void onKeyPress(KeyPressEvent event) {
+				        String input = hourPicker.getText();
+//				        if (!input.matches("[0-9]*")) {
+				        if (input.length()==1) {
+//				            Window.alert("Only Integers allowed. Fomat hh");
+				        	((DefaultSuggestionDisplay) hourPicker.getSuggestionDisplay()).hideSuggestions();
+				            minutePicker.setFocus(true);
+				            return;
+				        }
+				    }
+				});
+			   
+			   colon = new Label(":");
+			   colon.setStyleName("TimePickerLabel");
+			   
+			 minuteOptions = new MultiWordSuggestOracle();
+			   for(int i=0;i<60;i++) {
+				   String s = "";
+				   if(i<10) {
+				   s = "0"+Integer.toString(i);
+				   }else {
+				   s = Integer.toString(i);   
+				   }
+				   minuteOptions.add(s);
+			 }
+			   minutePicker = new SuggestBox(minuteOptions);
+			   minutePicker.setStyleName("TimePickerSuggestBox");
+			   minutePicker.getElement().setPropertyString("placeholder", "mm");
+			   
+			   if(screeningCardEdit.parentCard!=null) {
+				   hourPicker.setText(screeningToShow.getScreeningTime().toString().substring(0, 2));
+				   minutePicker.setText(screeningToShow.getScreeningTime().toString().substring(3, 5));
+			   }
+			   
+			   this.add(hourPicker);
+			   this.add(colon);
+			   this.add(minutePicker);
+		}
+	}
+	
+	class AllMoviesCallback implements AsyncCallback<Vector<Movie>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<Movie> result) {
+			// TODO Auto-generated method stub
+			for(Movie m: result) {
+				listOfMovies.add(m);
+				allMovies.add(m.getName());
+			}
+		}
+		
+	}
+	
+	class CinemasOfPersonCallback implements AsyncCallback<Vector<Cinema>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<Cinema> result) {
+			// TODO Auto-generated method stub
+			for(Cinema c: result) {
+				listOfCinemas.add(c);
+				allCinemas.addItem(c.getName());
+			}
+//			allCinemas.setItemText(0, cinemaOfScreening.getName());
+		}
+
+		
+		
+	}
+	
 	class SaveClickHandler implements ClickHandler{
 		ScreeningCardEdit screeningCardEdit;
 		public SaveClickHandler(ScreeningCardEdit screeningCardEdit) {
@@ -178,28 +308,81 @@ public class ScreeningCardEdit extends DialogBox {
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			if(timePicker.hourPicker.getText().length()!=2 || timePicker.minutePicker.getText().length()!=2) {
-				Window.alert("Please type in a correct time in the format hh:mm");
-			}
-			screeningToShow.setCinemaFK(0);
-			screeningToShow.setMovieFK(0);
-			screeningToShow.setScreeningDate((Date) datePicker.getValue());
-			Time t = new Time(DateTimeFormat.getFormat("hh:mm").parse(timePicker.hourPicker.getText()+":"+timePicker.minutePicker.getText()).getTime());
-			screeningToShow.setScreeningTime(t);
-			// TODO Auto-generated method stub
-			//screeningToShow.setMovieFK(proxy.findMovieByName(movieSuggestBox.getText()));
-			//screeningToShow.setCinemaFK(proxy.findCinemaByName(allCinemas.getText()));
-			//screeningToShow.setDate(datePicker.getDate());
-			//screeningToShow.setTime(timePicker.getText());
+//			
+//			Date sqlDate = java.sql.Date.valueOf(datePicker.getValue().toString());
+			java.sql.Date dt = new java.sql.Date(datePicker.getValue().getTime());
+//			Window.alert(dt.toString());
+			Time t =new Time(DateTimeFormat.getFormat("hh:mm").parse(timePicker.hourPicker.getText()+":"+timePicker.minutePicker.getText()).getTime());
 			if(parentCard==null) {
-				parentCard = new ScreeningCard(content,screeningToShow);
-				parentCard.showScreeningCardView(screeningToShow);
-				content.add(parentCard);
-				screeningCardEdit.hide();
+//				Window.alert(Integer.toString(screeningCardEdit.getSelectedCinema(allCinemas.getSelectedValue())));
+//				Window.alert(Integer.toString(screeningCardEdit.getSelectedMovie(movieSuggestBox.getText())));
+//				Window.alert(t.toString());
+//				Window.alert("W/o cast"+datePicker.getValue().toString());
+//				
+				
+				cinemaAdministration.createScreening(
+						dt, 
+//						new Time(DateTimeFormat.getFormat("hh:mm").parse(timePicker.hourPicker.getText()+":"+timePicker.minutePicker.getText()).getTime()), 
+						t,
+						screeningCardEdit.getSelectedCinema(allCinemas.getSelectedValue()), 
+						screeningCardEdit.getSelectedMovie(movieSuggestBox.getText()), 
+						1, 
+						new CreateScreeningCallback(screeningCardEdit));
 			}else {
-				parentCard.showScreeningCardView(screeningToShow);
-				screeningCardEdit.hide();
+				screeningToShow.setCinemaFK(screeningCardEdit.getSelectedCinema(allCinemas.getSelectedValue()));
+				screeningToShow.setMovieFK(screeningCardEdit.getSelectedMovie(movieSuggestBox.getText()));
+				screeningToShow.setScreeningDate((Date) datePicker.getValue());
+//				Time t = new Time(DateTimeFormat.getFormat("hh:mm").parse(timePicker.hourPicker.getText()+":"+timePicker.minutePicker.getText()).getTime());
+				screeningToShow.setScreeningTime(t);
+				
+				cinemaAdministration.updateScreening(screeningToShow, new UpdateScreeningCallback(screeningCardEdit));
 			}
+		}
+		
+	}
+	
+	class CreateScreeningCallback implements AsyncCallback<Screening>{
+		ScreeningCardEdit screeningCardEdit;
+		public CreateScreeningCallback(ScreeningCardEdit screeningCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.screeningCardEdit=screeningCardEdit;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the connection.");
+		}
+
+		@Override
+		public void onSuccess(Screening result) {
+			// TODO Auto-generated method stub
+//			Window.alert("In ScreeningCallback");
+			parentCard = new ScreeningCard(content,result);
+			parentCard.showScreeningCardView(result);
+			content.add(parentCard);
+			screeningCardEdit.hide();
+		}
+		
+	}
+	class UpdateScreeningCallback implements AsyncCallback<Screening>{
+		ScreeningCardEdit screeningCardEdit;
+		public UpdateScreeningCallback(ScreeningCardEdit screeningCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.screeningCardEdit=screeningCardEdit;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the connection.");
+		}
+
+		@Override
+		public void onSuccess(Screening result) {
+			// TODO Auto-generated method stub
+			parentCard.showScreeningCardView(screeningToShow);
+			screeningCardEdit.hide();
 		}
 		
 	}
@@ -243,62 +426,22 @@ public class ScreeningCardEdit extends DialogBox {
 		
 	}
 	
-	class TimePicker extends FlowPanel{
-		SuggestBox hourPicker;
-		SuggestBox minutePicker;
-		Label colon;
-		
-		public void onLoad() {
-			super.onLoad();
-			this.setStyleName("CardTimePicker");
-			
-			MultiWordSuggestOracle hourOptions = new MultiWordSuggestOracle();
-			   for(int i=0;i<24;i++) {
-				   String s = "";
-				   if(i<10) {
-				   s = "0"+Integer.toString(i);
-				   }else {
-				   s = Integer.toString(i);   
-				   }
-				   hourOptions.add(s);
-			 }
-			   hourPicker = new SuggestBox(hourOptions);
-			   hourPicker.setStyleName("TimePickerSuggestBox");
-			   hourPicker.getElement().setPropertyString("placeholder", "hh");
-			   hourPicker.addKeyPressHandler(new KeyPressHandler() {
-				    @Override
-				    public void onKeyPress(KeyPressEvent event) {
-				        String input = hourPicker.getText();
-//				        if (!input.matches("[0-9]*")) {
-				        if (input.length()==1) {
-//				            Window.alert("Only Integers allowed. Fomat hh");
-				        	((DefaultSuggestionDisplay) hourPicker.getSuggestionDisplay()).hideSuggestions();
-				            minutePicker.setFocus(true);
-				            return;
-				        }
-				    }
-				});
-			   
-			   colon = new Label(":");
-			   colon.setStyleName("TimePickerLabel");
-			   
-			 MultiWordSuggestOracle minuteOptions = new MultiWordSuggestOracle();
-			   for(int i=0;i<60;i++) {
-				   String s = "";
-				   if(i<10) {
-				   s = "0"+Integer.toString(i);
-				   }else {
-				   s = Integer.toString(i);   
-				   }
-				   minuteOptions.add(s);
-			 }
-			   minutePicker = new SuggestBox(minuteOptions);
-			   minutePicker.setStyleName("TimePickerSuggestBox");
-			   minutePicker.getElement().setPropertyString("placeholder", "mm");
-			   
-			   this.add(hourPicker);
-			   this.add(colon);
-			   this.add(minutePicker);
-		}
+	
+	public int getSelectedCinema(String selectedCinema) {
+		Cinema cinema = null;
+		for(Cinema c: listOfCinemas) {
+			if(c.getName().equals(selectedCinema)) {
+				cinema=c;
+			}
+		} return cinema.getId();
+	}
+	
+	public int getSelectedMovie(String selectedMovie) {
+		Movie movie = null;
+		for(Movie m: listOfMovies) {
+			if(m.getName().equals(selectedMovie)) {
+				movie=m;
+			}
+		} return movie.getId();
 	}
 }

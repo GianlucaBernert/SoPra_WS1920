@@ -131,5 +131,25 @@ public class Cinema extends Ownership {
 	public String toString() {
 		return "CinemaID #C" + this.getId();
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Cinema) {
+			Cinema c = (Cinema) obj;
+			if((this.getId()== c.getId())){				
+				return true;	
+			}
+			else {
+				return false;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = this.getId();
+		return result;
+	}
 
 }

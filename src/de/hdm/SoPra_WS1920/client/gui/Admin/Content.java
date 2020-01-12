@@ -240,11 +240,31 @@ public class Content extends FlowPanel{
 
 	public void showScreenings() {
 		this.clear();
+		cinemaAdministration.getScreeningsByPersonFK(user.getId(), new GetScreeningsCallback(this));
+	}
+	
+	class GetScreeningsCallback implements AsyncCallback<Vector<Screening>>{
+		Content content;
+		public GetScreeningsCallback(Content content) {
+			// TODO Auto-generated constructor stub
+			this.content=content;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<Screening> result) {
+			// TODO Auto-generated method stub
+			for(Screening s:result) {
+				ScreeningCard screeningCard = new ScreeningCard(content,s);
+				content.add(screeningCard);
+			}
+		}
 		
-//		this.add(new Label("Screenings"));
-		//Get all screenings of the all cinemas where user is permitted to
-		//for every screening...
-		//create a new ScreeningCard
 	}
 //	public Time getTimeFromString(String s2) {
 //		Time t;

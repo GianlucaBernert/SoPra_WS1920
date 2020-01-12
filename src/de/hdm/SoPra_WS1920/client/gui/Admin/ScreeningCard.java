@@ -35,9 +35,11 @@ public class ScreeningCard extends FlowPanel{
 		this.add(new ScreeningCardView(this, screeningToShow));
 	}
 	
-	public void showScreeningCardEdit(Screening screeningToShow) {
+	public void showScreeningCardEdit(Screening screeningToShow, Movie movieOfScreening, Cinema cinemaOfScreening) {
 		this.screeningToShow=screeningToShow;
-		ScreeningCardEdit screeningCardEdit = new ScreeningCardEdit(this,screeningToShow);
+		this.movieOfScreening=movieOfScreening;
+		this.cinemaOfScreening=cinemaOfScreening;
+		ScreeningCardEdit screeningCardEdit = new ScreeningCardEdit(this,screeningToShow,movieOfScreening,cinemaOfScreening);
 		screeningCardEdit.center();
 		screeningCardEdit.show();
 //		this.add(new ScreeningCardEdit(this, screening));

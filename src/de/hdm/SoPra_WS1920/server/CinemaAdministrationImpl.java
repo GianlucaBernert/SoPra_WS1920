@@ -823,5 +823,105 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     public void deleteBusinessObject(BusinessObject bo) throws IllegalArgumentException {
     	this.boMapper.deleteBusinessObject(bo);
     }
+
+
+
+	@Override
+	public Vector<Movie> searchMovie(String text) {
+		// TODO Auto-generated method stub
+		HashSet<Movie> hs = new HashSet<Movie>();
+		Vector<Movie> movies = new Vector<Movie>();
+		String s = text;
+		hs.addAll(this.getMoviesByName(s));
+		hs.addAll(this.getMovieByGenre(s));
+		
+		Iterator<Movie> it = hs.iterator();
+	     while(it.hasNext()){
+	        movies.add(it.next());
+	     }
+		
+		return movies;
+
+	}
+
+	public Vector<Cinema> searchCinema(int personFk, String text) {
+		// TODO Auto-generated method stub
+		HashSet<Cinema> hs = new HashSet<Cinema>();
+		Vector<Cinema> cinemas = new Vector<Cinema>();
+		Vector<CinemaChain> cinemaChainsOfPerson = this.getCinemaChainByPersonFK(personFk);
+		
+		for(CinemaChain cH: cinemaChainsOfPerson) {
+			if(cH.getName().equals(text)) {
+				hs.addAll(this.getCinemasByCinemaChainFK(cH));
+			}
+		}
+		for(Cinema c:this.getCinemasByPersonFK(personFk)) {
+			if(c.getName().equals(text)){
+				hs.add(c);
+			}else if(c.getCity().equals(text)) {
+				hs.add(c);
+			}
+		}
+		
+		Iterator<Cinema> it = hs.iterator();
+	     while(it.hasNext()){
+	        cinemas.add(it.next());
+	     }
+		
+		return cinemas;
+	}
+
+
+
+	@Override
+	public Vector<CinemaChain> searchCinemaChain(int personFk,String text) {
+		// TODO Auto-generated method stub
+		HashSet<CinemaChain> hs = new HashSet<CinemaChain>();
+		Vector<CinemaChain> cinemaChains = new Vector<CinemaChain>();
+		String s = text;
+		hs.addAll(this.getCinemaChainByName(s));
+		
+		Iterator<CinemaChain> it = hs.iterator();
+	     while(it.hasNext()){
+	        cinemaChains.add(it.next());
+	     }
+		
+		return cinemaChains;
+	}
+
+
+
+	@Override
+	public Vector<Screening> searchScreening(int personFk, String text) {
+		// TODO Auto-generated method stub
+		HashSet<Screening> hs = new HashSet<Screening>();
+		Vector<Screening> screenings = new Vector<Screening>();
+		Vector<Cinema> cinemas = new Vector<Cinema>();
+		Vector<Movie> movies = new Vector<Movie>();
+		
+		for(Screening s:this.getScreeningsByPersonFK(personFk)) {
+			cinemas.add(this.getCinemaById(s.getCinemaFK()));
+			movies.add(this.getMovieById(s.getMovieFK()));
+		}
+		
+		for(Cinema c: cinemas) {
+			if(c.getName().equals(text)) {
+				hs.addAll(this.getScreeningByCinemaFK(c.getId()));
+			}
+		}
+		
+		for(Movie m: movies) {
+			if(m.getName().equals(text)) {
+				hs.addAll(this.getScreeningByMovieFK(m.getId()));
+			}
+		}
+		
+		Iterator<Screening> it = hs.iterator();
+	     while(it.hasNext()){
+	        screenings.add(it.next());
+	     }
+		
+		return screenings;
+	}
         
 }
