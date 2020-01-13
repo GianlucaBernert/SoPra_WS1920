@@ -597,13 +597,49 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Vote> v = this.vMapper.findVoteBySurveyEntryFK(se.getId());
         return v.size();
     }
+    
+    /**
+     * Methode um die Anzahl der Gruppenmitglieder zu ZÃ¤hlen
+     * @param GroupFK gFK
+     * @return int m.size();
+     */
+    public int countGroupMembers(int gFK) {
+    	Vector <Membership> m = this.meMapper.findMembershipByGroupFK(gFK);
+    	return m.size();
+    }
 
-	
+    /**
+     * Methode um den Film einer Umfrage zurückzugeben
+     * @param int sFK
+     * @return Movie m;
+     */
+    public Movie getMoviebySurveyFK(int sFK) {
+    	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(sFK);
+    	SurveyEntry see = se.get(1);
+    	Screening sc = Admin.getScreeningById(see.getScreeningFK());
+    	Movie m = Admin.getMovieById(sc.getMovieFK());
+    	return m;
+    }
+    
+    /**
+     * Methode um alle Personen einer Umfrage zurückzugeben, die bereits abgestimmt haben
+     * @param int sFK
+     * @return ;
+     */
+//    public int countvotedPersons(int sFK) {
+//    	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(sFK);
+//    	for(SurveyEntry see: se) {
+//    		Vector<Vote> v = this.getVoteBySurveyEntryFK(see.getId());
+//    		
+//    	}
+//    }
+    
     /*
      * Methode um eine Person zu aktualisieren
      * @param Person p
      * @return Person p
      */
+    
 	public Person updatePerson(Person p) {
 		this.pMapper.updatePerson(p);
 		return p;

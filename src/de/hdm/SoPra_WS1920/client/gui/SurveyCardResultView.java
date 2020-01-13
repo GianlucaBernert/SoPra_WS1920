@@ -5,8 +5,12 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 
+import de.hdm.SoPra_WS1920.client.gui.SurveyCardView.GetGroupCallback;
+import de.hdm.SoPra_WS1920.client.gui.SurveyCardView.GetMovieCallback;
+import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
@@ -26,7 +30,7 @@ public class SurveyCardResultView extends FlowPanel {
 	Group groupOfSurvey;
 	Screening screeningOfSurvey;
 	
-	
+	SurveyManagementAsync surveymanagement;
 	
 	SurveyCard parentCard;
 	
@@ -38,6 +42,10 @@ public class SurveyCardResultView extends FlowPanel {
 	
 	public void onLoad() {
 		super.onLoad();
+		surveymanagement.getMoviebySurveyFK(surveyToShow.getId(), new GetMovieCallback());
+		surveymanagement.getGroupById(surveyToShow.getGroupFK(), new GetGroupCallback());
+		
+		
 		//surveyEntrysOfSurvey = SurveyManagementImpl.getSurveyEntryBySurveyFK(survey.getId)
 		//screeningOfSurvey = CinemaAdminImpl.getScreeningById(surveyentryOfSurvey.getScreeningFK)
 		//movieOfSurvey = cinemaAdminImpl.getMovieById(screeningOfSurvey.getMovieFK)
@@ -79,6 +87,42 @@ public class SurveyCardResultView extends FlowPanel {
 //		}
 //	}
 	
+	
+	class GetGroupCallback implements AsyncCallback<Group>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Group result) {
+			// TODO Auto-generated method stub
+//			Window.alert(result.getName());
+			groupOfSurvey = result;
+			group.setText(result.getName());
+		}
+		
+	}
+	
+	class GetMovieCallback implements AsyncCallback<Movie>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Movie result) {
+			// TODO Auto-generated method stub
+//			Window.alert(result.getName());
+			movieOfSurvey = result;
+			movie.setText(result.getName());
+		}
+		
+	}
 	
 
 }
