@@ -8,6 +8,9 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 
+import de.hdm.SoPra_WS1920.client.ClientsideSettings;
+import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
+import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 
 
@@ -22,10 +25,13 @@ public class SurveyManagementHeader extends FlowPanel {
 	
 	GroupForm gf;
 	SurveyCardEdit se;
+	
 	GroupCard groupCard;
 	Group groupToShow;
 	
 	SurveyContent content;
+	SurveyManagementAsync surveyManagementAdministration;
+	
 	
 	public SurveyManagementHeader(SurveyContent content) {
 		this.content = content;
@@ -35,6 +41,7 @@ public class SurveyManagementHeader extends FlowPanel {
 	public void onLoad() {
 		super.onLoad();
 		this.setStylePrimaryName("header");
+		surveyManagementAdministration = ClientsideSettings.getSurveyManagement();
 		//createBo.addClickHandler(new CreateBoClickHandler(this, gf));
 		//createSurvey.addClickHandler(new CreateSurveyClickHandler(this, sf));
 		
@@ -111,6 +118,13 @@ public class SurveyManagementHeader extends FlowPanel {
 			this.add(searchText);
 		}
 		
+		}
+		
+		public void searchWord(SearchBox searchBox, SurveyManagementHeader header){
+			if(header.headline.getText().equals("Movies"));{
+				
+			}
+			
 		}
 		
 		public void showGroupHeader() {

@@ -15,9 +15,11 @@ public class NavigationBar extends FlowPanel {
 	
 	SurveyManagementHeader header;
 	SurveyContent content;
+	
 	Image menuIcon;
-//	Image createIcon;
-//	Label headerLabel;
+	Image logoIcon;
+	
+	Label logoText;
 	Label movies;
 	Label groups;
 	Label surveys;
@@ -37,6 +39,11 @@ public class NavigationBar extends FlowPanel {
 		this.setStyleName("navbar");
 		b = new Button();
 		b.setStyleName("InvisibleButton");
+		
+		logoIcon = new Image("/Images/png/clapperboard.png");
+		logoIcon.setStylePrimaryName("LogoIcon");
+		logoText = new Label("Popcorns");
+		logoText.setStylePrimaryName("LogoText");
 
 		
 		movies = new Label("Movies");	//Menu Item 1
@@ -64,9 +71,8 @@ public class NavigationBar extends FlowPanel {
 //		createIcon.addClickHandler(new CreateBoClickHandler(header, content));
 
 		this.add(b);
-//		this.add(menuIcon);
-//		this.add(headerLabel);
-//		this.add(createIcon);
+		this.add(logoIcon);
+		this.add(logoText);
 		this.add(movies); //Add Item 1 to Menu
 		this.add(groups);	 //Add Item 2 to Menu
 		this.add(surveys); //Add Item 3 to Menu
