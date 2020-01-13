@@ -393,6 +393,51 @@ public interface SurveyManagementAsync {
      * return movie
      */
     public void getMoviebySurveyFK(int sFK, AsyncCallback<Movie> callback);
+
+    /**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param text
+     * @param AsyncCallback 
+     * return movie
+     */
+    
+	void searchMovie(String text, AsyncCallback<Vector<Movie>> callback);
+	
+	/**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param text
+     * @param AsyncCallback 
+     * return group
+     */
+	
+	void searchGroup(String text, AsyncCallback<Vector<Group>> callback);
+	
+	/**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param time
+     * @param AsyncCallback 
+     * return survey
+     */
+	
+	void searchSurvey(Timestamp time, AsyncCallback<Vector<Survey>> callback);
+
+	/**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param name
+     * @param AsyncCallback 
+     * return movie
+     */
+	
+	void getMoviesByName(String name, AsyncCallback<Vector<Movie>> callback);
+	
+	/**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param genre
+     * @param AsyncCallback 
+     * return movie
+     */
+	
+	void getMoviesByGenre(String genre, AsyncCallback<Vector<Movie>> callback);
     
 
 }
