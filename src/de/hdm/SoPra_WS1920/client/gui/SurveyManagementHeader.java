@@ -25,6 +25,7 @@ public class SurveyManagementHeader extends FlowPanel {
 	
 	GroupForm gf;
 	SurveyCardEdit se;
+	
 	GroupCard groupCard;
 	Group groupToShow;
 	
