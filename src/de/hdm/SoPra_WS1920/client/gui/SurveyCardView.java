@@ -8,9 +8,12 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 
 import de.hdm.SoPra_WS1920.server.SurveyManagementImpl;
+import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
+import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
@@ -34,6 +37,8 @@ public class SurveyCardView extends FlowPanel {
 	SurveyEntry surveyEntryOfSurvey;
 	
 	
+	SurveyManagementAsync surveymanagement;
+	
 	SurveyCard parentCard;
 	
 	Image editIcon;
@@ -45,28 +50,22 @@ public class SurveyCardView extends FlowPanel {
 	
 	public void onLoad() {
 		super.onLoad();
+		//surveymanagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
+		surveymanagement.getGroupById(surveyToShow.getGroupFK(), new GetGroupCallback());
 		
-		
-		//Vector surveyEntrysOfSurvey = SurveyManagementImpl.getSurveyEntryBySurveyFK(surveyToShow.getId());
 		
 		//surveyEntrysOfSurvey = SurveyManagementImpl.getSurveyEntryBySurveyFK(surveyToShow.getId());
 		//screeningOfSurvey = CinemaAdminImpl.getScreeningById(surveyEntryOfSurvey.getScreeningFK)
 		//movieOfSurvey = cinemaAdminImpl.getMovieById(screeningOfSurvey.getMovieFK)
 		movie = new Label("Joker");
 		movie.setStyleName("CardViewTitle");
-		
 		//groupofSurvey = SurveyManagementImpl.getGroupbyId(survey.getGroupFK)
-		group = new Label("Friends");
+		group = new Label();
 		group.setStyleName("CardViewSubtitle");
-		
 		status = new Label("Status: Active");
 		status.setStyleName("CardViewParagraph");
-		
 		voted = new Label("Voted:");
 		voted.setStyleName("CardViewParagraph");
-		
-		
-		
 		
 		// Anzahl der Votes holen + groupmembers = SurveyManagementImpl.countGroupMembers(groupOfSurvey.getId)
 		participations = new Label("4/6 participations");
@@ -109,5 +108,40 @@ public class SurveyCardView extends FlowPanel {
 //		}
 //	}
 	
+	class GetGroupCallback implements AsyncCallback<Group>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Group result) {
+			// TODO Auto-generated method stub
+//			Window.alert(result.getName());
+			groupOfSurvey = result;
+			group.setText(result.getName());
+		}
+		
+	}
+	
+	class GetMovieCallback implements AsyncCallback<Movie>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Movie result) {
+			// TODO Auto-generated method stub
+//			Window.alert(result.getName());
+			movieOfSurvey = result;
+			movie.setText(result.getName());
+		}
+		
+	}
 
 }

@@ -9,6 +9,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
+import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
@@ -376,5 +377,22 @@ public interface SurveyManagementAsync {
      * @param AsyncCallback<Void> callback
      */
     public void editSurveyEntry(SurveyEntry se, AsyncCallback<Void> callback);
+    
+    /**
+     * Methode um die Anzahl von Gruppenmitgliedern zu erhalten
+     * @param gFK
+     * @param AsyncCallback 
+     * return int
+     */
+    public void countGroupMembers(int sFK, AsyncCallback<Integer> callback);
+    
+    /**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param sFK
+     * @param AsyncCallback 
+     * return movie
+     */
+    public void getMoviebySurveyFK(int sFK, AsyncCallback<Movie> callback);
+    
 
 }
