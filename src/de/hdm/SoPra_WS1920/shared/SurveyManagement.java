@@ -353,4 +353,46 @@ public interface SurveyManagement extends RemoteService {
      * return movie
      */
     public Movie getMoviebySurveyFK(int sFK);
+    
+    /**
+     * Methode um den Film einer Suche zu erhalten
+     * @param text
+     * return movie
+     */
+    
+    Vector<Movie> searchMovie(String text);
+    
+    /**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param text
+     * return group
+     */
+    
+    Vector<Group> searchGroup(String text);
+    
+    /**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param time
+     * return survey
+     */
+    
+    Vector<Survey> searchSurvey(Timestamp time); 
+    
+    /**
+     * Methode um den Namen des Films zu erhalten
+     * @param name
+     * return movie
+     */
+    
+    Vector<Movie> getMoviesByName(String name);
+    
+    /**
+     * Methode um den Namen des Films zu erhalten
+     * @param genre
+     * return movie
+     */
+    
+    Vector<Movie> getMoviesByGenre(String genre);
+
+	
 }

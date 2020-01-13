@@ -2,8 +2,10 @@ package de.hdm.SoPra_WS1920.server;
 
 
 import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.Vector;
 
+import com.google.gwt.dev.util.collect.HashSet;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.SoPra_WS1920.server.db.BusinessObjectMapper;
@@ -688,6 +690,68 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
 		this.seMapper.updateSurveyEntry(se);
 		return se;
 	}
+	
+	public Vector<Movie> getMoviesByName(String name) throws IllegalArgumentException {
+		
+		return this.mMapper.findMovieByName(name);
+		
+	}
+	
+	public Vector<Movie> getMoviesByGenre(String genre) throws IllegalArgumentException {
+		
+	
+		return this.mMapper.findMovieByGenre(genre);
+	}
+	
+	public Vector<Movie> searchMovie(String text){
+		
+		HashSet<Movie> hs = new HashSet<Movie>();
+		Vector <Movie> movies = new Vector<Movie>();
+		String s = text;
+		hs.addAll(this.getMoviesByName(s));
+		hs.addAll(this.getMoviesByGenre(s));
+		
+		Iterator<Movie> it = hs.iterator();
+			while(it.hasNext()) {
+				movies.add(it.next());
+			}
+			
+			return movies;
+	
+	}
+	
+	public Vector<Group> searchGroup(String text){
+		
+		HashSet<Group> hs = new HashSet<Group>();
+		Vector <Group> groups = new Vector<Group>();
+		String s = text;
+		hs.addAll(this.getGroupByName(s));
+		
+		Iterator<Group> it = hs.iterator();
+			while(it.hasNext()) {
+				groups.add(it.next());
+			}
+			
+			return groups;
+			
+	}
+	
+	public Vector<Survey> searchSurvey(Timestamp time){
+		
+		HashSet<Survey> hs = new HashSet<Survey>();
+		Vector<Survey> surveys = new Vector<Survey>();
+		Timestamp t = time;
+		hs.addAll(this.getSurveyByEndDate(t));
+		
+		Iterator<Survey> it = hs.iterator();
+			while(it.hasNext()) {
+				surveys.add(it.next());
+			}
+			
+			return surveys;
+		
+	}
+
 
 	
 }
