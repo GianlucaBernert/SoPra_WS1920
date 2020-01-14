@@ -6,12 +6,14 @@ import java.util.Vector;
 
 import org.apache.james.mime4j.field.datetime.DateTime;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
+import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
@@ -338,4 +340,59 @@ public interface SurveyManagement extends RemoteService {
 	 */
     public SurveyEntry updateSurveyEntry(SurveyEntry se);
    
+    /**
+     * Methode um die Anzahl von Gruppenmitgliedern zu erhalten
+     * @param gFK
+     * return
+     */
+    public int countGroupMembers(int gFK);
+    
+    /**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param sFK 
+     * return movie
+     */
+    public Movie getMoviebySurveyFK(int sFK);
+    
+    /**
+     * Methode um den Film einer Suche zu erhalten
+     * @param text
+     * return movie
+     */
+    
+    Vector<Movie> searchMovie(String text);
+    
+    /**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param text
+     * return group
+     */
+    
+    Vector<Group> searchGroup(String text);
+    
+    /**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param time
+     * return survey
+     */
+    
+    Vector<Survey> searchSurvey(Timestamp time); 
+    
+    /**
+     * Methode um den Namen des Films zu erhalten
+     * @param name
+     * return movie
+     */
+    
+    Vector<Movie> getMoviesByName(String name);
+    
+    /**
+     * Methode um den Namen des Films zu erhalten
+     * @param genre
+     * return movie
+     */
+    
+    Vector<Movie> getMoviesByGenre(String genre);
+
+	
 }

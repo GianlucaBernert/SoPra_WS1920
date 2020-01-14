@@ -265,5 +265,13 @@ public interface CinemaAdministrationAsync {
 	void getAllMovies(AsyncCallback<Vector<Movie>> callback);
 	
 	void getScreeningByScreeningTime(Time screeningTime, AsyncCallback<Vector<Screening>> callback);
+
+	void searchMovie(String text, AsyncCallback<Vector<Movie>> callback);
+
+	void searchCinema(int personFk, String text, AsyncCallback<Vector<Cinema>> callback);
+
+	void searchCinemaChain(int personFk, String text, AsyncCallback<Vector<CinemaChain>> callback);
+
+	void searchScreening(int personFk, String text, AsyncCallback<Vector<Screening>> callback);
     
 }

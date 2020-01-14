@@ -9,6 +9,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
+import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
@@ -376,5 +377,67 @@ public interface SurveyManagementAsync {
      * @param AsyncCallback<Void> callback
      */
     public void editSurveyEntry(SurveyEntry se, AsyncCallback<Void> callback);
+    
+    /**
+     * Methode um die Anzahl von Gruppenmitgliedern zu erhalten
+     * @param gFK
+     * @param AsyncCallback 
+     * return int
+     */
+    public void countGroupMembers(int sFK, AsyncCallback<Integer> callback);
+    
+    /**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param sFK
+     * @param AsyncCallback 
+     * return movie
+     */
+    public void getMoviebySurveyFK(int sFK, AsyncCallback<Movie> callback);
+
+    /**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param text
+     * @param AsyncCallback 
+     * return movie
+     */
+    
+	void searchMovie(String text, AsyncCallback<Vector<Movie>> callback);
+	
+	/**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param text
+     * @param AsyncCallback 
+     * return group
+     */
+	
+	void searchGroup(String text, AsyncCallback<Vector<Group>> callback);
+	
+	/**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param time
+     * @param AsyncCallback 
+     * return survey
+     */
+	
+	void searchSurvey(Timestamp time, AsyncCallback<Vector<Survey>> callback);
+
+	/**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param name
+     * @param AsyncCallback 
+     * return movie
+     */
+	
+	void getMoviesByName(String name, AsyncCallback<Vector<Movie>> callback);
+	
+	/**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param genre
+     * @param AsyncCallback 
+     * return movie
+     */
+	
+	void getMoviesByGenre(String genre, AsyncCallback<Vector<Movie>> callback);
+    
 
 }

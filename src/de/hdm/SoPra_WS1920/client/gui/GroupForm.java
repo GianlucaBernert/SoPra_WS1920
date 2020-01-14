@@ -4,19 +4,21 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
-
+import de.hdm.SoPra_WS1920.client.ClientsideSettings;
+import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 
@@ -30,6 +32,7 @@ public class GroupForm extends DialogBox {
 	GroupCard parentCard;
 	GroupForm gf;
 	
+	
 	FlowPanel main;
 	HorizontalPanel buttonPanel;
 	Button cancel;
@@ -39,6 +42,7 @@ public class GroupForm extends DialogBox {
 	Label memberName;
 	Label cardDescription;
 	Label addedMembers;
+	Label deleteLabel;
 	
 	TextArea listedMembersTextArea;
 	
@@ -51,6 +55,7 @@ public class GroupForm extends DialogBox {
 	Button addMember;
 	Button add;
 	
+	Image deleteIcon;
 	Image cancelIcon;
 	Image addIcon;
 	Image searchIcon;
@@ -58,10 +63,18 @@ public class GroupForm extends DialogBox {
 	FlowPanel memberPanel;
 	Vector<Person> groupMembers;
 	
+	SurveyManagementAsync surveyManagementAdministration;
 	
 	
-	public GroupForm() {
+	public GroupForm(GroupCard groupCard, Group group) {
+		this.parentCard = groupCard;
+		this.groupToShow = group;
 		
+	}
+	
+	public GroupForm(SurveyManagementHeader header, SurveyContent content) {
+		this.header = header;
+		this.content = content;
 	}
 	
 	public void showMembers() {
@@ -119,6 +132,7 @@ public class GroupForm extends DialogBox {
 	
 	public void onLoad() {
 		super.onLoad();
+		surveyManagementAdministration = ClientsideSettings.getSurveyManagement();
 		
 		groupMembers = new Vector<Person>();
 		
@@ -150,9 +164,9 @@ public class GroupForm extends DialogBox {
 		
 		
 		allMembers = new MultiWordSuggestOracle();
-		allMembers.add("Yesin");
-		allMembers.add("Sebi");
-		allMembers.add("Matthias");
+		allMembers.add("ys018@hdm-stuttgart.de");
+		allMembers.add("sh67@hdm-stuttgart.de");
+		allMembers.add("mm34@hdm-stuttgart.de");
 		memberSuggestBox = new SuggestBox(allMembers);
 		memberSuggestBox.setStylePrimaryName("CardTextBox");
 		
@@ -189,33 +203,45 @@ public class GroupForm extends DialogBox {
 		main.add(groupName);
 		main.add(groupTextBox);
 		main.add(cancelIcon);
-		//main.add(addIcon);
 		main.add(memberName);
 		main.add(memberSuggestBox);
 		main.add(searchIcon);
 		main.add(addedMembers);
-		//main.add(listedMembersTextArea);
-//		main.add(addMember);
 		main.add(memberPanel);
 		main.add(saveButton);
 		
-		//main.add(cancel);
+//		if(parentCard!=null) {
+//			cardDescription.setText("Edit Cinema");
+//			deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
+//			deleteIcon.setStyleName("DeleteIcon");
+//			deleteIcon.addClickHandler(new DeleteClickHandler(this));
+//			deleteLabel = new Label("Delete");
+//			deleteLabel.setStyleName("DeleteLabel");
+//			deleteLabel.addClickHandler(new DeleteClickHandler(this));
+//			main.add(deleteIcon);
+//			main.add(deleteLabel);
+//		
+//		
 		
 		this.add(main);
 		this.center();
 		this.show();
+	
+		}
+		//groupToShow.setName(groupTextBox.getText());
+		//groupToShow.setId(1);
 		
 
-	}
+		
+	
+
 	
 	public void showGroupForm() {
 		this.center();
 		this.show();
 	
-		
-
-}
 	
+	}
 	class CancelClickHandler implements ClickHandler {
 		GroupForm gf;
 		
@@ -225,14 +251,21 @@ public class GroupForm extends DialogBox {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			if(parentCard== null) {
 			gf.hide();
+			}else {
+				parentCard.showGroupCardView(groupToShow);
+				gf.hide();
+			}
+			
+			
 		
-			
-			
+		
 		}
 		
 	}
 	
+
 	class SaveClickHandler implements ClickHandler {
 		GroupForm gf;
 		
@@ -243,10 +276,14 @@ public class GroupForm extends DialogBox {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			groupToShow.setName(groupTextBox.getValue());
 			
-			
-			
+			surveyManagementAdministration.createGroup(groupTextBox.getText(),
+					2, 
+					new CreateGroupCallback());
+					
+					groupToShow.setName(groupTextBox.getText());
+					groupToShow.setPersonFK(2);
+					
 			if(parentCard==null) {
 				parentCard = new GroupCard(content,groupToShow);
 				parentCard.showGroupCardView(groupToShow);
@@ -258,9 +295,32 @@ public class GroupForm extends DialogBox {
 			}
 			
 		}
+	}
+	
+		}
 		
+		class CreateGroupCallback implements AsyncCallback<Group>{
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("Problem with the Callback");
+				
+			}
+
+			@Override
+			public void onSuccess(Group result) {
+				// TODO Auto-generated method stub
+				
+				
+			}
+		}
 			
-	}	
+		
+		
+	
+		
+				
 	class AddMemberClickHandler implements ClickHandler{
 		GroupForm gf;
 		
@@ -277,36 +337,55 @@ public class GroupForm extends DialogBox {
 			gf.showMembers();
 			
 			
-		}
 		
+		}
+	
+	}
 
-	}
-}
-	class AddClickHandler implements ClickHandler{
-		GroupForm gf;
-	
-		
-		public AddClickHandler(GroupForm gf) {
+		class DeleteClickHandler implements ClickHandler{
 			
+			GroupForm gf;
 			
-		}
+			public DeleteClickHandler(GroupForm gf) {
+				this.gf = gf;
+			}
 
-		@Override
-		public void onClick(ClickEvent event) {
-			
-			
+			@Override
+			public void onClick(ClickEvent event) {
+//				surveyManagementAdministration.deleteGroup(groupToShow, new DeleteGroupCallback(gf));
+				
+			}
 			
 			
 		}
-	
+		class DeleteGroupCallback implements AsyncCallback<Void>{
+			GroupForm gf;
+			
+			public DeleteGroupCallback(GroupForm gf) {
+				this.gf = gf;
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Problem with DeleteCallback");
+				
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				gf.hide();
+//				parentCard.remove();
+				
+			}
+			
 		
-	public void showAddedGroupMembers(String m, Group g) {
+	
+		}
 		
-	}
-	
-	}
 	
 	
+	
+
 
 	
 	

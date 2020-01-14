@@ -2,8 +2,10 @@ package de.hdm.SoPra_WS1920.server;
 
 
 import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.Vector;
 
+import com.google.gwt.dev.util.collect.HashSet;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.SoPra_WS1920.server.db.BusinessObjectMapper;
@@ -597,13 +599,49 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Vote> v = this.vMapper.findVoteBySurveyEntryFK(se.getId());
         return v.size();
     }
+    
+    /**
+     * Methode um die Anzahl der Gruppenmitglieder zu ZÃ¤hlen
+     * @param GroupFK gFK
+     * @return int m.size();
+     */
+    public int countGroupMembers(int gFK) {
+    	Vector <Membership> m = this.meMapper.findMembershipByGroupFK(gFK);
+    	return m.size();
+    }
 
-	
+    /**
+     * Methode um den Film einer Umfrage zurückzugeben
+     * @param int sFK
+     * @return Movie m;
+     */
+    public Movie getMoviebySurveyFK(int sFK) {
+    	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(sFK);
+    	SurveyEntry see = se.get(1);
+    	Screening sc = Admin.getScreeningById(see.getScreeningFK());
+    	Movie m = Admin.getMovieById(sc.getMovieFK());
+    	return m;
+    }
+    
+    /**
+     * Methode um alle Personen einer Umfrage zurückzugeben, die bereits abgestimmt haben
+     * @param int sFK
+     * @return ;
+     */
+//    public int countvotedPersons(int sFK) {
+//    	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(sFK);
+//    	for(SurveyEntry see: se) {
+//    		Vector<Vote> v = this.getVoteBySurveyEntryFK(see.getId());
+//    		
+//    	}
+//    }
+    
     /*
      * Methode um eine Person zu aktualisieren
      * @param Person p
      * @return Person p
      */
+    
 	public Person updatePerson(Person p) {
 		this.pMapper.updatePerson(p);
 		return p;
@@ -652,6 +690,68 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
 		this.seMapper.updateSurveyEntry(se);
 		return se;
 	}
+	
+	public Vector<Movie> getMoviesByName(String name) throws IllegalArgumentException {
+		
+		return this.mMapper.findMovieByName(name);
+		
+	}
+	
+	public Vector<Movie> getMoviesByGenre(String genre) throws IllegalArgumentException {
+		
+	
+		return this.mMapper.findMovieByGenre(genre);
+	}
+	
+	public Vector<Movie> searchMovie(String text){
+		
+		HashSet<Movie> hs = new HashSet<Movie>();
+		Vector <Movie> movies = new Vector<Movie>();
+		String s = text;
+		hs.addAll(this.getMoviesByName(s));
+		hs.addAll(this.getMoviesByGenre(s));
+		
+		Iterator<Movie> it = hs.iterator();
+			while(it.hasNext()) {
+				movies.add(it.next());
+			}
+			
+			return movies;
+	
+	}
+	
+	public Vector<Group> searchGroup(String text){
+		
+		HashSet<Group> hs = new HashSet<Group>();
+		Vector <Group> groups = new Vector<Group>();
+		String s = text;
+		hs.addAll(this.getGroupByName(s));
+		
+		Iterator<Group> it = hs.iterator();
+			while(it.hasNext()) {
+				groups.add(it.next());
+			}
+			
+			return groups;
+			
+	}
+	
+	public Vector<Survey> searchSurvey(Timestamp time){
+		
+		HashSet<Survey> hs = new HashSet<Survey>();
+		Vector<Survey> surveys = new Vector<Survey>();
+		Timestamp t = time;
+		hs.addAll(this.getSurveyByEndDate(t));
+		
+		Iterator<Survey> it = hs.iterator();
+			while(it.hasNext()) {
+				surveys.add(it.next());
+			}
+			
+			return surveys;
+		
+	}
+
 
 	
 }

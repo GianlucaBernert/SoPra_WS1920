@@ -2,12 +2,17 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
+import de.hdm.SoPra_WS1920.client.ClientsideSettings;
+import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 
 public class CinemaCardView extends FlowPanel{
 
@@ -24,6 +29,8 @@ public class CinemaCardView extends FlowPanel{
 	FlowPanel streetRow;
 	FlowPanel cityRow;
 	
+	CinemaAdministrationAsync cinemaAdministration;
+	
 	public CinemaCardView(CinemaCard parentCard, Cinema cinemaToShow) {
 		this.parentCard=parentCard;
 		this.cinemaToShow=cinemaToShow;
@@ -31,6 +38,9 @@ public class CinemaCardView extends FlowPanel{
 
 	public void onLoad() {
 		super.onLoad();
+		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
+		cinemaAdministration.getCinemaChainById(cinemaToShow.getCinemaChainFK(), new GetCinemaChainCallback());
+		
 //		this.setStyleName("view");
 		streetRow = new FlowPanel();
 		streetRow.setStyleName("streetrow-inline");
@@ -68,6 +78,25 @@ public class CinemaCardView extends FlowPanel{
 		this.add(editIcon);
 		
 	}
+	
+	class GetCinemaChainCallback implements AsyncCallback<CinemaChain>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the connection");
+		}
+
+		@Override
+		public void onSuccess(CinemaChain result) {
+			// TODO Auto-generated method stub
+			cinemaChain.setText(result.getName());
+		}
+
+		
+		
+	}
+	
 	class EditClickHandler implements ClickHandler{	
 
 		@Override

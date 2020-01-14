@@ -10,7 +10,7 @@ public class GroupCard extends FlowPanel {
 	SurveyContent content;
 	
 	GroupCardView groupCardView;
-	GroupCardEdit groupCardEdit;
+	GroupForm groupGroupForm;
 	
 	public void onLoad() {
 		super.onLoad();
@@ -20,8 +20,12 @@ public class GroupCard extends FlowPanel {
 	}
 	
 	public GroupCard(SurveyContent content, Group groupToShow) {
-		this.groupToShow = groupToShow;
 		this.content = content;
+		this.groupToShow = groupToShow;
+	}
+	
+	public GroupCard() {
+		
 	}
 	
 	public void showGroupCardView(Group groupToShow) {
@@ -30,11 +34,11 @@ public class GroupCard extends FlowPanel {
 		this.add(new GroupCardView(this,groupToShow));
 	}
 	
-	public void showGroupCardEdit(Group groupToShow) {
+	public void showGroupCardForm(Group groupToShow) {
 		this.groupToShow = groupToShow;
-		GroupCardEdit groupCardEdit = new GroupCardEdit(this, groupToShow);
-		groupCardEdit.center();
-		groupCardEdit.show();
+		GroupForm groupForm = new GroupForm(this,groupToShow);
+		groupForm.center();
+		groupForm.show();
 	}
 	
 	public void remove() {

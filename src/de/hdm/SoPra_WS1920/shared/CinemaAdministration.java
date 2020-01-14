@@ -240,4 +240,12 @@ public interface CinemaAdministration extends RemoteService {
 
 	Vector<Screening> getScreeningByScreeningTime(Time screeningTime) throws IllegalArgumentException;
 
+	Vector<Movie> searchMovie(String text);
+	
+	Vector<Cinema> searchCinema(int personFk, String text);
+	
+	Vector<CinemaChain>	searchCinemaChain(int personFk, String text);
+	
+	Vector<Screening> searchScreening(int personFk, String text);
+	
 }

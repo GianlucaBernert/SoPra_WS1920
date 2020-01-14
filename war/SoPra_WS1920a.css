@@ -14,6 +14,31 @@ body{
 	padding:20px;
 	
 }
+
+.LogoIcon{
+	float: left;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    margin-left: 50px;
+    margin-top: 30px;
+    margin-right: 5px;
+    transform: rotate(20deg) !important;
+}
+
+.LogoText{
+	width: 100%;
+    font-family: "Pacifico" !important;
+    font-size: 20px;
+    color: #f1f1f1;
+    display: block;
+    text-decoration: underline;
+    text-decoration-color: #9278FF;
+    margin-left: 70px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
 .menuIcon{
 	display: block;
 	height: 20px;
@@ -186,6 +211,7 @@ body{
 
 .content{
 	padding:20px;
+	padding-right: 0px;
 	overflow: hidden;
 }
 
@@ -356,9 +382,10 @@ body{
 .Card {
   	position: relative;
 	float:left;
-	width: calc(100% - 40px);
-	min-width: 250px;
-	max-width: 350px;
+	/* width: calc(100% - 40px); */
+	width: 20%;
+	min-width: 200px;
+	/* max-width: 350px; */
 	padding: 20px;
 	border-radius: 10px;
 	background-image: linear-gradient(to bottom right, #0D1D2D, #112D49);
@@ -764,7 +791,7 @@ select option {
 	 	background-color: #0C1C2C;
 	 	position: fixed;
 		height: 100%;
-		overflow: auto;
+
 	}
 
 	.menuIcon{
@@ -779,12 +806,18 @@ select option {
 	    cursor: pointer;
 	    text-decoration: none;
 	}
-
-	.navbar-element:hover{
+	
+	.active{
 		color: #9278FF;
 		text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 		border-left: solid #9278FF;
 		padding: 15px 30px 15px 48px;
+	}
+
+	.navbar-element:hover{
+		color: #9981FC;
+		text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+		padding: 15px 30px 15px 50px;
 	}
 
 	.header{

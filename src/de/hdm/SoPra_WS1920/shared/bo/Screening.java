@@ -90,4 +90,24 @@ public class Screening extends Ownership {
 	public void setScreeningTime(Time screeningTime) {
 		this.screeningTime = screeningTime;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Screening) {
+			Screening s = (Screening) obj;
+			if((this.getId()== s.getId())){				
+				return true;	
+			}
+			else {
+				return false;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = this.getId();
+		return result;
+	}
 }
