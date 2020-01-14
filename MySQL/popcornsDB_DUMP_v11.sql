@@ -159,7 +159,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `popcorns`.`screening` (
   `id` INT(11) NOT NULL,
   `screeningDate` DATE NULL DEFAULT NULL,
-  `screeningTime` TIME NULL,
+  `screeningTime` TIME NULL DEFAULT NULL,
   `cinemaFK` INT(11) NOT NULL,
   `movieFK` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -184,8 +184,6 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `popcorns`.`survey` (
   `id` INT(11) NOT NULL,
-  `startDate` DATE NULL DEFAULT NULL,
-  `endDate` DATE NULL DEFAULT NULL,
   `groupFK` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_survey_businessownership1_idx` (`id` ASC) VISIBLE,
