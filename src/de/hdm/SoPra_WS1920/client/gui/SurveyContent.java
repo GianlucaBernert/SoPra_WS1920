@@ -91,9 +91,9 @@ public class SurveyContent extends FlowPanel {
 		public void onSuccess(Vector<Movie> result) {
 			// TODO Auto-generated method stub
 				for(Movie m : result) {
-				// Ergänzung der MovieCard in SurveyManagement nötig
-//				MovieCard movieCard = new MovieCard(content, m);
-//				content.add(movieCard);
+				
+			MovieBoard movieBoard = new MovieBoard(content, m);
+			content.add(movieBoard);
 			}
 			
 		}

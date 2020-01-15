@@ -9,6 +9,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -18,14 +19,21 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
+import de.hdm.SoPra_WS1920.client.ClientsideSettings;
+import de.hdm.SoPra_WS1920.client.gui.Admin.ScreeningCardEdit;
 import de.hdm.SoPra_WS1920.server.SurveyManagementImpl;
+import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
+import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
+import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 
 public class SurveyCardEdit extends DialogBox {
 	
@@ -47,8 +55,7 @@ public class SurveyCardEdit extends DialogBox {
 	
 	ListBox allGroups;
 	
-	MultiWordSuggestOracle allCities;
-	SuggestBox citySuggestBox;
+	TextBox cityTextBox;
 	
 	DateBox startDateBox;
 	DateBox endDateBox;
@@ -56,6 +63,13 @@ public class SurveyCardEdit extends DialogBox {
 	Button invisibleButton;
 	Button addScreenings; 
 	Image cancelIcon;
+	
+	Group group;
+	Movie movie;
+	Person person;
+	String city;
+	java.sql.Date startDate;
+	java.sql.Date endDate;
 	
 	
 	//CreateSurvey 2/2 
@@ -77,15 +91,20 @@ public class SurveyCardEdit extends DialogBox {
 	CheckBox screeningToSelect;
 	
 	Vector <ScreeningRow> screeningRowVector;
+	Vector <Screening> sv;
 	Vector <Screening> screeningVector;
+	Vector <SurveyEntry> surveyEntryVector;
 	
 	Label showSelected;
 	Button createSurvey;
+	Survey survey;
 	
+	Cinema cinema;
 	
 	SurveyManagementHeader header;
 	SurveyContent content;
-	
+	SurveyManagementAsync surveyManagement;
+	CinemaAdministrationAsync cinemaAdministration;
 	
 	
 	
@@ -102,8 +121,7 @@ public class SurveyCardEdit extends DialogBox {
 		Survey s = new Survey();
 		s.setId(1);
 		s.setGroupFK(1);
-		s.setStartDate(DateTimeFormat.getFormat("yyyy.mm.dd").parse("2019.12.19"));
-		s.setEndDate(DateTimeFormat.getFormat("yyyy.mm.dd").parse("2019.12.19"));
+
 		
 	}
 	
@@ -111,6 +129,8 @@ public class SurveyCardEdit extends DialogBox {
 		super.onLoad();
 		
 		this.setStyleName("EditCard");
+		surveyManagement = ClientsideSettings.getSurveyManagement();
+		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
 		formWrapper = new FlowPanel();
 		
 		cardDescription1 = new Label("Create Survey 1/2");
@@ -124,22 +144,21 @@ public class SurveyCardEdit extends DialogBox {
 		movieLabel = new Label("Movie");
 		movieLabel.setStyleName("TextBoxLabel");
 		allMovies = new MultiWordSuggestOracle();
-		allMovies.add("Joker");
+		cinemaAdministration.getAllMovies(new AllMoviesCallback());
 		movieSuggestBox = new SuggestBox(allMovies);
 		movieSuggestBox.setStyleName("CardSuggestBox");
 		
 		groupLabel =  new Label("Group");
 		groupLabel.setStyleName("TextBoxLabel");
 		allGroups = new ListBox();
-		allGroups.addItem("Popcorns");
+		surveyManagement.getGroupByPersonFK(person.getId(), new GetGroupsByFKCallback());
 		allGroups.setStyleName("CardSuggestBox");
 		
 		cityLabel = new Label("City");
 		cityLabel.setStyleName("TextBoxLabel");
-		allCities = new MultiWordSuggestOracle();
-		allCities.add("Stuggi");
-		citySuggestBox = new SuggestBox(allCities);
-		citySuggestBox.setStyleName("CardSuggestBox");
+		cityTextBox = new TextBox();
+		
+		cityTextBox.setStyleName("CardSuggestBox");
 		
 		startDateLabel = new Label("Start Date");
 		startDateLabel.setStyleName("TextBoxLabel");
@@ -168,12 +187,14 @@ public class SurveyCardEdit extends DialogBox {
 		formWrapper.add(groupLabel);
 		formWrapper.add(allGroups);
 		formWrapper.add(cityLabel);
-		formWrapper.add(citySuggestBox);
+		formWrapper.add(cityTextBox);
 		formWrapper.add(startDateLabel);
 		formWrapper.add(startDateBox);
 		formWrapper.add(endDateLabel);
 		formWrapper.add(endDateBox);
 		
+		person = new Person();
+		person.setId(1);
 		// Editieren wie edit or delte notwendig??
 		
 		//addScreenings Button im SaveButtonStyle. ok?
@@ -202,16 +223,12 @@ public class SurveyCardEdit extends DialogBox {
 		
 		// Als Übergabe reicht startDate, endDate, Vector<Sreenings> zum Testen erstelle ich 
 		// vorerst objekte manuell	
-		Movie m = new Movie();
-		m.setName(movieSuggestBox.getText());
-		m.setId(1);
-		Group g = new Group();
-		g.setName(allGroups.getSelectedItemText());
-		String c = new String();
-		c = citySuggestBox.getText();
+		cinemaAdministration.getMoviesByName(movieSuggestBox.getText(), new GetMovieCallback());
+		surveyManagement.getGroupByName(allGroups.getSelectedItemText(), new GetGroupCallback());
+		city = cityTextBox.getText();
 		
-		Date sd =(Date) startDateBox.getValue();
-		Date ed =(Date) endDateBox.getValue();
+		startDate = new java.sql.Date(startDateBox.getValue().getTime());
+		endDate = new java.sql.Date(endDateBox.getValue().getTime());
 		
 		
 		
@@ -224,7 +241,7 @@ public class SurveyCardEdit extends DialogBox {
 //			}else {
 				
 				surveyCardEdit.clear();
-				surveyCardEdit.showAddScreenings(m, g, c, sd, ed);
+				surveyCardEdit.showAddScreenings(movie, group, city, startDate, endDate);
 				
 				
 //		}
@@ -232,7 +249,75 @@ public class SurveyCardEdit extends DialogBox {
 		}
 	}
 	
+	class AllMoviesCallback implements AsyncCallback<Vector<Movie>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<Movie> result) {
+			// TODO Auto-generated method stub
+			for(Movie m: result) {
+				allMovies.add(m.getName());
+			}
+		}
+	}
 	
+	class GetGroupsByFKCallback implements AsyncCallback<Vector<Group>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<Group> result) {
+			// TODO Auto-generated method stub
+			for(Group g: result) {
+				allGroups.addItem(g.getName());
+			}
+					
+		}
+		
+	}
+	
+	class GetMovieCallback implements AsyncCallback<Vector<Movie>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Fehler beim Laden des Movies");
+		}
+
+		@Override
+		public void onSuccess(Vector<Movie> result) {
+			// TODO Auto-generated method stub
+			movie = result.firstElement();
+		}
+		
+	}
+	
+	class GetGroupCallback implements AsyncCallback<Vector<Group>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<Group> result) {
+			// TODO Auto-generated method stub
+			group = result.firstElement();
+		}
+		
+		
+	}
+
 	class CancelClickHandler implements ClickHandler{
 		SurveyCardEdit surveyCardEdit;
 		public CancelClickHandler(SurveyCardEdit surveyCardEdit) {
@@ -253,14 +338,10 @@ public class SurveyCardEdit extends DialogBox {
 		}
 	}
 	
-	public void showAddScreenings(Movie m, Group g, String c, Date sd, Date ed) {
+	public void showAddScreenings(Movie movie, Group group, String city, java.sql.Date startDate, java.sql.Date endDate) {
 		
-		Screening testScreening = new Screening();
-		testScreening.setCinemaFK(1);
-	//	testScreening.setScreeningDate(screeningDate);
-		testScreening.setId(2);
-		Vector <Screening> sv = new Vector();
-		sv.add(testScreening);
+
+		cinemaAdministration.getScreeningsforSurveyCreation(movie, city, startDate, endDate, new GetScreeningsCallback());
 		Screening testScreening1 = new Screening();
 		testScreening1.setId(3);
 		//s = this.getScreeningBy..(m, c, startDate, endDate);
@@ -276,13 +357,13 @@ public class SurveyCardEdit extends DialogBox {
 		
 		//TO DO BEfüllung der Label mit INhalt der vorherigen Auswahl
 		
-		selectedMovie = new Label("Movie:" + m.getName());
+		selectedMovie = new Label("Movie:" + movie.getName());
 		selectedMovie.setStyleName("TextBoxLabel");
-		selectedGroup = new Label ("Group:" + g.getName());
+		selectedGroup = new Label ("Group:" + group.getName());
 		selectedGroup.setStyleName("TextBoxLabel");
-		selectedCity = new Label ("City:" + c);
+		selectedCity = new Label ("City:" + city);
 		selectedCity.setStyleName("TextBoxLabel");
-		selectedPeriod = new Label ("selected Period: ");// + sd.toString() + " - " + ed.toString());
+		selectedPeriod = new Label ("selected Period: ");// + startDate.toString() + " - " + endDate.toString());
 		selectedPeriod.setStyleName("TextBoxLabel");
 		
 		cinemaFilter = new Label("City Filter");
@@ -357,20 +438,66 @@ public class SurveyCardEdit extends DialogBox {
 				}
 			}
 			
-			Window.alert(screeningVector.size() +" checkboxes selected");
+	//		Window.alert(screeningVector.size() +" checkboxes selected");
 			
-			Survey s = new Survey();
-//			s = SurveyManagementImpl.
-//			for(CheckBox selectedCheckBox : screeningCheckBoxVector) {
-//		/		if(selectedCheckBox.getValue() == true) {
-//					Screening screen = new Screening();
-//				}
-//			}
+			
+			surveyManagement.createSurvey(group.getId(), person.getId(), new CreateSurveyCallback(surveyCardEdit));
+			
+			
+			
+			}
 		
 			
 			
 		}
+
+	class GetScreeningsCallback implements AsyncCallback<Vector<Screening>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
 		}
+
+		@Override
+		public void onSuccess(Vector<Screening> result) {
+			// TODO Auto-generated method stub
+			sv = result;
+		}
+	
+	}
+
+	class CreateSurveyCallback implements AsyncCallback<Survey>{
+		
+		SurveyCardEdit surveyCardEdit;
+		public CreateSurveyCallback(SurveyCardEdit surveyCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.surveyCardEdit=surveyCardEdit;
+		}	
+		@Override
+		public void onFailure(Throwable caught) {
+		// TODO Auto-generated method stub
+		Window.alert("Callback: Survey could not be created.");
+		
+		}
+
+		@Override
+		public void onSuccess(Survey result) {
+		
+		survey = result;	
+		for(Screening selectedScreening : screeningVector) {
+			
+			surveyManagement.createSurveyEntry(selectedScreening.getId(), survey.getId(), person.getId(), new CreateSurveyEntryCallback());
+			}
+		
+		parentCard = new SurveyCard(content, result);
+		parentCard.showSurveyCardView(result);
+		content.add(parentCard);
+		surveyCardEdit.hide();
+		
+		}
+	}
+
 	
 	class ScreeningRow extends FlowPanel{
 		
@@ -384,10 +511,47 @@ public class SurveyCardEdit extends DialogBox {
 		public void onLoad() {
 			super.onLoad();
 		
-		cb = new CheckBox("CineMax " + " 20.01.2020" +" 20:15 " + s.getId());
+		cinemaAdministration.getCinemaById(s.getCinemaFK(), new GetCinemaCallback());
+		
+		cb = new CheckBox(cinema.getName() + s.getScreeningDate().toString() + s.getScreeningTime() + s.getId());
 		this.add(cb);		
 			
 		}
 		
 	}
+	
+	class GetCinemaCallback implements AsyncCallback<Cinema>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Cinema result) {
+			// TODO Auto-generated method stub
+			cinema = result;
+			
+		}
+		
+	}
+	
+	class CreateSurveyEntryCallback implements AsyncCallback<SurveyEntry>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(SurveyEntry result) {
+			// TODO Auto-generated method stub
+			surveyEntryVector.add(result);
+		}
+		
+	}
+
+
 }

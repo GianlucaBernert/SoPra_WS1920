@@ -247,5 +247,8 @@ public interface CinemaAdministration extends RemoteService {
 	Vector<CinemaChain>	searchCinemaChain(int personFk, String text);
 	
 	Vector<Screening> searchScreening(int personFk, String text);
+
+	Vector<Screening> getScreeningsforSurveyCreation(Movie movie, String city, Date startDate, Date endDate)
+			throws IllegalArgumentException;
 	
 }

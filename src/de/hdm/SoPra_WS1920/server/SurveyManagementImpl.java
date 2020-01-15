@@ -368,13 +368,11 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @throws IllegalArgumentException
      * @return Survey s
      */
-    public Survey createSurvey(int gFK, int pFK, Timestamp startDate, Timestamp endDate) throws IllegalArgumentException {
+    public Survey createSurvey(int gFK, int pFK) throws IllegalArgumentException {
     	Ownership os = this.createOwnership(pFK);
         Survey s = new Survey();
         s.setId(os.getId());
         s.setGroupFK(gFK);
-        s.setStartDate(startDate);
-        s.setEndDate(endDate);
         s.setCreationTimestamp(os.getCreationTimestamp());
         this.sMapper.insertSurvey(s);
         return s;
@@ -417,23 +415,6 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         return this.sMapper.findSurveyByID(id);
     }
     
-    /** 
-     * Methode um eine Umfrage anhand des Start Datums zu finden
-     * @param Timestamp startDate
-     * @return Vector<Survey>
-     */
-    public Vector<Survey> getSurveyByStartDate(Timestamp startDate) {
-        return this.sMapper.findSurveyByEndDate(startDate);
-    }
-
-    /**
-     * Methode um eine Umfrage anhand des ENd Datums zu finden
-     * @param Timestamp endDate
-     * @return Vector<Survey>
-     */
-    public Vector<Survey> getSurveyByEndDate(Timestamp endDate) {
-        return this.sMapper.findSurveyByEndDate(endDate);
-    }
     
     /**
      * Methode um eine Umfrage anhand des PersonFKs zu finden
@@ -601,13 +582,12 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     }
     
     /**
-     * Methode um die Anzahl der Gruppenmitglieder zu ZÃ¤hlen
+     * Methode um alle Mitglieder einer Gruppe zurückzugeben
      * @param GroupFK gFK
-     * @return int m.size();
+     * @return vector membership;
      */
-    public int countGroupMembers(int gFK) {
-    	Vector <Membership> m = this.meMapper.findMembershipByGroupFK(gFK);
-    	return m.size();
+    public Vector<Membership> getGroupMembersOfGroup(int gFK) {
+    	return this.meMapper.findMembershipByGroupFK(gFK);
     }
 
     /**
@@ -628,13 +608,42 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param int sFK
      * @return ;
      */
-//    public int countvotedPersons(int sFK) {
-//    	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(sFK);
-//    	for(SurveyEntry see: se) {
-//    		Vector<Vote> v = this.getVoteBySurveyEntryFK(see.getId());
-//    		
-//    	}
-//    }
+    public Vector<Person> getVotedPersonsOfSurvey(int surveyFK) {
+    	Vector<Person> result = new Vector<Person>();
+    	HashSet<Person> hs = new HashSet<Person>();
+    	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(surveyFK);
+    	for(SurveyEntry see: se) {
+    		Vector<Vote> v = this.getVoteBySurveyEntryFK(see.getId());
+    		for(Vote vo: v) {
+    			Ownership o = this.oMapper.findOwnershipByID(vo.getId());
+    			hs.add(this.getPersonById(o.getPersonFK()));
+    		}
+    	}
+		Iterator<Person> it = hs.iterator();
+	     while(it.hasNext()){
+	        result.add(it.next());
+	     }
+    	return result;
+    }
+    
+    
+    /*
+     * Methode um alle Personen zurückzugeben
+     * @return vector Person
+     */
+    public Vector<Person> getAllPersons(){
+    	return this.pMapper.findAll();
+    }
+   
+    
+    /*
+     * Methode um alle Memberships einer Gruppe zurückzugeben
+     * @param group
+     * @return membership
+     */
+    public Vector<Membership> getMembershipsOfGroup(Group group){
+    	return this.meMapper.findMembershipByGroupFK(group.getId());
+    }
     
     /*
      * Methode um eine Person zu aktualisieren
@@ -736,22 +745,36 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
 			
 	}
 	
-	public Vector<Survey> searchSurvey(Timestamp time){
+//	public Vector<Survey> searchSurvey(Timestamp time){
+//		
+//		HashSet<Survey> hs = new HashSet<Survey>();
+//		Vector<Survey> surveys = new Vector<Survey>();
+//		Timestamp t = time;
+//		hs.addAll(this.getSurveyByEndDate(t));
+//		
+//		Iterator<Survey> it = hs.iterator();
+//			while(it.hasNext()) {
+//				surveys.add(it.next());
+//			}
+//			
+//			return surveys;
+//		
+//	}
+	
+	@Override
+	public Vector <Person> searchPerson(String text){
 		
-		HashSet<Survey> hs = new HashSet<Survey>();
-		Vector<Survey> surveys = new Vector<Survey>();
-		Timestamp t = time;
-		hs.addAll(this.getSurveyByEndDate(t));
+		HashSet<Person> hs = new HashSet<Person>();
+		Vector<Person> persons = new Vector<Person>();
+		String s = text;
+		hs.add(this.getPersonByEmail(s));
 		
-		Iterator<Survey> it = hs.iterator();
+		Iterator<Person> it = hs.iterator();
 			while(it.hasNext()) {
-				surveys.add(it.next());
+				persons.add(it.next());
 			}
 			
-			return surveys;
-		
+			return persons;
 	}
-
-
 	
 }

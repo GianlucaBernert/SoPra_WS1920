@@ -12,10 +12,10 @@ import de.hdm.SoPra_WS1920.shared.bo.Survey;
 /**
  *
  * Mapper-Klasse, die <code>Survey</code>-Objekte auf relationale Datenbank abbildet.
- * Anhand von den Methoden kÃ¯Â¿Â½nnen Objekte gesucht, erzeugt, bearbeitet und gelÃ¯Â¿Â½scht werden.
- * Objekte kÃ¯Â¿Â½nnen in DB-Strukturen umgewandelt werden und DB-Strukturen in Objekte.
+ * Anhand von den Methoden k�nnen Objekte gesucht, erzeugt, bearbeitet und gel�scht werden.
+ * Objekte k�nnen in DB-Strukturen umgewandelt werden und DB-Strukturen in Objekte.
  * 
- * @author shila
+ * @author Shila Lotfi
  */ 
 public class SurveyMapper { 
 	
@@ -38,7 +38,7 @@ public class SurveyMapper {
 	
 /**
  * Folgende statische Methode sichert die Singleton-Eigenschaft.
- * Es wird dafÃ¯Â¿Â½r gesorgt, dass nur eine einzige Instanz von
+ * Es wird daf�r gesorgt, dass nur eine einzige Instanz von
  * <code>SurveyMapper</code> existiert.
  * SurveyMapper wird durch den Aufruf dieser statischen Methode instanziiert, 
  * nicht durch den new-Operator.
@@ -56,8 +56,8 @@ public class SurveyMapper {
 	}
 	
 	/**
-     * @param id (PrimÃ¯Â¿Â½rschlÃ¯Â¿Â½ssel-Attribut)
-     * @return Survey-Objekt, das dem Ã¯Â¿Â½bergebenen SchlÃ¯Â¿Â½ssel entspricht, null
+     * @param id (Prim�rschl�ssel-Attribut)
+     * @return Survey-Objekt, das dem �bergebenen Schluessel entspricht, null
      * bei nicht vorhandenem DB-Tupel.
      */
 	
@@ -72,8 +72,6 @@ public class SurveyMapper {
 				
 				Survey s = new Survey();
 				s.setId(rs.getInt("id"));
-				s.setStartDate(rs.getDate("startDate"));
-				s.setEndDate(rs.getDate("endDate"));
 				s.setGroupFK(rs.getInt("groupFK"));
 				
 				return s;
@@ -87,10 +85,10 @@ public class SurveyMapper {
 	}
 	
 	/**
-     * EinfÃ¯Â¿Â½gen eines <code>Survey</code>-Objekts in die DB.
-     * PrÃ¯Â¿Â½fung und ggf. Korrektur des PrimÃ¯Â¿Â½rschlÃ¯Â¿Â½ssels
+     * Einf�gen eines <code>Survey</code>-Objekts in die DB.
+     * Pr�fung und ggf. Korrektur des Prim�rschl�ssels
      * @param survey das zu speichernde Objekt
-     * @return das Ã¯Â¿Â½bergebene Objekt, mit ggf. korrigierter <code>id</code>.
+     * @return das �bergebene Objekt, mit ggf. korrigierter <code>id</code>.
      */
 	
 	public Survey insertSurvey(Survey s) {
@@ -105,10 +103,7 @@ public class SurveyMapper {
 					+ s.getId()	
 					+ "','"
 					+ s.getGroupFK()
-					+ "','"
-					+ s.getStartDate()
-					+ "','"
-					+ s.getEndDate()+ "')");
+					+ "')");
 		}
 		catch(SQLException e2) {
 			e2.printStackTrace();
@@ -122,7 +117,7 @@ public class SurveyMapper {
      * Ein Objekt wird wiederholt in die DB geschrieben.
      * 
      * @param s, das Objekt, das in die DB geschrieben werden soll
-     * @return das Objekt, das als Parameter Ã¯Â¿Â½bergeben wird -> s
+     * @return das Objekt, das als Parameter �bergeben wird -> s
      */
     public Survey updateSurvey(Survey s) {
         Connection con = DBConnection.connection();
@@ -131,9 +126,7 @@ public class SurveyMapper {
         	con.setAutoCommit(false);
         	Statement stmt = con.createStatement();
         	
-        	stmt.executeUpdate("UPDATE survey SET startDate='"+s.getStartDate()
-        	+ "', endDate='"+s.getEndDate()
-        	+ "', groupFK='"+s.getGroupFK()
+        	stmt.executeUpdate("UPDATE survey SET groupFK='" + s.getGroupFK()
         	+ "' WHERE id=" + s.getId());
         	con.setAutoCommit(true);
         }
@@ -145,8 +138,8 @@ public class SurveyMapper {
     }
     
     /**
-     * LÃ¯Â¿Â½schen von Daten eines <code>Survey</code>-Objekts aus der Datenbank
-     * @param s, das zu lÃ¯Â¿Â½schende Objekt 
+     * L�schenn von Daten eines <code>Survey</code>-Objekts aus der Datenbank
+     * @param s, das zu l�schende Objekt 
      */
     public void deleteSurvey(Survey s) {
     	Connection con = DBConnection.connection();
@@ -164,77 +157,9 @@ public class SurveyMapper {
         
     }
     
-    /**
-     * Auslesen der Survey-Objekte mit gegebenem Beginn
-     * @param startDate
-     * 
-     * @return Vektor mit Survey-Objekten
-     */
-    public Vector<Survey> findSurveyByStartDate(Date startDate) {
-        Connection con = DBConnection.connection();
-        Vector<Survey> result = new Vector<Survey>();
-        
-        try {
-        	Statement stmt = con.createStatement();
-
-
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM survey" 
-        	+ "WHERE startDate= '" + startDate + "'");
-        	//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
-
-
-        	while(rs.next()) {
-        		Survey s = new Survey();
-        		s.setId(rs.getInt("id"));
-        		s.setStartDate(rs.getDate("startDate"));
-        		s.setEndDate(rs.getDate("endDate"));
-        		s.setGroupFK(rs.getInt("groupFK"));
-        		
-        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
-        		result.addElement(s);
-        	}
-        }
-        	catch(SQLException e2) {
-        		e2.printStackTrace();
-        	}
-        	//RÃ¯Â¿Â½ckgabe des Ergebnisvektors
-        	return result;
-        }
     
     /**
-     * Auslesen der Survey-Objekte mit gegebenem Ende 
-     * @param endDate 
-     * @return Vektor mit Survey-Objekten
-     */
-    public Vector<Survey> findSurveyByEndDate(Date endDate) {
-        Connection con = DBConnection.connection();
-        Vector<Survey> result = new Vector<Survey>();
-        
-        try {
-        	Statement stmt = con.createStatement();
-
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM survey" + "WHERE endDate= '" + endDate + "'");
-        	//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
-
-        	while(rs.next()) {
-        		Survey s = new Survey();
-        		s.setId(rs.getInt("id"));
-        		s.setStartDate(rs.getDate("startDate"));
-        		s.setEndDate(rs.getDate("endDate"));
-        		s.setGroupFK(rs.getInt("groupFK"));
-        		
-        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
-        		result.addElement(s);
-        	}
-        } catch(SQLException e2) {
-        	e2.printStackTrace();
-        }
-        //Rückgabe des Ergebnisvektors
-        return result;
-    }
-    
-    /**
-     * Auslesen der Survey-Objekte mit gegebener GroupFK (FremdschlÃ¯Â¿Â½ssel)
+     * Auslesen der Survey-Objekte mit gegebener GroupFK (Fremdschl�ssel)
      * @param groupFK
      * @return Vektor mit Survey-Objekten
      */
@@ -251,12 +176,10 @@ public class SurveyMapper {
     		while(rs.next()) {
     			Survey s = new Survey();
     			s.setId(rs.getInt("id"));
-    			s.setStartDate(rs.getDate("startDate"));
-    			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
     			
     			
-    			//Hinzufügen des Objekts zum Ergebnisvektor
+    			//Hinzuf�gen des Objekts zum Ergebnisvektor
     			result.addElement(s);
     		}
     	} catch(SQLException e2) {
@@ -268,7 +191,7 @@ public class SurveyMapper {
     }
     
     /**
-     * Löschen einer Umfrage durch den GroupFK(Fremdschlüssel)
+     * L�schen einer Umfrage durch den GroupFK(Fremdschlüssel)
      * @param groupFK
      */
     
@@ -299,17 +222,15 @@ public class SurveyMapper {
         			+ "FROM survey INNER JOIN popcorns.businessownership "
         			+ "ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK + "'");
         	
-        	//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt zugeordnet
+        	//F�r jeden Eintrag im Suchergebnis wird ein Survey-Objekt zugeordnet
         	while(rs.next()) {
         		Survey s = new Survey();
         		s.setId(rs.getInt("id"));
-        		s.setStartDate(rs.getDate("startDate"));
-        		s.setEndDate(rs.getDate("endDate"));
         		s.setGroupFK(rs.getInt("groupFK"));
         		
         		
         		
-        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+        		//Hinzuf�gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(s);
         	}
         }

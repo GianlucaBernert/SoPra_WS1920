@@ -29,7 +29,7 @@ public interface SurveyManagementAsync {
 	public void createBusinessObject(AsyncCallback<BusinessObject> callback);
 	
     /**
-     * Methode um ein BusinessObject zu löschen
+     * Methode um ein BusinessObject zu lÃ¶schen
      * @param BusinessObject bo
      * @param AsyncCallback<Void> callback
      */
@@ -44,7 +44,7 @@ public interface SurveyManagementAsync {
 	public void createOwnership(int pFK, AsyncCallback<Ownership> callback);
 	
     /*
-     * Methode um eine Ownership zu löschen
+     * Methode um eine Ownership zu lÃ¶schen
      * @param Ownership os
      * @param AsyncCallback<Void> callback
      */
@@ -76,7 +76,7 @@ public interface SurveyManagementAsync {
      * @param AsyncCallback<Survey> callback
      * @return Survey s
      */
-    public void createSurvey(int gFK, int pFK, Timestamp startDate, Timestamp endDate, AsyncCallback<Survey> callback);
+    public void createSurvey(int gFK, int pFK, AsyncCallback<Survey> callback);
     
     /**
      * Methode um eine Umfrage zu bearbeiten
@@ -95,7 +95,7 @@ public interface SurveyManagementAsync {
     public void updatePerson(Person p, AsyncCallback<Person> callback);
     
     /**
-     * Methode um eine Person zu löschen
+     * Methode um eine Person zu lÃ¶schen
      * @param Person p
      * @param AsyncCallback<Void> callback
      */
@@ -143,7 +143,7 @@ public interface SurveyManagementAsync {
     void createMembership(Group g, Person p, AsyncCallback<Membership> callback);
     
     /**
-     * Methode um eine Mitgliedschaft zu löschen
+     * Methode um eine Mitgliedschaft zu lÃ¶schen
      * @param Group g
      * @param Person p
      * @param AsyncCallback<Void> callback
@@ -166,7 +166,7 @@ public interface SurveyManagementAsync {
     public void updateGroup(Group g, AsyncCallback<Group> callback);
 
     /**
-     * Methode um eine Gruppe zu löschen
+     * Methode um eine Gruppe zu lÃ¶schen
      * @param Group g 
      * @param AsyncCallback<Void> callback
      */
@@ -180,21 +180,6 @@ public interface SurveyManagementAsync {
      */
     public void getGroupByName(String name, AsyncCallback<Vector<Group>> callback);
 
-    /** 
-     * Methode um eine Umfrage anhand des Start Datums zu finden
-     * @param Timestamp startDate
-     * @param AsyncCallback<Vector<Survey>> callback
-     * @return Vector<Survey>
-     */
-    public void getSurveyByStartDate(Timestamp startDate, AsyncCallback<Vector<Survey>> callback);
-
-    /**
-     * Methode um eine Umfrage anhand des ENd Datums zu finden
-     * @param Timestamp endDate
-     * @param AsyncCallback<Vector<Survey>> callback
-     * @return Vector<Survey>
-     */
-    public void getSurveyByEndDate(Timestamp endDate, AsyncCallback<Vector<Survey>> callback);
 
     /**
      * Methode um eine Person anhand der ID zu finden
@@ -229,7 +214,7 @@ public interface SurveyManagementAsync {
     public void updateSurvey(Survey s, AsyncCallback<Survey> callback);
     
     /**
-     * Methode um eine Umfrage zu löschen
+     * Methode um eine Umfrage zu lÃ¶schen
      * @param Survey s
      * @param AsyncCallback<Void> callback
      */
@@ -285,7 +270,7 @@ public interface SurveyManagementAsync {
     public void updateVote(Vote v, AsyncCallback<Vote> callback);
     
     /**
-     * Methode um ein Vote zu löschen
+     * Methode um ein Vote zu lÃ¶schen
      * @param Vote v
      * @param AsyncCallback<Void> callback
      */
@@ -308,7 +293,7 @@ public interface SurveyManagementAsync {
     public void getVoteById(int id, AsyncCallback<Vote> callback);
     
     /**
-     * Methode um die Anzahl der Votes zu Zählen
+     * Methode um die Anzahl der Votes zu ZÃ¤hlen
      * @param SurveyEntry se 
      * @param AsyncCallback<Integer> callback
      * @return int v.size();
@@ -349,7 +334,7 @@ public interface SurveyManagementAsync {
     public void updateSurveyEntry(SurveyEntry se, AsyncCallback<SurveyEntry> callback);
 
     /**
-     * Methode um einen Umfrageeintrag zu löschen
+     * Methode um einen Umfrageeintrag zu lÃ¶schen
      * @param SurveyEntry se
      * @param AsyncCallback<Void> callback
      */
@@ -379,12 +364,12 @@ public interface SurveyManagementAsync {
     public void editSurveyEntry(SurveyEntry se, AsyncCallback<Void> callback);
     
     /**
-     * Methode um die Anzahl von Gruppenmitgliedern zu erhalten
+     * Methode um die Memberships einer Gruppe zu erhalten
      * @param gFK
      * @param AsyncCallback 
-     * return int
+     * return Vector Membership
      */
-    public void countGroupMembers(int sFK, AsyncCallback<Integer> callback);
+    public void getGroupMembersOfGroup(int sFK, AsyncCallback<Vector<Membership>> callback);
     
     /**
      * Methode um den Film einer Umfrage zu erhalten
@@ -394,6 +379,28 @@ public interface SurveyManagementAsync {
      */
     public void getMovieBySurveyFK(int sFK, AsyncCallback<Movie> callback);
 
+    /**
+     * Methode um alle Voters einer Survey zurückzugeben
+     * @param surveyFK
+     * @param AsyncCallback
+     * return vector person
+     */
+    public void getVotedPersonsOfSurvey(int surveyFK, AsyncCallback<Vector<Person>> callback);
+
+    /**
+     * Methode um alle Memberships einer Gruppe zurückzugeben
+     * @param group
+     * @param AsyncCallback
+     * return vector membership
+     */
+    public void getMembershipsOfGroup(Group group, AsyncCallback<Vector<Membership>> callback);
+    
+    /**
+     * Methode um alle Persons zurückzugeben
+     * @param AsyncCallback
+     * return vector person
+     */
+    public void getAllPersons(AsyncCallback<Vector<Person>> callback);
     /**
      * Methode um den Film einer Umfrage zu erhalten
      * @param text
@@ -419,7 +426,7 @@ public interface SurveyManagementAsync {
      * return survey
      */
 	
-	void searchSurvey(Timestamp time, AsyncCallback<Vector<Survey>> callback);
+//	void searchSurvey(Timestamp time, AsyncCallback<Vector<Survey>> callback);
 
 	/**
      * Methode um den Film einer Umfrage zu erhalten
@@ -438,6 +445,15 @@ public interface SurveyManagementAsync {
      */
 	
 	void getMoviesByGenre(String genre, AsyncCallback<Vector<Movie>> callback);
+	
+	/**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param text
+     * @param AsyncCallback 
+     * return person
+     */
+
+	void searchPerson(String text, AsyncCallback<Vector<Person>> callback);
     
 
 }
