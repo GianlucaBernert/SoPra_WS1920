@@ -317,7 +317,7 @@ public class PersonMapper {
             p.setLastname(rs.getString("lastname"));
             p.setEMail(rs.getString("email"));
 
-            // Hinzufügen des neuen Objekts zum Ergebnisvektor
+            //  Hinzufügen des neuen Objekts zum Ergebnisvektor
             result.addElement(p);
           }
         }
