@@ -99,7 +99,7 @@ public class VotingCard extends DialogBox {
 		caa = ClientsideSettings.getCinemaAdministration();
 		sma = ClientsideSettings.getSurveyManagement();
 		
-		sma.getMoviebySurveyFK(this.currentSurvey.getId(), new GetMovieCallback());
+		sma.getMovieBySurveyFK(this.currentSurvey.getId(), new GetMovieCallback());
 		sma.getGroupById(this.currentSurvey.getGroupFK(), new GetGroupCallback());
 		super.onLoad();
 		
