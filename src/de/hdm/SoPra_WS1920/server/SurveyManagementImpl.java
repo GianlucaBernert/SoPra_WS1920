@@ -600,12 +600,28 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	System.out.println("--------------------------------------------------"+se.size());
     	SurveyEntry see = se.get(0);
     	System.out.println("--------------------------------------------------"+see.getId());
-    	Screening sc = Admin.getScreeningById(see.getScreeningFK());
+    	Screening sc = this.getScreeningById(see.getScreeningFK());
     	System.out.println("--------------------------------------------------"+sc.getId());
-    	Movie m = Admin.getMovieById(sc.getMovieFK());
+    	Movie m = this.getMovieById(sc.getMovieFK());
     	System.out.println("--------------------------------------------------"+m.toString());
     	return m;
     }
+    
+    @Override
+    public Screening getScreeningById(int id) throws IllegalArgumentException {
+        
+        return this.scMapper.findScreeningByID(id);
+    }
+    
+    @Override
+    public Movie getMovieById(int id) throws IllegalArgumentException {
+        
+        return this.mMapper.findMovieByID(id);
+    }
+
+    
+    
+    
     
     /**
      * Methode um alle Personen einer Umfrage zur�ckzugeben, die bereits abgestimmt haben
