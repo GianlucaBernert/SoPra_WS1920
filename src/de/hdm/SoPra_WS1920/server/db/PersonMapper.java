@@ -298,7 +298,34 @@ public class PersonMapper {
 		return result;
     }
     
+    public Vector<Person> findAll() {
+        Connection con = DBConnection.connection();
+        Vector<Person> result = new Vector<Person>();
 
+        try {
+          Statement stmt = con.createStatement();
+
+          ResultSet rs = stmt.executeQuery("SELECT * FROM person "
+              + " ORDER BY id");
+
+          while (rs.next()) {
+            Person p = new Person();
+            p.setId(rs.getInt("id"));
+            p.setFirstname(rs.getString("firstname"));
+            p.setLastname(rs.getString("lastname"));
+            p.setEMail(rs.getString("email"));
+
+            //  Hinzufügen des neuen Objekts zum Ergebnisvektor
+            result.addElement(p);
+          }
+        }
+        catch (SQLException e2) {
+          e2.printStackTrace();
+        }
+
+        // Ergebnisvektor zurückgeben
+        return result;
+      }
 
 
 }
