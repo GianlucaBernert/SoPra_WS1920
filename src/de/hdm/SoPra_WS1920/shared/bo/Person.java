@@ -76,11 +76,15 @@ public class Person extends BusinessObject {
 		return "PersonID #P" + this.getId() + " " + this.firstname + " " + this.lastname;
 	}
 	
+
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Person) {
-			Person p= (Person) obj;
+			Person p = (Person) obj;
 			if((this.getId()== p.getId())){				
-				return true;	
+				return true;
+
 			}
 			else {
 				return false;

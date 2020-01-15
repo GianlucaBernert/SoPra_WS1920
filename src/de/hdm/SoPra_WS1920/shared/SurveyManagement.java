@@ -208,19 +208,19 @@ public interface SurveyManagement extends RemoteService {
      */
     public Vector<SurveyEntry> getSurveyEntryBySurveyFK(int sFK);
     
-    /** 
-     * Methode um eine Umfrage anhand des Start Datums zu finden
-     * @param Timestamp startDate
-     * @return Vector<Survey>
-     */
-    public Vector<Survey> getSurveyByStartDate(Timestamp startDate);
-
-    /**
-     * Methode um eine Umfrage anhand des ENd Datums zu finden
-     * @param Timestamp endDate
-     * @return Vector<Survey>
-     */
-    public Vector<Survey> getSurveyByEndDate(Timestamp endDate);
+//    /** 
+//     * Methode um eine Umfrage anhand des Start Datums zu finden
+//     * @param Timestamp startDate
+//     * @return Vector<Survey>
+//     */
+//    public Vector<Survey> getSurveyByStartDate(Timestamp startDate);
+//
+//    /**
+//     * Methode um eine Umfrage anhand des ENd Datums zu finden
+//     * @param Timestamp endDate
+//     * @return Vector<Survey>
+//     */
+//    public Vector<Survey> getSurveyByEndDate(Timestamp endDate);
 
     /**
      * Methode um ein Vote zu erstellen
@@ -347,12 +347,6 @@ public interface SurveyManagement extends RemoteService {
      */
     public Vector<Membership> getGroupMembersOfGroup(int gFK);
     
-    /**
-     * Methode um den Film einer Umfrage zu erhalten
-     * @param sFK 
-     * return movie
-     */
-    public Movie getMovieBySurveyFK(int sFK);
     
     /**
      * Methode um alle Voters einer Survey zurückzugeben
@@ -375,4 +369,49 @@ public interface SurveyManagement extends RemoteService {
     public Vector<Person> getAllPersons();
     
     
+
+    public Movie getMovieBySurveyFK(int sFK);
+    
+    /**
+     * Methode um den Film einer Suche zu erhalten
+     * @param text
+     * return movie
+     */
+    
+    Vector<Movie> searchMovie(String text);
+    
+    /**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param text
+     * return group
+     */
+    
+    Vector<Group> searchGroup(String text);
+    
+    /**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param time
+     * return survey
+     */
+    
+    Vector<Survey> searchSurvey(Timestamp time); 
+    
+    /**
+     * Methode um den Namen des Films zu erhalten
+     * @param name
+     * return movie
+     */
+    
+    Vector<Movie> getMoviesByName(String name);
+    
+    /**
+     * Methode um den Namen des Films zu erhalten
+     * @param genre
+     * return movie
+     */
+    
+    Vector<Movie> getMoviesByGenre(String genre);
+
+	
+
 }
