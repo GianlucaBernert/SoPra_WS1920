@@ -106,7 +106,7 @@ public class GroupForm extends DialogBox {
 			deleteIcon.addClickHandler(new DeleteMemberClickHandler(this));
 			
 			
-			fullNameLabel = new Label(p.getFirstname()+ " "+p.getLastname());
+			fullNameLabel = new Label(p.getEMail());
 			fullNameLabel.setStyleName("MemberTextBoxLabel");
 			
 			
@@ -134,9 +134,9 @@ public class GroupForm extends DialogBox {
 	public void onLoad() {
 		super.onLoad();
 		surveyManagementAdministration = ClientsideSettings.getSurveyManagement();
-		
+		surveyManagementAdministration.getAllPersons(new GetAllPersonsCallback());
 		if(parentCard!=null) {
-//			surveyManagementAdministration.getMembershipsOfGroup(groupToShow, new GetMembershipCallback());
+			surveyManagementAdministration.getMembershipsOfGroup(groupToShow, new GetMembershipCallback());
 		}
 		
 		groupMembers = new Vector<Person>();
@@ -165,11 +165,10 @@ public class GroupForm extends DialogBox {
 		searchIcon.setStyleName("SearchIcon");
 		searchIcon.addClickHandler(new AddMemberClickHandler(this));
 
-		
-		
-		
 		allMembers = new MultiWordSuggestOracle();
-		surveyManagementAdministration.getAllPersons(new GetAllPersonsCallback()); 
+		
+//		surveyManagementAdministration.getAllPersons(new GetAllPersonsCallback()); 
+//		surveyManagementAdministration.getAllPersons(new GetAllPersonsCallback());
 
 		memberSuggestBox = new SuggestBox(allMembers);
 		memberSuggestBox.setStylePrimaryName("CardTextBox");
@@ -202,7 +201,7 @@ public class GroupForm extends DialogBox {
 		
 		//addIcon = new Image("/Images/003-edit.png");
 		//addIcon.setStylePrimaryName("editIcon");
-		//addIcon.addClickHandler(new AddClickHandler(this, agmf));
+		//addIcon.addClickHandler(new AddClickHandler(this));
 		
 		
 		main.add(cardDescription);
@@ -221,12 +220,30 @@ public class GroupForm extends DialogBox {
 		this.show();
 	
 	}
+	
+	class GetAllPersonsCallback implements AsyncCallback<Vector<Person>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("funzt net");
+		}
+
+		@Override
+		public void onSuccess(Vector<Person> result) {
+			// TODO Auto-generated method stub
+			for(Person p: result) {
+				allMembers.add(p.getEMail());
+			}
+		}
+		
+	}
 		
 	public boolean checkforMembership(Person person) {
 		boolean isMember= false;
 		
 		for(Person p: groupMembers) {
-			if(p.getEMail().equals(person.getEMail())) {
+			if(!p.getEMail().equals(person.getEMail())) {
 				continue;
 			}else {
 				isMember = true;
@@ -276,25 +293,6 @@ public class GroupForm extends DialogBox {
 			}
 		}
 		
-	
-	
-	class GetAllPersonsCallback implements AsyncCallback<Vector<Person>>{
-
-		@Override
-		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-			Window.alert("Problem with getting the connection");
-		}
-
-		@Override
-		public void onSuccess(Vector<Person> result) {
-			// TODO Auto-generated method stub
-			for(Person p: result) {
-				allMembers.add(p.getEMail());
-			}
-		}
-		
-	}
 	
 	class CancelClickHandler implements ClickHandler {
 		GroupForm gf;
@@ -382,7 +380,7 @@ public class GroupForm extends DialogBox {
 		}
 		
 		
-	}
+	
 				
 	class AddMemberClickHandler implements ClickHandler{
 		GroupForm gf;
@@ -395,25 +393,35 @@ public class GroupForm extends DialogBox {
 		@Override
 		public void onClick(ClickEvent event) {
 			
+			surveyManagementAdministration.getPersonByEmail(gf.memberSuggestBox.getValue(), new GetPersonCallback(gf));
 			
-			Person p = new Person();
-			p.setEMail(gf.memberSuggestBox.getValue());
-			
-			if(gf.checkforMembership(p)==false) {
-				gf.groupMembers.add(p);
-			}
-			
-//			if(!gf.groupMembers.contains(p)) {
-//				gf.groupMembers.add(p);
-//				gf.showMembers();
-//			}
-//			for(Person person: gf.groupMembers) {
-//				if(p.getEMail().equals(person.getEMail())) {
-//					break;
-//				}
-//			}
 		}
 	
+	}
+	
+	class GetPersonCallback implements AsyncCallback<Person>{
+		GroupForm gf;
+		public GetPersonCallback(GroupForm gf) {
+			// TODO Auto-generated constructor stub
+			this.gf = gf;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Person result) {
+			// TODO Auto-generated method stub
+			if(gf.checkforMembership(result)==false) {
+				gf.groupMembers.add(result);
+				MemberRow newMember = new MemberRow(gf.memberPanel,result);
+				gf.memberPanel.add(newMember);
+			}
+		}
+		
 	}
 	
 
@@ -456,6 +464,7 @@ public class GroupForm extends DialogBox {
 		
 	
 		}
+}
 
 		
 	

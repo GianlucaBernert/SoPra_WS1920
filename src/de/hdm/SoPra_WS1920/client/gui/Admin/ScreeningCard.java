@@ -1,6 +1,8 @@
 package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 
+import java.util.TimeZone;
+
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
@@ -25,6 +27,7 @@ public class ScreeningCard extends FlowPanel{
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("Card ScreeningCardView");
+//		TimeZone.setDefault(TimeZone.getTimeZone("GMT+1:00"));
 		this.showScreeningCardView(screeningToShow);
 		
 	}

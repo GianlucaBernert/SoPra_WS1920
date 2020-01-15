@@ -7,23 +7,22 @@ import de.hdm.SoPra_WS1920.shared.bo.Survey;
 public class SurveyCard extends FlowPanel {
 	
 	Survey surveyToShow;
-	FlowPanel main;
+	SurveyContent surveyContent;
 	SurveyCardView surveyCardView;
 	
 	public void onLoad() {
 		super.onLoad();
-		this.setStylePrimaryName("moviecard");
+		this.setStylePrimaryName("Card CinemaCardView");
 		this.showSurveyCardView(surveyToShow);
-		surveyCardView = new SurveyCardView(this, surveyToShow);
-		this.showSurveyCardView(surveyToShow);
+//		surveyCardView = new SurveyCardView(this, surveyToShow);
 	}
 	
 	public SurveyCard(Survey surveyToShow) {
 		this.surveyToShow = surveyToShow;
 	}
 	
-	public SurveyCard(FlowPanel main, Survey surveyToShow) {
-		this.main = main;
+	public SurveyCard(SurveyContent surveyContent, Survey surveyToShow) {
+		this.surveyContent = surveyContent;
 		this.surveyToShow = surveyToShow;
 	}
 	
@@ -34,7 +33,7 @@ public class SurveyCard extends FlowPanel {
 	}
 	
 	public void remove() {
-		main.remove(this);
+		surveyContent.remove(this);
 	}
 
 }

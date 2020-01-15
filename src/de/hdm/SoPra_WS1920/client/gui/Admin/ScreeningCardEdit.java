@@ -3,6 +3,7 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.TimeZone;
 import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -24,6 +25,7 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
+import com.mysql.cj.util.DataTypeUtil;
 
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
@@ -159,12 +161,6 @@ public class ScreeningCardEdit extends DialogBox {
 			movieSuggestBox.setText(movieOfScreening.getName());
 			
 			datePicker.setValue(screeningToShow.getScreeningDate());
-//			Window.alert(timePicker.hourPicker.getText());
-//			timePicker.hourPicker.setText(screeningToShow.getScreeningTime().toString().substring(0, 2));
-//			Window.alert("minutePicker");
-//			timePicker.minutePicker.setText(screeningToShow.getScreeningTime().toString().substring(2, 4));
-//			timePicker.setHourText(screeningToShow);
-//			timePicker.setMinuteText(screeningToShow);
 			deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
 			deleteIcon.setStyleName("DeleteIcon");
 			deleteIcon.addClickHandler(new DeleteClickHandler(this));
@@ -200,6 +196,7 @@ public class ScreeningCardEdit extends DialogBox {
 			this.screeningCardEdit = screeningCardEdit;
 		}
 
+		@SuppressWarnings("deprecation")
 		public void onLoad() {
 			super.onLoad();
 			this.setStyleName("CardTimePicker");
@@ -221,12 +218,14 @@ public class ScreeningCardEdit extends DialogBox {
 				    @Override
 				    public void onKeyPress(KeyPressEvent event) {
 				        String input = hourPicker.getText();
-//				        if (!input.matches("[0-9]*")) {
-				        if (input.length()==1) {
-//				            Window.alert("Only Integers allowed. Fomat hh");
-				        	((DefaultSuggestionDisplay) hourPicker.getSuggestionDisplay()).hideSuggestions();
-				            minutePicker.setFocus(true);
+				        if (input.matches("([0-9]*)")) {
+				        	if (input.length()==1) {
+				        		((DefaultSuggestionDisplay) hourPicker.getSuggestionDisplay()).hideSuggestions();
+				            	minutePicker.setFocus(true);
 				            return;
+				        	}
+				        }else {
+				        	Window.alert("Please use the correct time format 'hh:mm'");
 				        }
 				    }
 				});
@@ -249,8 +248,13 @@ public class ScreeningCardEdit extends DialogBox {
 			   minutePicker.getElement().setPropertyString("placeholder", "mm");
 			   
 			   if(screeningCardEdit.parentCard!=null) {
-				   hourPicker.setText(screeningToShow.getScreeningTime().toString().substring(0, 2));
-				   minutePicker.setText(screeningToShow.getScreeningTime().toString().substring(3, 5));
+				   Time t = screeningToShow.getScreeningTime();
+				   t.setHours(t.getHours()-1);
+				   String s = DateTimeFormat.getFormat("HH:mm").format(t);
+//				   hourPicker.setText(screeningToShow.getScreeningTime().toString().substring(0, 2));
+//				   minutePicker.setText(screeningToShow.getScreeningTime().toString().substring(3, 5));
+				   hourPicker.setText(s.substring(0, 2));
+				   minutePicker.setText(s.substring(3, 5));
 			   }
 			   
 			   this.add(hourPicker);
@@ -308,21 +312,13 @@ public class ScreeningCardEdit extends DialogBox {
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-//			
-//			Date sqlDate = java.sql.Date.valueOf(datePicker.getValue().toString());
+
 			java.sql.Date dt = new java.sql.Date(datePicker.getValue().getTime());
-//			Window.alert(dt.toString());
-			Time t =new Time(DateTimeFormat.getFormat("hh:mm").parse(timePicker.hourPicker.getText()+":"+timePicker.minutePicker.getText()).getTime());
-			if(parentCard==null) {
-//				Window.alert(Integer.toString(screeningCardEdit.getSelectedCinema(allCinemas.getSelectedValue())));
-//				Window.alert(Integer.toString(screeningCardEdit.getSelectedMovie(movieSuggestBox.getText())));
-//				Window.alert(t.toString());
-//				Window.alert("W/o cast"+datePicker.getValue().toString());
-//				
-				
+			
+			Time t =new Time(DateTimeFormat.getFormat("HH:mm").parse(timePicker.hourPicker.getText()+":"+timePicker.minutePicker.getText()).getTime());
+			if(parentCard==null) {				
 				cinemaAdministration.createScreening(
 						dt, 
-//						new Time(DateTimeFormat.getFormat("hh:mm").parse(timePicker.hourPicker.getText()+":"+timePicker.minutePicker.getText()).getTime()), 
 						t,
 						screeningCardEdit.getSelectedCinema(allCinemas.getSelectedValue()), 
 						screeningCardEdit.getSelectedMovie(movieSuggestBox.getText()), 
@@ -331,12 +327,53 @@ public class ScreeningCardEdit extends DialogBox {
 			}else {
 				screeningToShow.setCinemaFK(screeningCardEdit.getSelectedCinema(allCinemas.getSelectedValue()));
 				screeningToShow.setMovieFK(screeningCardEdit.getSelectedMovie(movieSuggestBox.getText()));
-				screeningToShow.setScreeningDate((Date) datePicker.getValue());
-//				Time t = new Time(DateTimeFormat.getFormat("hh:mm").parse(timePicker.hourPicker.getText()+":"+timePicker.minutePicker.getText()).getTime());
+//				screeningToShow.setScreeningDate((Date) datePicker.getValue()); --> Geht nicht!
+				screeningToShow.setScreeningDate(dt);
 				screeningToShow.setScreeningTime(t);
 				
 				cinemaAdministration.updateScreening(screeningToShow, new UpdateScreeningCallback(screeningCardEdit));
 			}
+		}
+		
+	}
+	
+	class DeleteClickHandler implements ClickHandler{
+		ScreeningCardEdit screeningCardEdit;
+		
+		public DeleteClickHandler(ScreeningCardEdit screeningCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.screeningCardEdit = screeningCardEdit;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			cinemaAdministration.deleteScreening(screeningToShow, new DeleteCallback(screeningCardEdit));
+			screeningCardEdit.hide();
+			parentCard.remove();
+			
+		}
+		
+	}
+	
+	class DeleteCallback implements AsyncCallback<Void>{
+		ScreeningCardEdit screeningCardEdit;
+
+		public DeleteCallback(ScreeningCardEdit screeningCardEdit) {
+			// TODO Auto-generated constructor stub
+			this.screeningCardEdit = screeningCardEdit;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			screeningCardEdit.parentCard.remove();
 		}
 		
 	}
@@ -381,7 +418,7 @@ public class ScreeningCardEdit extends DialogBox {
 		@Override
 		public void onSuccess(Screening result) {
 			// TODO Auto-generated method stub
-			parentCard.showScreeningCardView(screeningToShow);
+			parentCard.showScreeningCardView(result);
 			screeningCardEdit.hide();
 		}
 		
@@ -408,23 +445,7 @@ public class ScreeningCardEdit extends DialogBox {
 		
 	}
 	
-	class DeleteClickHandler implements ClickHandler{
-		ScreeningCardEdit screeningCardEdit;
-		
-		public DeleteClickHandler(ScreeningCardEdit screeningCardEdit) {
-			// TODO Auto-generated constructor stub
-			this.screeningCardEdit = screeningCardEdit;
-		}
-
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
-			screeningCardEdit.hide();
-			parentCard.remove();
-			
-		}
-		
-	}
+	
 	
 	
 	public int getSelectedCinema(String selectedCinema) {

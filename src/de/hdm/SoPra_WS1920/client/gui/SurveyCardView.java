@@ -10,8 +10,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 
-import de.hdm.SoPra_WS1920.server.SurveyManagementImpl;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
@@ -37,7 +37,7 @@ public class SurveyCardView extends FlowPanel {
 	SurveyEntry surveyEntryOfSurvey;
 	
 	
-	SurveyManagementAsync surveymanagement;
+	SurveyManagementAsync surveyManagement;
 	EditSurveyCard esc;
 	
 	SurveyCard parentCard;
@@ -50,20 +50,22 @@ public class SurveyCardView extends FlowPanel {
 	}
 	
 	public void onLoad() {
-		super.onLoad();
-		surveymanagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
-		surveymanagement.getGroupById(surveyToShow.getGroupFK(), new GetGroupCallback());
+		super.onLoad();		
+		surveyManagement = ClientsideSettings.getSurveyManagement();
+		surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
+		surveyManagement.getGroupById(surveyToShow.getGroupFK(), new GetGroupCallback());
+		surveyManagement.getVotedPersonsOfSurvey(surveyToShow.getId(), new GetParticipations1Callback());
+		surveyManagement.getGroupMembersOfGroup(surveyToShow.getId(), new GetParticipations2Callback());
 		
-		//surveyEntrysOfSurvey = SurveyManagementImpl.getSurveyEntryBySurveyFK(surveyToShow.getId());
-		//screeningOfSurvey = CinemaAdminImpl.getScreeningById(surveyEntryOfSurvey.getScreeningFK)
-		//movieOfSurvey = cinemaAdminImpl.getMovieById(screeningOfSurvey.getMovieFK)
 		movie = new Label();
 		movie.setStyleName("CardViewTitle");
-		//groupofSurvey = SurveyManagementImpl.getGroupbyId(survey.getGroupFK)
+		
 		group = new Label();
 		group.setStyleName("CardViewSubtitle");
+		
 		status = new Label("Status: Active");
 		status.setStyleName("CardViewParagraph");
+		
 		voted = new Label("Voted:");
 		voted.setStyleName("CardViewParagraph");
 		
@@ -100,15 +102,7 @@ public class SurveyCardView extends FlowPanel {
 			//parentCard.showSurveyCardEdit(surveyToShow);
 		}
 	}
-//	class VoteClickHandler implements ClickHandler{
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			// TODO Auto-generated method stub
-//			parentCard.showSurveyCardVote(surveyToShow);
-//		}
-//	}
-	
+
 	class GetGroupCallback implements AsyncCallback<Group>{
 
 		@Override

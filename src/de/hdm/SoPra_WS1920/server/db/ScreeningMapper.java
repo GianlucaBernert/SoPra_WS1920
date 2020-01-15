@@ -17,8 +17,8 @@ import de.hdm.SoPra_WS1920.shared.bo.Survey;
 /**
 *
 * Mapper-Klasse, die <code>Screening</code>-Objekte auf relationale Datenbank abbildet.
-* Anhand von den Methoden können Objekte gesucht, erzeugt, bearbeitet und gelöscht werden.
-* Objekte können in DB-Strukturen umgewandelt werden und DB-Strukturen in Objekte.
+* Anhand von den Methoden kï¿½nnen Objekte gesucht, erzeugt, bearbeitet und gelï¿½scht werden.
+* Objekte kï¿½nnen in DB-Strukturen umgewandelt werden und DB-Strukturen in Objekte.
 * 
 * @author shila
 */ 
@@ -26,7 +26,7 @@ public class ScreeningMapper {
 
 	/**
 	 * Die Klasse ScreeningMapper wird nur einmal instanziiert (Singleton-Eigenschaft).
-	 * Die folgende Variable ist durch den Bezeichner <code>static</code> nur einmal für 
+	 * Die folgende Variable ist durch den Bezeichner <code>static</code> nur einmal fï¿½r 
 	 * alle Instanzen der Klasse vorhanden. Die einzige Instanz dieser Klasse wird darin gespeichert.
 	 */
 	
@@ -34,7 +34,7 @@ public class ScreeningMapper {
 
 
 	/**
-	 * Geschützter Konstruktor, der verhindert, dass mit dem new-Operator
+	 * Geschï¿½tzter Konstruktor, der verhindert, dass mit dem new-Operator
 	 * neue Instanzen der Klasse erstellt werden.
 	 */
    protected ScreeningMapper() {
@@ -42,7 +42,7 @@ public class ScreeningMapper {
    }
    /**
     * Folgende statische Methode sichert die Singleton-Eigenschaft.
-    * Es wird dafür gesorgt, dass nur eine einzige Instanz von
+    * Es wird dafï¿½r gesorgt, dass nur eine einzige Instanz von
     * <code>ScreeningMapper</code> existiert.
     * ScreeningMapper wird durch den Aufruf dieser statischen Methode instanziiert, 
     * nicht durch den new-Operator.
@@ -59,8 +59,8 @@ public class ScreeningMapper {
    }
 
    /**
-    * @param id (Primärschlüssel-Attribut)
-    * @return Screening-Objekt, das dem übergebenen Schlüssel entspricht, null
+    * @param id (Primï¿½rschlï¿½ssel-Attribut)
+    * @return Screening-Objekt, das dem ï¿½bergebenen Schlï¿½ssel entspricht, null
     * bei nicht vorhandenem DB-Tupel.
     */
 	
@@ -79,7 +79,6 @@ public class ScreeningMapper {
 				sc.setScreeningTime(rs.getTime("screeningTime"));
 				sc.setMovieFK(rs.getInt("movieFK"));
 				sc.setCinemaFK(rs.getInt("cinemaFK")); 
-				sc.setId(rs.getInt("id"));
 				
 				return sc;
 			}
@@ -92,10 +91,10 @@ public class ScreeningMapper {
 	}
 	
 	/**
-     * Einfügen eines <code>Screening</code>-Objekts in die DB.
-     * Prüfung und ggf. Korrektur des Primärschlüssels
+     * Einfï¿½gen eines <code>Screening</code>-Objekts in die DB.
+     * Prï¿½fung und ggf. Korrektur des Primï¿½rschlï¿½ssels
      * @param screening das zu speichernde Objekt.
-     * @return das übergebene Objekt, mit ggf. korrigierter <code>id</code>.
+     * @return das ï¿½bergebene Objekt, mit ggf. korrigierter <code>id</code>.
      */
 	
 	public Screening insertScreening(Screening sc) {
@@ -126,7 +125,7 @@ public class ScreeningMapper {
      * Ein Objekt wird wiederholt in die DB geschrieben.
      * 
      * @param sc, das Objekt, das in die DB geschrieben werden soll
-     * @return das Objekt, das als Parameter übergeben wird -> sc
+     * @return das Objekt, das als Parameter ï¿½bergeben wird -> sc
      */
     public Screening updateScreening(Screening sc) {
         Connection con = DBConnection.connection();
@@ -152,8 +151,8 @@ public class ScreeningMapper {
     }
 
     /**
-     * Löschen von Daten eines <code>Screening</code>-Objekts aus der Datenbank
-     * @param sc, das zu löschende Objekt 
+     * Lï¿½schen von Daten eines <code>Screening</code>-Objekts aus der Datenbank
+     * @param sc, das zu lï¿½schende Objekt 
      */
     public void deleteScreening(Screening sc) {
     	Connection con = DBConnection.connection();
@@ -171,15 +170,15 @@ public class ScreeningMapper {
         
     }
     
-    public Vector<Screening> findScreeningForSurveyCreation(Date startDate, Date endDate, int movieFK, String city) {
+    public Vector<Screening> findScreeningForSurveyCreation(Date startDate, Date endDate, int movieFK, String c) {
     	Connection con = DBConnection.connection();
     	Vector<Screening> result = new Vector<Screening>();
     	
     	try {
     		Statement stmt = con.createStatement();
     		ResultSet rs = stmt.executeQuery("SELECT * FROM screening INNER JOIN cinema" 
-    				+ "WHERE screeningDate BETWEEN" + startDate + "AND" + endDate + "AND" 
-    				+ "AND cinema.city=" + city + "AND movieFK=" + movieFK);
+    				+ " WHERE screeningDate BETWEEN '" + startDate + "' AND '" + endDate 
+    				+ "' AND city='" + c + "' AND movieFK='" + movieFK+"'");
     		
     		while(rs.next()) {
     			Screening sc = new Screening();
@@ -211,7 +210,7 @@ public class ScreeningMapper {
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
         			+ "WHERE screeningDate= '" + screeningDate + "AND screeningTime='" + screeningTime + "'");
-        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
         	while(rs.next()) {
         		Screening sc = new Screening();
         		sc.setId(rs.getInt("id"));
@@ -220,14 +219,14 @@ public class ScreeningMapper {
         		sc.setMovieFK(rs.getInt("movieFK"));
         		sc.setCinemaFK(rs.getInt("cinemaFK")); 
         		
-        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+        		//Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(sc);
         	}
         }
         	catch(SQLException e2) {
         		e2.printStackTrace();
         	}
-        	//Rückgabe des Ergebnisvektors
+        	//Rï¿½ckgabe des Ergebnisvektors
         	return result;
     }
     
@@ -244,7 +243,7 @@ public class ScreeningMapper {
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
         			+ "WHERE screeningDate= '" + screeningDate + "'");
-        	//Für jeden Eintrag im Suchergebnis wird ein Screening-Objekt erstellt
+        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein Screening-Objekt erstellt
         	while(rs.next()) {
         		Screening sc = new Screening();
         		sc.setId(rs.getInt("id"));
@@ -253,14 +252,14 @@ public class ScreeningMapper {
         		sc.setMovieFK(rs.getInt("movieFK"));
         		sc.setCinemaFK(rs.getInt("cinemaFK")); 
         		
-        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+        		//Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(sc);
         	}
         }
         	catch(SQLException e2) {
         		e2.printStackTrace();
         	}
-        	//Rückgabe des Ergebnisvektors
+        	//Rï¿½ckgabe des Ergebnisvektors
         	return result;
     }
     
@@ -277,7 +276,7 @@ public class ScreeningMapper {
         	Statement stmt = con.createStatement();
         	ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
         			+ "WHERE screeningTime= '" + screeningTime + "'");
-        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
         	while(rs.next()) {
         		Screening sc = new Screening();
         		sc.setId(rs.getInt("id"));
@@ -286,14 +285,14 @@ public class ScreeningMapper {
         		sc.setMovieFK(rs.getInt("movieFK"));
         		sc.setCinemaFK(rs.getInt("cinemaFK")); 
         		
-        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+        		//Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(sc);
         	}
         }
         	catch(SQLException e2) {
         		e2.printStackTrace();
         	}
-        	//Rückgabe des Ergebnisvektors
+        	//Rï¿½ckgabe des Ergebnisvektors
         	return result;
     }
     
@@ -337,7 +336,7 @@ public class ScreeningMapper {
     
 
     /**
-     * Auslesen der Screening-Objekte mit gegebenem MovieFK (Fremdschlüssel)
+     * Auslesen der Screening-Objekte mit gegebenem MovieFK (Fremdschlï¿½ssel)
      * @param movieFK 
      * @return Vektor mit Screening-Objekten
      */
@@ -350,7 +349,7 @@ public class ScreeningMapper {
     		ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
     				+ "WHERE movieFK= " + movieFK);
     		
-    		//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+    		//Fï¿½r jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
     		while(rs.next()) {
     			Screening sc = new Screening();
     			sc.setId(rs.getInt("id"));
@@ -360,18 +359,18 @@ public class ScreeningMapper {
     			sc.setCinemaFK(rs.getInt("cinemaFK"));
     			
     			
-    			//Hinzufügen des Objekts zum Ergebnisvektor
+    			//Hinzufï¿½gen des Objekts zum Ergebnisvektor
     			result.addElement(sc);
     		}
     	} catch(SQLException e2) {
     		e2.printStackTrace();
     	}
-    	//Rückgabe des Ergebnisvektors
+    	//Rï¿½ckgabe des Ergebnisvektors
     	return result;
     }
 
     /**
-     * Löschen eines Screening-Objekts durch den MovieFK (Fremdschlüssel)
+     * Lï¿½schen eines Screening-Objekts durch den MovieFK (Fremdschlï¿½ssel)
      * @param movieFK
      */
     public void deleteScreeningByMovieFK(int movieFK) {
@@ -388,7 +387,7 @@ public class ScreeningMapper {
     }
 
     /**
-     * Auslesen der Screening-Objekte mit vorgegebenem CinemaFK (Fremdschlüssel)
+     * Auslesen der Screening-Objekte mit vorgegebenem CinemaFK (Fremdschlï¿½ssel)
      * @param cinemaFK 
      * @return Vektor mit Screening-Objekten
      */
@@ -401,7 +400,7 @@ public class ScreeningMapper {
     		ResultSet rs = stmt.executeQuery("SELECT * FROM screening "
     				+ "WHERE screening.cinemaFK=" + cinemaFK);
     		
-    		//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
+    		//Fï¿½r jeden Eintrag im Suchergebnis wird ein Cinema-Objekt erstellt
     		while(rs.next()) {
     			Screening sc = new Screening();
     			sc.setId(rs.getInt("id"));
@@ -411,18 +410,18 @@ public class ScreeningMapper {
     			sc.setCinemaFK(rs.getInt("cinemaFK"));
     			
     			
-    			//Hinzufügen des Objekts zum Ergebnisvektor
+    			//Hinzufï¿½gen des Objekts zum Ergebnisvektor
     			result.addElement(sc);
     		}
     	} catch(SQLException e2) {
     		e2.printStackTrace();
     	}
-    	//Rückgabe des Ergebnisvektors
+    	//Rï¿½ckgabe des Ergebnisvektors
     	return result;
     }
 
     /**
-     * Löschen eines Screening-Objekts durch den CinemaFK
+     * Lï¿½schen eines Screening-Objekts durch den CinemaFK
      * @param cinemaFK 
      */
     public void deleteScreeningByCinemaFK(int cinemaFK) {
@@ -453,7 +452,7 @@ public class ScreeningMapper {
         			+ "FROM screening INNER JOIN popcorns.businessownership "
         			+ "ON screening.id = businessownership.id AND businessownership.personFK= '" + personFK+"'");
         	
-        	//Für jeden Eintrag im Suchergebnis wird ein Cinema-Objekt zugeordnet
+        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein Cinema-Objekt zugeordnet
         	while(rs.next()) {
         		Screening sc = new Screening();
         		sc.setId(rs.getInt("id"));
@@ -464,7 +463,7 @@ public class ScreeningMapper {
         		
         		
         		
-        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+        		//Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(sc);
         	}
         }

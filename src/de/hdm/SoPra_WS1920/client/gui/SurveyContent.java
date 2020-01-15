@@ -102,40 +102,42 @@ public class SurveyContent extends FlowPanel {
 	
 	public void showSurveys() {
 		this.clear();
-//		surveyManagementAdministration.getSurveyByPersonFK(1, new GetSurveyByPersonCallback(this));
+		surveyManagementAdministration.getSurveyByPersonFK(1, new GetSurveyByPersonCallback(this));
 		
-		class GetSurveyByPersonCallback implements AsyncCallback<Vector<Survey>> {
-			SurveyContent content;
+		
+	}
+	class GetSurveyByPersonCallback implements AsyncCallback<Vector<Survey>> {
+		SurveyContent content;
+		
+	
+		public GetSurveyByPersonCallback(SurveyContent content) {
+			this.content = content;
+		}
+	
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the Callback");
 			
-		
-			public GetSurveyByPersonCallback(SurveyContent content) {
-				this.content = content;
-			}
-		
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				Window.alert("Problem with the Callback");
-				
-				
-			}
-
-
-			@Override
-			public void onSuccess(Vector<Survey> result) {
-				// TODO Auto-generated method stub
-				for(Survey s : result) {
-				SurveyCard surveyCard = new SurveyCard(content, s);
-				content.add(surveyCard);
-					
-				}
-				
-				
-				
-			}
 			
 		}
+
+
+		@Override
+		public void onSuccess(Vector<Survey> result) {
+			// TODO Auto-generated method stub
+			for(Survey s : result) {
+			SurveyCard surveyCard = new SurveyCard(content, s);
+			surveyCard.showSurveyCardView(s);
+			content.add(surveyCard);
+				
+			}
+			
+			
+			
+		}
+		
 	}
 	
 	/*Movie m;

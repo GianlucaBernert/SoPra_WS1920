@@ -582,7 +582,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     }
     
     /**
-     * Methode um alle Mitglieder einer Gruppe zurückzugeben
+     * Methode um alle Mitglieder einer Gruppe zurï¿½ckzugeben
      * @param GroupFK gFK
      * @return vector membership;
      */
@@ -597,9 +597,13 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      */
     public Movie getMovieBySurveyFK(int sFK) {
     	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(sFK);
-    	SurveyEntry see = se.get(1);
+    	System.out.println("--------------------------------------------------"+se.size());
+    	SurveyEntry see = se.get(0);
+    	System.out.println("--------------------------------------------------"+see.getId());
     	Screening sc = Admin.getScreeningById(see.getScreeningFK());
+    	System.out.println("--------------------------------------------------"+sc.getId());
     	Movie m = Admin.getMovieById(sc.getMovieFK());
+    	System.out.println("--------------------------------------------------"+m.toString());
     	return m;
     }
     
@@ -628,7 +632,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     
     
     /*
-     * Methode um alle Personen zurückzugeben
+     * Methode um alle Personen zurï¿½ckzugeben
      * @return vector Person
      */
     public Vector<Person> getAllPersons(){
@@ -637,7 +641,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
    
     
     /*
-     * Methode um alle Memberships einer Gruppe zurückzugeben
+     * Methode um alle Memberships einer Gruppe zurï¿½ckzugeben
      * @param group
      * @return membership
      */

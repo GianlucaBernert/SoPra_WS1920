@@ -68,7 +68,7 @@ public class CinemaChainCardView extends FlowPanel{
 		@Override
 		public void onSuccess(Vector<Cinema> result) {
 			// TODO Auto-generated method stub
-			amountOfCinemas.setText(Integer.toString(result.size()));
+			amountOfCinemas.setText(Integer.toString(result.size())+" Cinemas");
 		}
 
 		

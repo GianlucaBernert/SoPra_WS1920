@@ -3,12 +3,17 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
+
+import de.hdm.SoPra_WS1920.client.ClientsideSettings;
+import de.hdm.SoPra_WS1920.shared.CinemaAdministration;
+import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 public class UserSettingsForm extends DialogBox{
@@ -33,6 +38,7 @@ public class UserSettingsForm extends DialogBox{
 	
 	Header header;
 	Content content;
+	CinemaAdministrationAsync cinemaAdministration;
 	
 	public UserSettingsForm(Person personToShow){
 		this.personToShow = personToShow;
@@ -51,6 +57,8 @@ public class UserSettingsForm extends DialogBox{
 	
 	public void onLoad() {
 		super.onLoad();
+		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
+		cinemaAdministration.getPersonByEMail(personToShow.getEMail(), new GetPersonCallback());
 		
 		this.setStyleName("EditCard");
 		formWrapper = new FlowPanel();
@@ -109,6 +117,27 @@ public class UserSettingsForm extends DialogBox{
 		formWrapper.add(saveButton);
 		this.add(formWrapper);
 	}
+	
+	class GetPersonCallback implements AsyncCallback<Person>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Person result) {
+			// TODO Auto-generated method stub
+			personToShow=result;
+			firstNameTextBox.setText(personToShow.getFirstname());
+			lastNameTextBox.setText(personToShow.getLastname());
+			eMailTextBox.setText(personToShow.getEMail());
+		}
+		
+		
+	}
+	
 	class SaveClickHandler implements ClickHandler{
 		UserSettingsForm userSettingsForm;
 		public SaveClickHandler(UserSettingsForm userSettingsForm) {
@@ -122,9 +151,22 @@ public class UserSettingsForm extends DialogBox{
 			personToShow.setFirstname(firstNameTextBox.getText());
 			personToShow.setLastname(lastNameTextBox.getText());
 			personToShow.setEMail(eMailTextBox.getText());
-			Window.alert("Successfully changed profile.");
 			userSettingsForm.hide();
+			cinemaAdministration.updatePerson(personToShow, new UpdatePersonCallback());
 			}
+			
+		}
+	class UpdatePersonCallback implements AsyncCallback<Person>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the connection. Please try again later");
+		}
+
+		@Override
+		public void onSuccess(Person result) {
+			// TODO Auto-generated method stub
 			
 		}
 		
@@ -158,6 +200,28 @@ public class UserSettingsForm extends DialogBox{
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
 			userSettingsForm.hide();
+//			cinemaAdministration.deletePerson(personToShow, new DeletePersonCallback());
 		}
 		
+		
+	}
+	
+	class DeletePersonCallback implements AsyncCallback<Void>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the connection. Please try again later");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+		
 }
+
+	
