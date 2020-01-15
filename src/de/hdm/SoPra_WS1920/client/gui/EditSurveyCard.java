@@ -117,7 +117,7 @@ public class EditSurveyCard extends DialogBox {
 		
 		caa = ClientsideSettings.getCinemaAdministration();
 		sma = ClientsideSettings.getSurveyManagement();
-		sma.getMoviebySurveyFK(surveyToShow.getId(), new GetMovieCallback());
+		sma.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
 		sma.getGroupById(surveyToShow.getGroupFK(), new GetGroupCallback());
 		
 		this.setStyleName("EditCard");

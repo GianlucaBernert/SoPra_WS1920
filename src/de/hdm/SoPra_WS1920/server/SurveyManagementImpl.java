@@ -611,11 +611,11 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     }
 
     /**
-     * Methode um den Film einer Umfrage zurückzugeben
+     * Methode um den Film einer Umfrage zurï¿½ckzugeben
      * @param int sFK
      * @return Movie m;
      */
-    public Movie getMoviebySurveyFK(int sFK) {
+    public Movie getMovieBySurveyFK(int sFK) {
     	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(sFK);
     	SurveyEntry see = se.get(1);
     	Screening sc = Admin.getScreeningById(see.getScreeningFK());
@@ -624,7 +624,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     }
     
     /**
-     * Methode um alle Personen einer Umfrage zurückzugeben, die bereits abgestimmt haben
+     * Methode um alle Personen einer Umfrage zurï¿½ckzugeben, die bereits abgestimmt haben
      * @param int sFK
      * @return ;
      */

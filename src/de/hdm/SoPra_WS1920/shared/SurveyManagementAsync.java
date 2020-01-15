@@ -392,7 +392,7 @@ public interface SurveyManagementAsync {
      * @param AsyncCallback 
      * return movie
      */
-    public void getMoviebySurveyFK(int sFK, AsyncCallback<Movie> callback);
+    public void getMovieBySurveyFK(int sFK, AsyncCallback<Movie> callback);
 
     /**
      * Methode um den Film einer Umfrage zu erhalten
