@@ -2,6 +2,8 @@ package de.hdm.SoPra_WS1920.server;
 
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -20,6 +22,7 @@ import de.hdm.SoPra_WS1920.server.db.VoteMapper;
 import de.hdm.SoPra_WS1920.shared.SurveyManagement;
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -599,13 +602,12 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     }
     
     /**
-     * Methode um die Anzahl der Gruppenmitglieder zu ZÃ¤hlen
+     * Methode um alle Mitglieder einer Gruppe zurückzugeben
      * @param GroupFK gFK
-     * @return int m.size();
+     * @return vector membership;
      */
-    public int countGroupMembers(int gFK) {
-    	Vector <Membership> m = this.meMapper.findMembershipByGroupFK(gFK);
-    	return m.size();
+    public Vector<Membership> getGroupMembersOfGroup(int gFK) {
+    	return this.meMapper.findMembershipByGroupFK(gFK);
     }
 
     /**
@@ -613,7 +615,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param int sFK
      * @return Movie m;
      */
-    public Movie getMoviebySurveyFK(int sFK) {
+    public Movie getMovieBySurveyFK(int sFK) {
     	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(sFK);
     	SurveyEntry see = se.get(1);
     	Screening sc = Admin.getScreeningById(see.getScreeningFK());
@@ -626,13 +628,44 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param int sFK
      * @return ;
      */
-//    public int countvotedPersons(int sFK) {
-//    	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(sFK);
-//    	for(SurveyEntry see: se) {
-//    		Vector<Vote> v = this.getVoteBySurveyEntryFK(see.getId());
-//    		
-//    	}
-//    }
+    public Vector<Person> getVotedPersonsOfSurvey(int surveyFK) {
+    	Vector<Person> result = new Vector<Person>();
+    	HashSet<Person> hs = new HashSet<Person>();
+    	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(surveyFK);
+    	for(SurveyEntry see: se) {
+    		Vector<Vote> v = this.getVoteBySurveyEntryFK(see.getId());
+    		for(Vote vo: v) {
+    			Ownership o = this.oMapper.findOwnershipByID(vo.getId());
+    			hs.add(this.getPersonById(o.getPersonFK()));
+    		}
+    	}
+		Iterator<Person> it = hs.iterator();
+	     while(it.hasNext()){
+	        result.add(it.next());
+	     }
+    	return result;
+    }
+    
+    
+    /*
+     * Methode um alle Memberships einer Gruppe zurückzugeben
+     * @param group
+     * @return membership
+     */
+    public Vector<Person> getAllPersons(){
+    	return this.pMapper.findAll();
+    }
+   
+    
+    /*
+     * Methode um alle Memberships einer Gruppe zurückzugeben
+     * @param group
+     * @return membership
+     */
+    
+    public Vector<Membership> getMembershipsOfGroup(Group group){
+    	return this.meMapper.findMembershipByGroupFK(group.getId());
+    }
     
     /*
      * Methode um eine Person zu aktualisieren

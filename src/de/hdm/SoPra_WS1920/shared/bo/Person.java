@@ -75,5 +75,24 @@ public class Person extends BusinessObject {
 	public String toString() {
 		return "PersonID #P" + this.getId() + " " + this.firstname + " " + this.lastname;
 	}
+	
+	public boolean equals(Object obj) {
+		if (obj instanceof Person) {
+			Person p= (Person) obj;
+			if((this.getId()== p.getId())){				
+				return true;	
+			}
+			else {
+				return false;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = this.getId();
+		return result;
+	}
 
 }
