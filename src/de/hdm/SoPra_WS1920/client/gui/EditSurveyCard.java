@@ -1,11 +1,10 @@
 package de.hdm.SoPra_WS1920.client.gui;
 
+import java.util.Date;
 import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -17,7 +16,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
-import com.google.gwt.user.datepicker.client.DateBox;
+import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
@@ -57,6 +56,7 @@ public class EditSurveyCard extends DialogBox {
 	SuggestBox movieSuggestBox;
 	
 	ListBox allGroups;
+	TextBox movieListBox;
 	
 	MultiWordSuggestOracle allCities;
 	SuggestBox citySuggestBox;
@@ -82,14 +82,17 @@ public class EditSurveyCard extends DialogBox {
 	ListBox availableCinemas;
 	
 	Label dateFilter;
-	DateBox filterDateBox;
+	ListBox filterDateBox;
 	
 	FlowPanel screeningSelection;
 	CheckBox screeningToSelect;
 	
-	Vector <ScreeningRow> screeningRowVector;
-	Vector <Screening> screeningVector;
-	Vector <Screening> screeningInSurvey;
+	Vector<ScreeningRow> screeningRowVector;
+	Vector<Screening> screeningVector;
+	Vector<Screening> screeningInSurvey;
+	Vector<Cinema> selectedCinemas;
+	Vector<Date> screeningDates;
+	Vector<Screening> currentScreenings;
 	
 	Label showSelected;
 	Button saveSurvey;
@@ -130,6 +133,9 @@ public class EditSurveyCard extends DialogBox {
 		
 		movieLabel = new Label("Movie");
 		movieLabel.setStyleName("TextBoxLabel");
+		movieListBox = new TextBox();
+		movieListBox.setStyleName("CardTextBox");
+		movieListBox.getElement().setPropertyString("placeholder", currentMovie.getName());
 		allMovies = new MultiWordSuggestOracle();
 		allMovies.add(currentMovie.getName());
 		movieSuggestBox = new SuggestBox(allMovies);
@@ -138,15 +144,16 @@ public class EditSurveyCard extends DialogBox {
 		groupLabel =  new Label("Group");
 		groupLabel.setStyleName("TextBoxLabel");
 		allGroups = new ListBox();
-		allGroups.addItem(currentGroup.getName());
 		allGroups.setStyleName("CardSuggestBox");
+		allGroups.getElement().setPropertyString("placeholder", currentGroup.getName());
 		
-		cityLabel = new Label("City");
-		cityLabel.setStyleName("TextBoxLabel");
-		allCities = new MultiWordSuggestOracle();
-		allCities.add(""); // TODO aktuelle Stadt anzeigen
-		citySuggestBox = new SuggestBox(allCities);
-		citySuggestBox.setStyleName("CardSuggestBox");
+//		cityLabel = new Label("City");
+//		cityLabel.setStyleName("TextBoxLabel");
+//		allCities = new MultiWordSuggestOracle();
+//		allCities.add(""); // TODO aktuelle Stadt anzeigen
+//		citySuggestBox = new SuggestBox();
+//		citySuggestBox.setStyleName("CardSuggestBox");
+//		citySuggestBox.getElement().setPropertyString("placeholder", currentCity);
 		
 //		startDateLabel = new Label("Start Date");
 //		startDateLabel.setStyleName("TextBoxLabel");
@@ -312,27 +319,32 @@ public class EditSurveyCard extends DialogBox {
 		
 		cinemaFilter = new Label("Cinema Filter");
 		cinemaFilter.setStyleName("TextBoxLabel");
+		availableCinemas = new ListBox();
+	    for (Cinema cin : selectedCinemas) {
+	      availableCinemas.addItem(cin.getName());
+		}
+	    availableCinemas.addClickHandler(new AvailableCinemasClickHandler());
+		availableCinemas.setStyleName("CardSuggestBox");
+		
+		screeningDates = new Vector<Date>();
+		for(Screening s : currentScreenings) {
+			screeningDates.add(s.getScreeningDate());
+		}
 		
 		dateFilter = new Label("Date Filter");
 		dateFilter.setStyleName("TextBoxLabel");
-		filterDateBox = new DateBox();
-		filterDateBox.setStyleName("CardDatePicker");
-		filterDateBox.setFormat(
-				new DateBox.DefaultFormat(
-						DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
-		
+		filterDateBox = new ListBox();
+		for (Date d : screeningDates) {
+			filterDateBox.addItem(d.toString());
+		}
+		filterDateBox.addClickHandler(new FilterDateBoxClickHandler());
+		filterDateBox.setStyleName("CardSuggestBox");
 		
 		screeningSelection = new FlowPanel();
 		
 		screeningRowVector = new Vector <ScreeningRow>();
 		
-		screeningVector = new Vector<Screening>();
-		
-		 
-		
-		
-		//Methode zur Erstellung der Screening Elemente sowie Bef�llung der ScreeningSelectionBox
-		
+		screeningVector = new Vector<Screening>();		
 		
 		for (Screening s : screeningVector) {
 			ScreeningRow sr = new ScreeningRow(s);
@@ -340,7 +352,8 @@ public class EditSurveyCard extends DialogBox {
 			screeningSelection.add(sr);
 		    }
 		
-		
+		selectedMovie.setText(currentMovie.getName());
+		selectedGroup.setText(currentGroup.getName());
 		
 		showSelected = new Label("Show All Screenings");
 		
@@ -406,6 +419,26 @@ public class EditSurveyCard extends DialogBox {
 			
 		}
 		}
+	
+	class AvailableCinemasClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Methode die nur die Screenings des Ausgewählten Cinemas anzeigt
+			
+		}
+		
+	}
+	
+	class FilterDateBoxClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Methode die nur die Screenings am ausgewählten Datum anzeigt
+			
+		}
+		
+	}
 	
 	class StopSurveyClickHandler implements ClickHandler {
 		EditSurveyCard editsurveyCard;
