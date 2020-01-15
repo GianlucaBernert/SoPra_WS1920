@@ -179,6 +179,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
         return this.pMapper.updatePerson(person);
     }
     
+    
     /**
      * Methode zum Lï¿½schen von Personen Objekten und allen zugehï¿½rigen Businessobjekten
      * @param p
@@ -545,6 +546,17 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
         return this.scMapper.findScreeningByID(id);
     }
 
+    /**
+     * Methode zum Aufrufen von Screening Objects die für die Erstellung von Umfragen benötigt werden.
+     * @param cinemaFK 
+     * @return
+     */
+    @Override
+    public Vector<Screening> getScreeningsforSurveyCreation(Movie movie, String city, Date startDate, Date endDate) throws IllegalArgumentException{
+    	
+    	return this.scMapper.findScreeningForSurveyCreation(startDate, endDate, movie.getId(), city);
+    }
+    
     
     /**
      * Methode zum Aufrufen von Screening Objects anhand des cinemaFK.

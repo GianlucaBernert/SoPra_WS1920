@@ -273,5 +273,7 @@ public interface CinemaAdministrationAsync {
 	void searchCinemaChain(int personFk, String text, AsyncCallback<Vector<CinemaChain>> callback);
 
 	void searchScreening(int personFk, String text, AsyncCallback<Vector<Screening>> callback);
+	
+	void getScreeningsforSurveyCreation(Movie movie, String city, Date startDate, Date endDate, AsyncCallback<Vector<Screening>> callback);
     
 }
