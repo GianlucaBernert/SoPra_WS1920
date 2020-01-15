@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.Label;
 public class NavigationBar extends FlowPanel {
 	
 	SurveyManagementHeader header;
-	SurveyContent content;
+	SurveyContent surveyContent;
 	
 	Image menuIcon;
 	Image logoIcon;
@@ -29,9 +29,9 @@ public class NavigationBar extends FlowPanel {
 	Button b;
 //	private int menuOpen = 0;
 	
-	public NavigationBar(SurveyManagementHeader header,SurveyContent content) {
+	public NavigationBar(SurveyManagementHeader header,SurveyContent surveyContent) {
 		this.header=header;
-		this.content=content;
+		this.surveyContent=surveyContent;
 	}
 	
 	public void onLoad() {
@@ -48,15 +48,15 @@ public class NavigationBar extends FlowPanel {
 		
 		movies = new Label("Movies");	//Menu Item 1
 		movies.setStyleName("navbar-element");
-		movies.addClickHandler(new ShowMoviesClickHandler(header, content, this));
+		movies.addClickHandler(new ShowMoviesClickHandler(header, surveyContent, this));
 		
 		groups = new Label("Groups"); //Menu Item 2
 		groups.setStyleName("navbar-element");
-		groups.addClickHandler(new ShowGroupsClickHandler(header, content, this));
+		groups.addClickHandler(new ShowGroupsClickHandler(header, surveyContent, this));
 		
 		surveys = new Label("Surveys"); //Menu Item 3
 		surveys.setStyleName("navbar-element");
-		surveys.addClickHandler(new ShowSurveysClickHandler(header, content, this));
+		surveys.addClickHandler(new ShowSurveysClickHandler(header, surveyContent, this));
 		
 		settings = new Label("Settings");
 		settings.setStyleName("navbar-element bottom");
@@ -83,7 +83,7 @@ public class NavigationBar extends FlowPanel {
 	
 	class ShowSurveysClickHandler implements ClickHandler{
 		NavigationBar navigationBar;
-		public ShowSurveysClickHandler(SurveyManagementHeader header, SurveyContent content, NavigationBar navigationBar) {
+		public ShowSurveysClickHandler(SurveyManagementHeader header, SurveyContent surveyContent, NavigationBar navigationBar) {
 			this.navigationBar=navigationBar;
 		}
 
@@ -92,6 +92,7 @@ public class NavigationBar extends FlowPanel {
 			// TODO Auto-generated method stub
 //			headerLabel.setText("Movies");
 			header.showSurveyHeader();
+			surveyContent.showSurveys();
 //			content.showCinemas();
 //			navigationBar.add(createIcon);
 			navigationBar.setStyleName("navbar");
@@ -115,7 +116,7 @@ public class NavigationBar extends FlowPanel {
 			// TODO Auto-generated method stub
 //			headerLabel.setText("Movies");
 			header.showMoviesHeader();
-//			content.showMovies();
+//			surveyContent.showMovies();
 //			navigationBar.add(createIcon);
 			navigationBar.setStyleName("navbar");
 //			menuIcon.setStyleName("menuIcon");
@@ -137,7 +138,7 @@ public class NavigationBar extends FlowPanel {
 			// TODO Auto-generated method stub
 //			headerLabel.setText("Screenings");
 			header.showGroupHeader();
-//			content.showSurveys();
+//			surveyContent.showSurveys();
 //			navigationBar.add(createIcon);
 			navigationBar.setStyleName("navbar");
 //			menuIcon.setStyleName("menuIcon");
@@ -157,7 +158,7 @@ public class NavigationBar extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			UserSettingsForm userSettingsForm = new UserSettingsForm(header, content);
+			UserSettingsForm userSettingsForm = new UserSettingsForm(header, surveyContent);
 			userSettingsForm.center();
 			userSettingsForm.show();
 		}

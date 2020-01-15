@@ -18,7 +18,7 @@
 
 <servlet-mapping>
     <servlet-name>SurveyManagementImpl</servlet-name>
-    <url-pattern>/sopra_ws1920a/SurveyManagementImpl</url-pattern>
+    <url-pattern>/sopra_ws1920a/surveyManagement</url-pattern>
 </servlet-mapping>
 
   
@@ -39,7 +39,7 @@
   
 <servlet-mapping>
     <servlet-name>LoginServiceImpl</servlet-name>
-    <url-pattern>/sopra_ws1920a/LoginServiceImpl</url-pattern>
+    <url-pattern>/sopra_ws1920a/loginService</url-pattern>
 </servlet-mapping>
 
 </web-app>

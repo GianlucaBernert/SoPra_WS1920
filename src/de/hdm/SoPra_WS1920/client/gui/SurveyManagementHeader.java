@@ -81,13 +81,14 @@ public class SurveyManagementHeader extends FlowPanel {
 		
 		class CreateSurveyClickHandler implements ClickHandler{
 			SurveyManagementHeader header;
-			SurveyContent content;
-			SurveyCardEdit se;
+//			SurveyContent content;
+//			SurveyCardEdit se;
 			
-			public CreateSurveyClickHandler(SurveyManagementHeader header, SurveyCardEdit se) {
+//			public CreateSurveyClickHandler(SurveyManagementHeader header, SurveyCardEdit se) {
+			public CreateSurveyClickHandler(SurveyManagementHeader header) {
 			this.header = header;
-			this.content = content;
-			this.se = se;
+//			this.content = content;
+//			this.se = se;
 			}
 
 			@Override
@@ -199,7 +200,8 @@ public class SurveyManagementHeader extends FlowPanel {
 			
 			createBo = new Button("+Add Survey");
 			createBo.setStylePrimaryName("CreateBoButton");
-			createBo.addClickHandler(new CreateSurveyClickHandler(this, se));
+//			createBo.addClickHandler(new CreateSurveyClickHandler(this, se));
+			createBo.addClickHandler(new CreateSurveyClickHandler(this));
 			
 			this.add(headline);
 			this.add(createBo);

@@ -12,8 +12,8 @@ import de.hdm.SoPra_WS1920.shared.bo.Survey;
 /**
  *
  * Mapper-Klasse, die <code>Survey</code>-Objekte auf relationale Datenbank abbildet.
- * Anhand von den Methoden können Objekte gesucht, erzeugt, bearbeitet und gelöscht werden.
- * Objekte können in DB-Strukturen umgewandelt werden und DB-Strukturen in Objekte.
+ * Anhand von den Methoden kï¿½nnen Objekte gesucht, erzeugt, bearbeitet und gelï¿½scht werden.
+ * Objekte kï¿½nnen in DB-Strukturen umgewandelt werden und DB-Strukturen in Objekte.
  * 
  * @author Shila Lotfi
  */ 
@@ -38,7 +38,7 @@ public class SurveyMapper {
 	
 /**
  * Folgende statische Methode sichert die Singleton-Eigenschaft.
- * Es wird dafür gesorgt, dass nur eine einzige Instanz von
+ * Es wird dafï¿½r gesorgt, dass nur eine einzige Instanz von
  * <code>SurveyMapper</code> existiert.
  * SurveyMapper wird durch den Aufruf dieser statischen Methode instanziiert, 
  * nicht durch den new-Operator.
@@ -56,8 +56,8 @@ public class SurveyMapper {
 	}
 	
 	/**
-     * @param id (Primärschlüssel-Attribut)
-     * @return Survey-Objekt, das dem übergebenen Schluessel entspricht, null
+     * @param id (Primï¿½rschlï¿½ssel-Attribut)
+     * @return Survey-Objekt, das dem ï¿½bergebenen Schluessel entspricht, null
      * bei nicht vorhandenem DB-Tupel.
      */
 	
@@ -85,10 +85,10 @@ public class SurveyMapper {
 	}
 	
 	/**
-     * Einfügen eines <code>Survey</code>-Objekts in die DB.
-     * Prüfung und ggf. Korrektur des Primärschlüssels
+     * Einfï¿½gen eines <code>Survey</code>-Objekts in die DB.
+     * Prï¿½fung und ggf. Korrektur des Primï¿½rschlï¿½ssels
      * @param survey das zu speichernde Objekt
-     * @return das übergebene Objekt, mit ggf. korrigierter <code>id</code>.
+     * @return das ï¿½bergebene Objekt, mit ggf. korrigierter <code>id</code>.
      */
 	
 	public Survey insertSurvey(Survey s) {
@@ -98,7 +98,7 @@ public class SurveyMapper {
 		
 			Statement stmt = con.createStatement();
 			
-				stmt.executeUpdate("INSERT INTO survey(id, groupFK, startDate, endDate)"
+				stmt.executeUpdate("INSERT INTO survey(id, groupFK) "
 					+ "VALUES ('"
 					+ s.getId()	
 					+ "','"
@@ -117,7 +117,7 @@ public class SurveyMapper {
      * Ein Objekt wird wiederholt in die DB geschrieben.
      * 
      * @param s, das Objekt, das in die DB geschrieben werden soll
-     * @return das Objekt, das als Parameter übergeben wird -> s
+     * @return das Objekt, das als Parameter ï¿½bergeben wird -> s
      */
     public Survey updateSurvey(Survey s) {
         Connection con = DBConnection.connection();
@@ -138,8 +138,8 @@ public class SurveyMapper {
     }
     
     /**
-     * Löschenn von Daten eines <code>Survey</code>-Objekts aus der Datenbank
-     * @param s, das zu löschende Objekt 
+     * Lï¿½schenn von Daten eines <code>Survey</code>-Objekts aus der Datenbank
+     * @param s, das zu lï¿½schende Objekt 
      */
     public void deleteSurvey(Survey s) {
     	Connection con = DBConnection.connection();
@@ -159,7 +159,7 @@ public class SurveyMapper {
     
     
     /**
-     * Auslesen der Survey-Objekte mit gegebener GroupFK (Fremdschlüssel)
+     * Auslesen der Survey-Objekte mit gegebener GroupFK (Fremdschlï¿½ssel)
      * @param groupFK
      * @return Vektor mit Survey-Objekten
      */
@@ -179,7 +179,7 @@ public class SurveyMapper {
     			s.setGroupFK(rs.getInt("groupFK"));
     			
     			
-    			//Hinzufügen des Objekts zum Ergebnisvektor
+    			//Hinzufï¿½gen des Objekts zum Ergebnisvektor
     			result.addElement(s);
     		}
     	} catch(SQLException e2) {
@@ -191,7 +191,7 @@ public class SurveyMapper {
     }
     
     /**
-     * Löschen einer Umfrage durch den GroupFK(FremdschlÃ¼ssel)
+     * Lï¿½schen einer Umfrage durch den GroupFK(FremdschlÃ¼ssel)
      * @param groupFK
      */
     
@@ -222,7 +222,7 @@ public class SurveyMapper {
         			+ "FROM survey INNER JOIN popcorns.businessownership "
         			+ "ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK + "'");
         	
-        	//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt zugeordnet
+        	//Fï¿½r jeden Eintrag im Suchergebnis wird ein Survey-Objekt zugeordnet
         	while(rs.next()) {
         		Survey s = new Survey();
         		s.setId(rs.getInt("id"));
@@ -230,7 +230,7 @@ public class SurveyMapper {
         		
         		
         		
-        		//Hinzufügen des neuen Objekts zum Ergebnisvektor
+        		//Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(s);
         	}
         }
