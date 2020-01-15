@@ -76,7 +76,7 @@ public interface SurveyManagementAsync {
      * @param AsyncCallback<Survey> callback
      * @return Survey s
      */
-    public void createSurvey(int gFK, int pFK, Timestamp startDate, Timestamp endDate, AsyncCallback<Survey> callback);
+    public void createSurvey(int gFK, int pFK, AsyncCallback<Survey> callback);
     
     /**
      * Methode um eine Umfrage zu bearbeiten
@@ -180,21 +180,6 @@ public interface SurveyManagementAsync {
      */
     public void getGroupByName(String name, AsyncCallback<Vector<Group>> callback);
 
-    /** 
-     * Methode um eine Umfrage anhand des Start Datums zu finden
-     * @param Timestamp startDate
-     * @param AsyncCallback<Vector<Survey>> callback
-     * @return Vector<Survey>
-     */
-    public void getSurveyByStartDate(Timestamp startDate, AsyncCallback<Vector<Survey>> callback);
-
-    /**
-     * Methode um eine Umfrage anhand des ENd Datums zu finden
-     * @param Timestamp endDate
-     * @param AsyncCallback<Vector<Survey>> callback
-     * @return Vector<Survey>
-     */
-    public void getSurveyByEndDate(Timestamp endDate, AsyncCallback<Vector<Survey>> callback);
 
     /**
      * Methode um eine Person anhand der ID zu finden
@@ -441,7 +426,7 @@ public interface SurveyManagementAsync {
      * return survey
      */
 	
-	void searchSurvey(Timestamp time, AsyncCallback<Vector<Survey>> callback);
+//	void searchSurvey(Timestamp time, AsyncCallback<Vector<Survey>> callback);
 
 	/**
      * Methode um den Film einer Umfrage zu erhalten
