@@ -1,7 +1,6 @@
 package de.hdm.SoPra_WS1920.client.gui;
 
 import java.util.Vector;
-import java.sql.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -28,6 +27,8 @@ import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
+import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
+import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
 public class EditSurveyCard extends DialogBox {
 	
@@ -35,6 +36,10 @@ public class EditSurveyCard extends DialogBox {
 	SurveyCard parentCard;
 	Survey surveyToShow;
 	Cinema cinemaInScreening;
+	Movie currentMovie;
+	Group currentGroup;
+//	Date currentStartDate;
+//	Date currentEndDate;
 	SurveyManagementAsync sma; 
 	CinemaAdministrationAsync caa; 
 	
@@ -45,8 +50,8 @@ public class EditSurveyCard extends DialogBox {
 	Label movieLabel;
 	Label groupLabel;
 	Label cityLabel;
-	Label startDateLabel;
-	Label endDateLabel;
+//	Label startDateLabel;
+//	Label endDateLabel;
 	
 	MultiWordSuggestOracle allMovies;
 	SuggestBox movieSuggestBox;
@@ -56,8 +61,8 @@ public class EditSurveyCard extends DialogBox {
 	MultiWordSuggestOracle allCities;
 	SuggestBox citySuggestBox;
 	
-	DateBox startDateBox;
-	DateBox endDateBox;
+//	DateBox startDateBox;
+//	DateBox endDateBox;
 	
 	Button invisibleButton;
 	Button editScreenings; 
@@ -84,22 +89,23 @@ public class EditSurveyCard extends DialogBox {
 	
 	Vector <ScreeningRow> screeningRowVector;
 	Vector <Screening> screeningVector;
+	Vector <Screening> screeningInSurvey;
 	
 	Label showSelected;
 	Button saveSurvey;
+	Button stopSurvey;
 	
 	
-	SurveyManagementHeader header;
 	SurveyContent content;
 	
 	
 	
 	
-	public EditSurveyCard(SurveyCard surveyCard, Survey survey, SurveyContent content, SurveyManagementHeader header) {
+	public EditSurveyCard(SurveyCard surveyCard, Survey survey) {
 		this.parentCard = surveyCard;
 		this.surveyToShow = survey;
-		this.content = content;
-		this.header = header;	
+		
+		
 	}
 	
 	
@@ -108,6 +114,8 @@ public class EditSurveyCard extends DialogBox {
 		
 		caa = ClientsideSettings.getCinemaAdministration();
 		sma = ClientsideSettings.getSurveyManagement();
+		sma.getMoviebySurveyFK(surveyToShow.getId(), new GetMovieCallback());
+		sma.getGroupById(surveyToShow.getGroupFK(), new GetGroupCallback());
 		
 		this.setStyleName("EditCard");
 		formWrapper = new FlowPanel();
@@ -123,42 +131,42 @@ public class EditSurveyCard extends DialogBox {
 		movieLabel = new Label("Movie");
 		movieLabel.setStyleName("TextBoxLabel");
 		allMovies = new MultiWordSuggestOracle();
-		allMovies.add(content.m.getName());
+		allMovies.add(currentMovie.getName());
 		movieSuggestBox = new SuggestBox(allMovies);
 		movieSuggestBox.setStyleName("CardSuggestBox");
 		
 		groupLabel =  new Label("Group");
 		groupLabel.setStyleName("TextBoxLabel");
 		allGroups = new ListBox();
-		allGroups.addItem(content.g.getName());
+		allGroups.addItem(currentGroup.getName());
 		allGroups.setStyleName("CardSuggestBox");
 		
 		cityLabel = new Label("City");
 		cityLabel.setStyleName("TextBoxLabel");
 		allCities = new MultiWordSuggestOracle();
-		allCities.add("");
+		allCities.add(""); // TODO aktuelle Stadt anzeigen
 		citySuggestBox = new SuggestBox(allCities);
 		citySuggestBox.setStyleName("CardSuggestBox");
 		
-		startDateLabel = new Label("Start Date");
-		startDateLabel.setStyleName("TextBoxLabel");
-		startDateBox = new DateBox();
-		startDateBox.setStyleName("CardDatePicker");
-		startDateBox.setFormat(
-				new DateBox.DefaultFormat(
-						DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
-		
-		
-		endDateLabel = new Label("End Date");
-		endDateLabel.setStyleName("TextBoxLabel");
-		endDateBox = new DateBox();
-		endDateBox.setStyleName("CardDatePicker");
-		endDateBox.setFormat(
-				new DateBox.DefaultFormat(
-						DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
+//		startDateLabel = new Label("Start Date");
+//		startDateLabel.setStyleName("TextBoxLabel");
+//		startDateBox = new DateBox();
+//		startDateBox.setStyleName("CardDatePicker");
+//		startDateBox.setFormat(
+//				new DateBox.DefaultFormat(
+//						DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
+//		
+//		
+//		endDateLabel = new Label("End Date");
+//		endDateLabel.setStyleName("TextBoxLabel");
+//		endDateBox = new DateBox();
+//		endDateBox.setStyleName("CardDatePicker");
+//		endDateBox.setFormat(
+//				new DateBox.DefaultFormat(
+//						DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
 				
 		
-		//setValue, setText notwendig?
+		
 		
 		formWrapper.add(cardDescription1);
 		formWrapper.add(cancelIcon);
@@ -168,10 +176,10 @@ public class EditSurveyCard extends DialogBox {
 		formWrapper.add(allGroups);
 		formWrapper.add(cityLabel);
 		formWrapper.add(citySuggestBox);
-		formWrapper.add(startDateLabel);
-		formWrapper.add(startDateBox);
-		formWrapper.add(endDateLabel);
-		formWrapper.add(endDateBox);
+//		formWrapper.add(startDateLabel);
+//		formWrapper.add(startDateBox);
+//		formWrapper.add(endDateLabel);
+//		formWrapper.add(endDateBox);
 		
 		
 		editScreenings = new Button("Edit Screenings");
@@ -183,6 +191,37 @@ public class EditSurveyCard extends DialogBox {
 		this.add(formWrapper);
 //		
 //		
+	}
+	
+	class GetMovieCallback implements AsyncCallback<Movie> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with the Callback");
+			
+		}
+
+		@Override
+		public void onSuccess(Movie result) {
+			currentMovie = result;
+			movieLabel.setText(result.getName());
+		}
+		
+	}
+	
+	class GetGroupCallback implements AsyncCallback<Group> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with the Callback");			
+		}
+
+		@Override
+		public void onSuccess(Group result) {
+			currentGroup = result;
+			groupLabel.setText(result.getName());
+		}
+		
 	}
 	
 	
@@ -207,8 +246,8 @@ public class EditSurveyCard extends DialogBox {
 		String c = new String();
 		c = citySuggestBox.getText();
 		
-		Date sd =(Date) startDateBox.getValue();
-		Date ed =(Date) endDateBox.getValue();
+//		Date sd =(Date) startDateBox.getValue();
+//		Date ed =(Date) endDateBox.getValue();
 		
 		
 		
@@ -221,7 +260,7 @@ public class EditSurveyCard extends DialogBox {
 //			}else {
 				
 				editSurveyCard.clear();
-				editSurveyCard.showEditScreenings(m, g, c, sd, ed);
+				editSurveyCard.showEditScreenings(m, g, c);
 				
 				
 //		}
@@ -233,14 +272,12 @@ public class EditSurveyCard extends DialogBox {
 	class CancelClickHandler implements ClickHandler{
 		EditSurveyCard editSurveyCard;
 		public CancelClickHandler(EditSurveyCard editSurveyCard) {
-			// TODO Auto-generated constructor stub
 			this.editSurveyCard = editSurveyCard;
 		}
 		
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
 			if(parentCard==null) {
 				editSurveyCard.hide();
 			}else {
@@ -250,18 +287,9 @@ public class EditSurveyCard extends DialogBox {
 		}
 	}
 	
-	public void showEditScreenings(Movie m, Group g, String c, Date sd, Date ed) {
+	public void showEditScreenings(Movie m, Group g, String c) {
 		
-		Screening testScreening = new Screening();
-		testScreening.setCinemaFK(1);
-	//	testScreening.setScreeningDate(screeningDate);
-		testScreening.setId(2);
-		Vector <Screening> sv = new Vector();
-		sv.add(testScreening);
-		Screening testScreening1 = new Screening();
-		testScreening1.setId(3);
-		//s = this.getScreeningBy..(m, c, startDate, endDate);
-		sv.add(testScreening1);
+		
 		
 		this.setStyleName("EditCard");
 		formWrapper = new FlowPanel();
@@ -298,11 +326,15 @@ public class EditSurveyCard extends DialogBox {
 		
 		screeningRowVector = new Vector <ScreeningRow>();
 		
+		screeningVector = new Vector<Screening>();
+		
+		 
+		
 		
 		//Methode zur Erstellung der Screening Elemente sowie Bef�llung der ScreeningSelectionBox
 		
 		
-		for (Screening s : sv) {
+		for (Screening s : screeningVector) {
 			ScreeningRow sr = new ScreeningRow(s);
 			screeningRowVector.add(sr);
 			screeningSelection.add(sr);
@@ -324,11 +356,16 @@ public class EditSurveyCard extends DialogBox {
 		saveSurvey.setStyleName("SaveButton");
 		saveSurvey.addClickHandler(new SaveSurveyClickHandler(this));
 		
+		stopSurvey = new Button("Stop Survey");
+		stopSurvey.setStyleName("SaveButton");;
+		stopSurvey.addClickHandler(new StopSurveyClickHandler(this));
+		
 		formWrapper.add(saveSurvey);
+		formWrapper.add(stopSurvey);
 		this.add(formWrapper);
 	}	
 	
-	class SaveSurveyClickHandler implements ClickHandler{
+	class SaveSurveyClickHandler implements ClickHandler{ 
 		EditSurveyCard editSurveyCard;
 		public SaveSurveyClickHandler(EditSurveyCard editSurveyCard) {
 		
@@ -348,23 +385,51 @@ public class EditSurveyCard extends DialogBox {
 			
 			Window.alert(screeningVector.size() +" checkboxes selected");
 			
-			Survey s = new Survey();
-//			s = SurveyManagementImpl.
-//			for(CheckBox selectedCheckBox : screeningCheckBoxVector) {
-//		/		if(selectedCheckBox.getValue() == true) {
-//					Screening screen = new Screening();
-//				}
-//			}
+			sma.updateSurvey(editSurveyCard.surveyToShow, new SaveSurveyCallback());
 		
 			
 			
 		}
+		
+		class SaveSurveyCallback implements AsyncCallback<Survey> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Problem with the Callback");				
+			}
+
+			@Override
+			public void onSuccess(Survey result) {
+				parentCard.showSurveyCardView(result);
+				editSurveyCard.hide();
+			}
+			
 		}
+		}
+	
+	class StopSurveyClickHandler implements ClickHandler {
+		EditSurveyCard editsurveyCard;
+		
+		public StopSurveyClickHandler (EditSurveyCard editSurveyCard) {
+			this.editsurveyCard = editSurveyCard;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Methode um den Status der Umfrage auf Beendet zu setzen.
+			
+		}
+		
+	}
 	
 	class ScreeningRow extends FlowPanel{
 		
 		CheckBox cb;
 		Screening s;
+		Vector<SurveyEntry> seV;
+		Vector<Vote> vV;
+		Vector<Vote> pVV;
+		Vector<Vote> nVV;
 		public ScreeningRow(Screening s) {
 			this.s = s;
 		}
@@ -373,8 +438,20 @@ public class EditSurveyCard extends DialogBox {
 		public void onLoad() {
 			super.onLoad();
 		
+			caa.getSurveyEntryByScreeningFK(s.getId(), new GetSurveyEntryCallback());
 			caa.getCinemaById(s.getCinemaFK(), new GetCinemaCallback());
-			cb = new CheckBox(cinemaInScreening.getName() + " " + s.getScreeningDate() + " " + s.getScreeningTime() + " Uhr" + s.getId());
+			for (SurveyEntry se : seV) {
+				caa.getVotesBySurveyEntryFK(se.getId(), new GetVoteCallback());
+			}
+			for (Vote v : vV) {
+				if (v.getVotingWeight() > 0) {
+					pVV.add(v);
+				}else {
+					nVV.add(v);
+				}
+			}
+			cb = new CheckBox(cinemaInScreening.getName() + " " + s.getScreeningDate() + " " + s.getScreeningTime() 
+			+ " Uhr" + "positiv Votes " + pVV.size() + " " + "negativ Votes " + nVV.size() + s.getId());
 			this.add(cb);		
 			
 		}
@@ -383,14 +460,43 @@ public class EditSurveyCard extends DialogBox {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
+				Window.alert("Problem with the Callback");				
 			}
 
 			@Override
 			public void onSuccess(Cinema result) {
 				cinemaInScreening = result;
 				
+			}
+			
+		}
+		
+		class GetSurveyEntryCallback implements AsyncCallback<Vector<SurveyEntry>> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Problem with the Callback");				
+				
+			}
+
+			@Override
+			public void onSuccess(Vector<SurveyEntry> result) {
+				seV = result;
+			}
+			
+		}
+		
+		class GetVoteCallback implements AsyncCallback<Vector<Vote>> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Problem with the Callback");				
+				
+			}
+
+			@Override
+			public void onSuccess(Vector<Vote> result) {
+				vV = result;
 			}
 			
 		}

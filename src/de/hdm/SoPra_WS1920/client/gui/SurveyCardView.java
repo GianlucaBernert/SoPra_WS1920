@@ -38,6 +38,7 @@ public class SurveyCardView extends FlowPanel {
 	
 	
 	SurveyManagementAsync surveymanagement;
+	EditSurveyCard esc;
 	
 	SurveyCard parentCard;
 	
@@ -95,6 +96,7 @@ public class SurveyCardView extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
+			esc = new EditSurveyCard(parentCard, surveyToShow);
 			//parentCard.showSurveyCardEdit(surveyToShow);
 		}
 	}
