@@ -393,6 +393,14 @@ public interface SurveyManagement extends RemoteService {
      */
     
     Vector<Movie> getMoviesByGenre(String genre);
+    
+    /**
+     * Methode um den Namen des Films zu erhalten
+     * @param text
+     * return person
+     */
+
+	Vector<Person> searchPerson(String text);
 
 	
 }

@@ -438,6 +438,15 @@ public interface SurveyManagementAsync {
      */
 	
 	void getMoviesByGenre(String genre, AsyncCallback<Vector<Movie>> callback);
+	
+	/**
+     * Methode um den Film einer Umfrage zu erhalten
+     * @param text
+     * @param AsyncCallback 
+     * return person
+     */
+
+	void searchPerson(String text, AsyncCallback<Vector<Person>> callback);
     
 
 }
