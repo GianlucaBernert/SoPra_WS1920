@@ -1,0 +1,27 @@
+@FinalFields, false
+com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true, true, true, true, com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533, 3936916533
+com.google.gwt.user.client.rpc.RpcTokenException, true, true, false, false, com.google.gwt.user.client.rpc.RpcTokenException/2345075298, 2345075298
+com.google.gwt.user.client.rpc.XsrfToken, false, false, true, true, com.google.gwt.user.client.rpc.XsrfToken/4254043109, 4254043109
+de.hdm.SoPra_WS1920.shared.SurveyManagement, false, false, false, false, _, 2528529821
+de.hdm.SoPra_WS1920.shared.bo.BusinessObject, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.BusinessObject/2482673657, 2482673657
+de.hdm.SoPra_WS1920.shared.bo.Cinema, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Cinema/1553089393, 1553089393
+de.hdm.SoPra_WS1920.shared.bo.CinemaChain, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.CinemaChain/995486881, 995486881
+de.hdm.SoPra_WS1920.shared.bo.Group, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Group/2264146912, 2264146912
+de.hdm.SoPra_WS1920.shared.bo.Membership, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Membership/942809773, 942809773
+de.hdm.SoPra_WS1920.shared.bo.Movie, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Movie/684384691, 684384691
+de.hdm.SoPra_WS1920.shared.bo.Ownership, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Ownership/3736745514, 3736745514
+de.hdm.SoPra_WS1920.shared.bo.Person, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Person/139243207, 139243207
+de.hdm.SoPra_WS1920.shared.bo.Screening, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Screening/3626817210, 3626817210
+de.hdm.SoPra_WS1920.shared.bo.Survey, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Survey/3182791358, 3182791358
+de.hdm.SoPra_WS1920.shared.bo.SurveyEntry, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.SurveyEntry/808292215, 808292215
+de.hdm.SoPra_WS1920.shared.bo.Vote, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Vote/3678519461, 3678519461
+java.lang.Exception, true, false, true, false, java.lang.Exception/1920171873, 1920171873
+java.lang.RuntimeException, true, false, true, false, java.lang.RuntimeException/515124647, 515124647
+java.lang.String, true, true, true, true, java.lang.String/2004016611, 2004016611
+java.lang.Throwable, true, false, true, false, java.lang.Throwable/2953622131, 2953622131
+java.sql.Date, true, true, true, true, java.sql.Date/730999118, 730999118
+java.sql.Time, true, true, true, true, java.sql.Time/1816797103, 1816797103
+java.sql.Timestamp, true, true, true, true, java.sql.Timestamp/3040052672, 3040052672
+java.util.Date, true, false, true, false, java.util.Date/3385151746, 3385151746
+java.util.Stack, true, true, false, false, java.util.Stack/1346942793, 1346942793
+java.util.Vector, true, true, false, false, java.util.Vector/3057315478, 3057315478

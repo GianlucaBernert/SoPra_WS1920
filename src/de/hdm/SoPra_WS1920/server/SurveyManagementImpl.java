@@ -751,6 +751,22 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
 			return surveys;
 		
 	}
+	
+	@Override
+	public Vector <Person> searchPerson(String text){
+		
+		HashSet<Person> hs = new HashSet<Person>();
+		Vector<Person> persons = new Vector<Person>();
+		String s = text;
+		hs.add(this.getPersonByEmail(s));
+		
+		Iterator<Person> it = hs.iterator();
+			while(it.hasNext()) {
+				persons.add(it.next());
+			}
+			
+			return persons;
+	}
 
 
 	
