@@ -169,7 +169,7 @@ public class GroupForm extends DialogBox {
 		
 		
 		allMembers = new MultiWordSuggestOracle();
-//		surveyManagementAdministration.getAllPersons(new GetAllPersonsCallback(this); -->To be defined in impl, service and service asnyc
+		surveyManagementAdministration.getAllPersons(new GetAllPersonsCallback()); 
 
 		memberSuggestBox = new SuggestBox(allMembers);
 		memberSuggestBox.setStylePrimaryName("CardTextBox");
