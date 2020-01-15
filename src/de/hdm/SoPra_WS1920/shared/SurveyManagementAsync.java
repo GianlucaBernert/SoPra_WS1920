@@ -379,12 +379,12 @@ public interface SurveyManagementAsync {
     public void editSurveyEntry(SurveyEntry se, AsyncCallback<Void> callback);
     
     /**
-     * Methode um die Anzahl von Gruppenmitgliedern zu erhalten
+     * Methode um die Memberships einer Gruppe zu erhalten
      * @param gFK
      * @param AsyncCallback 
-     * return int
+     * return Vector Membership
      */
-    public void countGroupMembers(int sFK, AsyncCallback<Integer> callback);
+    public void getGroupMembersOfGroup(int sFK, AsyncCallback<Vector<Membership>> callback);
     
     /**
      * Methode um den Film einer Umfrage zu erhalten
@@ -392,8 +392,30 @@ public interface SurveyManagementAsync {
      * @param AsyncCallback 
      * return movie
      */
-    public void getMoviebySurveyFK(int sFK, AsyncCallback<Movie> callback);
+    public void getMovieBySurveyFK(int sFK, AsyncCallback<Movie> callback);
 
+    /**
+     * Methode um alle Voters einer Survey zurückzugeben
+     * @param surveyFK
+     * @param AsyncCallback
+     * return vector person
+     */
+    public void getVotedPersonsOfSurvey(int surveyFK, AsyncCallback<Vector<Person>> callback);
+
+    /**
+     * Methode um alle Memberships einer Gruppe zurückzugeben
+     * @param group
+     * @param AsyncCallback
+     * return vector membership
+     */
+    public void getMembershipsOfGroup(Group group, AsyncCallback<Vector<Membership>> callback);
+    
+    /**
+     * Methode um alle Persons zurückzugeben
+     * @param AsyncCallback
+     * return vector person
+     */
+    public void getAllPersons(AsyncCallback<Vector<Person>> callback);
     /**
      * Methode um den Film einer Umfrage zu erhalten
      * @param text

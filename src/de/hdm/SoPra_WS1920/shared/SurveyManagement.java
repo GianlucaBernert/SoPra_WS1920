@@ -345,14 +345,34 @@ public interface SurveyManagement extends RemoteService {
      * @param gFK
      * return
      */
-    public int countGroupMembers(int gFK);
+    public Vector<Membership> getGroupMembersOfGroup(int gFK);
     
     /**
      * Methode um den Film einer Umfrage zu erhalten
      * @param sFK 
      * return movie
      */
-    public Movie getMoviebySurveyFK(int sFK);
+    public Movie getMovieBySurveyFK(int sFK);
+    
+    /**
+     * Methode um alle Voters einer Survey zurückzugeben
+     * @param surveyFK
+     * return vector person
+     */
+    public Vector<Person> getVotedPersonsOfSurvey(int surveyFK);
+    
+    /**
+     * Methode um alle Memberships einer Group zurückzugeben
+     * @param group
+     * return vector membership
+     */
+    public Vector<Membership> getMembershipsOfGroup(Group group);
+    
+    /**
+     * Methode um alle Personen zurückzugeben
+     * return vector person
+     */
+    public Vector<Person> getAllPersons();
     
     /**
      * Methode um den Film einer Suche zu erhalten
