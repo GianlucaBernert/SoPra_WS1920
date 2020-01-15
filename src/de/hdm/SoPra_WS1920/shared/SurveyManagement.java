@@ -165,7 +165,7 @@ public interface SurveyManagement extends RemoteService {
      * @param Timestamp endDate 
      * @return Survey s
      */
-    public Survey createSurvey(int gFK, int pFK, Timestamp startDate, Timestamp endDate);
+    public Survey createSurvey(int gFK, int pFK);
     
     /**
      * Methode um eine Umfrage zu bearbeiten
@@ -207,20 +207,6 @@ public interface SurveyManagement extends RemoteService {
      * @return Vector<SurveyEntry>
      */
     public Vector<SurveyEntry> getSurveyEntryBySurveyFK(int sFK);
-    
-    /** 
-     * Methode um eine Umfrage anhand des Start Datums zu finden
-     * @param Timestamp startDate
-     * @return Vector<Survey>
-     */
-    public Vector<Survey> getSurveyByStartDate(Timestamp startDate);
-
-    /**
-     * Methode um eine Umfrage anhand des ENd Datums zu finden
-     * @param Timestamp endDate
-     * @return Vector<Survey>
-     */
-    public Vector<Survey> getSurveyByEndDate(Timestamp endDate);
 
     /**
      * Methode um ein Vote zu erstellen
@@ -396,7 +382,7 @@ public interface SurveyManagement extends RemoteService {
      * return survey
      */
     
-    Vector<Survey> searchSurvey(Timestamp time); 
+//    Vector<Survey> searchSurvey(Timestamp time); 
     
     /**
      * Methode um den Namen des Films zu erhalten

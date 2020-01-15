@@ -151,7 +151,7 @@ public class SurveyCardEdit extends DialogBox {
 		groupLabel =  new Label("Group");
 		groupLabel.setStyleName("TextBoxLabel");
 		allGroups = new ListBox();
-		//surveyManagement.getAllGroups(new GetAllGroupsCallback)
+		surveyManagement.getGroupByPersonFK(person.getId(), new GetGroupsByFKCallback());
 		allGroups.setStyleName("CardSuggestBox");
 		
 		cityLabel = new Label("City");
@@ -264,6 +264,25 @@ public class SurveyCardEdit extends DialogBox {
 				allMovies.add(m.getName());
 			}
 		}
+	}
+	
+	class GetGroupsByFKCallback implements AsyncCallback<Vector<Group>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<Group> result) {
+			// TODO Auto-generated method stub
+			for(Group g: result) {
+				allGroups.addItem(g.getName());
+			}
+					
+		}
+		
 	}
 	
 	class GetMovieCallback implements AsyncCallback<Vector<Movie>>{
@@ -423,7 +442,6 @@ public class SurveyCardEdit extends DialogBox {
 			
 			
 			surveyManagement.createSurvey(group.getId(), person.getId(), new CreateSurveyCallback(surveyCardEdit));
-			
 			
 			
 			
