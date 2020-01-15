@@ -591,7 +591,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     }
 
     /**
-     * Methode um den Film einer Umfrage zurückzugeben
+     * Methode um den Film einer Umfrage zurï¿½ckzugeben
      * @param int sFK
      * @return Movie m;
      */
@@ -604,7 +604,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     }
     
     /**
-     * Methode um alle Personen einer Umfrage zurückzugeben, die bereits abgestimmt haben
+     * Methode um alle Personen einer Umfrage zurï¿½ckzugeben, die bereits abgestimmt haben
      * @param int sFK
      * @return ;
      */
