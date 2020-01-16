@@ -26,43 +26,32 @@ import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 public class GroupForm extends DialogBox {
 	
-	SurveyManagementHeader header;
-	SurveyContent content;
-	AddGroupMemberForm agmf;
+	FlowPanel formWrapper;
 	Group groupToShow;
 	GroupCard parentCard;
-	GroupForm gf;
-	
-	
-	FlowPanel main;
-	HorizontalPanel buttonPanel;
-	Button cancel;
 
-	
-	Label groupName;
-	Label memberName;
 	Label cardDescription;
-	Label addedMembers;
-	Label deleteLabel;
+	Image cancelIcon;
+	Button invisibleButton;
 	
-//	TextArea listedMembersTextArea;
-	
-	TextBox groupTextBox;
-	
+	Label groupNameLabel;
+	TextBox groupNameTextBox;
+	Label addMembersLabel;
 	MultiWordSuggestOracle allMembers;
 	SuggestBox memberSuggestBox;
+	Image addIcon;
 	
-	Button saveButton;
-	Button addMember;
-	Button add;
+	FlowPanel membersPanel;
 	
 	Image deleteIcon;
-	Image cancelIcon;
-	Image addIcon;
-	Image searchIcon;
+	Label deleteLabel;
 	
-	FlowPanel memberPanel;
+	Button saveButton;
+	
 	Vector<Person> groupMembers;
+	
+	SurveyManagementHeader header;
+	SurveyContent content;
 	
 	SurveyManagementAsync surveyManagementAdministration;
 	
@@ -78,11 +67,71 @@ public class GroupForm extends DialogBox {
 		this.content = content;
 	}
 	
+	public void onLoad() {
+		super.onLoad();
+		surveyManagementAdministration = ClientsideSettings.getSurveyManagement();
+		surveyManagementAdministration.getAllPersons(new GetAllPersonsCallback());
+		
+		if(parentCard!=null) {
+			surveyManagementAdministration.getMembershipsOfGroup(groupToShow, new GetMembershipCallback());
+		}
+		
+		groupMembers = new Vector<Person>();
+		
+		formWrapper = new FlowPanel();
+		this.setStylePrimaryName("EditCard");
+		
+		cardDescription = new Label("Add Group");
+		cardDescription.setStyleName("CardDescription");
+		cancelIcon = new Image("/Images/png/007-close.png");
+		cancelIcon.setStyleName("CancelIcon");
+		cancelIcon.addClickHandler(new CancelClickHandler(this));
+		
+		groupNameLabel = new Label("Goupname:");
+		groupNameLabel.setStylePrimaryName("TextBoxLabel");
+		groupNameTextBox = new TextBox();
+		groupNameTextBox.setStyleName("CardTextBox");
+		groupNameTextBox.getElement().setPropertyString("placeholder", "person@mail.com");
+		
+		addMembersLabel = new Label(" Add Group Member:");
+		addMembersLabel.setStylePrimaryName("TextBoxLabel");
+		
+		membersPanel = new FlowPanel();
+		allMembers = new MultiWordSuggestOracle();
+		memberSuggestBox = new SuggestBox(allMembers);
+		memberSuggestBox.setStylePrimaryName("CardTextBox");
+		this.showMembers();
+				
+		addIcon = new Image("/Images/png/001-add-button.png");
+		addIcon.setStyleName("AddIcon");
+		addIcon.addClickHandler(new AddMemberClickHandler(this));
+
+		saveButton = new Button("Save");
+		saveButton.setStylePrimaryName("SaveButton");
+		saveButton.addClickHandler(new SaveClickHandler(this));
+			
+		formWrapper.add(cardDescription);
+		formWrapper.add(groupNameLabel);
+		formWrapper.add(groupNameTextBox);
+		formWrapper.add(cancelIcon);
+		formWrapper.add(addMembersLabel);
+		formWrapper.add(memberSuggestBox);
+		formWrapper.add(addIcon);
+//		formWrapper.add(addedMembers);
+		formWrapper.add(membersPanel);
+		formWrapper.add(saveButton);
+
+		this.add(formWrapper);
+		this.center();
+		this.show();
+	
+	}
+	
 	public void showMembers() {
-		memberPanel.clear();
+		membersPanel.clear();
 		for(Person p: groupMembers) {
-			MemberRow memberRow = new MemberRow(memberPanel,p);
-			memberPanel.add(memberRow);
+			MemberRow memberRow = new MemberRow(membersPanel,p);
+			membersPanel.add(memberRow);
 		}
 		
 	}
@@ -101,14 +150,13 @@ public class GroupForm extends DialogBox {
 		
 		public void onLoad() {
 			super.onLoad();
+			
 			deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
-			deleteIcon.setStyleName("searchSubmitIcon");
+			deleteIcon.setStyleName("DeletetIcon");
 			deleteIcon.addClickHandler(new DeleteMemberClickHandler(this));
 			
-			
 			fullNameLabel = new Label(p.getEMail());
-			fullNameLabel.setStyleName("MemberTextBoxLabel");
-			
+			fullNameLabel.setStyleName("TextBoxLabel");
 			
 			this.add(deleteIcon);
 			this.add(fullNameLabel);
@@ -125,100 +173,29 @@ public class GroupForm extends DialogBox {
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
+				
+//				surveyManagementAdministration.deleteMembership(parentCard.groupToShow.getId(), p.getId(), new DeleteMembershipCallback());
+				groupMembers.remove(p);
 				memberPanel.remove(memberRow);
 			}
 			
 		}
-	}
-	
-	public void onLoad() {
-		super.onLoad();
-		surveyManagementAdministration = ClientsideSettings.getSurveyManagement();
-		surveyManagementAdministration.getAllPersons(new GetAllPersonsCallback());
-		if(parentCard!=null) {
-			surveyManagementAdministration.getMembershipsOfGroup(groupToShow, new GetMembershipCallback());
+		
+		class DeleteMembershipCallback implements AsyncCallback<Void>{
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				// TODO Auto-generated method stub
+				
+			}
+			
 		}
-		
-		groupMembers = new Vector<Person>();
-		
-		FlowPanel main = new FlowPanel();
-		this.setStylePrimaryName("EditCard");
-		
-		memberPanel = new FlowPanel();
-//		this.setStylePrimaryName(style);
-		
-		cardDescription = new Label("Add Group");
-		cardDescription.setStyleName("CardDescription");
-		
-		groupName = new Label("Goupname:");
-		groupName.setStylePrimaryName("TextBoxLabel");
-		
-		memberName = new Label(" Add Group Member:");
-		memberName.setStylePrimaryName("TextBoxLabel");
-		
-		
-		groupTextBox = new TextBox();
-		groupTextBox.setStylePrimaryName("CardTextBox");
-		
-
-		searchIcon = new Image("/Images/png/003-search.png");
-		searchIcon.setStyleName("SearchIcon");
-		searchIcon.addClickHandler(new AddMemberClickHandler(this));
-
-		allMembers = new MultiWordSuggestOracle();
-		
-//		surveyManagementAdministration.getAllPersons(new GetAllPersonsCallback()); 
-//		surveyManagementAdministration.getAllPersons(new GetAllPersonsCallback());
-
-		memberSuggestBox = new SuggestBox(allMembers);
-		memberSuggestBox.setStylePrimaryName("CardTextBox");
-		
-		
-		
-		addedMembers = new Label("Added Members");
-		addedMembers.setStylePrimaryName("TextBoxLabel");
-		
-		//listedMembersTextArea =new TextArea();
-		//listedMembersTextArea.setStyleName("CardTextArea");
-		//listedMembersTextArea.getElement().setAttribute("maxlength", "350");
-		
-		//cancel = new Button("cancel");
-		//cancel.setStylePrimaryName("createBoButton");
-		
-		this.showMembers();
-		
-		cancelIcon = new Image("/Images/001-unchecked.svg");
-		cancelIcon.setStyleName("CancelIcon");
-		cancelIcon.addClickHandler(new CancelClickHandler(this));
-		
-		saveButton = new Button("Save");
-		saveButton.setStylePrimaryName("SaveButton");
-		saveButton.addClickHandler(new SaveClickHandler(this));
-		
-		addMember = new Button("Add Member");
-		addMember.setStylePrimaryName("SaveButton");
-		addMember.addClickHandler(new AddMemberClickHandler(this));
-		
-		//addIcon = new Image("/Images/003-edit.png");
-		//addIcon.setStylePrimaryName("editIcon");
-		//addIcon.addClickHandler(new AddClickHandler(this));
-		
-		
-		main.add(cardDescription);
-		main.add(groupName);
-		main.add(groupTextBox);
-		main.add(cancelIcon);
-		main.add(memberName);
-		main.add(memberSuggestBox);
-		main.add(searchIcon);
-		main.add(addedMembers);
-		main.add(memberPanel);
-		main.add(saveButton);
-
-		this.add(main);
-		this.center();
-		this.show();
-	
 	}
 	
 	class GetAllPersonsCallback implements AsyncCallback<Vector<Person>>{
@@ -238,6 +215,8 @@ public class GroupForm extends DialogBox {
 		}
 		
 	}
+	
+	
 		
 	public boolean checkforMembership(Person person) {
 		boolean isMember= false;
@@ -326,16 +305,19 @@ public class GroupForm extends DialogBox {
 		@Override
 		public void onClick(ClickEvent event) {
 			
-			surveyManagementAdministration.createGroup(groupTextBox.getText(),
+			surveyManagementAdministration.createGroup(groupNameTextBox.getText(),
 					1, 
-					new CreateGroupCallback());
+					new CreateGroupCallback(gf));
 			
 		}
 	}
 		
 		class CreateGroupCallback implements AsyncCallback<Group>{
-			
-			
+			GroupForm gf;
+			public CreateGroupCallback(GroupForm gf) {
+				// TODO Auto-generated constructor stub
+				this.gf=gf;
+			}
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -386,17 +368,14 @@ public class GroupForm extends DialogBox {
 		GroupForm gf;
 		
 		public AddMemberClickHandler(GroupForm gf) {
-			this.gf = gf;
-			
+			this.gf = gf;		
 		}
 
 		@Override
 		public void onClick(ClickEvent event) {
-			
 			surveyManagementAdministration.getPersonByEmail(gf.memberSuggestBox.getValue(), new GetPersonCallback(gf));
-			
+		
 		}
-	
 	}
 	
 	class GetPersonCallback implements AsyncCallback<Person>{
@@ -409,7 +388,7 @@ public class GroupForm extends DialogBox {
 		@Override
 		public void onFailure(Throwable caught) {
 			// TODO Auto-generated method stub
-			
+			Window.alert("Person not found");
 		}
 
 		@Override
@@ -417,8 +396,8 @@ public class GroupForm extends DialogBox {
 			// TODO Auto-generated method stub
 			if(gf.checkforMembership(result)==false) {
 				gf.groupMembers.add(result);
-				MemberRow newMember = new MemberRow(gf.memberPanel,result);
-				gf.memberPanel.add(newMember);
+				MemberRow newMember = new MemberRow(gf.membersPanel,result);
+				gf.membersPanel.add(newMember);
 			}
 		}
 		

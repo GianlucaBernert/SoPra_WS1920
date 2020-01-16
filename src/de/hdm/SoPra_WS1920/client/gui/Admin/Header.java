@@ -28,7 +28,6 @@ public class Header extends FlowPanel{
 	Label headline;
 	Button createBo;
 	SearchBox searchBox;
-	PopupPanel pPanel;
 
 	Content content;
 	CinemaAdministrationAsync cinemaAdministration;
@@ -209,18 +208,10 @@ public class Header extends FlowPanel{
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-//				if(header.headline.getText().equals("Movies")){
-//					cinemaAdministration.searchMovie(searchBox.searchText.getText(), new SearchMovieCallback());
-//				}else if(header.headline.getText().equals("Cinemas")){
-//					cinemaAdministration.searchCinema(1,searchBox.searchText.getText(), new SearchCinemaCallback());
-//				}else if(header.headline.getText().equals("Cinema Chains")){
-//			  				cinemaAdministration.searchCinemaChain(1,searchBox.searchText.getText(), new SearchCinemaChainCallback());
-//			  	}else if(header.headline.getText().equals("Screenings")){
-//			  				cinemaAdministration.searchScreening(1,searchBox.searchText.getText(), new SearchScreeningCallback());
-//			  	}
+
 				searchBox.searchWord(searchBox, header);
 			}
-	}
+		}
 		class SearchMovieCallback implements AsyncCallback<Vector<Movie>>{
 
 			@Override

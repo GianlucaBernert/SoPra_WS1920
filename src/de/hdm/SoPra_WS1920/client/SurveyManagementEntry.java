@@ -7,9 +7,6 @@ import de.hdm.SoPra_WS1920.client.gui.NavigationBar;
 import de.hdm.SoPra_WS1920.client.gui.SurveyContent;
 import de.hdm.SoPra_WS1920.client.gui.SurveyManagementHeader;
 
-
-
-
 public class SurveyManagementEntry implements EntryPoint {
 	
 	NavigationBar navBar;

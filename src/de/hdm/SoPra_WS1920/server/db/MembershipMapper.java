@@ -102,7 +102,7 @@ public class MembershipMapper {
         	
         	while(rs.next()) {
         		Membership me = new Membership();
-        		me.setId(rs.getInt("id"));
+//        		me.setId(rs.getInt("id"));
         		me.setGroupFK(rs.getInt("groupFK"));
         		me.setPersonFK(rs.getInt("personFK"));
         		

@@ -1,6 +1,7 @@
 package de.hdm.SoPra_WS1920.client.gui;
 
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 
@@ -10,25 +11,32 @@ public class MovieBoard extends FlowPanel {
 	SurveyContent content;
 	MovieBoardView movieBoardView;
 	
-	public void onLoad() {
-		super.onLoad();
-		this.setStylePrimaryName("Card");
-		this.showMovieBoardView(movieToShow);
-	}
+	Label name;
+	Label genre;
+	Label description;
 	
 	public MovieBoard(SurveyContent content, Movie movieToShow) {
 		this.content = content;
 		this.movieToShow = movieToShow;
 	}
 	
-	public MovieBoard() {
+	public void onLoad() {
+		super.onLoad();
+		this.setStylePrimaryName("Card");
 		
+		name = new Label(movieToShow.getName());
+		name.setStylePrimaryName("CardViewTitle");
+		
+		genre = new Label(movieToShow.getGenre());
+		genre.setStylePrimaryName("CardViewSubTitle");
+		
+		description=new Label(movieToShow.getDescription());
+		description.setStyleName("CardViewParagraph");
+		
+		this.add(name);
+		this.add(genre);
+		this.add(description);
 	}
 	
-	public void showMovieBoardView(Movie movieToShow) {
-		this.movieToShow = movieToShow;
-		this.clear();
-		this.add(new MovieBoardView(this, movieToShow));
-	}
 
 }
