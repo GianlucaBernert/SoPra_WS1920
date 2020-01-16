@@ -32,9 +32,43 @@ public class SurveyContent extends FlowPanel {
 		super.onLoad();
 		this.setStylePrimaryName("content");
 		surveyManagementAdministration = ClientsideSettings.getSurveyManagement();
+		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
 	}
 	
-	public void ShowGroups() {
+	public void showMovies() {
+		this.clear();
+		cinemaAdministration.getAllMovies(new GetAllMoviesCallback(this));
+		
+		
+	}
+	
+	class GetAllMoviesCallback implements AsyncCallback<Vector<Movie>>{
+		
+		SurveyContent content;
+		
+		public GetAllMoviesCallback(SurveyContent content) {
+			this.content = content;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the Callback");
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<Movie> result) {
+			// TODO Auto-generated method stub
+			for(Movie m : result) {
+				MovieBoard movieBoard = new MovieBoard(content,m);
+				content.add(movieBoard);
+			}		
+		}
+		
+	}
+	
+	public void showGroups() {
 		this.clear();
 		surveyManagementAdministration.getGroupByPersonFK(1, new GetGroupByPersonCallback(this));
 	}
@@ -65,47 +99,14 @@ public class SurveyContent extends FlowPanel {
 		
 	}
 	
-	public void showMovies() {
-		this.clear();
-		cinemaAdministration.getAllMovies(new GetAllMoviesCallback(this));
-		
-		
-	}
 	
-	class GetAllMoviesCallback implements AsyncCallback<Vector<Movie>>{
-		
-		SurveyContent content;
-		
-		public GetAllMoviesCallback(SurveyContent content) {
-			this.content = content;
-		}
-
-		@Override
-		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-			Window.alert("Problem with the Callback");
-			
-		}
-
-		@Override
-		public void onSuccess(Vector<Movie> result) {
-			// TODO Auto-generated method stub
-				for(Movie m : result) {
-				
-			MovieBoard movieBoard = new MovieBoard(content, m);
-			content.add(movieBoard);
-			}
-			
-		}
-		
-	}
 	
 	public void showSurveys() {
 		this.clear();
 		surveyManagementAdministration.getSurveyByPersonFK(1, new GetSurveyByPersonCallback(this));
 		
-		
 	}
+	
 	class GetSurveyByPersonCallback implements AsyncCallback<Vector<Survey>> {
 		SurveyContent content;
 		
