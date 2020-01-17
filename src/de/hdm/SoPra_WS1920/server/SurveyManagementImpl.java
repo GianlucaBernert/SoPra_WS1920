@@ -122,8 +122,8 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @param Ownership os
      */
     public void deleteOwnership(Ownership os) {
-    	this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(os.getId()));
     	this.oMapper.deleteOwnership(os);
+    	this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(os.getId()));
     }
     
     /**
@@ -373,6 +373,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Survey s = new Survey();
         s.setId(os.getId());
         s.setGroupFK(gFK);
+        s.setStatus(1);
         s.setCreationTimestamp(os.getCreationTimestamp());
         this.sMapper.insertSurvey(s);
         return s;
@@ -400,10 +401,10 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         		this.deleteSurveyEntry(se);
         	}
         }
+        this.sMapper.deleteSurvey(s);
         
         this.deleteOwnership(os);
         
-        this.sMapper.deleteSurvey(s);
     }
     
     /**
@@ -475,9 +476,10 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         	}
         }
         
+        this.seMapper.deleteSurveyEntry(se);
+        
         this.deleteOwnership(os);
         
-        this.seMapper.deleteSurveyEntry(se);
     }
     
     /**
@@ -531,8 +533,8 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      */
     public void deleteVote(Vote v) {
     	Ownership os = this.oMapper.findOwnershipByID(v.getId());
-    	this.deleteOwnership(os);
     	this.vMapper.deleteVote(v);
+    	this.deleteOwnership(os);
     }
 
     /**
@@ -795,6 +797,11 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
 			}
 			
 			return persons;
+	}
+	
+	public Survey endSurvey(Survey s) {
+		s.setId(0);
+		return this.sMapper.updateSurvey(s);
 	}
 	
 }

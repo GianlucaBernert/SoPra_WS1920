@@ -98,9 +98,11 @@ public class SurveyMapper {
 		
 			Statement stmt = con.createStatement();
 			
-				stmt.executeUpdate("INSERT INTO survey(id, groupFK) "
+				stmt.executeUpdate("INSERT INTO survey(id, isActive, groupFK) "
 					+ "VALUES ('"
 					+ s.getId()	
+					+ "','"
+					+ s.getStatus()
 					+ "','"
 					+ s.getGroupFK()
 					+ "')");
