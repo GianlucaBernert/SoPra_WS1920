@@ -196,6 +196,39 @@ public class SurveyMapper {
     }
     
     /**
+     * Auslesen der Survey-Objekte mit gegebenem Status
+     * @param isActive
+     * @return Vektor mit Survey-Objekten
+     */
+    public Vector<Survey> findSurveyByIsActive(int isActive) {
+    	Connection con = DBConnection.connection();
+    	Vector<Survey> result = new Vector<Survey>();
+    	
+    	try {
+    		Statement stmt = con.createStatement();
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM survey "
+    				+ "WHERE survey.isActive=" + isActive);
+    		
+    		//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
+    		while(rs.next()) {
+    			Survey s = new Survey();
+    			s.setId(rs.getInt("id"));
+    			s.setGroupFK(rs.getInt("groupFK"));
+    			s.setStatus(rs.getInt("isActive"));
+    			
+    			
+    			//Hinzuf�gen des Objekts zum Ergebnisvektor
+    			result.addElement(s);
+    		}
+    	} catch(SQLException e2) {
+    		e2.printStackTrace();
+    	}
+    	//Rückgabe des Ergebnisvektors
+    	return result;
+        
+    }
+    
+    /**
      * L�schen einer Umfrage durch den GroupFK(Fremdschlüssel)
      * @param groupFK
      */
