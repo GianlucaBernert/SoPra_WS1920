@@ -73,6 +73,7 @@ public class SurveyMapper {
 				Survey s = new Survey();
 				s.setId(rs.getInt("id"));
 				s.setGroupFK(rs.getInt("groupFK"));
+				s.setStatus(rs.getInt("isActive"));
 				
 				return s;
 			}
@@ -129,6 +130,7 @@ public class SurveyMapper {
         	Statement stmt = con.createStatement();
         	
         	stmt.executeUpdate("UPDATE survey SET groupFK='" + s.getGroupFK()
+        	+"', isActive='"+s.getStatus()
         	+ "' WHERE id=" + s.getId());
         	con.setAutoCommit(true);
         }
@@ -179,6 +181,7 @@ public class SurveyMapper {
     			Survey s = new Survey();
     			s.setId(rs.getInt("id"));
     			s.setGroupFK(rs.getInt("groupFK"));
+    			s.setStatus(rs.getInt("isActive"));
     			
     			
     			//Hinzuf�gen des Objekts zum Ergebnisvektor
@@ -220,7 +223,7 @@ public class SurveyMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK "
+        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.groupFK, survey.isActive "
         			+ "FROM survey INNER JOIN popcorns.businessownership "
         			+ "ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK + "'");
         	
@@ -229,7 +232,7 @@ public class SurveyMapper {
         		Survey s = new Survey();
         		s.setId(rs.getInt("id"));
         		s.setGroupFK(rs.getInt("groupFK"));
-        		
+        		s.setStatus(rs.getInt("isActive"));
         		
         		
         		//Hinzuf�gen des neuen Objekts zum Ergebnisvektor
