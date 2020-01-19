@@ -72,6 +72,8 @@ public class SurveyMapper {
 				
 				Survey s = new Survey();
 				s.setId(rs.getInt("id"));
+				s.setStartDate(rs.getDate("startDate"));
+				s.setEndDate(rs.getDate("endDate"));
 				s.setGroupFK(rs.getInt("groupFK"));
 				s.setStatus(rs.getInt("isActive"));
 				
@@ -99,9 +101,13 @@ public class SurveyMapper {
 		
 			Statement stmt = con.createStatement();
 			
-				stmt.executeUpdate("INSERT INTO survey(id, isActive, groupFK) "
+				stmt.executeUpdate("INSERT INTO survey(id, startDate, endDate, isActive, groupFK) "
 					+ "VALUES ('"
 					+ s.getId()	
+					+ "','"
+					+ s.getStartDate()
+					+ "','"
+					+ s.getEndDate()
 					+ "','"
 					+ s.getStatus()
 					+ "','"
@@ -130,7 +136,8 @@ public class SurveyMapper {
         	Statement stmt = con.createStatement();
         	
         	stmt.executeUpdate("UPDATE survey SET groupFK='" + s.getGroupFK()
-        	+"', isActive='"+s.getStatus()
+        	+"', isActive='"+s.getStatus() + "', startDate='" + s.getStartDate()
+        	+ "', endDate='" + s.getEndDate()
         	+ "' WHERE id=" + s.getId());
         	con.setAutoCommit(true);
         }
@@ -161,6 +168,84 @@ public class SurveyMapper {
         
     }
     
+    public Survey findSurveyByStartDate(java.sql.Date startDate) {
+    	Connection con = DBConnection.connection();
+    	
+    	try {
+    		
+    		Statement stmt = con.createStatement();
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM survey WHERE startDate='" + startDate + "'");
+    		
+    		if(rs.next()) {
+    			Survey s = new Survey();
+    			s.setId(rs.getInt("id"));
+    			s.setStartDate(rs.getDate("startDate"));
+    			s.setEndDate(rs.getDate("endDate"));
+    			s.setGroupFK(rs.getInt("groupFK"));
+    			s.setStatus(rs.getInt("isActive"));
+    			
+    			return s;
+    		}
+    	}
+    	catch(SQLException e2) {
+    		e2.printStackTrace();
+    	}
+    	return null;
+    }
+    
+    public Survey findSurveyByEndDate(java.sql.Date endDate) {
+    	Connection con = DBConnection.connection();
+    	
+    	try {
+    		
+    		Statement stmt = con.createStatement();
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM survey WHERE endDate='" + endDate + "'");
+    		
+    		if(rs.next()) {
+    			Survey s = new Survey();
+    			s.setId(rs.getInt("id"));
+    			s.setStartDate(rs.getDate("startDate"));
+    			s.setEndDate(rs.getDate("endDate"));
+    			s.setGroupFK(rs.getInt("groupFK"));
+    			s.setStatus(rs.getInt("isActive"));
+    			
+    			return s;
+    		}
+    		
+    		
+    	}catch(SQLException e2) {
+			e2.printStackTrace();
+		}
+    	return null;
+    }
+    
+    public Survey findSelectedCityOfSurvey(int surveyID, String city) {
+    	Connection con = DBConnection.connection();
+    	
+    	try {
+    		
+    		Statement stmt = con.createStatement();
+    		ResultSet rs = stmt.executeQuery("SELECT survey.id, cinema.city FROM survey INNER JOIN cinema" 
+    				+ "WHERE survey.id='" + surveyID +  "' AND cinema.city= '" + city + "'");
+    		
+    		if(rs.next()) {
+    			Survey s = new Survey();
+    			s.setId(rs.getInt("id"));
+    			s.setStartDate(rs.getDate("startDate"));
+    			s.setEndDate(rs.getDate("endDate"));
+    			s.setGroupFK(rs.getInt("groupFK"));
+    			s.setStatus(rs.getInt("isActive"));
+    			
+    			return s;
+    		}
+    	}
+    	catch(SQLException e2)
+    	{
+    		e2.printStackTrace();
+    		}
+    	return null;
+    	}
+    
     
     /**
      * Auslesen der Survey-Objekte mit gegebener GroupFK (Fremdschl�ssel)
@@ -180,6 +265,8 @@ public class SurveyMapper {
     		while(rs.next()) {
     			Survey s = new Survey();
     			s.setId(rs.getInt("id"));
+    			s.setStartDate(rs.getDate("startDate"));
+    			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
     			s.setStatus(rs.getInt("isActive"));
     			
@@ -213,6 +300,8 @@ public class SurveyMapper {
     		while(rs.next()) {
     			Survey s = new Survey();
     			s.setId(rs.getInt("id"));
+    			s.setStartDate(rs.getDate("startDate"));
+    			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
     			s.setStatus(rs.getInt("isActive"));
     			
@@ -245,18 +334,20 @@ public class SurveyMapper {
     	}
     }
     
+    
+    
     /**
      * @param personFK 
      * @return Vektor mit Survey-Objekten eines Erstellers
      */
-    public Vector<Survey> findSurveyByPersonFK(int personFK) {
+     public Vector<Survey> findSurveyByPersonFK(int personFK) {
         Connection con = DBConnection.connection();
         Vector<Survey> result = new Vector<Survey>();
         
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.groupFK, survey.isActive, businessownership.personFK "
+        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK, survey.isActive "
         			+ "FROM survey INNER JOIN popcorns.businessownership "
         			+ "ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK + "'");
         	
@@ -264,6 +355,8 @@ public class SurveyMapper {
         	while(rs.next()) {
         		Survey s = new Survey();
         		s.setId(rs.getInt("id"));
+        		s.setStartDate(rs.getDate("startDate"));
+        		s.setEndDate(rs.getDate("endDate"));
         		s.setGroupFK(rs.getInt("groupFK"));
         		s.setStatus(rs.getInt("isActive"));
         		s.setPersonFK(rs.getInt("personFK"));
