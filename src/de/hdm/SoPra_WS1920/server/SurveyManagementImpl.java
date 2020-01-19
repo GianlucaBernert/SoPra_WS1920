@@ -9,6 +9,7 @@ import com.google.gwt.dev.util.collect.HashSet;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.SoPra_WS1920.server.db.BusinessObjectMapper;
+import de.hdm.SoPra_WS1920.server.db.CinemaChainMapper;
 import de.hdm.SoPra_WS1920.server.db.CinemaMapper;
 import de.hdm.SoPra_WS1920.server.db.GroupMapper;
 import de.hdm.SoPra_WS1920.server.db.MembershipMapper;
@@ -22,6 +23,7 @@ import de.hdm.SoPra_WS1920.server.db.VoteMapper;
 import de.hdm.SoPra_WS1920.shared.SurveyManagement;
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -42,6 +44,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
 	 */
 	private static final long serialVersionUID = 1L;
 	private CinemaMapper cMapper = null;
+	private CinemaChainMapper ccMapper = null;
 	private GroupMapper gMapper = null;
 	private MovieMapper mMapper = null;
 	private PersonMapper pMapper = null;
@@ -67,6 +70,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      */
     public void init() throws IllegalArgumentException {
     	this.cMapper = CinemaMapper.cinemaMapper();
+    	this.ccMapper = CinemaChainMapper.cinemaChainMapper();
     	this.gMapper = GroupMapper.groupMapper();
     	this.mMapper = MovieMapper.moviemapper();
     	this.pMapper = PersonMapper.personMapper();
@@ -186,7 +190,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Screening> scOfPerson = this.scMapper.findScreeningByPersonFK(p.getId());
         if (scOfPerson != null) {
         	for (Screening sc : scOfPerson) {
-        		Admin.deleteScreening(sc);
+        		this.scMapper.deleteScreening(sc);
         		System.out.println("Screening ok");
         	}
         }
@@ -194,7 +198,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Cinema> cOfPerson = this.cMapper.findCinemaByPersonFK(p.getId());
         if (cOfPerson != null) {
         	for (Cinema c : cOfPerson) {
-        		Admin.deleteCinema(c);
+        		this.cMapper.deleteCinema(c);
         		System.out.println("Cinema ok");
         	}
         }
@@ -202,8 +206,16 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Movie> mOfPerson = this.mMapper.findMovieByPersonFK(p.getId());
         if (mOfPerson != null) {
         	for (Movie m : mOfPerson) {
-        		Admin.deleteMovie(m);
+        		this.mMapper.deleteMovie(m);
         		System.out.println("Movie ok");
+        	}
+        }
+        
+        Vector<CinemaChain> ccOfPerson = this.ccMapper.findCinemaChainByPersonFK(p.getId());
+        if (ccOfPerson != null) {
+        	for (CinemaChain cc : ccOfPerson) {
+        		this.ccMapper.deleteCinemaChain(cc);
+        		System.out.println("CinemaChain ok");
         	}
         }
         
@@ -216,10 +228,10 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         }
         
         BusinessObject bo = this.boMapper.findBusinessObjectByID(p.getId());
-        
+        this.pMapper.deletePerson(p);
         this.deleteBusinessObject(bo);
         
-        this.pMapper.deletePerson(p);
+       
     }
     
     /**
@@ -327,9 +339,9 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         		this.deleteMembership(me.getGroupFK(), me.getPersonFK());
         	}
         }
-        
-        this.deleteOwnership(os);    	
+        	
     	this.gMapper.deleteGroup(g);
+    	this.deleteOwnership(os);    
     }
     
     /**
