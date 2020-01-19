@@ -370,6 +370,8 @@ body{
 	transition: background-color 0.2s;
 }
 
+
+
 .CreateBoButton:hover{
 	background-color: #6A52D0;
 }
@@ -457,6 +459,41 @@ body{
 
 }
 
+.AddIcon{
+	width: 15px !important;
+	height: 15px !important;
+	cursor: pointer !important;
+}
+
+.MemberTextBox{
+	width:90% !important;
+}
+
+.Screening{
+	background: #04101A;
+    padding: 5px;
+    border-radius: 7px;
+    display: block;
+    vertical-align: middle !important;
+    height: 130px;
+    overflow-y: scroll;
+}	
+
+.gwt-CheckBox{
+	border: none !important;
+    outline: none !important;
+    border-color: transparent;
+    padding-top: px !important;
+    margin: 0px 5px;
+    height: 30px;
+    text-decoration: none !important;
+    vertical-align: middle;
+}
+
+.gwt-CheckBox label{
+	color: #3C5063;
+}
+
 .CardDescription {
 	font-size: 20px;
 	color:  #7A93B0;
@@ -482,15 +519,7 @@ body{
 	margin-bottom: 5px;
 }
 
-.MemberTextBoxLabel {
 
-	width:100%;
-	font-size: 22px;
-	color: #6483A1;
-	margin-top:10px;
-	margin-bottom: 5px;
-
-}	
 
 .InvisibleButton {
 	display: none;
@@ -512,6 +541,7 @@ body{
 	outline-style: none;
 	font-size: 12px;
 }
+
 
 .CardTextArea {
 	margin-bottom: 10px;

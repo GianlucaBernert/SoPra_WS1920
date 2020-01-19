@@ -91,15 +91,16 @@ public class GroupForm extends DialogBox {
 		groupNameLabel.setStylePrimaryName("TextBoxLabel");
 		groupNameTextBox = new TextBox();
 		groupNameTextBox.setStyleName("CardTextBox");
-		groupNameTextBox.getElement().setPropertyString("placeholder", "person@mail.com");
+		groupNameTextBox.getElement().setPropertyString("placeholder", "e.g. Friends");
 		
 		addMembersLabel = new Label(" Add Group Member:");
-		addMembersLabel.setStylePrimaryName("TextBoxLabel");
+		addMembersLabel.setStyleName("TextBoxLabel");
 		
 		membersPanel = new FlowPanel();
 		allMembers = new MultiWordSuggestOracle();
 		memberSuggestBox = new SuggestBox(allMembers);
-		memberSuggestBox.setStylePrimaryName("CardTextBox");
+		memberSuggestBox.getElement().setPropertyString("placeholder", "Start typing in mail adress...");
+		memberSuggestBox.setStyleName("CardTextBox MemberTextBox");
 		this.showMembers();
 				
 		addIcon = new Image("/Images/png/001-add-button.png");
@@ -107,7 +108,7 @@ public class GroupForm extends DialogBox {
 		addIcon.addClickHandler(new AddMemberClickHandler(this));
 
 		saveButton = new Button("Save");
-		saveButton.setStylePrimaryName("SaveButton");
+		saveButton.setStyleName("SaveButton");
 		saveButton.addClickHandler(new SaveClickHandler(this));
 			
 		formWrapper.add(cardDescription);
