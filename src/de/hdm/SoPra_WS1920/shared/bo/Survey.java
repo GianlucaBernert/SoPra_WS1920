@@ -15,6 +15,8 @@ public class Survey extends Ownership {
      * Variablen der Klasse Survey
      */
     private int groupFK;
+    
+    private int status;
 
     /**
      * Konstruktor der Klasse Survey, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
@@ -45,4 +47,12 @@ public class Survey extends Ownership {
    	public String toString() {
    		return "SurveyID #S" + this.getId();
    	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 }

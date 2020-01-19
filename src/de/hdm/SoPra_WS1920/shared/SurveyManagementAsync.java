@@ -12,6 +12,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
+import de.hdm.SoPra_WS1920.shared.bo.Screening;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 import de.hdm.SoPra_WS1920.shared.bo.Vote;
@@ -454,6 +455,10 @@ public interface SurveyManagementAsync {
      */
 
 	void searchPerson(String text, AsyncCallback<Vector<Person>> callback);
+
+	void getScreeningById(int id, AsyncCallback<Screening> callback);
+
+	void getMovieById(int id, AsyncCallback<Movie> callback);
     
 
 }

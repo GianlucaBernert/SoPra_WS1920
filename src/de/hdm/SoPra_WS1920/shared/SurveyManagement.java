@@ -16,6 +16,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
+import de.hdm.SoPra_WS1920.shared.bo.Screening;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 import de.hdm.SoPra_WS1920.shared.bo.Vote;
@@ -407,6 +408,10 @@ public interface SurveyManagement extends RemoteService {
      */
 
 	Vector<Person> searchPerson(String text);
+
+	Screening getScreeningById(int id) throws IllegalArgumentException;
+
+	Movie getMovieById(int id) throws IllegalArgumentException;
 
 	
 }
