@@ -256,7 +256,7 @@ public class SurveyMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.groupFK, survey.isActive "
+        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.groupFK, survey.isActive, businessownership.personFK "
         			+ "FROM survey INNER JOIN popcorns.businessownership "
         			+ "ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK + "'");
         	
@@ -266,7 +266,7 @@ public class SurveyMapper {
         		s.setId(rs.getInt("id"));
         		s.setGroupFK(rs.getInt("groupFK"));
         		s.setStatus(rs.getInt("isActive"));
-        		
+        		s.setPersonFK(rs.getInt("personFK"));
         		
         		//Hinzuf�gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(s);

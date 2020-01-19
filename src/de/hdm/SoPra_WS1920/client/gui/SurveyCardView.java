@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
@@ -15,7 +16,9 @@ import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
+import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
@@ -24,12 +27,14 @@ public class SurveyCardView extends FlowPanel {
 	
 	Label group;
 	Label movie;
-	Label status;
+	Label surveyStatus;
 	Label participations;
-	Label voted;
-	Button vote;
+	Label groupMemberAmount;
+	Label voteStatus;
+	Button voteButton;
 	Button edit;
-	
+	Button resultButton;
+	Image editIcon;
 	Survey surveyToShow;
 	Movie movieOfSurvey;
 	Group groupOfSurvey;
@@ -38,11 +43,9 @@ public class SurveyCardView extends FlowPanel {
 	
 	
 	SurveyManagementAsync surveyManagement;
-	EditSurveyCard esc;
-	
 	SurveyCard parentCard;
 	
-	Image editIcon;
+	
 	
 	public SurveyCardView(SurveyCard parentCard, Survey surveyToShow) {
 		this.parentCard = parentCard;
@@ -53,54 +56,97 @@ public class SurveyCardView extends FlowPanel {
 		super.onLoad();		
 		surveyManagement = ClientsideSettings.getSurveyManagement();
 		surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
-		surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
 		surveyManagement.getGroupById(surveyToShow.getGroupFK(), new GetGroupCallback());
-//		surveyManagement.getVotedPersonsOfSurvey(surveyToShow.getId(), new GetParticipations1Callback());
-//		surveyManagement.getGroupMembersOfGroup(surveyToShow.getId(), new GetParticipations2Callback());
+		surveyManagement.getVotedPersonsOfSurvey(surveyToShow.getId(), new GetParticipationsCallback());
+		surveyManagement.getGroupMembersOfGroup(surveyToShow.getGroupFK(), new GetGroupMemberAmountCallback());
 		
 		movie = new Label();
 		movie.setStyleName("CardViewTitle");
 		
 		group = new Label();
-		group.setStyleName("CardViewSubtitle");
+		group.setStyleName("CardViewSubTitle");
 		
-		status = new Label("Status: Active");
-		status.setStyleName("CardViewParagraph");
+		surveyStatus = new Label();
+		surveyStatus.setStyleName("CardViewParagraph");
 		
-		voted = new Label("Voted:");
-		voted.setStyleName("CardViewParagraph");
+		voteStatus = new Label();
+		voteStatus.setStyleName("CardViewParagraph");
 		
 		// Anzahl der Votes holen + groupmembers = SurveyManagementImpl.countGroupMembers(groupOfSurvey.getId)
-		participations = new Label("4/6 participations");
+		participations = new Label();
 		participations.setStyleName("CardViewParagraph");
 		
-		edit = new Button("");
+		groupMemberAmount = new Label();
+		groupMemberAmount.setStyleName("CardViewParagraph");
+		
+		edit = new Button();
 		edit.setStyleName("InvisibleButton");
 		editIcon = new Image("/Images/png/006-pen.png");
 		editIcon.setStyleName("EditIcon");
-		//editIcon.addClickHandler(new EditClickHandler());
+//		editIcon.addClickHandler(new EditClickHandler(this));
 		
-		vote = new Button("vote");
-		vote.setStyleName("InvisibleButton");
-		//vote.addClickHandler(new VoteClickHandler());
-	
+		voteButton = new Button("Vote");
+		voteButton.setStyleName("CardViewParagraph");
+		voteButton.addClickHandler(new VoteClickHandler(this));
+		
+		resultButton = new Button("Results");
+		resultButton.setStyleName("CardViewParagraph");
+//		resultButton.addClickHandler(new ResultsClickHandler());
+
 		this.add(movie);
 		this.add(group);
-		this.add(status);
-		this.add(voted);
+		this.add(surveyStatus);
+		this.add(voteStatus);
 		this.add(participations);
-		this.add(edit);
-		this.add(editIcon);
-		this.add(vote);
+		this.add(groupMemberAmount);
+		
+		if(surveyToShow.getStatus()==1) {
+			this.showEditVoteView();
+		}else {
+			this.showResultsView();
+		}
 	
 	}
+	
+	public void showEditVoteView() {
+		surveyStatus.setText("Survey Status: Active");
+		surveyStatus.setStyleName("ActiveSurveyLabel");
+		Window.alert("personId: "+ Integer.toString(surveyToShow.getPersonFK()));
+		if(surveyToShow.getPersonFK()==1) {
+			this.add(edit);
+			this.add(editIcon);
+		}
+		
+		this.add(voteButton);
+	}
+	
+	public void showResultsView() {
+		surveyStatus.setText("Survey Status: Closed");
+		surveyStatus.setStyleName("ClosedSurveyLabel");
+		this.add(resultButton);
+	}
+	
+	class VoteClickHandler implements ClickHandler{
+		SurveyCardView surveyCardView;
+		public VoteClickHandler(SurveyCardView surveyCardView) {
+			// TODO Auto-generated constructor stub
+			this.surveyCardView = surveyCardView;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			SurveyCardEdit surveyCardEdit = new SurveyCardEdit(parentCard,surveyToShow);
+			surveyCardEdit.showVoteForm();
+		}
+		
+	}
+	
 	class EditClickHandler implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			esc = new EditSurveyCard(parentCard, surveyToShow);
-			//parentCard.showSurveyCardEdit(surveyToShow);
 		}
 	}
 
@@ -136,6 +182,40 @@ public class SurveyCardView extends FlowPanel {
 //			Window.alert(result.getName());
 			movieOfSurvey = result;
 			movie.setText(result.getName());
+		}
+		
+	}
+	
+	class GetParticipationsCallback implements AsyncCallback<Vector<Person>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<Person> result) {
+			// TODO Auto-generated method stub
+			participations.setText(Integer.toString(result.size())+ "/");
+		}
+
+		
+		
+	}
+	
+	class GetGroupMemberAmountCallback implements AsyncCallback<Vector<Membership>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<Membership> result) {
+			// TODO Auto-generated method stub
+			groupMemberAmount.setText(Integer.toString(result.size()));
 		}
 		
 	}
