@@ -17,6 +17,12 @@ public class Survey extends Ownership {
     private int groupFK;
     
     private int status;
+    
+    private java.sql.Date startDate;
+    
+    private java.sql.Date endDate;
+    
+    
 
     /**
      * Konstruktor der Klasse Survey, welcher beim Aufruf dieser eine Instanz seiner selbst erzeugt
@@ -54,5 +60,24 @@ public class Survey extends Ownership {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	
+	public java.sql.Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(java.sql.Date startDate) {
+		this.startDate = startDate;
+		
+	}
+	
+	public java.sql.Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(java.sql.Date endDate) {
+		this.endDate = endDate;
+		
+		
 	}
 }
