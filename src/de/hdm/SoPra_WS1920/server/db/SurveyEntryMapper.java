@@ -168,8 +168,7 @@ public class SurveyEntryMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry "
-        			+ "WHERE screeningFK=" + screeningFK);
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry WHERE screeningFK= " + screeningFK);
         	
         	while(rs.next()) {
         		SurveyEntry se = new SurveyEntry();
