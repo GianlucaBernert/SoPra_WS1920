@@ -53,9 +53,10 @@ public class SurveyCardView extends FlowPanel {
 		super.onLoad();		
 		surveyManagement = ClientsideSettings.getSurveyManagement();
 		surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
+		surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
 		surveyManagement.getGroupById(surveyToShow.getGroupFK(), new GetGroupCallback());
-		surveyManagement.getVotedPersonsOfSurvey(surveyToShow.getId(), new GetParticipations1Callback());
-		surveyManagement.getGroupMembersOfGroup(surveyToShow.getId(), new GetParticipations2Callback());
+//		surveyManagement.getVotedPersonsOfSurvey(surveyToShow.getId(), new GetParticipations1Callback());
+//		surveyManagement.getGroupMembersOfGroup(surveyToShow.getId(), new GetParticipations2Callback());
 		
 		movie = new Label();
 		movie.setStyleName("CardViewTitle");
