@@ -249,7 +249,7 @@ public class ScreeningCardEdit extends DialogBox {
 			   
 			   if(screeningCardEdit.parentCard!=null) {
 				   Time t = screeningToShow.getScreeningTime();
-				   t.setHours(t.getHours()-1);
+//				   t.setHours(t.getHours()-1);
 				   String s = DateTimeFormat.getFormat("HH:mm").format(t);
 //				   hourPicker.setText(screeningToShow.getScreeningTime().toString().substring(0, 2));
 //				   minutePicker.setText(screeningToShow.getScreeningTime().toString().substring(3, 5));
