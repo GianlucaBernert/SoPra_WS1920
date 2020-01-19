@@ -256,7 +256,7 @@ public class SurveyMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.groupFK, survey.isActive, businessownership.personFK "
+        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK, survey.isActive, businessownership.personFK "
         			+ "FROM survey INNER JOIN popcorns.businessownership "
         			+ "ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK + "'");
         	
@@ -264,6 +264,8 @@ public class SurveyMapper {
         	while(rs.next()) {
         		Survey s = new Survey();
         		s.setId(rs.getInt("id"));
+        		s.setStartDate(rs.getDate("startDate"));
+        		s.setEndDate(rs.getDate("endDate"));
         		s.setGroupFK(rs.getInt("groupFK"));
         		s.setStatus(rs.getInt("isActive"));
         		s.setPersonFK(rs.getInt("personFK"));
