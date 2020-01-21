@@ -1,6 +1,7 @@
 package de.hdm.SoPra_WS1920.shared;
 
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Vector;
 
@@ -68,16 +69,7 @@ public interface SurveyManagementAsync {
      */
     public void editPerson(Person p, AsyncCallback<Void> callback);
 
-    /** 
-     * Methode um eine Umfrage zu erstellen
-     * @param int gFK
-     * @param int pFK
-     * @param Timestamp startDate
-     * @param Timestamp endDate 
-     * @param AsyncCallback<Survey> callback
-     * @return Survey s
-     */
-    public void createSurvey(int gFK, int pFK, AsyncCallback<Survey> callback);
+    void createSurvey(int gFK, int pFK, String city, Date startDate, Date endDate, AsyncCallback<Survey> callback);
     
     /**
      * Methode um eine Umfrage zu bearbeiten
@@ -459,6 +451,8 @@ public interface SurveyManagementAsync {
 	void getScreeningById(int id, AsyncCallback<Screening> callback);
 
 	void getMovieById(int id, AsyncCallback<Movie> callback);
+
+	void getGroupOfPersonByGroupName(int personFk, String groupName, AsyncCallback<Group> callback);
     
 
 }

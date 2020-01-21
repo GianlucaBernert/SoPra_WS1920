@@ -111,8 +111,8 @@ public class SurveyCardView extends FlowPanel {
 	public void showEditVoteView() {
 		surveyStatus.setText("Survey Status: Active");
 		surveyStatus.setStyleName("ActiveSurveyLabel");
-		Window.alert("personId: "+ Integer.toString(surveyToShow.getPersonFK()));
 		if(surveyToShow.getPersonFK()==1) {
+			editIcon.addClickHandler(new EditClickHandler());
 			this.add(edit);
 			this.add(editIcon);
 		}
@@ -137,7 +137,7 @@ public class SurveyCardView extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
 			SurveyCardEdit surveyCardEdit = new SurveyCardEdit(parentCard,surveyToShow);
-			surveyCardEdit.showVoteForm();
+
 		}
 		
 	}
@@ -147,6 +147,10 @@ public class SurveyCardView extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
+			SurveyCardEdit surveyCardEdit = new SurveyCardEdit(parentCard,surveyToShow);
+			surveyCardEdit.showSurveyCardEdit();
+			surveyCardEdit.center();
+			surveyCardEdit.show();
 		}
 	}
 
