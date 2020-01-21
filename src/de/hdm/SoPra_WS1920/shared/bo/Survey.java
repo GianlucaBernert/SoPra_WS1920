@@ -22,6 +22,8 @@ public class Survey extends Ownership {
     
     private java.sql.Date endDate;
     
+    private String selectedCity;
+    
     
 
     /**
@@ -79,5 +81,13 @@ public class Survey extends Ownership {
 		this.endDate = endDate;
 		
 		
+	}
+	
+	public String getSelectedCity() {
+		return selectedCity;
+	}
+	
+	public void setSelectedCity(String selectedCity) {
+		this.selectedCity = selectedCity;
 	}
 }

@@ -75,6 +75,7 @@ public class SurveyMapper {
 				s.setStartDate(rs.getDate("startDate"));
 				s.setEndDate(rs.getDate("endDate"));
 				s.setGroupFK(rs.getInt("groupFK"));
+				s.setSelectedCity(rs.getString("selectedCity"));
 				s.setStatus(rs.getInt("isActive"));
 				
 				return s;
@@ -101,7 +102,7 @@ public class SurveyMapper {
 		
 			Statement stmt = con.createStatement();
 			
-				stmt.executeUpdate("INSERT INTO survey(id, startDate, endDate, isActive, groupFK) "
+				stmt.executeUpdate("INSERT INTO survey(id, startDate, endDate, isActive, selectedCity, groupFK) "
 					+ "VALUES ('"
 					+ s.getId()	
 					+ "','"
@@ -110,6 +111,8 @@ public class SurveyMapper {
 					+ s.getEndDate()
 					+ "','"
 					+ s.getStatus()
+					+ "','"
+					+ s.getSelectedCity()
 					+ "','"
 					+ s.getGroupFK()
 					+ "')");
@@ -137,7 +140,7 @@ public class SurveyMapper {
         	
         	stmt.executeUpdate("UPDATE survey SET groupFK='" + s.getGroupFK()
         	+"', isActive='"+s.getStatus() + "', startDate='" + s.getStartDate()
-        	+ "', endDate='" + s.getEndDate()
+        	+ "', endDate='" + s.getEndDate() + "', selectedCity='" + s.getSelectedCity()
         	+ "' WHERE id=" + s.getId());
         	con.setAutoCommit(true);
         }
@@ -182,6 +185,7 @@ public class SurveyMapper {
     			s.setStartDate(rs.getDate("startDate"));
     			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
+    			s.setSelectedCity(rs.getString("selectedCity"));
     			s.setStatus(rs.getInt("isActive"));
     			
     			return s;
@@ -207,6 +211,7 @@ public class SurveyMapper {
     			s.setStartDate(rs.getDate("startDate"));
     			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
+    			s.setSelectedCity(rs.getString("selectedCity"));
     			s.setStatus(rs.getInt("isActive"));
     			
     			return s;
@@ -219,14 +224,13 @@ public class SurveyMapper {
     	return null;
     }
     
-    public Survey findSelectedCityOfSurvey(int surveyID, String city) {
+    public Survey findSelectedCityOfSurvey(String selectedCity) {
     	Connection con = DBConnection.connection();
     	
     	try {
     		
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT survey.id, cinema.city FROM survey INNER JOIN cinema" 
-    				+ "WHERE survey.id='" + surveyID +  "' AND cinema.city= '" + city + "'");
+    		ResultSet rs = stmt.executeQuery("SELECT *  FROM survey WHERE selectedCity='" + selectedCity + "'");
     		
     		if(rs.next()) {
     			Survey s = new Survey();
@@ -234,6 +238,7 @@ public class SurveyMapper {
     			s.setStartDate(rs.getDate("startDate"));
     			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
+    			s.setSelectedCity(rs.getString("selectedCity"));
     			s.setStatus(rs.getInt("isActive"));
     			
     			return s;
@@ -268,6 +273,7 @@ public class SurveyMapper {
     			s.setStartDate(rs.getDate("startDate"));
     			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
+    			s.setSelectedCity(rs.getString("selectedCity"));
     			s.setStatus(rs.getInt("isActive"));
     			
     			
@@ -303,6 +309,7 @@ public class SurveyMapper {
     			s.setStartDate(rs.getDate("startDate"));
     			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
+    			s.setSelectedCity(rs.getString("selectedCity"));
     			s.setStatus(rs.getInt("isActive"));
     			
     			
@@ -347,7 +354,7 @@ public class SurveyMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK, survey.isActive "
+        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK, survey.selectedCity, survey.isActive "
         			+ "FROM survey INNER JOIN popcorns.businessownership "
         			+ "ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK + "'");
         	
@@ -358,6 +365,7 @@ public class SurveyMapper {
         		s.setStartDate(rs.getDate("startDate"));
         		s.setEndDate(rs.getDate("endDate"));
         		s.setGroupFK(rs.getInt("groupFK"));
+        		s.setSelectedCity(rs.getString("selectedCity"));
         		s.setStatus(rs.getInt("isActive"));
         		
         		

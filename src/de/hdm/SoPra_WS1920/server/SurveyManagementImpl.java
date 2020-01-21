@@ -468,8 +468,8 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * Methode, um die selektierte Stadt einer Umfrage auszugeben
      */
     
-    public Survey getSelectedCityOfSurvey(int surveyID, String city) {
-    	return this.sMapper.findSelectedCityOfSurvey(surveyID, city);
+    public Survey getSelectedCityOfSurvey(String city) {
+    	return this.sMapper.findSelectedCityOfSurvey(city);
     }
     
     /**
