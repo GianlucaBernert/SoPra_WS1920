@@ -448,6 +448,34 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     }
     
     /**
+<<<<<<< HEAD
+=======
+     * Methode um den Start einer Umfrage auszugeben
+     * @param startDate
+     * @return
+     */
+    public Survey getStartDateOfSurvey(java.sql.Date startDate) {
+    	return this.sMapper.findSurveyByStartDate(startDate);
+    }
+    
+    /*
+     * Methode, um das Ende einer Umfrage auszugeben
+     */
+    
+    public Survey getEndDateOfSurvey(java.sql.Date endDate) {
+    	return this.sMapper.findSurveyByEndDate(endDate);
+    }
+    
+    /*
+     * Methode, um die selektierte Stadt einer Umfrage auszugeben
+     */
+    
+    public Survey getSelectedCityOfSurvey(String city) {
+    	return this.sMapper.findSelectedCityOfSurvey(city);
+    }
+    
+    /**
+>>>>>>> refs/heads/master
      * Methode um einen Umfrageeintrag zu erstellen
      * @param int scFK
      * @param int sFK
