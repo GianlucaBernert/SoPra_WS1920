@@ -256,7 +256,11 @@ public class SurveyMapper {
         try {
         	Statement stmt = con.createStatement();
         	
+<<<<<<< HEAD
         	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK, survey.isActive, businessownership.personFK "
+=======
+        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK, survey.isActive "
+>>>>>>> branch 'SurveyCardExperiment' of https://github.com/GianlucaBernert/SoPra_WS1920.git
         			+ "FROM survey INNER JOIN popcorns.businessownership "
         			+ "ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK + "'");
         	
