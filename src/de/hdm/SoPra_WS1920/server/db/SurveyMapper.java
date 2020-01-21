@@ -100,11 +100,7 @@ public class SurveyMapper {
 		
 			Statement stmt = con.createStatement();
 			
-<<<<<<< HEAD
-				stmt.executeUpdate("INSERT INTO survey(id, isActive, groupFK) "
-=======
 				stmt.executeUpdate("INSERT INTO survey(id, startDate, endDate, isActive, selectedCity, groupFK) "
->>>>>>> refs/heads/master
 					+ "VALUES ('"
 					+ s.getId()	
 					+ "','"
@@ -137,12 +133,9 @@ public class SurveyMapper {
         	Statement stmt = con.createStatement();
         	
         	stmt.executeUpdate("UPDATE survey SET groupFK='" + s.getGroupFK()
-<<<<<<< HEAD
-        	+"', isActive='"+s.getStatus()
-=======
+
         	+"', isActive='"+s.getStatus() + "', startDate='" + s.getStartDate()
         	+ "', endDate='" + s.getEndDate() + "', selectedCity='" + s.getSelectedCity()
->>>>>>> refs/heads/master
         	+ "' WHERE id=" + s.getId());
         	con.setAutoCommit(true);
         }
@@ -173,8 +166,6 @@ public class SurveyMapper {
         
     }
     
-<<<<<<< HEAD
-=======
     public Survey findSurveyByStartDate(java.sql.Date startDate) {
     	Connection con = DBConnection.connection();
     	
@@ -254,8 +245,6 @@ public class SurveyMapper {
     		}
     	return null;
     	}
-    
->>>>>>> refs/heads/master
     
     /**
      * Auslesen der Survey-Objekte mit gegebener GroupFK (Fremdschl�ssel)
@@ -353,15 +342,8 @@ public class SurveyMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-<<<<<<< HEAD
-<<<<<<< HEAD
         	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK, survey.isActive, businessownership.personFK "
-=======
-        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK, survey.isActive "
->>>>>>> branch 'SurveyCardExperiment' of https://github.com/GianlucaBernert/SoPra_WS1920.git
-=======
-        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK, survey.selectedCity, survey.isActive "
->>>>>>> refs/heads/master
+
         			+ "FROM survey INNER JOIN popcorns.businessownership "
         			+ "ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK + "'");
         	
