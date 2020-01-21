@@ -83,7 +83,7 @@ public class SurveyCardView extends FlowPanel {
 		edit.setStyleName("InvisibleButton");
 		editIcon = new Image("/Images/png/006-pen.png");
 		editIcon.setStyleName("EditIcon");
-//		editIcon.addClickHandler(new EditClickHandler(this));
+		editIcon.addClickHandler(new EditClickHandler(this));
 		
 		voteButton = new Button("Vote");
 		voteButton.setStyleName("CardViewParagraph");
@@ -111,10 +111,10 @@ public class SurveyCardView extends FlowPanel {
 	public void showEditVoteView() {
 		surveyStatus.setText("Survey Status: Active");
 		surveyStatus.setStyleName("ActiveSurveyLabel");
-		Window.alert("personId: "+ Integer.toString(surveyToShow.getPersonFK()));
 		if(surveyToShow.getPersonFK()==1) {
 			this.add(edit);
 			this.add(editIcon);
+			
 		}
 		
 		this.add(voteButton);
@@ -137,12 +137,16 @@ public class SurveyCardView extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
 			SurveyCardEdit surveyCardEdit = new SurveyCardEdit(parentCard,surveyToShow);
-			surveyCardEdit.showVoteForm();
+//			surveyCardEdit.showVoteForm(movieOfSurvey, groupOfSurvey);
 		}
 		
 	}
 	
 	class EditClickHandler implements ClickHandler{
+
+		public EditClickHandler(SurveyCardView surveyCardView) {
+			// TODO Auto-generated constructor stub
+		}
 
 		@Override
 		public void onClick(ClickEvent event) {
