@@ -362,6 +362,19 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         return this.gMapper.findGroupByName(name);
     }
     
+    public Group getGroupOfPersonByGroupName(int personFk ,String groupName) {
+    	Vector<Group> groupsOfPerson = this.getGroupByPersonFK(personFk);
+    	Group group = null;
+    	for(Group g: groupsOfPerson) {
+    		if(!g.getName().equals(groupName)) {
+    			continue;
+    		}else {
+    			group = g;
+    		}
+    	}
+    	return group;
+    }
+    
     /**
      * Methode um eine Gruppe anhand des PersonFK zu finden
      * @param int pFK
@@ -380,12 +393,15 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @throws IllegalArgumentException
      * @return Survey s
      */
-    public Survey createSurvey(int gFK, int pFK) throws IllegalArgumentException {
+    public Survey createSurvey(int gFK, int pFK, String city, java.sql.Date startDate, java.sql.Date endDate) throws IllegalArgumentException {
     	Ownership os = this.createOwnership(pFK);
         Survey s = new Survey();
         s.setId(os.getId());
         s.setGroupFK(gFK);
         s.setStatus(1);
+        s.setSelectedCity(city);
+        s.setStartDate(startDate);
+        s.setEndDate(endDate);
         s.setCreationTimestamp(os.getCreationTimestamp());
         this.sMapper.insertSurvey(s);
         return s;

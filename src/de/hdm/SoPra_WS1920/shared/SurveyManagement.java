@@ -145,10 +145,20 @@ public interface SurveyManagement extends RemoteService {
     public Group getGroupById(int id);
 
     /**
+     * Methode um eine Gruppe einer PersonFK anhand des Namen zu finden
+     * @param int pFK
+     * @param String groupName
+     * @return Group
+     */
+    
+    public Group getGroupOfPersonByGroupName(int personFk ,String groupName);
+    
+    /**
      * Methode um eine Gruppe anhand des PersonFK zu finden
      * @param int pFK
      * @return Vector<Group>
      */
+    
     public Vector<Group> getGroupByPersonFK(int pFK);
 
     /**
@@ -166,7 +176,7 @@ public interface SurveyManagement extends RemoteService {
      * @param Timestamp endDate 
      * @return Survey s
      */
-    public Survey createSurvey(int gFK, int pFK);
+    public Survey createSurvey(int gFK, int pFK, String city, java.sql.Date startDate, java.sql.Date endDate);
     
     /**
      * Methode um eine Umfrage zu bearbeiten
@@ -342,21 +352,21 @@ public interface SurveyManagement extends RemoteService {
     public Movie getMovieBySurveyFK(int sFK);
     
     /**
-     * Methode um alle Voters einer Survey zurückzugeben
+     * Methode um alle Voters einer Survey zurï¿½ckzugeben
      * @param surveyFK
      * return vector person
      */
     public Vector<Person> getVotedPersonsOfSurvey(int surveyFK);
     
     /**
-     * Methode um alle Memberships einer Group zurückzugeben
+     * Methode um alle Memberships einer Group zurï¿½ckzugeben
      * @param group
      * return vector membership
      */
     public Vector<Membership> getMembershipsOfGroup(Group group);
     
     /**
-     * Methode um alle Personen zurückzugeben
+     * Methode um alle Personen zurï¿½ckzugeben
      * return vector person
      */
     public Vector<Person> getAllPersons();
