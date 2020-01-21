@@ -367,7 +367,7 @@ public class SurveyMapper {
         		s.setGroupFK(rs.getInt("groupFK"));
         		s.setSelectedCity(rs.getString("selectedCity"));
         		s.setStatus(rs.getInt("isActive"));
-        		
+        		s.setPersonFK(rs.getInt("personFK"));
         		
         		//Hinzuf�gen des neuen Objekts zum Ergebnisvektor
         		result.addElement(s);

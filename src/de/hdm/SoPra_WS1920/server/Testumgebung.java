@@ -30,15 +30,18 @@ public class Testumgebung {
 		//implSurveyManagement.createPerson("Yesin","Soufi", "ys018@hdm-stuttgart.de");
 		
 //		implAdmin.createPerson("Yesin", "Soufi", "ys018@hdm-stuttgart.de");
-		System.out.println(implSurveyManagement.getAllPersons());
-		System.out.println(implSurveyManagement.getAllPersons().get(0).getEMail());
-		Movie m = implAdmin.getMoviesByName("Wonderwoman").get(0);
-		m.setId(7);
-		
-		SurveyEntry see = implSurveyManagement.getSurveyEntryBySurveyFK(33).get(0);
-		Screening sc = implAdmin.getScreeningById(see.getScreeningFK());
-		Movie movie = implAdmin.getMovieById(sc.getMovieFK());
-		System.out.println(see.getId() + " " + sc.getId()+ " "+ movie.getId());
+//		System.out.println(implSurveyManagement.getAllPersons());
+//		System.out.println(implSurveyManagement.getAllPersons().get(0).getEMail());
+//		Movie m = implAdmin.getMoviesByName("Wonderwoman").get(0);
+//		m.setId(7);
+//		
+//		SurveyEntry see = implSurveyManagement.getSurveyEntryBySurveyFK(33).get(0);
+//		Screening sc = implAdmin.getScreeningById(see.getScreeningFK());
+//		Movie movie = implAdmin.getMovieById(sc.getMovieFK());
+//		System.out.println(see.getId() + " " + sc.getId()+ " "+ movie.getId());
+//		implAdmin.createPerson("Sebastian", "Hermann", "sh267@hdm-stuttgart.de");
+//		implAdmin.createPerson("Yesin", "Soufi", "yesin.soufi@hdm-stuttgart.de");
+//		implAdmin.createPerson("Matthias", "Kling", "matthias.kling@hdm-stuttgart.de");
 //		java.sql.Date ds = new java.sql.Date(119, 5, 5);
 //		java.sql.Date de = new java.sql.Date(121, 5, 5);
 //		

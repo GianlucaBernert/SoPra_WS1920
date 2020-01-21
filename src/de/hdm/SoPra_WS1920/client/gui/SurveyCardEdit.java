@@ -191,21 +191,16 @@ public class SurveyCardEdit extends DialogBox {
 		formWrapper.add(endDateLabel);
 		formWrapper.add(endDateBox);
 		
-//		person = new Person();
-//		person.setId(1);
-		// Editieren wie edit or delte notwendig??
-		
-		//addScreenings Button im SaveButtonStyle. ok?
+
 		addScreenings = new Button("Add Screenings");
 		addScreenings.setStyleName("SaveButton");
 		addScreenings.addClickHandler(new AddScreeningsClickHandler(this));
-//		
-//		
+
 		formWrapper.add(addScreenings);
 		this.add(formWrapper);
-//		
-//		
+		
 	}
+	
 	class ScreeningRow extends FlowPanel{
 		
 		CheckBox cb;
@@ -213,15 +208,12 @@ public class SurveyCardEdit extends DialogBox {
 		public ScreeningRow(Screening s) {
 			this.s = s;
 		}
-		
-		
+
 		public void onLoad() {
 			super.onLoad();
 			cb = new CheckBox();
 			cinemaAdministration.getCinemaById(s.getCinemaFK(), new GetCinemaCallback(this));
-		
-//		cb = new CheckBox(cinema.getName() + s.getScreeningDate().toString() + s.getScreeningTime() + s.getId());
-		
+			
 			this.add(cb);		
 			
 		}
@@ -241,18 +233,6 @@ public class SurveyCardEdit extends DialogBox {
 		public void onClick(ClickEvent event) {
 		
 			cinemaAdministration.getMoviesByName(movieSuggestBox.getText(), new GetMovieCallback(surveyCardEdit));
-//			surveyManagement.getGroupByName(allGroups.getSelectedItemText(), new GetGroupCallback());
-//			city = cityTextBox.getText();
-//			
-//			startDate = new java.sql.Date(startDateBox.getValue().getTime());
-//			endDate = new java.sql.Date(endDateBox.getValue().getTime());
-//			Window.alert(movie.getName());
-//			Window.alert(group.getName());
-//			Window.alert(city);
-//			Window.alert(startDate.toString());
-//			Window.alert(endDate.toString());
-//			surveyCardEdit.clear();
-//			surveyCardEdit.showAddScreenings(movie, group, city, startDate, endDate);
 
 		}
 	}
@@ -311,17 +291,7 @@ public class SurveyCardEdit extends DialogBox {
 			// TODO Auto-generated method stub
 			movie = result.firstElement();
 			surveyManagement.getGroupByName(allGroups.getSelectedItemText(), new GetGroupCallback(surveyCardEdit));
-//			city = cityTextBox.getText();
-//			
-//			startDate = new java.sql.Date(startDateBox.getValue().getTime());
-//			endDate = new java.sql.Date(endDateBox.getValue().getTime());
-//			Window.alert(movie.getName());
-//			Window.alert(group.getName());
-//			Window.alert(city);
-//			Window.alert(startDate.toString());
-//			Window.alert(endDate.toString());
-//			surveyCardEdit.clear();
-//			surveyCardEdit.showAddScreenings(movie, group, city, startDate, endDate);
+
 		}
 		
 	}
@@ -376,13 +346,7 @@ public class SurveyCardEdit extends DialogBox {
 	}
 	
 	public void showAddScreenings(Movie movie, Group group, String city, java.sql.Date startDate, java.sql.Date endDate) {
-//		Window.alert(movie.getName());
-//		Window.alert(group.getName());
-//		Window.alert(city);
-//		Window.alert(startDate.toString());
-//		Window.alert(endDate.toString());
-		
-		
+		this.clear();
 		this.setStyleName("EditCard");
 		formWrapper = new FlowPanel();
 		cinemaAdministration.getScreeningsforSurveyCreation(movie, city, startDate, endDate, new GetScreeningsCallback(formWrapper));
@@ -439,6 +403,11 @@ public class SurveyCardEdit extends DialogBox {
 		this.add(formWrapper);
 	}	
 	
+	public void showVoteForm() {
+		this.screeningSelection.clear();
+//		
+	}
+	
 	class CreateSurveyClickHandler implements ClickHandler{
 		SurveyCardEdit surveyCardEdit;
 		
@@ -459,13 +428,8 @@ public class SurveyCardEdit extends DialogBox {
 			}
 			
 			surveyManagement.createSurvey(group.getId(), person.getId(), new CreateSurveyCallback(surveyCardEdit));
-			
-			
-			
-			}
-		
-			
-			
+
+			}	
 		}
 
 	class GetScreeningsCallback implements AsyncCallback<Vector<Screening>>{
@@ -487,8 +451,7 @@ public class SurveyCardEdit extends DialogBox {
 			Window.alert("Get ScreeningsCallback");
 			Window.alert(Integer.toString(result.size()));
 			for (Screening s : sv) {
-				ScreeningRow sr = new ScreeningRow(s);
-				
+				ScreeningRow sr = new ScreeningRow(s);	
 				screeningRowVector.add(sr);
 				screeningSelection.add(sr);
 			}
@@ -545,25 +508,20 @@ public class SurveyCardEdit extends DialogBox {
 		public void onSuccess(Cinema result) {
 			// TODO Auto-generated method stub
 			cinema = result;
-			screeningRow.cb.setText(cinema.getName() + screeningRow.s.getScreeningDate().toString() + screeningRow.s.getScreeningTime() + screeningRow.s.getId());
-			
+			screeningRow.cb.setText(cinema.getName() + screeningRow.s.getScreeningDate().toString() + screeningRow.s.getScreeningTime() + screeningRow.s.getId());		
 		}
-		
 	}
 	
 	class CreateSurveyEntryCallback implements AsyncCallback<SurveyEntry>{
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-			
+			// TODO Auto-generated method stub	
 		}
 
 		@Override
 		public void onSuccess(SurveyEntry result) {
-			// TODO Auto-generated method stub
-//			surveyEntryVector.add(result);
-			Window.alert("Hat geklappt. We have a survey");
+
 		}
 		
 	}
