@@ -189,6 +189,7 @@ CREATE TABLE IF NOT EXISTS `popcorns`.`survey` (
   `startDate` DATE NULL,
   `endDate` DATE NULL,
   `selectedCity` VARCHAR(45) NULL,
+  `movieName` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_survey_businessownership1_idx` (`id` ASC) VISIBLE,
   INDEX `fk_survey_group1_idx` (`groupFK` ASC) VISIBLE,
