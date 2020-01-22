@@ -24,6 +24,8 @@ public class Survey extends Ownership {
     
     private String selectedCity;
     
+    private String movieName;
+    
     
 
     /**
@@ -89,5 +91,13 @@ public class Survey extends Ownership {
 	
 	public void setSelectedCity(String selectedCity) {
 		this.selectedCity = selectedCity;
+	}
+	
+	public String getMovieName() {
+		return movieName;
+	}
+	
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
 	}
 }

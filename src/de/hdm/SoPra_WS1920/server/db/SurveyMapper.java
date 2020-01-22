@@ -76,6 +76,7 @@ public class SurveyMapper {
 				s.setEndDate(rs.getDate("endDate"));
 				s.setGroupFK(rs.getInt("groupFK"));
 				s.setSelectedCity(rs.getString("selectedCity"));
+				s.setMovieName(rs.getString("movieName"));
 				s.setStatus(rs.getInt("isActive"));
 				
 				return s;
@@ -102,7 +103,7 @@ public class SurveyMapper {
 		
 			Statement stmt = con.createStatement();
 			
-				stmt.executeUpdate("INSERT INTO survey(id, startDate, endDate, isActive, selectedCity, groupFK) "
+				stmt.executeUpdate("INSERT INTO survey(id, startDate, endDate, isActive, selectedCity, movieName, groupFK) "
 					+ "VALUES ('"
 					+ s.getId()	
 					+ "','"
@@ -113,6 +114,8 @@ public class SurveyMapper {
 					+ s.getStatus()
 					+ "','"
 					+ s.getSelectedCity()
+					+ "','"
+					+ s.getMovieName()
 					+ "','"
 					+ s.getGroupFK()
 					+ "')");
@@ -141,6 +144,7 @@ public class SurveyMapper {
         	stmt.executeUpdate("UPDATE survey SET groupFK='" + s.getGroupFK()
         	+"', isActive='"+s.getStatus() + "', startDate='" + s.getStartDate()
         	+ "', endDate='" + s.getEndDate() + "', selectedCity='" + s.getSelectedCity()
+        	+ "', movieName='" + s.getMovieName()
         	+ "' WHERE id=" + s.getId());
         	con.setAutoCommit(true);
         }
@@ -186,6 +190,7 @@ public class SurveyMapper {
     			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
     			s.setSelectedCity(rs.getString("selectedCity"));
+    			s.setMovieName(rs.getString("movieName"));
     			s.setStatus(rs.getInt("isActive"));
     			
     			return s;
@@ -212,6 +217,7 @@ public class SurveyMapper {
     			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
     			s.setSelectedCity(rs.getString("selectedCity"));
+    			s.setMovieName(rs.getString("movieName"));
     			s.setStatus(rs.getInt("isActive"));
     			
     			return s;
@@ -239,6 +245,7 @@ public class SurveyMapper {
     			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
     			s.setSelectedCity(rs.getString("selectedCity"));
+    			s.setMovieName(rs.getString("movieName"));
     			s.setStatus(rs.getInt("isActive"));
     			
     			return s;
@@ -274,6 +281,7 @@ public class SurveyMapper {
     			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
     			s.setSelectedCity(rs.getString("selectedCity"));
+    			s.setMovieName(rs.getString("movieName"));
     			s.setStatus(rs.getInt("isActive"));
     			
     			
@@ -310,6 +318,7 @@ public class SurveyMapper {
     			s.setEndDate(rs.getDate("endDate"));
     			s.setGroupFK(rs.getInt("groupFK"));
     			s.setSelectedCity(rs.getString("selectedCity"));
+    			s.setMovieName(rs.getString("movieName"));
     			s.setStatus(rs.getInt("isActive"));
     			
     			
@@ -324,6 +333,32 @@ public class SurveyMapper {
         
     }
     
+    public Survey findMovieNameOfSurvey(String movieName) {
+    	Connection con = DBConnection.connection();
+    	
+    	try {
+    		
+    		Statement stmt = con.createStatement();
+    		ResultSet rs = stmt.executeQuery("SELECT * FROM survey WHERE movieName='" + movieName + "'");
+    		
+    		if(rs.next()) {
+    			Survey s = new Survey();
+    			s.setId(rs.getInt("id"));
+    			s.setStartDate(rs.getDate("startDate"));
+    			s.setEndDate(rs.getDate("endDate"));
+    			s.setGroupFK(rs.getInt("groupFK"));
+    			s.setSelectedCity(rs.getString("selectedCity"));
+    			s.setMovieName(rs.getString("movieName"));
+    			s.setStatus(rs.getInt("isActive"));
+    			
+    			return s; 
+    		}
+    	}
+    	catch(SQLException e2) {
+    		e2.printStackTrace();
+    	}
+    	return null;
+    }
     /**
      * L�schen einer Umfrage durch den GroupFK(Fremdschlüssel)
      * @param groupFK
@@ -367,6 +402,7 @@ public class SurveyMapper {
         		s.setGroupFK(rs.getInt("groupFK"));
         		s.setSelectedCity(rs.getString("selectedCity"));
         		s.setStatus(rs.getInt("isActive"));
+        		s.setMovieName(rs.getString("movieName"));
         		s.setPersonFK(rs.getInt("personFK"));
         		
         		//Hinzuf�gen des neuen Objekts zum Ergebnisvektor
