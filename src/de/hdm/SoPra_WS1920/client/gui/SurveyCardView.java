@@ -50,18 +50,24 @@ public class SurveyCardView extends FlowPanel {
 	public SurveyCardView(SurveyCard parentCard, Survey surveyToShow) {
 		this.parentCard = parentCard;
 		this.surveyToShow = surveyToShow;
+		movieOfSurvey=parentCard.getMovie();
 	}
 	
 	public void onLoad() {
 		super.onLoad();		
 		surveyManagement = ClientsideSettings.getSurveyManagement();
-		surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
+		
 		surveyManagement.getGroupById(surveyToShow.getGroupFK(), new GetGroupCallback());
 		surveyManagement.getVotedPersonsOfSurvey(surveyToShow.getId(), new GetParticipationsCallback());
 		surveyManagement.getGroupMembersOfGroup(surveyToShow.getGroupFK(), new GetGroupMemberAmountCallback());
 		
 		movie = new Label();
 		movie.setStyleName("CardViewTitle");
+		if(movieOfSurvey!=null) {
+			movie.setText(movieOfSurvey.getName());
+		}else {
+			surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
+		}
 		
 		group = new Label();
 		group.setStyleName("CardViewSubTitle");
@@ -111,6 +117,7 @@ public class SurveyCardView extends FlowPanel {
 	public void showEditVoteView() {
 		surveyStatus.setText("Survey Status: Active");
 		surveyStatus.setStyleName("ActiveSurveyLabel");
+		Window.alert("PersonID: " +Integer.toString(surveyToShow.getPersonFK()));
 		if(surveyToShow.getPersonFK()==1) {
 			editIcon.addClickHandler(new EditClickHandler());
 			this.add(edit);
@@ -148,9 +155,11 @@ public class SurveyCardView extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
 			SurveyCardEdit surveyCardEdit = new SurveyCardEdit(parentCard,surveyToShow);
-			surveyCardEdit.showSurveyCardEdit();
 			surveyCardEdit.center();
 			surveyCardEdit.show();
+			Window.alert(surveyToShow.toString());
+			surveyCardEdit.showSurveyCardEdit();
+			
 		}
 	}
 

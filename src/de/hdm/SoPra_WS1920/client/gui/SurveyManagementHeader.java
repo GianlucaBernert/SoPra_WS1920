@@ -82,8 +82,10 @@ public class SurveyManagementHeader extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			SurveyCardEdit se = new SurveyCardEdit(content, header);
+			
 			se.center();
 			se.show();
+			se.showCreateCard();
 			
 		}
 		

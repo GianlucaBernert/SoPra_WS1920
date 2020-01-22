@@ -396,6 +396,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     public Survey createSurvey(int gFK, int pFK, String city, java.sql.Date startDate, java.sql.Date endDate) throws IllegalArgumentException {
     	Ownership os = this.createOwnership(pFK);
         Survey s = new Survey();
+        s.setPersonFK(os.getPersonFK());
         s.setId(os.getId());
         s.setGroupFK(gFK);
         s.setStatus(1);
