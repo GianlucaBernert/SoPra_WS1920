@@ -2,6 +2,7 @@ package de.hdm.SoPra_WS1920.client.gui;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 
+import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
 
 public class SurveyCard extends FlowPanel {
@@ -9,6 +10,7 @@ public class SurveyCard extends FlowPanel {
 	Survey surveyToShow;
 	SurveyContent surveyContent;
 	SurveyCardView surveyCardView;
+	Movie movieOfSurvey;
 	
 	public void onLoad() {
 		super.onLoad();
@@ -34,6 +36,14 @@ public class SurveyCard extends FlowPanel {
 	
 	public void remove() {
 		surveyContent.remove(this);
+	}
+	
+	public Movie getMovie() {
+		return movieOfSurvey;
+	}
+
+	public void setMovie(Movie movie) {
+		this.movieOfSurvey = movie;
 	}
 
 }
