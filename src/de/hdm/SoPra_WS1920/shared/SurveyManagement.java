@@ -168,15 +168,8 @@ public interface SurveyManagement extends RemoteService {
      */
     public Vector<Group> getGroupByName(String name);
 
-    /** 
-     * Methode um eine Umfrage zu erstellen
-     * @param int gFK
-     * @param int pFK
-     * @param Timestamp startDate
-     * @param Timestamp endDate 
-     * @return Survey s
-     */
-    public Survey createSurvey(int gFK, int pFK, String city, java.sql.Date startDate, java.sql.Date endDate);
+    Survey createSurvey(int gFK, int pFK, String city, String movieName, java.sql.Date startDate,
+			java.sql.Date endDate);
     
     /**
      * Methode um eine Umfrage zu bearbeiten

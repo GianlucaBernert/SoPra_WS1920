@@ -18,11 +18,21 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
+import de.hdm.SoPra_WS1920.client.gui.SurveyCardEdit.CancelClickHandler;
+import de.hdm.SoPra_WS1920.client.gui.SurveyCardEdit.CreateSurveyClickHandler;
+import de.hdm.SoPra_WS1920.client.gui.SurveyCardEdit.DeleteSurveyClickHandler;
+import de.hdm.SoPra_WS1920.client.gui.SurveyCardEdit.GetGroupOfSurveyCallback;
+import de.hdm.SoPra_WS1920.client.gui.SurveyCardEdit.GetMovieByNameCallback;
+import de.hdm.SoPra_WS1920.client.gui.SurveyCardEdit.GetScreeningsCallback;
+import de.hdm.SoPra_WS1920.client.gui.SurveyCardEdit.GetSurveyEntriesCallback;
+import de.hdm.SoPra_WS1920.client.gui.SurveyCardEdit.ScreeningRow;
+import de.hdm.SoPra_WS1920.client.gui.SurveyCardEdit.UpdateSurveyClickHandler;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
@@ -30,215 +40,160 @@ import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
 public class VotingCard extends DialogBox {
 	
-	SurveyManagementAsync sma; 
-	CinemaAdministrationAsync caa; 
+	Survey surveyToShow;
 	
 	FlowPanel formWrapper;
-	FlowPanel screeningSelection;
-	
-	SurveyCard parentCard;
-	
-	Survey currentSurvey;
-	
-	Movie currentMovie;
-	
-	Group currentGroup;
-	
-	Cinema cinemaInScreening;
-	
-	Vector<Screening> currentScreenings;
-	Vector<SurveyEntry> currentSurveyEntrys;
-	Vector<ScreeningRow> screeningRowVector;
-	Vector<Cinema> selectedCinemas;
-	Vector<Date> screeningDates;
-	Vector<Screening> screeningVector;
-	
-	Date startDate;
-	Date endDate;
-	
-	Image cancelIcon;
-	Image saveIcon;
-	Image deleteIcon;
-	
 	Label cardDescription;
-	Label selectedSurvey;
+	Image cancelIcon;	
 	Label selectedMovie;
 	Label selectedGroup;
+	Label selectedCity;
 	Label selectedPeriod;
-	Label cinemaFilter;
-	Label dateFilter;
-	Label showSelected;
-	Label deleteSurvey;
-	Label movieLabel;
-	Label groupLabel;
-	Label surveyPeriod;
+	Label screeningLabel;
+	FlowPanel surveyEntrySelection;
+	Button saveVoting;
 	
-	ListBox availableCinemas;
-	ListBox filterDateBox;
+	Vector<SurveyEntryRow> surveyEntryVector;
+	Vector<SurveyEntry> surveyEntries;
+	Person person;
 	
-	DateBox surveyIntervall;
+	SurveyContent surveyContent;
+	SurveyCard parentCard;
+	SurveyManagementAsync surveyManagement;
+	CinemaAdministrationAsync cinemaAdministration;
 	
-	Checkbox screeningToSelect;
-	
-	Button saveSurvey;
-	Button stopSurvey;
-	Button cancel;
-	Button invisibleButton;
-	
-	SurveyManagementHeader header;
-	
-	SurveyContent content;
-	
-	public VotingCard(SurveyCard surveyCard, Survey survey, SurveyContent content) {
-		this.parentCard = surveyCard;
-		this.currentSurvey = survey;
-		this.content = content;
+	public VotingCard(SurveyCard parentCard, Survey surveyToShow) {
+		this.surveyToShow = surveyToShow;
+		this.parentCard = parentCard;
 	}
 	
 	public void onLoad() {
-		caa = ClientsideSettings.getCinemaAdministration();
-		sma = ClientsideSettings.getSurveyManagement();
-		
-		sma.getMovieBySurveyFK(this.currentSurvey.getId(), new GetMovieCallback());
-		sma.getGroupById(this.currentSurvey.getGroupFK(), new GetGroupCallback());
 		super.onLoad();
-		
+	
+		this.clear();
 		this.setStyleName("EditCard");
-		formWrapper = new FlowPanel();
 		
-		cardDescription = new Label("Edit Survey");
+		person = new Person();
+		person.setId(1);
+		
+		surveyManagement = ClientsideSettings.getSurveyManagement();
+		cinemaAdministration = ClientsideSettings.getCinemaAdministration();	
+//		surveyEntries = new Vector<SurveyEntry>();
+		formWrapper = new FlowPanel();
+		formWrapper.setStyleName("DialogBoxWrapper");
+		cardDescription = new Label("Vote");
 		cardDescription.setStyleName("CardDescription");
 		cancelIcon = new Image("/Images/png/007-close.png");
 		cancelIcon.setStyleName("CancelIcon");
 		cancelIcon.addClickHandler(new CancelClickHandler(this));
-		invisibleButton = new Button();
-		invisibleButton.setStyleName("InvisibleButton");
+		selectedMovie = new Label("Movie: "+ surveyToShow.getMovieName());
+		selectedMovie.setStyleName("TextBoxLabel");
+		selectedGroup = new Label ();
+		selectedGroup.setStyleName("TextBoxLabel");
+		selectedCity = new Label ("City: "+ surveyToShow.getSelectedCity());
+		selectedCity.setStyleName("TextBoxLabel");
+		selectedPeriod = new Label ("Screening Period: "+ surveyToShow.getStartDate().toString()+" - "+surveyToShow.getEndDate().toString());
+		selectedPeriod.setStyleName("TextBoxLabel");
+		surveyEntrySelection = new FlowPanel();
+		surveyEntrySelection.setStyleName("SurveyEntrySelection");
 
-		movieLabel = new Label("Movie: " + this.currentMovie);
-		movieLabel.setStyleName("TextBoxLabel");
-		
-		groupLabel =  new Label("Group: " + this.currentGroup);
-		groupLabel.setStyleName("TextBoxLabel");
-		
-//		surveyPeriod = new Label("Survey Period: " + this.startDate + " - " + this.endDate);
-//		surveyPeriod.setStyleName("TextBoxLabel");
-		
-		selectedCinemas = new Vector<Cinema>();
-		for (Screening sc : currentScreenings) {
-			caa.getCinemaById(sc.getCinemaFK(), new GetCinemaCallback());
-		}
-		
-		cinemaFilter = new Label("Cinema Filter");
-		cinemaFilter.setStyleName("TextBoxLabel");
-		availableCinemas = new ListBox();
-	    for (Cinema c : selectedCinemas) {
-	      availableCinemas.addItem(c.getName());
-		}
-	    availableCinemas.addClickHandler(new AvailableCinemasClickHandler());
-		availableCinemas.setStyleName("CardSuggestBox");
-		
-		screeningDates = new Vector<Date>();
-		for(Screening s : currentScreenings) {
-			screeningDates.add(s.getScreeningDate());
-		}
-		
-		dateFilter = new Label("Date Filter");
-		dateFilter.setStyleName("TextBoxLabel");
-		filterDateBox = new ListBox();
-		for (Date d : screeningDates) {
-			filterDateBox.addItem(d.toString());
-		}
-		filterDateBox.addClickHandler(new FilterDateBoxClickHandler());
-		filterDateBox.setStyleName("CardSuggestBox");
-		
-		screeningSelection = new FlowPanel();
-		
-		screeningRowVector = new Vector <ScreeningRow>();
-		
-		screeningVector = new Vector<Screening>();		
-		
-		for (Screening s : screeningVector) {
-			ScreeningRow sr = new ScreeningRow(s);
-			screeningRowVector.add(sr);
-			screeningSelection.add(sr);
-		    }
+		screeningLabel = new Label("Screenings:");
 		
 		formWrapper.add(cardDescription);
 		formWrapper.add(cancelIcon);
-		formWrapper.add(movieLabel);
-		formWrapper.add(groupLabel);
-//		formWrapper.add(surveyPeriod);
-		formWrapper.add(cinemaFilter);
-		formWrapper.add(availableCinemas);
-		formWrapper.add(dateFilter);
-		formWrapper.add(filterDateBox);
-		formWrapper.add(screeningSelection);
+		formWrapper.add(selectedMovie);
+		formWrapper.add(selectedGroup);
+		formWrapper.add(selectedCity);
+		formWrapper.add(selectedPeriod);
+		formWrapper.add(surveyEntrySelection);
 		
+		saveVoting = new Button("Save");
+		saveVoting.setStyleName("SaveButton");
+		saveVoting.addClickHandler(new SaveSurveyClickHandler(this));
+		
+		surveyManagement.getSurveyEntryBySurveyFK(surveyToShow.getId(), new GetSurveyEntriesCallback());					
+		surveyManagement.getGroupById(surveyToShow.getGroupFK(), new GetGroupOfSurveyCallback());
 
+//		saveVoting.addClickHandler(new UpdateSurveyClickHandler(this));
+		formWrapper.add(saveVoting);
+		this.add(formWrapper);
 	}
 	
-	class GetMovieCallback implements AsyncCallback<Movie> {
-
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Problem with the Callback");							
+	class SaveSurveyClickHandler implements ClickHandler{
+		VotingCard votingCard;
+		public SaveSurveyClickHandler(VotingCard votingCard) {
+			// TODO Auto-generated constructor stub
+			this.votingCard=votingCard;
 		}
 
 		@Override
-		public void onSuccess(Movie result) {
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			
+			for(SurveyEntryRow surveyEntryRow: surveyEntryVector) {
+				
+				if(surveyEntryRow.voteOfPerson.getVotingWeight()==0 && surveyEntryRow.newVoteOfPerson.getVotingWeight()!=0) {
+					surveyManagement.createVote(surveyEntryRow.newVoteOfPerson.getVotingWeight(), surveyEntryRow.surveyEntry.getId(), person.getId(), new CreateVoteCallback());
+				}else if(surveyEntryRow.voteOfPerson.getVotingWeight()!=0 && surveyEntryRow.newVoteOfPerson.getVotingWeight()!=0) {
+					if(surveyEntryRow.newVoteOfPerson.getVotingWeight()!=surveyEntryRow.voteOfPerson.getVotingWeight()) {
+						surveyManagement.updateVote(surveyEntryRow.newVoteOfPerson, new UpdateVoteCallback());
+					}
+				}else if(surveyEntryRow.voteOfPerson.getVotingWeight()!=0 && surveyEntryRow.newVoteOfPerson.getVotingWeight()==0) {
+					surveyManagement.deleteVote(surveyEntryRow.voteOfPerson, new DeleteVoteCallback());
+				}
+			}
+			votingCard.hide();
+			parentCard.showSurveyCardView(surveyToShow);
+			
+			//implement save logic
+		}
+		
+	}
+	
+	class CreateVoteCallback implements AsyncCallback<Vote>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Vote result) {
 			// TODO Auto-generated method stub
 			
 		}
 		
 	}
 	
-	class GetGroupCallback implements AsyncCallback<Group> {
+	class UpdateVoteCallback implements AsyncCallback<Vote>{
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Problem with the Callback");							
+			// TODO Auto-generated method stub
+			
 		}
 
 		@Override
-		public void onSuccess(Group result) {
+		public void onSuccess(Vote result) {
 			// TODO Auto-generated method stub
 			
 		}
 		
 	}
 	
-	class AvailableCinemasClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Methode die nur die Screenings des Ausgewählten Cinemas anzeigt
-			
-		}
-		
-	}
-	
-	class FilterDateBoxClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Methode die nur die Screenings am ausgewählten Datum anzeigt
-			
-		}
-		
-	}
-	
-	class GetCinemaCallback implements AsyncCallback<Cinema> {
+	class DeleteVoteCallback implements AsyncCallback<Void>{
 
 		@Override
 		public void onFailure(Throwable caught) {
-			
+			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
-		public void onSuccess(Cinema result) {
-				selectedCinemas.addElement(result);
-		
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	}
@@ -246,84 +201,265 @@ public class VotingCard extends DialogBox {
 	class CancelClickHandler implements ClickHandler{
 		VotingCard votingCard;
 		public CancelClickHandler(VotingCard votingCard) {
-			this.votingCard = votingCard;
+			// TODO Auto-generated constructor stub
+			this.votingCard=votingCard;
 		}
-		
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if(parentCard==null) {
-				votingCard.hide();
-			}else {
-				parentCard.showSurveyCardView(currentSurvey);
-				votingCard.hide();
-			}
+			// TODO Auto-generated method stub
+			votingCard.hide();
 		}
+		
 	}
 	
-	// TODO Votebar machen
-	class ScreeningRow extends FlowPanel{
-		
-		CheckBox cb;
-		Screening s;
-		Vector<SurveyEntry> seV;
-		Vector<Vote> vV;
-		Vector<Vote> pVV;
-		Vector<Vote> nVV;
-		public ScreeningRow(Screening s) {
-			this.s = s;
+	class GetGroupOfSurveyCallback implements AsyncCallback<Group>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Group result) {
+			// TODO Auto-generated method stub
+			selectedGroup.setText("Group: "+result.getName());
 		}
 		
+	}
+	
+	class SurveyEntryRow extends FlowPanel{
+		
+		SurveyEntry surveyEntry;
+		Cinema cinemaOfSurveyEntry;
+		Screening screeningOfSurveyEntry;
+		
+		Label surveyEntryDescription;
+		Button upVoteButton;
+		Button downVoteButton;
+		
+		Vector<Vote> allVotes;
+		
+		Vector<Vote> upVotes;
+		int upVoteCounter;
+		Vector<Vote> downVotes;
+		int downVoteCounter;
+		
+		Vote voteOfPerson;
+		Vote newVoteOfPerson;
+		
+		public SurveyEntryRow(SurveyEntry surveyEntry) {
+			this.surveyEntry=surveyEntry;
+		}
+		
+		//Three Voting-Weights: 1: Positive Vote, 0: Neutral Vote, -1: Negative Vote
 		
 		public void onLoad() {
 			super.onLoad();
+			this.setStyleName("SurveyEntryRow");
+			voteOfPerson = new Vote();
+			voteOfPerson.setVotingWeight(0);
+			newVoteOfPerson = new Vote();
+			newVoteOfPerson.setVotingWeight(0);
+			
+			cinemaAdministration.getCinemaByScreeningFK(surveyEntry.getScreeningFK(), new GetCinemaOfSurveyEntryCallback());
+			surveyManagement.getVoteBySurveyEntryFK(surveyEntry.getId(), new GetVoteBySurveyEntryCallback());
+			surveyEntryDescription = new Label();
+			surveyEntryDescription.setStyleName("SurveyRowLabel");
+			
+			upVoteButton = new Button();
+			upVoteButton.setStyleName("UpVoteButton");
+			upVoteButton.addClickHandler(new UpVoteClickHandler());
+			downVoteButton = new Button();
+			downVoteButton.setStyleName("DownVoteButton");
+			downVoteButton.addClickHandler(new DownVoteClickHandler());	
+			
+			allVotes = new Vector<Vote>();
+			upVotes = new Vector<Vote>();
+			downVotes = new Vector<Vote>();
+			
+			this.add(surveyEntryDescription);
+			this.add(downVoteButton);
+			this.add(upVoteButton);
+			
+						
+		}
 		
-			caa.getSurveyEntryByScreeningFK(s.getId(), new GetSurveyEntryCallback());
-			caa.getCinemaById(s.getCinemaFK(), new GetCinemaCallback());
-			for (SurveyEntry se : seV) {
-				caa.getVotesBySurveyEntryFK(se.getId(), new GetVoteCallback());
-			}
-			for (Vote v : vV) {
-				if (v.getVotingWeight() > 0) {
-					pVV.add(v);
+		class UpVoteClickHandler implements ClickHandler{
+			
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				if(newVoteOfPerson.getVotingWeight()==1) {
+					newVoteOfPerson.setVotingWeight(0);
+					upVoteCounter--;
+					upVoteButton.setText(Integer.toString(upVoteCounter));
+					
+					upVoteButton.setStyleName("UpVoteButton");
+				
+				}else if(newVoteOfPerson.getVotingWeight()==-1) {
+					newVoteOfPerson.setVotingWeight(1);
+					
+					upVoteCounter++;
+					downVoteCounter--;
+					downVoteButton.setText(Integer.toString(downVoteCounter));			
+					upVoteButton.setText(Integer.toString(upVoteCounter));
+					
+					downVoteButton.setStyleName("DownVoteButton");
+					upVoteButton.setStyleName("UpVoteButton VoteSelection");
+				
 				}else {
-					nVV.add(v);
+					newVoteOfPerson.setPersonFK(person.getId());
+					newVoteOfPerson.setSurveyEntryFK(surveyEntry.getId());
+					newVoteOfPerson.setVotingWeight(1);
+					upVoteCounter++;
+					upVoteButton.setText(Integer.toString(upVoteCounter));
+					
+					upVoteButton.setStyleName("UpVoteButton VoteSelection");
+				
 				}
+
 			}
-			cb = new CheckBox(cinemaInScreening.getName() + " " + s.getScreeningDate() + " " + s.getScreeningTime() 
-			+ " Uhr" + "positiv Votes " + pVV.size() + " " + "negativ Votes " + nVV.size() + s.getId());
-			this.add(cb);		
 			
 		}
 		
-		class GetSurveyEntryCallback implements AsyncCallback<Vector<SurveyEntry>> {
+		class DownVoteClickHandler implements ClickHandler{
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				if(newVoteOfPerson.getVotingWeight()==1) {
+					newVoteOfPerson.setVotingWeight(-1);
+					upVoteCounter--;
+					downVoteCounter++;
+					upVoteButton.setText(Integer.toString(upVoteCounter));	
+					downVoteButton.setText(Integer.toString(downVoteCounter));
+					
+					downVoteButton.setStyleName("DownVoteButton VoteSelection");
+					upVoteButton.setStyleName("UpVoteButton");
+					
+
+				}else if(newVoteOfPerson.getVotingWeight()==-1) {
+					newVoteOfPerson.setVotingWeight(0);
+					downVoteCounter--;
+					downVoteButton.setText(Integer.toString(downVoteCounter));
+					downVoteButton.setStyleName("DownVoteButton");
+					
+				}else {
+					newVoteOfPerson.setPersonFK(person.getId());
+					newVoteOfPerson.setSurveyEntryFK(surveyEntry.getId());
+					newVoteOfPerson.setVotingWeight(-1);
+					downVoteCounter++;
+					downVoteButton.setText(Integer.toString(downVoteCounter));
+					downVoteButton.setStyleName("DownVoteButton VoteSelection");
+				
+				}
+			}
+			
+		}
+		
+		class GetCinemaOfSurveyEntryCallback implements AsyncCallback<Cinema>{
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Problem with the Callback");				
+				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
-			public void onSuccess(Vector<SurveyEntry> result) {
-				seV = result;
+			public void onSuccess(Cinema result) {
+				// TODO Auto-generated method stub
+				cinemaOfSurveyEntry = result;
+				cinemaAdministration.getScreeningById(surveyEntry.getScreeningFK(), new GetScreeningOfSurveyEntryCallback());
 			}
 			
 		}
 		
-		class GetVoteCallback implements AsyncCallback<Vector<Vote>> {
+		class GetScreeningOfSurveyEntryCallback implements AsyncCallback<Screening>{
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Problem with the Callback");				
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Screening result) {
+				// TODO Auto-generated method stub
+				screeningOfSurveyEntry = result;
+				surveyEntryDescription.setText(cinemaOfSurveyEntry.getName() + ", "+ screeningOfSurveyEntry.getScreeningDate().toString() + ", "+ screeningOfSurveyEntry.getScreeningTime());
+			}
+			
+		}
+		
+		class GetVoteBySurveyEntryCallback implements AsyncCallback<Vector<Vote>>{
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void onSuccess(Vector<Vote> result) {
-				vV = result;
+				// TODO Auto-generated method stub
+				allVotes = result;
+				
+				for(Vote v: result) {
+					if(v.getPersonFK()==person.getId()) {
+						voteOfPerson = v;
+						newVoteOfPerson.setId(v.getId());
+						newVoteOfPerson.setVotingWeight(v.getVotingWeight());
+						newVoteOfPerson.setPersonFK(v.getPersonFK());
+						newVoteOfPerson.setSurveyEntryFK(v.getSurveyEntryFK());
+						if(v.getVotingWeight()==1) {
+							upVoteButton.setStyleName("UpVoteButton VoteSelection");
+						}else if(v.getVotingWeight()==-1) {
+							downVoteButton.setStyleName("DownVoteButton VoteSelection");
+						}
+					}
+				}
+				
+				
+				for(Vote v: result) {
+					if(v.getVotingWeight()==1) {
+						upVotes.add(v);
+					}else {
+						downVotes.add(v);
+					}
+				}
+				upVoteCounter = upVotes.size();
+				downVoteCounter = downVotes.size();
+				upVoteButton.setText(Integer.toString(upVoteCounter));
+				downVoteButton.setText(Integer.toString(downVoteCounter));
 			}
 			
 		}
-}
+		
+	}
+	
+	class GetSurveyEntriesCallback implements AsyncCallback<Vector<SurveyEntry>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<SurveyEntry> result) {
+			// TODO Auto-generated method stub
+			surveyEntryVector = new Vector<SurveyEntryRow>();
+			for(SurveyEntry sE: result) {
+				SurveyEntryRow surveyEntryRow = new SurveyEntryRow(sE);
+				surveyEntrySelection.add(surveyEntryRow);
+				//Survey Entry Selection Vector
+				surveyEntryVector.add(surveyEntryRow);
+				
+			}
+		}
+		
+	}
 }

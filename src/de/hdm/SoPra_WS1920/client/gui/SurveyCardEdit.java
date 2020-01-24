@@ -82,6 +82,7 @@ public class SurveyCardEdit extends DialogBox {
 	
 	FlowPanel screeningSelection;
 	Label deleteLabel;
+	Image deleteIcon;
 	
 	Vector <ScreeningRow> screeningRowVector;
 	Vector <Screening> sv;
@@ -207,7 +208,6 @@ public class SurveyCardEdit extends DialogBox {
 			@Override
 			
 			public void onClick(ClickEvent event) {
-			
 				cinemaAdministration.getMoviesByName(movieSuggestBox.getText(), new GetMovieCallback(surveyCardEdit));
 
 			}
@@ -223,7 +223,7 @@ public class SurveyCardEdit extends DialogBox {
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
-				Window.alert("Fehler beim Laden des Movies");
+				Window.alert("Could not load movies.");
 			}
 
 			@Override
@@ -313,14 +313,20 @@ public class SurveyCardEdit extends DialogBox {
 				cinemaAdministration.getScreeningsforSurveyCreation(movie, city, startDate, endDate, new GetScreeningsCallback());
 				saveSurvey.addClickHandler(new CreateSurveyClickHandler(this));
 			}else{
-				Window.alert(surveyToShow.toString()+": in EditMode");
 				cardDescription.setText("Edit Survey");
+				selectedMovie.setText("Movie: "+ surveyToShow.getMovieName());
 				selectedPeriod.setText("Screening Period: "+ surveyToShow.getStartDate().toString()+" - "+surveyToShow.getEndDate().toString());
 				surveyManagement.getSurveyEntryBySurveyFK(surveyToShow.getId(), new GetSurveyEntriesCallback());
-				surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieBySurveyCallback());
+//				surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieBySurveyCallback());			
+				cinemaAdministration.getMoviesByName(surveyToShow.getMovieName(), new GetMovieByNameCallback());			
 				surveyManagement.getGroupById(surveyToShow.getGroupFK(), new GetGroupOfSurveyCallback());
+				
+				deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
+				deleteIcon.setStyleName("DeleteIcon");
 				deleteLabel = new Label("Delete Survey");
-//				deleteLabel.addClickHandler(new DeleteSurveyClickHandler());
+				deleteLabel.setStyleName("DeleteLabel");
+				deleteLabel.addClickHandler(new DeleteSurveyClickHandler(this));
+				formWrapper.add(deleteIcon);
 				formWrapper.add(deleteLabel);
 				saveSurvey.setText("Save");
 				saveSurvey.addClickHandler(new UpdateSurveyClickHandler(this));
@@ -337,7 +343,6 @@ public class SurveyCardEdit extends DialogBox {
 					selectedScreenings.add(sR.s);
 				}
 			}
-			Window.alert("Selected Screenings: "+Integer.toString(selectedScreenings.size()));
 			for(Screening s: selectedScreenings) {
 				for(SurveyEntry sE: surveyEntryVector) {
 					if(sE.getScreeningFK()==s.getId()) {
@@ -347,12 +352,60 @@ public class SurveyCardEdit extends DialogBox {
 					}
 				}
 			}
-			Window.alert("To be deleted: "+Integer.toString(surveyEntryVector.size()));
 			for(SurveyEntry sE: surveyEntryVector) {
 				surveyManagement.deleteSurveyEntry(sE, new DeleteSurveyEntryCallback());
 			}
 		}
 		
+		class GetMovieByNameCallback implements AsyncCallback<Vector<Movie>>{
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Vector<Movie> result) {
+				// TODO Auto-generated method stub
+				movie = result.firstElement();
+				cinemaAdministration.getScreeningsforSurveyCreation(movie, surveyToShow.getSelectedCity(), surveyToShow.getStartDate(), surveyToShow.getEndDate(), new GetScreeningsCallback());
+			}
+			
+		}
+		
+		class DeleteSurveyClickHandler implements ClickHandler{
+			SurveyCardEdit surveyCardEdit;
+			public DeleteSurveyClickHandler(SurveyCardEdit surveyCardEdit) {
+				// TODO Auto-generated constructor stub
+				this.surveyCardEdit = surveyCardEdit;
+			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				surveyManagement.deleteSurvey(surveyToShow, new DeleteSurveyCallback());
+				surveyCardEdit.hide();
+				parentCard.remove();
+			}
+			
+		}
+		
+		class DeleteSurveyCallback implements AsyncCallback<Void>{
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("Problem with the connection. Survey could not be deleted");
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				// TODO Auto-generated method stub
+				Window.alert("Survey Deleted");
+			}
+			
+		}
 		class DeleteSurveyEntryCallback implements AsyncCallback<Void>{
 
 			@Override
@@ -364,7 +417,7 @@ public class SurveyCardEdit extends DialogBox {
 			@Override
 			public void onSuccess(Void result) {
 				// TODO Auto-generated method stub
-				Window.alert("Deletion successfull");
+
 			}
 			
 		}
@@ -380,7 +433,7 @@ public class SurveyCardEdit extends DialogBox {
 			@Override
 			public void onSuccess(SurveyEntry result) {
 				// TODO Auto-generated method stub
-				
+				Window.alert(Integer.toString(result.getSurveyFK()));
 			}
 			
 		}
@@ -395,8 +448,8 @@ public class SurveyCardEdit extends DialogBox {
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				Window.alert("Updated");
 				surveyCardEdit.saveSurvey();
+				surveyCardEdit.hide();
 				
 			}
 			
@@ -417,9 +470,7 @@ public class SurveyCardEdit extends DialogBox {
 				Vector<Screening> screeningVector = new Vector<Screening>();
 				screeningVector.addAll(result);
 
-				Window.alert(Integer.toString(result.size()));
 				for (Screening s : result) {	
-					Window.alert("ScreeningRow");
 					ScreeningRow sr = new ScreeningRow(s);
 					screeningRowVector.add(sr);
 					screeningSelection.add(sr);
@@ -442,9 +493,10 @@ public class SurveyCardEdit extends DialogBox {
 
 			public void onLoad() {
 				super.onLoad();
+				this.setStyleName("ScreeningRow");
 				cb = new CheckBox();
 				screeningDescription = new Label();
-				Window.alert("before cinemacall");
+				screeningDescription.setStyleName("ScreeningRowLabel");
 				if(surveyToShow!=null) {
 					for(SurveyEntry sE: surveyEntryVector) {
 						if(sE.getScreeningFK()==s.getId()) {
@@ -456,7 +508,6 @@ public class SurveyCardEdit extends DialogBox {
 				
 				this.add(cb);
 				this.add(screeningDescription);
-//				screeningSelection.add(this);
 			}
 	
 		}
@@ -602,7 +653,7 @@ public class SurveyCardEdit extends DialogBox {
 		
 		public void onClick(ClickEvent event) {
 			
-			surveyManagement.createSurvey(group.getId(), person.getId(), city, startDate, endDate, new CreateSurveyCallback(surveyCardEdit));
+			surveyManagement.createSurvey(group.getId(), person.getId(), city, movie.getName(), startDate, endDate, new CreateSurveyCallback(surveyCardEdit));
 			
 			}	
 		}
@@ -618,7 +669,7 @@ public class SurveyCardEdit extends DialogBox {
 		@Override
 		public void onFailure(Throwable caught) {
 		// TODO Auto-generated method stub
-			Window.alert("Callback: Survey could not be created.");
+			Window.alert("Survey could not be created.");
 		
 		}
 
@@ -626,13 +677,11 @@ public class SurveyCardEdit extends DialogBox {
 		public void onSuccess(Survey result) {
 		
 			surveyToShow = result;	
-			Window.alert(Integer.toString(screeningRowVector.size()));
 			for(ScreeningRow sr: screeningRowVector) {
 				if(sr.cb.getValue() == true) {
 					surveyManagement.createSurveyEntry(sr.s.getId(), result.getId(), person.getId(), new CreateSurveyEntryCallback());
 				}
 			}
-			Window.alert(Integer.toString(result.getPersonFK()));
 			//Irgendwas damit ich sicherstellen kann dass die survey nur beim owner angezeigt wird
 			parentCard = new SurveyCard(content, result);
 			parentCard.setMovie(movie);
@@ -653,7 +702,6 @@ public class SurveyCardEdit extends DialogBox {
 
 		@Override
 		public void onSuccess(SurveyEntry result) {
-			Window.alert("SurveyEntry Created!");
 		}
 		
 	}

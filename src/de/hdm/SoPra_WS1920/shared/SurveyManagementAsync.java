@@ -69,7 +69,7 @@ public interface SurveyManagementAsync {
      */
     public void editPerson(Person p, AsyncCallback<Void> callback);
 
-    void createSurvey(int gFK, int pFK, String city, Date startDate, Date endDate, AsyncCallback<Survey> callback);
+    void createSurvey(int gFK, int pFK, String city, String movieName, Date startDate, Date endDate, AsyncCallback<Survey> callback);
     
     /**
      * Methode um eine Umfrage zu bearbeiten

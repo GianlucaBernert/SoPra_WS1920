@@ -15,7 +15,6 @@ public class Vote extends Ownership {
      */
     private int votingWeight;
     private int surveyEntryFK;
-    private int personFK;
     
 
     /**
@@ -40,22 +39,8 @@ public class Vote extends Ownership {
        this.votingWeight = votingWeight;
     }
 
-    /**
-     * Methode um den personFK eines Votings auszugeben
-     * @return int PersonFK
-     */
-    public int getpersonFK() {
-        return personFK;
-    }
 
-    /**
-     * Methode um den personFK eines Votings zu setzen
-     * @param int PersonFK 
-     */
-    public void setPersonFK(int personFK) {
-        this.personFK = personFK;
-    }
-    
+
     /**
      * Methode um den surveyEntryFK eines Votings auszugeben
      * @return int surveyEntryFK

@@ -31,7 +31,7 @@ public class SurveyCardView extends FlowPanel {
 	Label participations;
 	Label groupMemberAmount;
 	Label voteStatus;
-	Button voteButton;
+	Label voteLabel;
 	Button edit;
 	Button resultButton;
 	Image editIcon;
@@ -73,36 +73,34 @@ public class SurveyCardView extends FlowPanel {
 		group.setStyleName("CardViewSubTitle");
 		
 		surveyStatus = new Label();
-		surveyStatus.setStyleName("CardViewParagraph");
+		surveyStatus.setStyleName("VoteLabel");
 		
 		voteStatus = new Label();
 		voteStatus.setStyleName("CardViewParagraph");
 		
 		// Anzahl der Votes holen + groupmembers = SurveyManagementImpl.countGroupMembers(groupOfSurvey.getId)
 		participations = new Label();
-		participations.setStyleName("CardViewParagraph");
+		participations.setStyleName("Participations");
 		
 		groupMemberAmount = new Label();
-		groupMemberAmount.setStyleName("CardViewParagraph");
+		groupMemberAmount.setStyleName("Participations");
 		
 		edit = new Button();
 		edit.setStyleName("InvisibleButton");
 		editIcon = new Image("/Images/png/006-pen.png");
 		editIcon.setStyleName("EditIcon");
-//		editIcon.addClickHandler(new EditClickHandler(this));
 		
-		voteButton = new Button("Vote");
-		voteButton.setStyleName("CardViewParagraph");
-		voteButton.addClickHandler(new VoteClickHandler(this));
+		voteLabel = new Label("Vote");
+		voteLabel.setStyleName("VoteLabel");
+		voteLabel.addClickHandler(new VoteClickHandler(this));
 		
 		resultButton = new Button("Results");
 		resultButton.setStyleName("CardViewParagraph");
-//		resultButton.addClickHandler(new ResultsClickHandler());
 
 		this.add(movie);
 		this.add(group);
 		this.add(surveyStatus);
-		this.add(voteStatus);
+//		this.add(voteStatus);
 		this.add(participations);
 		this.add(groupMemberAmount);
 		
@@ -115,20 +113,19 @@ public class SurveyCardView extends FlowPanel {
 	}
 	
 	public void showEditVoteView() {
-		surveyStatus.setText("Survey Status: Active");
+		surveyStatus.setText("Active");
 		surveyStatus.setStyleName("ActiveSurveyLabel");
-		Window.alert("PersonID: " +Integer.toString(surveyToShow.getPersonFK()));
 		if(surveyToShow.getPersonFK()==1) {
 			editIcon.addClickHandler(new EditClickHandler());
 			this.add(edit);
 			this.add(editIcon);
 		}
 		
-		this.add(voteButton);
+		this.add(voteLabel);
 	}
 	
 	public void showResultsView() {
-		surveyStatus.setText("Survey Status: Closed");
+		surveyStatus.setText("Closed");
 		surveyStatus.setStyleName("ClosedSurveyLabel");
 		this.add(resultButton);
 	}
@@ -143,8 +140,10 @@ public class SurveyCardView extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			SurveyCardEdit surveyCardEdit = new SurveyCardEdit(parentCard,surveyToShow);
-
+//			SurveyCardEdit surveyCardEdit = new SurveyCardEdit(parentCard,surveyToShow);
+			VotingCard votingCard = new VotingCard(parentCard, surveyToShow);
+			votingCard.center();
+			votingCard.show();
 		}
 		
 	}
@@ -157,7 +156,6 @@ public class SurveyCardView extends FlowPanel {
 			SurveyCardEdit surveyCardEdit = new SurveyCardEdit(parentCard,surveyToShow);
 			surveyCardEdit.center();
 			surveyCardEdit.show();
-			Window.alert(surveyToShow.toString());
 			surveyCardEdit.showSurveyCardEdit();
 			
 		}
@@ -228,7 +226,7 @@ public class SurveyCardView extends FlowPanel {
 		@Override
 		public void onSuccess(Vector<Membership> result) {
 			// TODO Auto-generated method stub
-			groupMemberAmount.setText(Integer.toString(result.size()));
+			groupMemberAmount.setText(Integer.toString(result.size())+ " Participations");
 		}
 		
 	}

@@ -374,6 +374,10 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	return this.cMapper.findCinemaByCinemaChainFK(cc.getId());
     }
 
+    public Cinema getCinemaByScreeningFK(int screeningFK) {
+    	Screening s = this.getScreeningById(screeningFK);
+    	return this.getCinemaById(s.getCinemaFK());
+    }
     
     
     /**
@@ -547,7 +551,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     }
 
     /**
-     * Methode zum Aufrufen von Screening Objects die für die Erstellung von Umfragen benötigt werden.
+     * Methode zum Aufrufen von Screening Objects die fï¿½r die Erstellung von Umfragen benï¿½tigt werden.
      * @param cinemaFK 
      * @return
      */

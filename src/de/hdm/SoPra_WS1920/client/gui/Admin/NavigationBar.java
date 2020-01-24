@@ -1,14 +1,13 @@
 package de.hdm.SoPra_WS1920.client.gui.Admin;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 
 public class NavigationBar extends FlowPanel {
 	
@@ -58,6 +57,10 @@ public class NavigationBar extends FlowPanel {
 		screenings.setStyleName("navbar-element");
 		screenings.addClickHandler(new ShowScreeningsClickHandler(header, content, this));
 		
+		switchToEditor = new Label("Switch to Editor");
+		switchToEditor.setStyleName("navbar-element switchClient");
+		switchToEditor.addClickHandler(new SwitchToEditorClickHandler());
+		
 		settings = new Label("Settings");
 		settings.setStyleName("navbar-element bottom");
 		settings.addClickHandler(new SettingsClickHandler());
@@ -73,9 +76,21 @@ public class NavigationBar extends FlowPanel {
 		this.add(cinemaChains);
 		this.add(movies);	 //Add Item 2 to Menu
 		this.add(screenings); //Add Item 3 to Menu
+		this.add(switchToEditor);
 		this.add(settings);
 		this.add(logOut);
 	}
+	
+	class SwitchToEditorClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+//			Window.Location.assign(GWT.getHostPageBaseURL() + "SurveyManagement.html");
+		}
+		
+	}
+	
 	
 	class ShowCinemasClickHandler implements ClickHandler{
 		NavigationBar navigationBar;

@@ -1,5 +1,6 @@
 package de.hdm.SoPra_WS1920.client.gui;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -27,7 +28,7 @@ public class NavigationBar extends FlowPanel {
 	Label groups;
 	Label surveys;
 	Label settings;
-	Label switchToEditor;
+	Label switchToAdmin;
 	Label logOut;
 	Button b;
 	
@@ -65,6 +66,10 @@ public class NavigationBar extends FlowPanel {
 		surveys.setStyleName("navbar-element");
 		surveys.addClickHandler(new ShowSurveysClickHandler(header, surveyContent, this));
 		
+		switchToAdmin = new Label("Switch to Admin");
+		switchToAdmin.setStyleName("navbar-element switchClient");
+		switchToAdmin.addClickHandler(new SwitchToAdminClickHandler());
+		
 		settings = new Label("Settings");
 		settings.setStyleName("navbar-element bottom");
 		settings.addClickHandler(new SettingsClickHandler());
@@ -80,8 +85,19 @@ public class NavigationBar extends FlowPanel {
 		this.add(movies); //Add Item 1 to Menu
 		this.add(groups);	 //Add Item 2 to Menu
 		this.add(surveys); //Add Item 3 to Menu
+		this.add(switchToAdmin);
 		this.add(settings);
 		this.add(logOut);
+	}
+	
+	class SwitchToAdminClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+//			Window.Location.assign(GWT.getHostPageBaseURL() + "SoPra_WS1920a.html");
+		}
+		
 	}
 	
 	class ShowMoviesClickHandler implements ClickHandler{

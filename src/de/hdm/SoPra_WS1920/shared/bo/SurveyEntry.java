@@ -78,5 +78,25 @@ public class SurveyEntry extends BusinessObject {
    	public String toString() {
    		return "SurveyEntryID #SE" + this.getId();
    	}
+   	
+   	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof SurveyEntry) {
+			SurveyEntry sE = (SurveyEntry) obj;
+			if((this.getId()== sE.getId())){				
+				return true;	
+			}
+			else {
+				return false;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = this.getId();
+		return result;
+	}
 
 }
