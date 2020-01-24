@@ -389,7 +389,7 @@ public class SurveyMapper {
         try {
         	Statement stmt = con.createStatement();
         	
-        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK, survey.selectedCity, survey.isActive, businessownership.personFK "
+        	ResultSet rs = stmt.executeQuery("SELECT survey.id, survey.startDate, survey.endDate, survey.groupFK, survey.selectedCity, survey.isActive, survey.movieName, businessownership.personFK "
         			+ "FROM survey INNER JOIN popcorns.businessownership "
         			+ "ON survey.id = businessownership.id AND businessownership.personFK= '" + personFK + "'");
         	

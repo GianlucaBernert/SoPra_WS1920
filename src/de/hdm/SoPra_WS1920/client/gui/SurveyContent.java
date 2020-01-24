@@ -38,8 +38,6 @@ public class SurveyContent extends FlowPanel {
 	public void showMovies() {
 		this.clear();
 		cinemaAdministration.getAllMovies(new GetAllMoviesCallback(this));
-		
-		
 	}
 	
 	class GetAllMoviesCallback implements AsyncCallback<Vector<Movie>>{

@@ -807,6 +807,147 @@ select option {
 	margin-left: 30px;
 }
 
+/*
+-----------------Section: SurveyCard-------------
+	SurveyCardEdit
+*/
+.ScreeningSelection{
+	background: #04101A;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.ScreeningRow{
+	padding: 10px 0px 10px 20px;
+}
+
+.ScreeningRowLabel{
+	color: #71889C;
+    float: left;
+}
+
+.ScreeningRow input{
+	float: left;
+    padding: 5px;
+}
+
+/*
+-----------------Section: SurveyCard-------------
+	SurveyCardView
+*/
+
+.SurveyCard{
+	position: relative;
+    float: left;
+    width: 20%;
+    min-width: 200px;
+    padding: 20px;
+    border-radius: 10px;
+    background-image: linear-gradient(to bottom right, #0D1D2D, #112D49);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    overflow-x: hidden;
+    margin: 0px 20px 20px 0px;
+    height: 150px !important;
+}
+
+.ActiveSurveyLabel{
+	width: calc(100% - 40px);
+    text-decoration: none;
+    font-size: 13px;
+    color: #5CFF50;
+    display: block;
+    text-decoration: none;
+    margin-top: 16px;
+    margin-bottom: 10px;
+}
+
+.ClosedSurveyLabel{
+	width: calc(100% - 40px);
+    text-decoration: none;
+    font-size: 13px;
+    color: #FF5063;
+    display: block;
+    text-decoration: none;
+    margin-top: 16px;
+    margin-bottom: 10px;
+}
+
+.Participations{
+	float: left;
+    text-decoration: none;
+    font-size: 12px;
+    color: #7A93B0;
+    display: block;
+    text-decoration: none;
+    line-height: 1.5;
+}
+
+.VoteLabel{
+	position: absolute;
+    float: right;
+    width: 15px;
+    height: 15px;
+    bottom: 20px;
+    right: 80px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 12px;
+    color: #7A93B0;
+    display: block;
+    line-height: 1.5;
+}
+
+/*
+-------------Vote Section---------------
+*/
+
+.SurveyEntrySelection{
+	background: #04101A;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 120px;
+    
+}
+
+.SurveyEntryRow{
+	padding: 10px;
+}
+
+.SurveyRowLabel{
+	color: #71889C;
+    float: left;
+	padding: 0px 10px 5px 10px;
+}
+
+.UpVoteButton{
+	float: right;
+    margin: 0px 20px;
+    background: transparent;
+    color: lightgreen;
+    border: none;
+    text-decoration: none;
+    outline: none;
+}
+
+.DownVoteButton{
+	float: right;
+    margin: 0px 20px;
+    background: transparent;
+    color: red;
+    border: none;
+    text-decoration: none;
+    outline: none;
+}
+
+.VoteSelection{
+	background: #173450;
+	border-radius: 5px;
+}
+
 .PopUpPanel{
 	right: 0;
 	

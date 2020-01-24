@@ -89,6 +89,7 @@ public interface CinemaAdministration extends RemoteService {
      */
     Vector<Cinema> getCinemaByName(String name);
 
+    Cinema getCinemaByScreeningFK(int screeningFK);
     /**
      * @param genre 
      * @return

@@ -210,13 +210,15 @@ public class VoteMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM vote Where surveyEntryFK =" +surveyEntryFK);
+//			ResultSet rs = stmt.executeQuery("SELECT * FROM vote Where surveyEntryFK =" +surveyEntryFK);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.vote INNER JOIN businessownership ON businessownership.id ="+ surveyEntryFK);
 		
 			while (rs.next()) {
 				Vote v = new Vote();
 				v.setId(rs.getInt("id"));
 				v.setVotingWeight(rs.getInt("votingWeight"));
 				v.setSurveyEntryFK(rs.getInt("surveyEntryFK"));
+				v.setPersonFK(rs.getInt("personFK"));
 				result.add(v);
 				
 			}			

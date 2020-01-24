@@ -14,7 +14,7 @@ public class SurveyCard extends FlowPanel {
 	
 	public void onLoad() {
 		super.onLoad();
-		this.setStylePrimaryName("Card CinemaCardView");
+		this.setStylePrimaryName("SurveyCard");
 		this.showSurveyCardView(surveyToShow);
 //		surveyCardView = new SurveyCardView(this, surveyToShow);
 	}

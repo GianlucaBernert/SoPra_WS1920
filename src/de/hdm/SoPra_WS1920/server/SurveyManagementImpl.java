@@ -393,7 +393,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @throws IllegalArgumentException
      * @return Survey s
      */
-    public Survey createSurvey(int gFK, int pFK, String city, java.sql.Date startDate, java.sql.Date endDate) throws IllegalArgumentException {
+    public Survey createSurvey(int gFK, int pFK, String city, String movieName, java.sql.Date startDate, java.sql.Date endDate) throws IllegalArgumentException {
     	Ownership os = this.createOwnership(pFK);
         Survey s = new Survey();
         s.setPersonFK(os.getPersonFK());
@@ -401,6 +401,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         s.setGroupFK(gFK);
         s.setStatus(1);
         s.setSelectedCity(city);
+        s.setMovieName(movieName);
         s.setStartDate(startDate);
         s.setEndDate(endDate);
         s.setCreationTimestamp(os.getCreationTimestamp());
@@ -652,6 +653,8 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @return Movie m;
      */
     public Movie getMovieBySurveyFK(int sFK) {
+    	
+    	
     	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(sFK);
     	System.out.println("--------------------------------------------------"+se.size());
     	SurveyEntry see = se.get(0);
