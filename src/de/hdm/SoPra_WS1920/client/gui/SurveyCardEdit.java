@@ -85,7 +85,6 @@ public class SurveyCardEdit extends DialogBox {
 	Image deleteIcon;
 	
 	Vector <ScreeningRow> screeningRowVector;
-	Vector <Screening> sv;
 	Vector <Screening> screeningVector;
 	Vector <SurveyEntry> surveyEntryVector;
 	
@@ -338,23 +337,46 @@ public class SurveyCardEdit extends DialogBox {
 		
 		public void saveSurvey() {
 			Vector<Screening> selectedScreenings = new Vector<Screening>();
+			Vector<Screening> screeningsForCreation = new Vector<Screening>();
+			Vector<SurveyEntry> surveyEntriesForDeletion = new Vector<SurveyEntry>();
+			
+			Window.alert("Screenings + ScreeningRows: "+Integer.toString(screeningVector.size())+" "+Integer.toString(screeningRowVector.size()));
+//			Window.alert("Selected Screenings: "+Integer.toString(selectedScreenings.size()));
+			
 			for(ScreeningRow sR: screeningRowVector) {
 				if(sR.cb.getValue()==true) {
-					selectedScreenings.add(sR.s);
-				}
-			}
-			for(Screening s: selectedScreenings) {
-				for(SurveyEntry sE: surveyEntryVector) {
-					if(sE.getScreeningFK()==s.getId()) {
-						surveyEntryVector.remove(sE);
-					}else {
-						surveyManagement.createSurveyEntry(s.getId(), surveyToShow.getId(), 1, new SaveSurveyCallback());
+					screeningsForCreation.add(sR.s);
+				}else if(sR.cb.getValue()==false) {
+					for(SurveyEntry sE: surveyEntryVector){
+						if(sR.s.getId()==sE.getScreeningFK()) {
+							surveyEntriesForDeletion.add(sE);
+						}
 					}
 				}
 			}
-			for(SurveyEntry sE: surveyEntryVector) {
+			
+			for(ScreeningRow sR: screeningRowVector) {
+				if(sR.cb.getValue()==true) {
+					for(SurveyEntry sE:surveyEntryVector) {
+						if(sE.getScreeningFK()==sR.s.getId()) {
+							screeningsForCreation.remove(sR.s);
+						}
+					}
+				}
+			}
+			
+			Window.alert("1. To be created:"+ Integer.toString(screeningsForCreation.size()));
+			Window.alert("To be deleted:"+ Integer.toString(surveyEntriesForDeletion.size()));
+			
+			for(Screening s: screeningsForCreation) {
+				surveyManagement.createSurveyEntry(s.getId(), surveyToShow.getId(), person.getId(), new CreateSurveyEntryCallback());
+			}
+			
+			for(SurveyEntry sE: surveyEntriesForDeletion) {
 				surveyManagement.deleteSurveyEntry(sE, new DeleteSurveyEntryCallback());
 			}
+
+
 		}
 		
 		class GetMovieByNameCallback implements AsyncCallback<Vector<Movie>>{
@@ -467,7 +489,7 @@ public class SurveyCardEdit extends DialogBox {
 			public void onSuccess(Vector<Screening> result) {
 				// TODO Auto-generated method stub
 				
-				Vector<Screening> screeningVector = new Vector<Screening>();
+				screeningVector = new Vector<Screening>();
 				screeningVector.addAll(result);
 
 				for (Screening s : result) {	

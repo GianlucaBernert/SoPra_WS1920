@@ -50,7 +50,6 @@ public class SurveyCardView extends FlowPanel {
 	public SurveyCardView(SurveyCard parentCard, Survey surveyToShow) {
 		this.parentCard = parentCard;
 		this.surveyToShow = surveyToShow;
-		movieOfSurvey=parentCard.getMovie();
 	}
 	
 	public void onLoad() {

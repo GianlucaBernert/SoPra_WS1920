@@ -656,13 +656,9 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	
     	
     	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(sFK);
-    	System.out.println("--------------------------------------------------"+se.size());
     	SurveyEntry see = se.get(0);
-    	System.out.println("--------------------------------------------------"+see.getId());
     	Screening sc = this.getScreeningById(see.getScreeningFK());
-    	System.out.println("--------------------------------------------------"+sc.getId());
     	Movie m = this.getMovieById(sc.getMovieFK());
-    	System.out.println("--------------------------------------------------"+m.toString());
     	return m;
     }
     
@@ -691,6 +687,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	Vector<Person> result = new Vector<Person>();
     	HashSet<Person> hs = new HashSet<Person>();
     	Vector<SurveyEntry> se = this.getSurveyEntryBySurveyFK(surveyFK);
+    	
     	for(SurveyEntry see: se) {
     		Vector<Vote> v = this.getVoteBySurveyEntryFK(see.getId());
     		for(Vote vo: v) {
