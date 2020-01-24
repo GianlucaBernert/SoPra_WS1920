@@ -211,7 +211,9 @@ public class VoteMapper {
 			Statement stmt = con.createStatement();
 			
 //			ResultSet rs = stmt.executeQuery("SELECT * FROM vote Where surveyEntryFK =" +surveyEntryFK);
-			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.vote INNER JOIN businessownership ON businessownership.id ="+ surveyEntryFK);
+			ResultSet rs = stmt.executeQuery("Select vote.id, votingWeight, surveyentryFK, surveyFK, screeningFK, personFK from vote "
+					+ "inner join surveyentry on vote.surveyentryFK = surveyentry.id "
+					+ "inner join businessownership on vote.id=businessownership.id where surveyEntryFK="+ surveyEntryFK);
 		
 			while (rs.next()) {
 				Vote v = new Vote();

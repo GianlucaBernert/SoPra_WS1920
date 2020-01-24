@@ -239,9 +239,9 @@ public class VotingCard extends DialogBox {
 		Button upVoteButton;
 		Button downVoteButton;
 		
-		Vector<Vote> allVotes;
-		
+		Vector<Vote> allVotes;	
 		Vector<Vote> upVotes;
+		
 		int upVoteCounter;
 		Vector<Vote> downVotes;
 		int downVoteCounter;
@@ -274,10 +274,6 @@ public class VotingCard extends DialogBox {
 			downVoteButton = new Button();
 			downVoteButton.setStyleName("DownVoteButton");
 			downVoteButton.addClickHandler(new DownVoteClickHandler());	
-			
-			allVotes = new Vector<Vote>();
-			upVotes = new Vector<Vote>();
-			downVotes = new Vector<Vote>();
 			
 			this.add(surveyEntryDescription);
 			this.add(downVoteButton);
@@ -405,15 +401,20 @@ public class VotingCard extends DialogBox {
 			@Override
 			public void onSuccess(Vector<Vote> result) {
 				// TODO Auto-generated method stub
-				allVotes = result;
-				
-				for(Vote v: result) {
+				Vector<Vote> allVotes = result;
+				upVotes = new Vector<Vote>();
+				downVotes = new Vector<Vote>();
+				for(Vote v: allVotes) {
 					if(v.getPersonFK()==person.getId()) {
-						voteOfPerson = v;
+						voteOfPerson.setId(v.getId());
+						voteOfPerson.setVotingWeight(v.getVotingWeight());
+						voteOfPerson.setPersonFK(v.getPersonFK());
+						voteOfPerson.setSurveyEntryFK(v.getSurveyEntryFK());
 						newVoteOfPerson.setId(v.getId());
 						newVoteOfPerson.setVotingWeight(v.getVotingWeight());
 						newVoteOfPerson.setPersonFK(v.getPersonFK());
 						newVoteOfPerson.setSurveyEntryFK(v.getSurveyEntryFK());
+						
 						if(v.getVotingWeight()==1) {
 							upVoteButton.setStyleName("UpVoteButton VoteSelection");
 						}else if(v.getVotingWeight()==-1) {
@@ -421,12 +422,11 @@ public class VotingCard extends DialogBox {
 						}
 					}
 				}
-				
-				
+
 				for(Vote v: result) {
 					if(v.getVotingWeight()==1) {
 						upVotes.add(v);
-					}else {
+					}else{
 						downVotes.add(v);
 					}
 				}
