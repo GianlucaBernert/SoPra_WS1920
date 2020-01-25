@@ -6,13 +6,15 @@ body{
 	min-width: 240px;
 }
 .navbar {
-	width: calc(100% - 40px);
-	height: auto;
-	position: relative;
+	height: 100%;
 	top: 0;
 	overflow: hidden;
-	padding:20px;
-	
+	margin: 0;
+	padding: 0;
+ 	width: 250px;
+ 	background-color: #0C1C2C;
+ 	position: fixed;
+	height: 100%;
 }
 
 .LogoIcon{
@@ -37,13 +39,6 @@ body{
     margin-left: 70px;
     margin-bottom: 20px;
     margin-top: 20px;
-}
-
-.menuIcon{
-	display: block;
-	height: 20px;
-	float: left;
-	
 }
 
 .createIcon{
@@ -80,7 +75,25 @@ body{
 }
 
 .navbar-element {
-	display: none;
+	display: block;
+	color: #7A93B0;
+    padding: 15px 30px 15px 50px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.navbar-element:hover{
+		color: #9981FC;
+		text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+		padding: 15px 30px 15px 50px;
+	}
+
+.active{
+	color: #9278FF;
+	text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	border-left: solid #9278FF;
+	padding: 15px 30px 15px 48px;
 }
 
 .bottom{
@@ -89,9 +102,9 @@ body{
 }
 
 .logout{
-	position: absolute !important;
-	bottom: 40px !important;
-	color: #FF6172 !important;
+	position: absolute;
+	bottom: 40px;
+	color: #FF6172;
 }
 .logout:hover{
 		text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2) !important;
@@ -144,8 +157,8 @@ body{
 }
 
 .header{
-	margin-left: 0;
-	padding: 0px 20px;
+	margin-left: 250px;
+	padding: 16px;
 	overflow: hidden;
 }
 
@@ -156,7 +169,7 @@ body{
 	float: left;
 	vertical-align: center;
 	padding-top: 5px;
-	display:none;
+	display:block;
 }
 
 .searchBox{
@@ -206,10 +219,12 @@ body{
 	background-color: red;
 	border-radius: 5px;
 	float: right;
-	display: none;
+	display: block;
 }
 
 .content{
+	margin-left: 250px;
+	height: 100%;
 	padding:20px;
 	padding-right: 0px;
 	overflow: hidden;
@@ -222,10 +237,10 @@ body{
 */
 
 .moviecard {
-	margin-top: 32px;
+	margin: 16px 16px 0px 0px;
   	position: relative;
 	float:left;
-	width: calc(100% - 40px);
+	width: calc(33% - 40px);
 	min-width: 250px;
 	max-width: 400px;
 	height: 250px;
@@ -934,6 +949,37 @@ select option {
     line-height: 1.5;
 }
 
+.StopSurveyButton{
+    width: 100%;
+    padding: 12px;
+    cursor: pointer;
+    bottom: 0;
+    left: 0;
+    margin-top: 20px;
+    transition: background-color 0.2s;
+    background-color: transparent;
+    color: #9278FF;
+    outline: none;
+    border: #9278FF;
+    border-style: solid;
+    border-width: medium;
+    border-radius: 15px;
+}
+
+.ResultsButton{
+	position: absolute;
+    float: right;
+    width: 15px;
+    height: 15px;
+    bottom: 20px;
+    right: 80px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 12px;
+    color: #7A93B0;
+    display: block;
+    line-height: 1.5;
+}
 /*
 -------------Vote Section---------------
 */
@@ -944,43 +990,52 @@ select option {
     margin-top: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
-    height: 120px;
+    min-height: 120px;
     
 }
 
 .SurveyEntryRow{
-	padding: 10px;
+	padding: 0px 10px;
+    display: inline-block;
+    margin: 10px 0px;
+    /* display: block; */
+    width: calc(100% - 20px);
 }
 
 .SurveyRowLabel{
 	color: #71889C;
     float: left;
-	padding: 0px 10px 5px 10px;
+    padding: 0px 10px;
+    width: 50%;
 }
 
 .UpVoteButton{
-	float: right;
-    margin: 0px 20px;
+	    float: right;
+    margin: 0px 10px;
     background: transparent;
     color: lightgreen;
     border: none;
     text-decoration: none;
     outline: none;
+    display: block;
+    padding: 10px 15px;
 }
 
 .DownVoteButton{
 	float: right;
-    margin: 0px 20px;
+    /* margin: 0px 10px; */
     background: transparent;
-    color: red;
+    color: #FF5063;
     border: none;
     text-decoration: none;
     outline: none;
+    display: block;
+    padding: 10px 15px;
 }
 
 .VoteSelection{
 	background: #173450;
-	border-radius: 5px;
+    border-radius: 25px;
 }
 
 .PopUpPanel{
@@ -989,64 +1044,67 @@ select option {
 }
 
 
-@media screen and (min-width: 500px) {
-	.navbar{
-		margin: 0;
-		padding: 0;
-	 	width: 250px;
-	 	background-color: #0C1C2C;
-	 	position: fixed;
-		height: 100%;
-
+@media screen and (max-width: 500px) {
+	.navbar {
+	    width: 100%;
+   		height: 60px;
+    	position: relative;
 	}
-
-	.menuIcon{
-		display: none;
+	.navbar-element {
+		text-align: center;
+    	float: left;
+    	padding: 20px 20px;
+    	vertical-align: middle;
 	}
-
-	.navbar-element{
-		display: block;
-		color: #7A93B0;
-	    padding: 15px 30px 15px 50px;
-	    font-size: 16px;
-	    cursor: pointer;
-	    text-decoration: none;
+	.logout {
+		position: relative !important;
+	    bottom: 0 !important;
+	    text-align: center;
+	    float: right;
+	    padding: 20px 20px 0px 0px;
 	}
-	
+  
+	.Header {margin-left: 0}
+	.content {
+		margin-left: 0;
+	    height: 100%;
+	    padding: 20px;
+	    overflow: hidden;
+	}
+	.LogoIcon{display:none}
+	.LogoText{display:none}
+	.navbar-element.switchClient{display:none}
+	.navbar-element.bottom{display:none}
 	.active{
 		color: #9278FF;
 		text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-		border-left: solid #9278FF;
-		padding: 15px 30px 15px 48px;
+		border-left: none;
+		padding: 20px;
 	}
-
-	.navbar-element:hover{
-		color: #9981FC;
-		text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-		padding: 15px 30px 15px 50px;
+	.navbar-element:hover {
+	    color: #9981FC;
+	    text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	    padding: 20px;
 	}
-
-	.header{
-		margin-left: 250px;
-		padding: 16px;
+	.Card{
+		position: relative;
+	    float: left;
+	    width: calc(100% - 40px);
+	    min-width: unset;
+    	max-width: unset;
+	}
+	.SurveyCard{
+		position: relative;
+	    float: left;
+	    width: calc(100% - 40px);
+	    min-width: unset;
+    	max-width: unset;
 	}
 	
-	.headline{
-		display: block;
-	}
-	
-	.createBoButton{
-		display: block;
-	}
-	
-	.content{
-	margin-left: 250px;
-	height: 100%;
-	}
-	.moviecard {
-	margin: 16px 16px 0px 0px;
-	width: calc(33% - 40px);
-
+	.EditCard{
+		top: 80px !important;
+		width: calc(100% - 40px) !important;
+		
 	}
 
 }
