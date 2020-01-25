@@ -3,7 +3,9 @@ package de.hdm.SoPra_WS1920.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
 
-
+import de.hdm.SoPra_WS1920.client.gui.SurveyContent;
+import de.hdm.SoPra_WS1920.client.gui.SurveyManagementHeader;
+import de.hdm.SoPra_WS1920.client.gui.SurveyNavigationBar;
 import de.hdm.SoPra_WS1920.client.gui.Admin.Content;
 import de.hdm.SoPra_WS1920.client.gui.Admin.Header;
 import de.hdm.SoPra_WS1920.client.gui.Admin.NavigationBar;
@@ -17,19 +19,9 @@ public class CinemaAdminEntry implements EntryPoint{
 	NavigationBar navBar;
 	Header header;
 	Content content;
-//	Image menuIcon;
-//	Label cinemas;
-//	Label movies;
-//	Label screenings;
-//	private int menuOpen = 0;
-//	MovieCard mCard;
-//	MovieCard mCard2;
-	
-	//Example Movie
-	
-	
-	
-	
+	SurveyNavigationBar surveyNavBar;
+	SurveyManagementHeader surveyHeader;
+	SurveyContent surveyContent;
 	
 	@Override
 	public void onModuleLoad() {
@@ -49,6 +41,7 @@ public class CinemaAdminEntry implements EntryPoint{
 		
 		content = new Content();
 		header = new Header(content);
+//		navBar = new NavigationBar(this,header,content);
 		navBar = new NavigationBar(header,content);
 		
 //		navbar.setStyleName("navbar");
@@ -103,6 +96,27 @@ public class CinemaAdminEntry implements EntryPoint{
 		RootPanel.get().add(header);
 		RootPanel.get().add(content); //Add the (main-)content to the RootPanel
 	}
+//	public void showSurveyManagementEntry() {
+//		RootPanel.get().clear();
+//		surveyContent = new SurveyContent();
+//		surveyHeader = new SurveyManagementHeader(surveyContent);
+//		surveyNavBar = new SurveyNavigationBar(this,surveyHeader, surveyContent);
+//		
+//		RootPanel.get().add(navBar);
+//		RootPanel.get().add(header);
+//		RootPanel.get().add(content);
+//		
+//	}
+//	
+//	public void showCinemaAdminEntry() {
+//		RootPanel.get().clear();
+//		content = new Content();
+//		header = new Header(content);
+//		navBar = new NavigationBar(this,header,content);
+//		RootPanel.get().add(navBar); //Add the Menu to the RootPanel
+//		RootPanel.get().add(header);
+//		RootPanel.get().add(content); //Add the (main-)content to the RootPanel
+//	}
 //	class MenuClickHandler implements ClickHandler{
 //
 //		@Override

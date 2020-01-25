@@ -9,7 +9,12 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
+import de.hdm.SoPra_WS1920.client.CinemaAdminEntry;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
+
 public class NavigationBar extends FlowPanel {
+	
+	Person personToShow;
 	
 	Header header;
 	Content content;
@@ -24,15 +29,27 @@ public class NavigationBar extends FlowPanel {
 	Label switchToEditor;
 	Label logOut;
 	Button b;
+	CinemaAdminEntry cinemaAdminEntry;
+	
 	
 	public NavigationBar(Header header,Content content) {
 		this.header=header;
 		this.content=content;
+//		this.cinemaAdminEntry = cinemaAdminEntry;
 	}
 	
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("navbar");
+		
+		Person p = new Person();
+		p.setId(1);
+		p.setFirstname("Sebastian");
+		p.setLastname("Hermann");
+		p.setEMail("sh267@hdm-stuttgart.de");
+		
+		personToShow = p;
+		
 		b = new Button();
 		b.setStyleName("InvisibleButton");
 		
@@ -87,6 +104,7 @@ public class NavigationBar extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
 //			Window.Location.assign(GWT.getHostPageBaseURL() + "SurveyManagement.html");
+//			cinemaAdminEntry.showSurveyManagementEntry();
 		}
 		
 	}
@@ -135,7 +153,7 @@ public class NavigationBar extends FlowPanel {
 //			headerLabel.setText("Cinemas");
 			header.showCinemaChainHeader();
 			content.showCinemaChains();
-//			navigationBar.add(createIcon);
+//			surveyNavigationBar.add(createIcon);
 			navigationBar.setStyleName("navbar");
 //			menuIcon.setStyleName("menuIcon");
 //			cinemas.setStyleName("navbar-element");
@@ -165,7 +183,7 @@ public class NavigationBar extends FlowPanel {
 //			headerLabel.setText("Movies");
 			header.showMovieHeader();
 			content.showMovies();
-//			navigationBar.add(createIcon);
+//			surveyNavigationBar.add(createIcon);
 			navigationBar.setStyleName("navbar");
 //			menuIcon.setStyleName("menuIcon");
 //			cinemas.setStyleName("navbar-element");
@@ -213,7 +231,7 @@ public class NavigationBar extends FlowPanel {
 			movies.setStyleName("navbar-element");
 			screenings.setStyleName("navbar-element");
 			settings.setStyleName("navbar-element bottom");
-			UserSettingsForm userSettingsForm = new UserSettingsForm(header, content);
+			UserSettingsForm userSettingsForm = new UserSettingsForm(personToShow);
 			userSettingsForm.center();
 			userSettingsForm.show();
 		}

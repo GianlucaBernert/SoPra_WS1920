@@ -3,13 +3,13 @@ package de.hdm.SoPra_WS1920.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import de.hdm.SoPra_WS1920.client.gui.NavigationBar;
+import de.hdm.SoPra_WS1920.client.gui.SurveyNavigationBar;
 import de.hdm.SoPra_WS1920.client.gui.SurveyContent;
 import de.hdm.SoPra_WS1920.client.gui.SurveyManagementHeader;
 
 public class SurveyManagementEntry implements EntryPoint {
 	
-	NavigationBar navBar;
+	SurveyNavigationBar navBar;
 	SurveyManagementHeader header;
 	SurveyContent content;
 	
@@ -32,7 +32,8 @@ public class SurveyManagementEntry implements EntryPoint {
 		
 		content = new SurveyContent();
 		header = new SurveyManagementHeader(content);
-		navBar = new NavigationBar(header, content);
+//		navBar = new SurveyNavigationBar(this,header, content);
+		navBar = new SurveyNavigationBar(header, content);
 		
 		RootPanel.get().add(navBar);
 		RootPanel.get().add(header);

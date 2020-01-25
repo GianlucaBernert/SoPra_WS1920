@@ -807,6 +807,41 @@ select option {
 	margin-left: 30px;
 }
 
+.MembersPanel{
+	display: flow-root;
+    background: #04101A;
+    border-radius: 10px;
+    /* margin-top: 20px; */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    min-height: 150px;
+    
+}
+
+.MemberRow{
+	
+}
+
+.MemberDeleteIcon{
+	float: left;
+    /* margin-top: 20px; */
+    width: 11px;
+    /* margin-top: 16px; */
+    margin-right: 2px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.MemberLabel{
+	width: 90%;
+    font-size: 12px;
+    color: #6483A1;
+    /* margin-top: 15px; */
+    margin-bottom: 5px;
+    float: left;
+}
+
+
 /*
 -----------------Section: SurveyCard-------------
 	SurveyCardEdit
