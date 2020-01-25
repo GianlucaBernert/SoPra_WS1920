@@ -9,13 +9,15 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
+import de.hdm.SoPra_WS1920.client.CinemaAdminEntry;
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
+import de.hdm.SoPra_WS1920.client.SurveyManagementEntry;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 
 
 
 
-public class NavigationBar extends FlowPanel {
+public class SurveyNavigationBar extends FlowPanel {
 	
 	SurveyManagementHeader header;
 	SurveyContent surveyContent;
@@ -31,12 +33,14 @@ public class NavigationBar extends FlowPanel {
 	Label switchToAdmin;
 	Label logOut;
 	Button b;
+	CinemaAdminEntry cinemaAdminEntry;
 	
 	SurveyManagementAsync surveyManagement;
 	
-	public NavigationBar(SurveyManagementHeader header,SurveyContent surveyContent) {
+	public SurveyNavigationBar(SurveyManagementHeader header,SurveyContent surveyContent) {
 		this.header=header;
 		this.surveyContent=surveyContent;
+
 	}
 	
 	public void onLoad() {
@@ -96,14 +100,15 @@ public class NavigationBar extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
 //			Window.Location.assign(GWT.getHostPageBaseURL() + "SoPra_WS1920a.html");
+//			cinemaAdminEntry.showCinemaAdminEntry();
 		}
 		
 	}
 	
 	class ShowMoviesClickHandler implements ClickHandler{
-		NavigationBar navigationBar;
-		public ShowMoviesClickHandler(SurveyManagementHeader header, SurveyContent content, NavigationBar navigationBar) {
-			this.navigationBar=navigationBar;
+		SurveyNavigationBar surveyNavigationBar;
+		public ShowMoviesClickHandler(SurveyManagementHeader header, SurveyContent content, SurveyNavigationBar surveyNavigationBar) {
+			this.surveyNavigationBar=surveyNavigationBar;
 		}
 
 		@Override
@@ -113,7 +118,7 @@ public class NavigationBar extends FlowPanel {
 			header.showMoviesHeader();
 			surveyContent.showMovies();
 			
-			navigationBar.setStyleName("navbar");
+			surveyNavigationBar.setStyleName("navbar");
 			movies.setStyleName("navbar-element");
 			groups.setStyleName("navbar-element");
 			surveys.setStyleName("navbar-element");
@@ -122,9 +127,9 @@ public class NavigationBar extends FlowPanel {
 	}
 	
 	class ShowGroupsClickHandler implements ClickHandler{
-		NavigationBar navigationBar;
-		public ShowGroupsClickHandler(SurveyManagementHeader header, SurveyContent content, NavigationBar navigationBar) {
-			this.navigationBar=navigationBar;
+		SurveyNavigationBar surveyNavigationBar;
+		public ShowGroupsClickHandler(SurveyManagementHeader header, SurveyContent content, SurveyNavigationBar surveyNavigationBar) {
+			this.surveyNavigationBar=surveyNavigationBar;
 		}
 
 		@Override
@@ -133,7 +138,7 @@ public class NavigationBar extends FlowPanel {
 			header.showGroupHeader();
 			surveyContent.showGroups();
 			
-			navigationBar.setStyleName("navbar");
+			surveyNavigationBar.setStyleName("navbar");
 			movies.setStyleName("navbar-element");
 			groups.setStyleName("navbar-element");
 			surveys.setStyleName("navbar-element");
@@ -142,9 +147,9 @@ public class NavigationBar extends FlowPanel {
 	}
 	
 	class ShowSurveysClickHandler implements ClickHandler{
-		NavigationBar navigationBar;
-		public ShowSurveysClickHandler(SurveyManagementHeader header, SurveyContent surveyContent, NavigationBar navigationBar) {
-			this.navigationBar=navigationBar;
+		SurveyNavigationBar surveyNavigationBar;
+		public ShowSurveysClickHandler(SurveyManagementHeader header, SurveyContent surveyContent, SurveyNavigationBar surveyNavigationBar) {
+			this.surveyNavigationBar=surveyNavigationBar;
 		}
 
 		@Override
@@ -153,7 +158,7 @@ public class NavigationBar extends FlowPanel {
 			header.showSurveyHeader();
 			surveyContent.showSurveys();
 			
-			navigationBar.setStyleName("navbar");
+			surveyNavigationBar.setStyleName("navbar");
 			movies.setStyleName("navbar-element");
 			groups.setStyleName("navbar-element");
 			surveys.setStyleName("navbar-element");

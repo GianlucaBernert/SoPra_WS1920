@@ -49,9 +49,13 @@ public class GroupForm extends DialogBox {
 	Button saveButton;
 	
 	Vector<Person> groupMembers;
+	Vector<Person> newGroupMembers;
+	Vector<Person> groupMembersToBeDeleted;
+	Vector<MemberRow> memberRows;
 	
 	SurveyManagementHeader header;
 	SurveyContent content;
+	Person groupAdmin;
 	
 	SurveyManagementAsync surveyManagementAdministration;
 	
@@ -69,14 +73,20 @@ public class GroupForm extends DialogBox {
 	
 	public void onLoad() {
 		super.onLoad();
+		groupAdmin = new Person();
+		groupAdmin.setId(1);
+		groupAdmin.setFirstname("Sebastian");
+		groupAdmin.setLastname("Hermann");
+		groupAdmin.setEMail("sh267@hdm-stuttgart.de");
+		
+		
 		surveyManagementAdministration = ClientsideSettings.getSurveyManagement();
 		surveyManagementAdministration.getAllPersons(new GetAllPersonsCallback());
 		
-		if(parentCard!=null) {
-			surveyManagementAdministration.getMembershipsOfGroup(groupToShow, new GetMembershipCallback());
-		}
-		
 		groupMembers = new Vector<Person>();
+		newGroupMembers = new Vector<Person>();
+		groupMembersToBeDeleted = new Vector<Person>();
+		memberRows = new Vector<MemberRow>();
 		
 		formWrapper = new FlowPanel();
 		this.setStylePrimaryName("EditCard");
@@ -97,11 +107,11 @@ public class GroupForm extends DialogBox {
 		addMembersLabel.setStyleName("TextBoxLabel");
 		
 		membersPanel = new FlowPanel();
+		membersPanel.setStyleName("MembersPanel");
 		allMembers = new MultiWordSuggestOracle();
 		memberSuggestBox = new SuggestBox(allMembers);
 		memberSuggestBox.getElement().setPropertyString("placeholder", "Start typing in mail adress...");
 		memberSuggestBox.setStyleName("CardTextBox MemberTextBox");
-		this.showMembers();
 				
 		addIcon = new Image("/Images/png/001-add-button.png");
 		addIcon.setStyleName("AddIcon");
@@ -120,6 +130,24 @@ public class GroupForm extends DialogBox {
 		formWrapper.add(addIcon);
 //		formWrapper.add(addedMembers);
 		formWrapper.add(membersPanel);
+		if(groupToShow!=null) {
+			surveyManagementAdministration.getMembershipsOfGroup(groupToShow, new GetMembershipCallback(this));
+			groupNameTextBox.setText(groupToShow.getName());
+			deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
+			deleteIcon.setStyleName("DeleteIcon");
+			deleteLabel = new Label("Delete Group");
+			deleteLabel.setStyleName("DeleteLabel");
+			deleteIcon.addClickHandler(new DeleteGroupClickHandler(this));
+			deleteLabel.addClickHandler(new DeleteGroupClickHandler(this));
+			
+			formWrapper.add(deleteIcon);
+			formWrapper.add(deleteLabel);
+		}else {
+			MemberRow memberRow = new MemberRow(membersPanel, groupAdmin);
+			memberRows.add(memberRow);
+			membersPanel.add(memberRow);
+		}
+		
 		formWrapper.add(saveButton);
 
 		this.add(formWrapper);
@@ -132,6 +160,7 @@ public class GroupForm extends DialogBox {
 		membersPanel.clear();
 		for(Person p: groupMembers) {
 			MemberRow memberRow = new MemberRow(membersPanel,p);
+			memberRows.add(memberRow);
 			membersPanel.add(memberRow);
 		}
 		
@@ -139,6 +168,7 @@ public class GroupForm extends DialogBox {
 	
 	class MemberRow extends FlowPanel{
 		Image deleteIcon;
+		Image adminIcon;
 		Label fullNameLabel;
 		
 		Person p;
@@ -151,15 +181,35 @@ public class GroupForm extends DialogBox {
 		
 		public void onLoad() {
 			super.onLoad();
+			this.setStyleName("MemberRow");
 			
-			deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
-			deleteIcon.setStyleName("DeletetIcon");
-			deleteIcon.addClickHandler(new DeleteMemberClickHandler(this));
+			if(groupToShow==null) {
+				if(p.getId()==groupToShow.getPersonFK()){
+					adminIcon = new Image("/Images/png/002-user-1.png");
+					adminIcon.setStyleName("MemberDeleteIcon");
+					newGroupMembers.add(p);
+					this.add(adminIcon);
+				}else {
+					deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
+					deleteIcon.setStyleName("MemberDeleteIcon");
+					deleteIcon.addClickHandler(new DeleteMemberClickHandler(this));
+					this.add(deleteIcon);
+				}
+			}else if(p.getId()==groupToShow.getPersonFK()){
+				adminIcon = new Image("/Images/png/002-user-1.png");
+				adminIcon.setStyleName("MemberDeleteIcon");
+				this.add(adminIcon);
+			}else {
+				deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
+				deleteIcon.setStyleName("MemberDeleteIcon");
+				deleteIcon.addClickHandler(new DeleteMemberClickHandler(this));
+				this.add(deleteIcon);
+			}
 			
 			fullNameLabel = new Label(p.getEMail());
-			fullNameLabel.setStyleName("TextBoxLabel");
+			fullNameLabel.setStyleName("MemberLabel");
 			
-			this.add(deleteIcon);
+			
 			this.add(fullNameLabel);
 		}
 		
@@ -174,29 +224,16 @@ public class GroupForm extends DialogBox {
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				
-//				surveyManagementAdministration.deleteMembership(parentCard.groupToShow.getId(), p.getId(), new DeleteMembershipCallback());
-				groupMembers.remove(p);
+
+				if(newGroupMembers.contains(memberRow.p)){
+					newGroupMembers.remove(memberRow.p);
+				}
+				groupMembersToBeDeleted.add(memberRow.p);
 				memberPanel.remove(memberRow);
 			}
 			
 		}
 		
-		class DeleteMembershipCallback implements AsyncCallback<Void>{
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onSuccess(Void result) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		}
 	}
 	
 	class GetAllPersonsCallback implements AsyncCallback<Vector<Person>>{
@@ -217,8 +254,6 @@ public class GroupForm extends DialogBox {
 		
 	}
 	
-	
-		
 	public boolean checkforMembership(Person person) {
 		boolean isMember= false;
 		
@@ -240,6 +275,11 @@ public class GroupForm extends DialogBox {
 	}
 	
 	class GetMembershipCallback implements AsyncCallback<Vector<Membership>>{
+		GroupForm groupForm;
+		public GetMembershipCallback(GroupForm groupForm) {
+			// TODO Auto-generated constructor stub
+			this.groupForm = groupForm;
+		}
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -251,13 +291,18 @@ public class GroupForm extends DialogBox {
 		public void onSuccess(Vector<Membership> result) {
 			// TODO Auto-generated method stub
 			for(Membership m:result) {
-				surveyManagementAdministration.getPersonById(m.getPersonFK(), new GetMembersCallback());
+				surveyManagementAdministration.getPersonById(m.getPersonFK(), new GetMembersCallback(groupForm));
 			}
 		}
 		
 	}
 	
 	class GetMembersCallback implements AsyncCallback<Person>{
+		GroupForm groupForm;
+		public GetMembersCallback(GroupForm groupForm) {
+			// TODO Auto-generated constructor stub
+			this.groupForm = groupForm;
+		}
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -269,9 +314,10 @@ public class GroupForm extends DialogBox {
 		public void onSuccess(Person result) {
 			// TODO Auto-generated method stub
 				groupMembers.add(result);
+				groupForm.showMembers();
 				
-			}
 		}
+	}
 		
 	
 	class CancelClickHandler implements ClickHandler {
@@ -305,65 +351,91 @@ public class GroupForm extends DialogBox {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			if(gf.groupNameTextBox.getText().length()>3)
+				if(groupToShow==null) {
+					surveyManagementAdministration.createGroup(groupNameTextBox.getText(), groupAdmin.getId() , new CreateGroupCallback(gf));	
+				}else {
+					
+					for(Person p: newGroupMembers) {
+						surveyManagementAdministration.createMembership(groupToShow, p, new AddMembersCallback());
+					}
+					
+					for(Person p: groupMembersToBeDeleted) {
+						surveyManagementAdministration.deleteMembership(groupToShow.getId(), p.getId(), new DeleteMembershipCallback());
+					}
+					parentCard.showGroupCardView(groupToShow);
+					gf.hide();
+				}
+			else {
+				Window.alert("Group name must have at least 3 characters.");
+			}
+		}
+	}
+	
+	class DeleteMembershipCallback implements AsyncCallback<Void>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
 			
-			surveyManagementAdministration.createGroup(groupNameTextBox.getText(),
-					1, 
-					new CreateGroupCallback(gf));
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
 			
+		}
+		
+	}
+		
+	class CreateGroupCallback implements AsyncCallback<Group>{
+		GroupForm gf;
+		public CreateGroupCallback(GroupForm gf) {
+			// TODO Auto-generated constructor stub
+			this.gf=gf;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the Callback");
+			
+		}
+
+		@Override
+		public void onSuccess(Group result) {
+			groupToShow = result;
+
+			for(Person p: newGroupMembers) {
+				surveyManagementAdministration.createMembership(result, p, new AddMembersCallback());
+			}
+			if(parentCard==null) {
+				parentCard = new GroupCard(content,result);
+				parentCard.showGroupCardView(groupToShow);
+				content.add(parentCard);
+				gf.hide();
+			}else {
+				parentCard.showGroupCardView(groupToShow);
+				gf.hide();
+			}
 		}
 	}
 		
-		class CreateGroupCallback implements AsyncCallback<Group>{
-			GroupForm gf;
-			public CreateGroupCallback(GroupForm gf) {
-				// TODO Auto-generated constructor stub
-				this.gf=gf;
-			}
+	class AddMembersCallback implements AsyncCallback<Membership>{
 
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				Window.alert("Problem with the Callback");
-				
-			}
-
-			@Override
-			public void onSuccess(Group result) {
-				groupToShow = result;
-
-				for(Person p: groupMembers) {
-					surveyManagementAdministration.createMembership(result, p, new AddMembersCallback());
-				}
-				if(parentCard==null) {
-					parentCard = new GroupCard(content,result);
-					parentCard.showGroupCardView(groupToShow);
-					content.add(parentCard);
-					gf.hide();
-				}else {
-					parentCard.showGroupCardView(groupToShow);
-					gf.hide();
-				}
-			}
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with adding the members");
 		}
-		
-		class AddMembersCallback implements AsyncCallback<Membership>{
 
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				Window.alert("Problem with adding the members");
-			}
-
-			@Override
-			public void onSuccess(Membership result) {
-				// TODO Auto-generated method stub
-				
-			}
+		@Override
+		public void onSuccess(Membership result) {
+			// TODO Auto-generated method stub
 			
 		}
 		
-		
-	
+	}
 				
 	class AddMemberClickHandler implements ClickHandler{
 		GroupForm gf;
@@ -374,8 +446,11 @@ public class GroupForm extends DialogBox {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			surveyManagementAdministration.getPersonByEmail(gf.memberSuggestBox.getValue(), new GetPersonCallback(gf));
-		
+			if((gf.memberSuggestBox.getValue().length())>1) {
+				surveyManagementAdministration.getPersonByEmail(gf.memberSuggestBox.getValue(), new GetPersonCallback(gf));
+			}else {
+				Window.alert("Please enter a valid e-Mail");
+			}	
 		}
 	}
 	
@@ -395,55 +470,63 @@ public class GroupForm extends DialogBox {
 		@Override
 		public void onSuccess(Person result) {
 			// TODO Auto-generated method stub
-			if(gf.checkforMembership(result)==false) {
-				gf.groupMembers.add(result);
+//			if(gf.checkforMembership(result)==false) {
+			if((!groupMembers.contains(result)&&!newGroupMembers.contains(result))||(groupMembers.contains(result)&&groupMembersToBeDeleted.contains(result))) {
+//				gf.groupMembers.add(result);
+				if(groupMembers.contains(result)&&groupMembersToBeDeleted.contains(result)) {
+					groupMembersToBeDeleted.remove(result);
+				}
 				MemberRow newMember = new MemberRow(gf.membersPanel,result);
+				newGroupMembers.add(result);
+				gf.memberRows.add(newMember);
 				gf.membersPanel.add(newMember);
+				gf.memberSuggestBox.setText("");
+			}else {
+				Window.alert("User is allready a member.");
 			}
 		}
 		
 	}
 	
+	class DeleteGroupClickHandler implements ClickHandler{
+		
+		GroupForm gf;
+		
+		public DeleteGroupClickHandler(GroupForm gf) {
+			this.gf = gf;
+		}
 
-		class DeleteClickHandler implements ClickHandler{
-			
-			GroupForm gf;
-			
-			public DeleteClickHandler(GroupForm gf) {
-				this.gf = gf;
-			}
-
-			@Override
-			public void onClick(ClickEvent event) {
-//				surveyManagementAdministration.deleteGroup(groupToShow, new DeleteGroupCallback(gf));
-				
-			}
-			
+		@Override
+		public void onClick(ClickEvent event) {
+			surveyManagementAdministration.deleteGroup(groupToShow, new DeleteGroupCallback(gf));
 			
 		}
-		class DeleteGroupCallback implements AsyncCallback<Void>{
-			GroupForm gf;
-			
-			public DeleteGroupCallback(GroupForm gf) {
-				this.gf = gf;
-			}
+		
+		
+	}
+	class DeleteGroupCallback implements AsyncCallback<Void>{
+		GroupForm gf;
+		
+		public DeleteGroupCallback(GroupForm gf) {
+			this.gf = gf;
+		}
 
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Problem with DeleteCallback");
-				
-			}
-
-			@Override
-			public void onSuccess(Void result) {
-				gf.hide();
-//				parentCard.remove();
-				
-			}
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with DeleteCallback");
 			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			gf.hide();
+			parentCard.remove();
+			
+		}
 		
 	
-		}
+
+	}
 }
 
 		

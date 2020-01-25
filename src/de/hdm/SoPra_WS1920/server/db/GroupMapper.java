@@ -71,12 +71,14 @@ public class GroupMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.`group` WHERE id= " + groupID);
+			ResultSet rs = stmt.executeQuery("SELECT popcorns.group.id, popcorns.group.name,personFK FROM popcorns.group "
+					+ "INNER JOIN popcorns.businessownership ON popcorns.group.id=businessownership.id WHERE popcorns.group.id= " + groupID);
 			
 			if(rs.next()) {
 				Group g = new Group();
 				g.setName(rs.getString("name"));
 				g.setId(rs.getInt("id"));
+				g.setPersonFK(rs.getInt("personFK"));
 				return g;
 				
 			}
@@ -157,14 +159,15 @@ public class GroupMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM popcorns.group " + 
+			ResultSet rs = stmt.executeQuery("SELECT popcorns.group.id, popcorns.group.name,personFK FROM popcorns.group " + 
 					"INNER JOIN popcorns.businessownership ON popcorns.group.id=businessownership.id " + 
-					"AND businessownership.personFK='"+personFK+"'");
+					"Where personFK='"+personFK+"'");
 		
 			while (rs.next()) {
 				Group g = new Group();
 				g.setName(rs.getString("name"));
 				g.setId(rs.getInt("id"));
+				g.setPersonFK(rs.getInt("personFK"));
 				result.add(g);
 			}			
 		}

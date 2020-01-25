@@ -42,23 +42,20 @@ public class UserSettingsForm extends DialogBox{
 	
 	public UserSettingsForm(Person personToShow){
 		this.personToShow = personToShow;
+		
 	}
 	
 	public UserSettingsForm(Header header, Content content) {
 		this.header = header;
 		this.content = content;
-		
-		Person p = new Person();
-		p.setFirstname("Sebastian");
-		p.setLastname("Hermann");
-		p.setEMail("sh267@hdm-stuttgart.de");
-		personToShow=p;
 	}
 	
 	public void onLoad() {
 		super.onLoad();
 		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
 		cinemaAdministration.getPersonByEMail(personToShow.getEMail(), new GetPersonCallback());
+		
+		
 		
 		this.setStyleName("EditCard");
 		formWrapper = new FlowPanel();
