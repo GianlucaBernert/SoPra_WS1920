@@ -90,6 +90,8 @@ public class SurveyCardEdit extends DialogBox {
 	
 	Label showSelected;
 	Button saveSurvey;
+	Button stopSurvey;
+	
 	Survey survey;
 	
 	Cinema cinema;
@@ -271,6 +273,7 @@ public class SurveyCardEdit extends DialogBox {
 		public void showSurveyCardEdit() {
 			this.clear();
 			this.setStyleName("EditCard");
+//			Window.alert("In editClickHandler: "+parentCard.toString()+ " "+surveyToShow.toString());
 			screeningRowVector = new Vector<ScreeningRow>();
 			formWrapper = new FlowPanel();
 			formWrapper.setStyleName("DialogBoxWrapper");
@@ -300,9 +303,6 @@ public class SurveyCardEdit extends DialogBox {
 			formWrapper.add(selectedPeriod);
 			formWrapper.add(screeningSelection);
 			
-			saveSurvey = new Button("Create Survey");
-			saveSurvey.setStyleName("SaveButton");
-			
 			if(surveyToShow==null){
 				cardDescription.setText("Create Survey 2/2");
 				selectedMovie.setText("Movie: "+ movie.getName());
@@ -311,6 +311,7 @@ public class SurveyCardEdit extends DialogBox {
 				
 				cinemaAdministration.getScreeningsforSurveyCreation(movie, city, startDate, endDate, new GetScreeningsCallback());
 				saveSurvey.addClickHandler(new CreateSurveyClickHandler(this));
+				formWrapper.add(saveSurvey);
 			}else{
 				cardDescription.setText("Edit Survey");
 				selectedMovie.setText("Movie: "+ surveyToShow.getMovieName());
@@ -327,11 +328,21 @@ public class SurveyCardEdit extends DialogBox {
 				deleteLabel.addClickHandler(new DeleteSurveyClickHandler(this));
 				formWrapper.add(deleteIcon);
 				formWrapper.add(deleteLabel);
-				saveSurvey.setText("Save");
-				saveSurvey.addClickHandler(new UpdateSurveyClickHandler(this));
+				
+				if(surveyToShow.getStatus()==1) {
+					saveSurvey = new Button("Create Survey");
+					saveSurvey.setStyleName("SaveButton");
+					saveSurvey.setText("Save");
+					saveSurvey.addClickHandler(new UpdateSurveyClickHandler(this));
+					stopSurvey=new Button();
+					stopSurvey.setText("Stop Survey");
+					stopSurvey.addClickHandler(new StopSurveyClickHandler(this));
+					stopSurvey.setStyleName("StopSurveyButton");
+					formWrapper.add(saveSurvey);
+					formWrapper.add(stopSurvey);
+				}
 			}
 					
-			formWrapper.add(saveSurvey);
 			this.add(formWrapper);
 		}
 		
@@ -340,7 +351,7 @@ public class SurveyCardEdit extends DialogBox {
 			Vector<Screening> screeningsForCreation = new Vector<Screening>();
 			Vector<SurveyEntry> surveyEntriesForDeletion = new Vector<SurveyEntry>();
 			
-			Window.alert("Screenings + ScreeningRows: "+Integer.toString(screeningVector.size())+" "+Integer.toString(screeningRowVector.size()));
+//			Window.alert("Screenings + ScreeningRows: "+Integer.toString(screeningVector.size())+" "+Integer.toString(screeningRowVector.size()));
 //			Window.alert("Selected Screenings: "+Integer.toString(selectedScreenings.size()));
 			
 			for(ScreeningRow sR: screeningRowVector) {
@@ -365,8 +376,8 @@ public class SurveyCardEdit extends DialogBox {
 				}
 			}
 			
-			Window.alert("1. To be created:"+ Integer.toString(screeningsForCreation.size()));
-			Window.alert("To be deleted:"+ Integer.toString(surveyEntriesForDeletion.size()));
+//			Window.alert("1. To be created:"+ Integer.toString(screeningsForCreation.size()));
+//			Window.alert("To be deleted:"+ Integer.toString(surveyEntriesForDeletion.size()));
 			
 			for(Screening s: screeningsForCreation) {
 				surveyManagement.createSurveyEntry(s.getId(), surveyToShow.getId(), person.getId(), new CreateSurveyEntryCallback());
@@ -455,7 +466,7 @@ public class SurveyCardEdit extends DialogBox {
 			@Override
 			public void onSuccess(SurveyEntry result) {
 				// TODO Auto-generated method stub
-				Window.alert(Integer.toString(result.getSurveyFK()));
+//				Window.alert(Integer.toString(result.getSurveyFK()));
 			}
 			
 		}
@@ -473,6 +484,44 @@ public class SurveyCardEdit extends DialogBox {
 				surveyCardEdit.saveSurvey();
 				surveyCardEdit.hide();
 				
+			}
+			
+		}
+		
+		class StopSurveyClickHandler implements ClickHandler{
+			SurveyCardEdit surveyCardEdit;
+			public StopSurveyClickHandler(SurveyCardEdit surveyCardEdit) {
+				// TODO Auto-generated constructor stub
+				this.surveyCardEdit=surveyCardEdit;
+			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				surveyToShow.setStatus(0);
+				surveyManagement.updateSurvey(surveyToShow, new StopSurveyCallback(surveyCardEdit));
+			}
+			
+		}
+		
+		class StopSurveyCallback implements AsyncCallback<Survey>{
+			SurveyCardEdit surveyCardEdit;
+			public StopSurveyCallback(SurveyCardEdit surveyCardEdit) {
+				// TODO Auto-generated constructor stub
+				this.surveyCardEdit=surveyCardEdit;
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Survey result) {
+				// TODO Auto-generated method stub
+				parentCard.showSurveyCardView(result);
+				surveyCardEdit.hide();
 			}
 			
 		}

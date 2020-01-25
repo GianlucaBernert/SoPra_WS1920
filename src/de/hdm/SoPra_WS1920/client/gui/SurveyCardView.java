@@ -33,7 +33,7 @@ public class SurveyCardView extends FlowPanel {
 	Label voteStatus;
 	Label voteLabel;
 	Button edit;
-	Button resultButton;
+	Label resultLabel;
 	Image editIcon;
 	Survey surveyToShow;
 	Movie movieOfSurvey;
@@ -93,8 +93,9 @@ public class SurveyCardView extends FlowPanel {
 		voteLabel.setStyleName("VoteLabel");
 		voteLabel.addClickHandler(new VoteClickHandler(this));
 		
-		resultButton = new Button("Results");
-		resultButton.setStyleName("CardViewParagraph");
+		resultLabel = new Label("Results");
+		resultLabel.setStyleName("ResultsButton");
+		resultLabel.addClickHandler(new ResultsClickHandler());
 
 		this.add(movie);
 		this.add(group);
@@ -108,25 +109,24 @@ public class SurveyCardView extends FlowPanel {
 		}else {
 			this.showResultsView();
 		}
+		if(surveyToShow.getPersonFK()==1) {
+			editIcon.addClickHandler(new EditClickHandler());
+			this.add(edit);
+			this.add(editIcon);
+		}
 	
 	}
 	
 	public void showEditVoteView() {
 		surveyStatus.setText("Active");
 		surveyStatus.setStyleName("ActiveSurveyLabel");
-		if(surveyToShow.getPersonFK()==1) {
-			editIcon.addClickHandler(new EditClickHandler());
-			this.add(edit);
-			this.add(editIcon);
-		}
-		
 		this.add(voteLabel);
 	}
 	
 	public void showResultsView() {
 		surveyStatus.setText("Closed");
 		surveyStatus.setStyleName("ClosedSurveyLabel");
-		this.add(resultButton);
+		this.add(resultLabel);
 	}
 	
 	class VoteClickHandler implements ClickHandler{
@@ -153,11 +153,25 @@ public class SurveyCardView extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
 			SurveyCardEdit surveyCardEdit = new SurveyCardEdit(parentCard,surveyToShow);
+//			Window.alert("In editClickHandler: "+parentCard.toString()+ " "+surveyToShow.toString());
 			surveyCardEdit.center();
 			surveyCardEdit.show();
 			surveyCardEdit.showSurveyCardEdit();
 			
 		}
+	}
+	
+	class ResultsClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			VotingCard votingCard = new VotingCard(parentCard,surveyToShow);
+			//votingCard.showResultsOnly ---> Remove ClickHandler from SurveyEntryRows, Remove SaveButton
+			votingCard.center();
+			votingCard.show();
+		}
+		
 	}
 
 	class GetGroupCallback implements AsyncCallback<Group>{

@@ -115,7 +115,12 @@ public class VotingCard extends DialogBox {
 		surveyManagement.getGroupById(surveyToShow.getGroupFK(), new GetGroupOfSurveyCallback());
 
 //		saveVoting.addClickHandler(new UpdateSurveyClickHandler(this));
-		formWrapper.add(saveVoting);
+		if(surveyToShow.getStatus()==1) {	
+			formWrapper.add(saveVoting);
+		}else {
+			cardDescription.setText("Results");
+		}
+		
 		this.add(formWrapper);
 	}
 	
@@ -270,11 +275,13 @@ public class VotingCard extends DialogBox {
 			
 			upVoteButton = new Button();
 			upVoteButton.setStyleName("UpVoteButton");
-			upVoteButton.addClickHandler(new UpVoteClickHandler());
 			downVoteButton = new Button();
 			downVoteButton.setStyleName("DownVoteButton");
-			downVoteButton.addClickHandler(new DownVoteClickHandler());	
-			
+			if(surveyToShow.getStatus()==1) {
+				upVoteButton.addClickHandler(new UpVoteClickHandler());
+				downVoteButton.addClickHandler(new DownVoteClickHandler());	
+			}
+		
 			this.add(surveyEntryDescription);
 			this.add(downVoteButton);
 			this.add(upVoteButton);
@@ -291,7 +298,7 @@ public class VotingCard extends DialogBox {
 				if(newVoteOfPerson.getVotingWeight()==1) {
 					newVoteOfPerson.setVotingWeight(0);
 					upVoteCounter--;
-					upVoteButton.setText(Integer.toString(upVoteCounter));
+					upVoteButton.setText(Integer.toString(upVoteCounter)+"+");
 					
 					upVoteButton.setStyleName("UpVoteButton");
 				
@@ -300,8 +307,8 @@ public class VotingCard extends DialogBox {
 					
 					upVoteCounter++;
 					downVoteCounter--;
-					downVoteButton.setText(Integer.toString(downVoteCounter));			
-					upVoteButton.setText(Integer.toString(upVoteCounter));
+					downVoteButton.setText(Integer.toString(downVoteCounter)+"-");			
+					upVoteButton.setText(Integer.toString(upVoteCounter)+"+");
 					
 					downVoteButton.setStyleName("DownVoteButton");
 					upVoteButton.setStyleName("UpVoteButton VoteSelection");
@@ -311,7 +318,7 @@ public class VotingCard extends DialogBox {
 					newVoteOfPerson.setSurveyEntryFK(surveyEntry.getId());
 					newVoteOfPerson.setVotingWeight(1);
 					upVoteCounter++;
-					upVoteButton.setText(Integer.toString(upVoteCounter));
+					upVoteButton.setText(Integer.toString(upVoteCounter)+"+");
 					
 					upVoteButton.setStyleName("UpVoteButton VoteSelection");
 				
@@ -330,8 +337,8 @@ public class VotingCard extends DialogBox {
 					newVoteOfPerson.setVotingWeight(-1);
 					upVoteCounter--;
 					downVoteCounter++;
-					upVoteButton.setText(Integer.toString(upVoteCounter));	
-					downVoteButton.setText(Integer.toString(downVoteCounter));
+					upVoteButton.setText(Integer.toString(upVoteCounter)+"+");	
+					downVoteButton.setText(Integer.toString(downVoteCounter)+"-");
 					
 					downVoteButton.setStyleName("DownVoteButton VoteSelection");
 					upVoteButton.setStyleName("UpVoteButton");
@@ -340,7 +347,7 @@ public class VotingCard extends DialogBox {
 				}else if(newVoteOfPerson.getVotingWeight()==-1) {
 					newVoteOfPerson.setVotingWeight(0);
 					downVoteCounter--;
-					downVoteButton.setText(Integer.toString(downVoteCounter));
+					downVoteButton.setText(Integer.toString(downVoteCounter)+"-");
 					downVoteButton.setStyleName("DownVoteButton");
 					
 				}else {
@@ -348,7 +355,7 @@ public class VotingCard extends DialogBox {
 					newVoteOfPerson.setSurveyEntryFK(surveyEntry.getId());
 					newVoteOfPerson.setVotingWeight(-1);
 					downVoteCounter++;
-					downVoteButton.setText(Integer.toString(downVoteCounter));
+					downVoteButton.setText(Integer.toString(downVoteCounter)+"-");
 					downVoteButton.setStyleName("DownVoteButton VoteSelection");
 				
 				}
@@ -432,8 +439,8 @@ public class VotingCard extends DialogBox {
 				}
 				upVoteCounter = upVotes.size();
 				downVoteCounter = downVotes.size();
-				upVoteButton.setText(Integer.toString(upVoteCounter));
-				downVoteButton.setText(Integer.toString(downVoteCounter));
+				upVoteButton.setText(Integer.toString(upVoteCounter)+"+");
+				downVoteButton.setText(Integer.toString(downVoteCounter)+"-");
 			}
 			
 		}
