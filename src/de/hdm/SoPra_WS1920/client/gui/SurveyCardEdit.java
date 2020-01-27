@@ -295,6 +295,9 @@ public class SurveyCardEdit extends DialogBox {
 
 			showSelected = new Label("Screenings:");
 			
+			saveSurvey = new Button("Create Survey");
+			saveSurvey.setStyleName("SaveButton");
+			
 			formWrapper.add(cardDescription);
 			formWrapper.add(cancelIcon);
 			formWrapper.add(selectedMovie);
@@ -330,8 +333,6 @@ public class SurveyCardEdit extends DialogBox {
 				formWrapper.add(deleteLabel);
 				
 				if(surveyToShow.getStatus()==1) {
-					saveSurvey = new Button("Create Survey");
-					saveSurvey.setStyleName("SaveButton");
 					saveSurvey.setText("Save");
 					saveSurvey.addClickHandler(new UpdateSurveyClickHandler(this));
 					stopSurvey=new Button();

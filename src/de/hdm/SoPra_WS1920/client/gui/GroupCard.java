@@ -14,6 +14,7 @@ public class GroupCard extends FlowPanel {
 	
 	public void onLoad() {
 		super.onLoad();
+	
 		this.setStylePrimaryName("Card CinemaCardView");
 		this.showGroupCardView(groupToShow);
 		
