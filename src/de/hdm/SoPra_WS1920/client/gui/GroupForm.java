@@ -184,17 +184,17 @@ public class GroupForm extends DialogBox {
 			this.setStyleName("MemberRow");
 			
 			if(groupToShow==null) {
-				if(p.getId()==groupToShow.getPersonFK()){
+//				if(p.getId()==groupToShow.getPersonFK()){
 					adminIcon = new Image("/Images/png/002-user-1.png");
 					adminIcon.setStyleName("MemberDeleteIcon");
 					newGroupMembers.add(p);
 					this.add(adminIcon);
-				}else {
-					deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
-					deleteIcon.setStyleName("MemberDeleteIcon");
-					deleteIcon.addClickHandler(new DeleteMemberClickHandler(this));
-					this.add(deleteIcon);
-				}
+//				}else {
+//					deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
+//					deleteIcon.setStyleName("MemberDeleteIcon");
+//					deleteIcon.addClickHandler(new DeleteMemberClickHandler(this));
+//					this.add(deleteIcon);
+//				}
 			}else if(p.getId()==groupToShow.getPersonFK()){
 				adminIcon = new Image("/Images/png/002-user-1.png");
 				adminIcon.setStyleName("MemberDeleteIcon");
