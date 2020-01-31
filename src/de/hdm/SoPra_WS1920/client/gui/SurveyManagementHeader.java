@@ -323,7 +323,7 @@ public class SurveyManagementHeader extends FlowPanel {
 //			
 //		}
 		public void setPerson(Person person) {
-			this.p = p;
+			this.p = person;
 		}
 		
 		public Person getPerson() {

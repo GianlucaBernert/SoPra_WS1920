@@ -167,7 +167,7 @@ public class SurveyContent extends FlowPanel {
 		MovieCard movieCard = new MovieCard(content, m);
 	this.add(movieCard);*/
 	public void setPerson(Person person) {
-		this.p = p;
+		this.p = person;
 	}
 	
 	public Person getPerson() {
