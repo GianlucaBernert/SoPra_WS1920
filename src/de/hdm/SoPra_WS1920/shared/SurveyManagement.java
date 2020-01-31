@@ -430,6 +430,9 @@ public interface SurveyManagement extends RemoteService {
 	Vector<Movie> getAllMovies() throws IllegalArgumentException;
 
 	Cinema getCinemaByScreeningFK(int screeningFK);
+
+	Vector<Screening> getScreeningsforSurveyCreation(Movie movie, String city, java.sql.Date startDate,
+			java.sql.Date endDate) throws IllegalArgumentException;
 	
 	
 

@@ -1,6 +1,7 @@
 package de.hdm.SoPra_WS1920.server;
 
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.Vector;
@@ -896,6 +897,13 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         
         return this.mMapper.findMovieByGenre(genre);
     }
+    
+    @Override
+    public Vector<Screening> getScreeningsforSurveyCreation(Movie movie, String city, Date startDate, Date endDate) throws IllegalArgumentException{
+    	
+    	return this.scMapper.findScreeningForSurveyCreation(startDate, endDate, movie.getId(), city);
+    }
+    
    
            
 
