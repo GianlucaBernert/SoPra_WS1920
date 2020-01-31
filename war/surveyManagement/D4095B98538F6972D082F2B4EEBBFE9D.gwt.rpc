@@ -12,10 +12,12 @@ de.hdm.SoPra_WS1920.shared.bo.Movie, true, true, true, true, de.hdm.SoPra_WS1920
 de.hdm.SoPra_WS1920.shared.bo.Ownership, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Ownership/3736745514, 3736745514
 de.hdm.SoPra_WS1920.shared.bo.Person, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Person/139243207, 139243207
 de.hdm.SoPra_WS1920.shared.bo.Screening, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Screening/3626817210, 3626817210
-de.hdm.SoPra_WS1920.shared.bo.Survey, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Survey/3182791358, 3182791358
+de.hdm.SoPra_WS1920.shared.bo.Survey, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Survey/1807681893, 1807681893
 de.hdm.SoPra_WS1920.shared.bo.SurveyEntry, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.SurveyEntry/808292215, 808292215
-de.hdm.SoPra_WS1920.shared.bo.Vote, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Vote/3678519461, 3678519461
+de.hdm.SoPra_WS1920.shared.bo.Vote, true, true, true, true, de.hdm.SoPra_WS1920.shared.bo.Vote/1944480974, 1944480974
 java.lang.Exception, true, false, true, false, java.lang.Exception/1920171873, 1920171873
+java.lang.IllegalArgumentException, true, true, false, false, java.lang.IllegalArgumentException/1755012560, 1755012560
+java.lang.NumberFormatException, true, true, false, false, java.lang.NumberFormatException/3305228476, 3305228476
 java.lang.RuntimeException, true, false, true, false, java.lang.RuntimeException/515124647, 515124647
 java.lang.String, true, true, true, true, java.lang.String/2004016611, 2004016611
 java.lang.Throwable, true, false, true, false, java.lang.Throwable/2953622131, 2953622131
