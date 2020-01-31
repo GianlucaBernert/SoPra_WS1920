@@ -21,6 +21,7 @@ import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
 
 public class Header extends FlowPanel{
@@ -28,6 +29,7 @@ public class Header extends FlowPanel{
 	Label headline;
 	Button createBo;
 	SearchBox searchBox;
+	Person person;
 
 	Content content;
 	CinemaAdministrationAsync cinemaAdministration;
@@ -395,5 +397,13 @@ public class Header extends FlowPanel{
 		this.add(headline);
 		this.add(createBo);
 		this.add(searchBox);
+	}
+	
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+	
+	public Person getPerson() {
+		return person;
 	}
 }
