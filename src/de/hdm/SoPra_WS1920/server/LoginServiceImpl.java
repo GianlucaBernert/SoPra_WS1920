@@ -1,6 +1,7 @@
 package de.hdm.SoPra_WS1920.server;
 
 
+
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -8,35 +9,30 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.SoPra_WS1920.client.LoginService;
 import de.hdm.SoPra_WS1920.shared.LoginInfo;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
+
 
 /**
  * 
  */
-public class LoginServiceImpl extends RemoteServiceServlet implements LoginService{
+public class LoginServiceImpl extends RemoteServiceServlet implements
+LoginService {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public LoginInfo login(String requestUri) {
+UserService userService = UserServiceFactory.getUserService();
+User user = userService.getCurrentUser();
+LoginInfo loginInfo = new LoginInfo();
 
-    /**
-     * @param String requestURL 
-     * @return LoginInfo loginInfo
-     */
-    public LoginInfo login(String requestURL) {
-        UserService personService = UserServiceFactory.getUserService();
-        User p = personService.getCurrentUser();
-        LoginInfo loginInfo = new LoginInfo();
-        
-        if (p != null) {
-        	loginInfo.setLoggedIn(true);
-        	loginInfo.setEmailAddress(p.getEmail());
-        	loginInfo.setLogoutUrl(personService.createLogoutURL(requestURL));
-        }else {
-        	loginInfo.setLoggedIn(false);
-        	loginInfo.setLoginUrl(personService.createLoginURL(requestURL));
-        }
-        return loginInfo;
-    }
+if (user != null) {
+  loginInfo.setLoggedIn(true);
+  loginInfo.setEmailAddress(user.getEmail());
+  loginInfo.setNickname(user.getNickname());
+  loginInfo.setLogoutUrl(userService.createLogoutURL(requestUri));
+} else {
+  loginInfo.setLoggedIn(false);
+  loginInfo.setLoginUrl(userService.createLoginURL(requestUri));
+}
+return loginInfo;
+}
 
 }

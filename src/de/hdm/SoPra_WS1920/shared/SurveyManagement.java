@@ -21,6 +21,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
+
 /**
  * @author GianlucaBernert
  */
@@ -28,6 +29,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Vote;
 @RemoteServiceRelativePath("surveyManagement")
 
 public interface SurveyManagement extends RemoteService {
+	
 
     /**
      * Methode um ein BusinessObject zu erstellen

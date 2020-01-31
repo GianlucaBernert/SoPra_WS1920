@@ -26,6 +26,7 @@ public class ClientsideSettings extends CommonSettings {
 
   private static CinemaAdministrationAsync cinemaAdministration = null;
   private static SurveyManagementAsync surveyManagement = null;
+  private static LoginServiceAsync loginAdministration = null;
 
 
   /**
@@ -48,9 +49,18 @@ public class ClientsideSettings extends CommonSettings {
 		  surveyManagement = GWT.create(SurveyManagement.class);
 	  }
 	  
-	  return surveyManagement;
-	  
-	  
+	  return surveyManagement;  
   }
   
-}
+  public static LoginServiceAsync getLoginService() {
+
+	    if (loginAdministration == null) {
+	    	loginAdministration = GWT.create(LoginService.class);
+	    }
+
+	    return loginAdministration;
+	  }
+  
+	} 
+
+

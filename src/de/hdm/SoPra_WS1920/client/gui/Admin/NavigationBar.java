@@ -105,6 +105,7 @@ public class NavigationBar extends FlowPanel {
 			// TODO Auto-generated method stub
 //			Window.Location.assign(GWT.getHostPageBaseURL() + "SurveyManagement.html");
 //			cinemaAdminEntry.showSurveyManagementEntry();
+			Window.Location.replace("/SurveyManagement.html");
 		}
 		
 	}
