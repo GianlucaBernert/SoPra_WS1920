@@ -27,6 +27,7 @@ import de.hdm.SoPra_WS1920.client.gui.SurveyContent;
 import de.hdm.SoPra_WS1920.client.gui.SurveyManagementHeader;
 
 public class SurveyManagementEntry implements EntryPoint {
+	
 	SurveyManagementAsync surveyManagement = ClientsideSettings.getSurveyManagement();
 	Person p = new Person();
 	private LoginInfo loginInfo = null;
@@ -54,7 +55,7 @@ public class SurveyManagementEntry implements EntryPoint {
 	      public void onSuccess(LoginInfo result) {
 	        loginInfo = result;
 	        if(loginInfo.isLoggedIn()) {
-	          loadAdmin(result);
+	          loadEditor(result);
 	        } else {
 	          loadLogin();
 	        }
@@ -73,14 +74,14 @@ public class SurveyManagementEntry implements EntryPoint {
 	
 	
 	//wird erst nach Erfolgreichem Login geladen
-	public void loadAdmin(LoginInfo loginInfo){
+	public void loadEditor(LoginInfo loginInfo){
 		//Window.alert("Eingeloggt mit der mail " + loginInfo.getEmailAddress());
 		surveyManagement.getPersonByEmail(loginInfo.getEmailAddress(), new GetUserCallback());
 		//Window.alert(loginInfo.getEmailAddress());
 		//pinnwandVerwaltung.getUserById(1, new GetUserCallback());
 	}
 	
-	public void loadAdminStart(Person person) {
+	public void loadEditorStart(Person person) {
 		
 		surveyContent = new SurveyContent();
 		surveyContent.setPerson(person);
@@ -197,7 +198,7 @@ public class SurveyManagementEntry implements EntryPoint {
 			Cookies.setCookie("lastName", result.getLastname());
 			// hide(); - funktioniert nicht
 			this.parentRFDB.hide();
-			loadAdminStart(result);
+			loadEditorStart(result);
 			
 		
 		}
@@ -248,7 +249,8 @@ public class SurveyManagementEntry implements EntryPoint {
 				Cookies.setCookie("userId", result.getId() + "");
 				Cookies.setCookie("firstName", result.getFirstname());
 				Cookies.setCookie("lastName", result.getLastname());
-				loadAdminStart(result);
+				loadEditorStart(result);
+				
 			} else {
 				RegistrationFormDialogBox dlgBox = new RegistrationFormDialogBox(loginInfo.getEmailAddress());
 				dlgBox.center();

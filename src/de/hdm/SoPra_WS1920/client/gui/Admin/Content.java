@@ -42,7 +42,7 @@ public class Content extends FlowPanel{
 	DateBox dB;
 	TextBox textBox;
 	SuggestBox box;
-	Person user;
+	Person person;
 	
 	CinemaAdministrationAsync cinemaAdministration;
 	
@@ -53,135 +53,15 @@ public class Content extends FlowPanel{
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("content");
-		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
-//		dP = new DatePicker();
-//		this.add(dP);
-		
-		//Example Objects for testing the GUI. Those objects will be deleted as soon as the backend is attached to the frontend
-		user = new Person();
-		user.setEMail("sebi.hermann95@t-online.de");
-		user.setFirstname("Sebastian");
-		user.setLastname("Hermann");
-		user.setId(1);
-		
-//		c = new Cinema();
-//		c.setName("Cinemax");
-//		c.setCity("Stuttgart");
-//		c.setZipCode("70372");
-//		c.setPersonFK(1);
-//		c.setStreet("Deckerstra�e");
-//		c.setStreetNo("49");
-//		c.setId(1);
-//		
-//		m = new Movie();
-//		m.setName("Joker");
-//		m.setGenre("Drama");
-//		m.setDescription("Forever alone in a crowd, failed comedian Arthur Fleck seeks connection "
-//				+ "as he walks the streets of Gotham City. Arthur wears two masks -- the one he "
-//				+ "paints for his day job as a clown, and the guise he projects in a futile attempt "
-//				+ "to feel like he's part of the world around him.");
-//		m.setId(1);
-//		
-//		s=new Screening();
-//		s = new Screening();
-//		s.setCinemaFK(c.getId());
-//		s.setMovieFK(m.getId());
-//		s.setPersonFK(1);
-//		Date d = (Date) DateTimeFormat.getFormat("dd.MM.yyyy").parse("31.12.2019");
-//		s.setScreeningDate(d);
-//		Time t = new Time(DateTimeFormat.getFormat("hh:mm").parse("02:30").getTime());
-//		s.setScreeningTime(t);
-//		String s2 = "00:30";
-//		String d2 = "2020-02-12";
-////		s.setScreeningTime(this.getTimeFromString(s2));
-////		s.setScreeningDate(this.getDateFromString(d2));
-////		Window.alert(this.getDateFromString(d2).toString());
-//		dB = new DateBox();
-//		this.add(dB);
-//		b = new Button("Show");
-//		b.addClickHandler(new SaveDateClickHandler());
-//		this.add(b);
-//
-//		MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-//		   for(int i=0;i<24;i++) {
-//			   String s = "";
-//			   if(i<10) {
-//			   s = "0"+Integer.toString(i);
-//			   }else {
-//			   s = Integer.toString(i);   
-//			   }
-//			   oracle.add(s);
-//		   }
-//
-//		box = new SuggestBox(oracle);
-//		box.getElement().setPropertyString("placeholder", "hh");
-//		
-////		textBox = new TextBox();
-//
-//		box.addKeyPressHandler(new KeyPressHandler() {
-//		    @Override
-//		    public void onKeyPress(KeyPressEvent event) {
-//		        String input = box.getText();
-////		        if (!input.matches("[0-9]*")) {
-//		        if (input.length()==1) {
-////		            Window.alert("Only Integers allowed. Fomat hh");
-//		            dB.setFocus(true);
-//		            return;
-//		        }
-//		        // do your thang
-//		    }
-//		});
-//		this.add(box);
-//		this.add(textBox);
-		
-		
-		
-//		SimpleDateFormat dt = new SimpleDateFormat("dd.mm.yyyy");
-//		try {
-//			Date d = dt.parse(s);
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-//		
-//		s = new Screening();
-//		try {
-//			Date date;
-//			date = new SimpleDateFormat("dd/MM/yyyy").parse("31/12/2019");
-//			s.setDate(date);
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//			s.setCinemaFK(1);
-//			s.setMovieFK(1);
-//		
-		
+		cinemaAdministration = ClientsideSettings.getCinemaAdministration();	
 		
 	}
 
-//	class SaveDateClickHandler implements ClickHandler{
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//
-//		}
-//		
-//	}
-//	
 	
 	public void showCinemas() {
 		this.clear();
-//		this.add(new Label("Cinemas"));
-		cinemaAdministration.getCinemasByPersonFK(1, new GetCinemasByPersonCallback(this));
+		cinemaAdministration.getCinemasByPersonFK(person.getId(), new GetCinemasByPersonCallback(this));
 		
-//		CinemaCard cinemaCard = new CinemaCard(this, c);
-//		this.add(cinemaCard);
-		
-		//Get all cinemas where user is permitted to
-		//for every cinema...
-		//create a new CinemaCard
 	}
 	
 	class GetCinemasByPersonCallback implements AsyncCallback<Vector<Cinema>>{
@@ -240,7 +120,7 @@ public class Content extends FlowPanel{
 
 	public void showScreenings() {
 		this.clear();
-		cinemaAdministration.getScreeningsByPersonFK(user.getId(), new GetScreeningsCallback(this));
+		cinemaAdministration.getScreeningsByPersonFK(person.getId(), new GetScreeningsCallback(this));
 	}
 	
 	class GetScreeningsCallback implements AsyncCallback<Vector<Screening>>{
@@ -297,7 +177,7 @@ public class Content extends FlowPanel{
 	public void showCinemaChains() {
 		// TODO Auto-generated method stub
 		this.clear();
-		cinemaAdministration.getCinemaChainByPersonFK(user.getId(), new CinemaChainCallback(this));
+		cinemaAdministration.getCinemaChainByPersonFK(person.getId(), new CinemaChainCallback(this));
 	}
 	
 	class CinemaChainCallback implements AsyncCallback<Vector<CinemaChain>>{
@@ -320,9 +200,14 @@ public class Content extends FlowPanel{
 			}
 			
 		}
-
-		
-		
-		
+	
+	}
+	
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+	
+	public Person getPerson() {
+		return person;
 	}
 }

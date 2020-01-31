@@ -2,8 +2,10 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import java.util.Vector;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -18,6 +20,7 @@ import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 public class CinemaCardEdit extends DialogBox{
 	
@@ -66,6 +69,7 @@ public class CinemaCardEdit extends DialogBox{
 		c.setZipCode("");
 		c.setCity("");
 		cinemaToShow = c;
+
 	}
 	
 	
@@ -75,7 +79,6 @@ public class CinemaCardEdit extends DialogBox{
 		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
 		
 		formWrapper = new FlowPanel();
-		
 		cardDescription = new Label("Add Cinema");
 		cardDescription.setStyleName("CardDescription");
 		cancelIcon = new Image("/Images/png/007-close.png");
@@ -92,7 +95,7 @@ public class CinemaCardEdit extends DialogBox{
 		cinemaChainLabel = new Label("Cinema Chain");
 		cinemaChainLabel.setStyleName("TextBoxLabel");
 		cinemaChainListBox = new ListBox();
-		cinemaAdministration.getCinemaChainByPersonFK(1, new CinemaChainCallback());
+		cinemaAdministration.getCinemaChainByPersonFK(Integer.parseInt(Cookies.getCookie("userId")), new CinemaChainCallback());
 		cinemaChainListBox.setStyleName("CardListBox");
 		adressLabel = new Label("Adress");
 		adressLabel.setStyleName("TextBoxLabel");
@@ -200,43 +203,24 @@ public class CinemaCardEdit extends DialogBox{
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-//			cinemaAdministration.createCinema(
-//					nameTextBox.getText(), 
-//					cityTextBox.getText(), 
-//					streetTextBox.getText(), 
-//					streetNrTextBox.getText(), 
-//					zipCodeTextBox.getText(), 
-//					cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()),
-//					1, 
-//					new CreateCinemaCallback());
-			
-//			cinemaToShow.setName(nameTextBox.getText());
-//			cinemaToShow.setCinemaChainFK(1);
-//			cinemaToShow.setStreet(streetTextBox.getText());
-//			cinemaToShow.setStreetNo(streetNrTextBox.getText());
-//			cinemaToShow.setZipCode(zipCodeTextBox.getText());
-//			cinemaToShow.setCity(cityTextBox.getText());
 			
 			if(parentCard==null) {
-				Window.alert("Create");
-				cinemaAdministration.createCinema(nameTextBox.getText(), cityTextBox.getText(), streetTextBox.getText(), streetNrTextBox.getText(), zipCodeTextBox.getText(), cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()), 1, 
+				cinemaAdministration.createCinema(nameTextBox.getText(), 
+						cityTextBox.getText(), streetTextBox.getText(), 
+						streetNrTextBox.getText(), zipCodeTextBox.getText(), 
+						cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()), 
+						Integer.parseInt(Cookies.getCookie("userId")), 
 						new CreateCinemaCallback());
-//				Window.alert("before dataBase: "+streetNrTextBox.getText());
-//				parentCard = new CinemaCard(content,cinemaToShow);
-//				parentCard.showCinemaCardView(cinemaToShow);
-//				content.add(parentCard);
-//				cinemaCardEdit.hide();
+
 			}else {
-//				parentCard.showCinemaCardView(cinemaToShow);
-//				cinemaCardEdit.hide();
-				Window.alert("Update");
+
 				cinemaToShow.setName(nameTextBox.getText());
 				cinemaToShow.setCity(cityTextBox.getText()); 
 				cinemaToShow.setStreet(streetTextBox.getText()); 
 				cinemaToShow.setStreetNo(streetNrTextBox.getText()); 
 				cinemaToShow.setZipCode(zipCodeTextBox.getText()); 
 				cinemaToShow.setCinemaChainFK(cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()));
-				cinemaToShow.setPersonFK(1);
+				cinemaToShow.setPersonFK(Integer.parseInt(Cookies.getCookie("userId")));
 				cinemaAdministration.updateCinema(cinemaToShow, new UpdateCinemaCinemaCallback());
 			}
 		}
@@ -353,7 +337,6 @@ public class CinemaCardEdit extends DialogBox{
 			cinemaChain = cH;
 			
 		}
-		Window.alert("Selected CinemaChain: "+cinemaChain.getId());
 		return cinemaChain.getId();
 		
 	}

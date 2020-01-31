@@ -12,6 +12,7 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -126,7 +127,7 @@ public class ScreeningCardEdit extends DialogBox {
 //		allCinemas.setItemText(0, cinemaOfScreening.getName());
 		allCinemas.setStyleName("CardListBox");
 		listOfCinemas = new Vector<Cinema>();
-		cinemaAdministration.getCinemasByPersonFK(1,new CinemasOfPersonCallback());
+		cinemaAdministration.getCinemasByPersonFK(Integer.parseInt(Cookies.getCookie("userId")),new CinemasOfPersonCallback());
 		
 		
 		dateLabel = new Label("Date");
@@ -322,7 +323,7 @@ public class ScreeningCardEdit extends DialogBox {
 						t,
 						screeningCardEdit.getSelectedCinema(allCinemas.getSelectedValue()), 
 						screeningCardEdit.getSelectedMovie(movieSuggestBox.getText()), 
-						1, 
+						Integer.parseInt(Cookies.getCookie("userId")), 
 						new CreateScreeningCallback(screeningCardEdit));
 			}else {
 				screeningToShow.setCinemaFK(screeningCardEdit.getSelectedCinema(allCinemas.getSelectedValue()));

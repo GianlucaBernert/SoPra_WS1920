@@ -2,6 +2,7 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -157,7 +158,7 @@ public class MovieCardEdit extends DialogBox{
 			
 			if(parentCard==null) {
 				
-				cinemaAdministration.createMovie(nameTextBox.getText(), genreTextBox.getText(),descriptionTextArea.getText(), 1, new NewMovieCallback(movieCardEdit));
+				cinemaAdministration.createMovie(nameTextBox.getText(), genreTextBox.getText(),descriptionTextArea.getText(), Integer.parseInt(Cookies.getCookie("userId")), new NewMovieCallback(movieCardEdit));
 				
 				
 			}else {

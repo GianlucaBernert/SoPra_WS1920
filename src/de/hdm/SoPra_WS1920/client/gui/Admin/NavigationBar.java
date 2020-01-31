@@ -14,7 +14,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 public class NavigationBar extends FlowPanel {
 	
-	Person personToShow;
+	Person person;
 	
 	Header header;
 	Content content;
@@ -41,14 +41,6 @@ public class NavigationBar extends FlowPanel {
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("navbar");
-		
-		Person p = new Person();
-		p.setId(1);
-		p.setFirstname("Sebastian");
-		p.setLastname("Hermann");
-		p.setEMail("sh267@hdm-stuttgart.de");
-		
-		personToShow = p;
 		
 		b = new Button();
 		b.setStyleName("InvisibleButton");
@@ -232,7 +224,7 @@ public class NavigationBar extends FlowPanel {
 			movies.setStyleName("navbar-element");
 			screenings.setStyleName("navbar-element");
 			settings.setStyleName("navbar-element bottom");
-			UserSettingsForm userSettingsForm = new UserSettingsForm(personToShow);
+			UserSettingsForm userSettingsForm = new UserSettingsForm(person);
 			userSettingsForm.center();
 			userSettingsForm.show();
 		}
@@ -248,4 +240,13 @@ public class NavigationBar extends FlowPanel {
 		}
 		
 	}
+	
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+	
+	public Person getPerson() {
+		return person;
+	}
+	
 }
