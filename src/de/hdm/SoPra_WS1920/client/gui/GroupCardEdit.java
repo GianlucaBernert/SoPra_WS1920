@@ -49,9 +49,9 @@ public class GroupCardEdit extends DialogBox {
 		this.header = header;
 		
 		Group g = new Group();
-		g.setId(1);
+//		g.setId(1);
 		g.setName("");
-		g.setPersonFK(1);
+		g.setPersonFK(content.p.getId());
 		groupToShow = g;
 		
 	}

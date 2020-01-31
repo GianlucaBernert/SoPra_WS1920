@@ -73,11 +73,7 @@ public class GroupForm extends DialogBox {
 	
 	public void onLoad() {
 		super.onLoad();
-		groupAdmin = new Person();
-		groupAdmin.setId(1);
-		groupAdmin.setFirstname("Sebastian");
-		groupAdmin.setLastname("Hermann");
-		groupAdmin.setEMail("sh267@hdm-stuttgart.de");
+		groupAdmin = content.getPerson();
 		
 		
 		surveyManagementAdministration = ClientsideSettings.getSurveyManagement();

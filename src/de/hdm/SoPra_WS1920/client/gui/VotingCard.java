@@ -72,8 +72,7 @@ public class VotingCard extends DialogBox {
 		this.clear();
 		this.setStyleName("EditCard");
 		
-		person = new Person();
-		person.setId(1);
+		person = surveyContent.getPerson();
 		
 		surveyManagement = ClientsideSettings.getSurveyManagement();
 		

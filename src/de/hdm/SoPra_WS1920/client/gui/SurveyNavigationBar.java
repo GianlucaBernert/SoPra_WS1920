@@ -13,6 +13,7 @@ import de.hdm.SoPra_WS1920.client.CinemaAdminEntry;
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.client.SurveyManagementEntry;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 
 
@@ -21,6 +22,7 @@ public class SurveyNavigationBar extends FlowPanel {
 	
 	SurveyManagementHeader header;
 	SurveyContent surveyContent;
+	Person p;
 	
 	Image menuIcon;
 	Image logoIcon;
@@ -193,6 +195,13 @@ public class SurveyNavigationBar extends FlowPanel {
 		
 	}
 
-
+	public void setPerson(Person person) {
+		this.p = p;
+	}
+	
+	public Person getPerson() {
+		return p;
+	}
+	
 
 }

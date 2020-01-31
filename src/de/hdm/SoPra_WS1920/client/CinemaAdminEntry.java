@@ -41,9 +41,6 @@ public class CinemaAdminEntry implements EntryPoint{
 	NavigationBar navBar;
 	Header header;
 	Content content;
-	SurveyNavigationBar surveyNavBar;
-	SurveyManagementHeader surveyHeader;
-	SurveyContent surveyContent;
 	
 	@Override
 	public void onModuleLoad() {
@@ -149,7 +146,7 @@ public class CinemaAdminEntry implements EntryPoint{
 	
 	/**
 	 * Die Nested-Class <code>CreateUserClickHandler</code> implementiert das ClickHandler-Interface
-	 * welches es ermöglicht auf den Wunsch des Users zu reagieren, dass er einen User anlegen möchte.
+	 * welches es ermï¿½glicht auf den Wunsch des Users zu reagieren, dass er einen User anlegen mï¿½chte.
 	 */
 	private class CreateUserClickHandler implements ClickHandler {
 		RegistrationFormDialogBox parentRFDB;
@@ -167,7 +164,7 @@ public class CinemaAdminEntry implements EntryPoint{
 	
 	/**
 	 * Die Nested-Class <code>CreateUserCallback</code> implementiert den AsyncCallback, 
-	 * welcher bei erfolgreicher Vollführung einen User zurückgibt.
+	 * welcher bei erfolgreicher Vollfï¿½hrung einen User zurï¿½ckgibt.
 	 */
 	private class CreateUserCallback implements AsyncCallback<Person> {
 		RegistrationFormDialogBox parentRFDB;
@@ -183,7 +180,7 @@ public class CinemaAdminEntry implements EntryPoint{
 		}
 
 		/**
-		 * Cookie Setzung für das gesamte System
+		 * Cookie Setzung fï¿½r das gesamte System
 		 */
 		@Override
 		public void onSuccess(Person result) {
@@ -204,13 +201,13 @@ public class CinemaAdminEntry implements EntryPoint{
 	
 	/**
 	 * Die Nested Class <code>CreatePinnwandCallback</code> implementiert den AsyncCallback, 
-	 * welcher bei einem erfolgreichen durchführen eine Pinnwand zurückgibt.
+	 * welcher bei einem erfolgreichen durchfï¿½hren eine Pinnwand zurï¿½ckgibt.
 	 */
 	
 	
 	/**
 	 * Die Nested-Class <code>DontCreateUserClickHandler</code> implementiert das ClickHandler-Interface
-	 * welches es ermöglicht das anlegen eines Users abbricht.
+	 * welches es ermï¿½glicht das anlegen eines Users abbricht.
 	 */
 	private class DontCreateUserClickHandler implements ClickHandler {
 		RegistrationFormDialogBox parentRFDB;
@@ -228,7 +225,7 @@ public class CinemaAdminEntry implements EntryPoint{
 		
 	/**
 	 * Die Nested-Class implementiert einen AsyncCallback, welcher bei einem erfolgreichen
-	 * durchführen einen User zurückgibt.
+	 * durchfï¿½hren einen User zurï¿½ckgibt.
 	 */
 	public class GetUserCallback implements AsyncCallback<Person> {
 
@@ -257,7 +254,7 @@ public class CinemaAdminEntry implements EntryPoint{
 	
 	/**
 	 * Die Nested-Class <code>GetPinnwandCallback</code> implementiert einen AsyncCallback,
-	 * welcher bei erfolgreicher durchführung eine Pinnwand zurückgibt.
+	 * welcher bei erfolgreicher durchfï¿½hrung eine Pinnwand zurï¿½ckgibt.
 	 */
 	
 		// TODO Auto-generated method stub
