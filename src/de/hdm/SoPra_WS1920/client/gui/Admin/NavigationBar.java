@@ -15,6 +15,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Person;
 public class NavigationBar extends FlowPanel {
 	
 	Person person;
+	String logoutUrl;
 	
 	Header header;
 	Content content;
@@ -247,6 +248,12 @@ public class NavigationBar extends FlowPanel {
 	
 	public Person getPerson() {
 		return person;
+	}
+
+	public void setLogOutURL(String logoutUrl) {
+		// TODO Auto-generated method stub
+		this.logoutUrl = logoutUrl;
+		
 	}
 	
 }

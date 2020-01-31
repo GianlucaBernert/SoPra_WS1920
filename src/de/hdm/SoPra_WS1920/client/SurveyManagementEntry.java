@@ -90,6 +90,7 @@ public class SurveyManagementEntry implements EntryPoint {
 //		navBar = new SurveyNavigationBar(this,header, content);
 		surveyNavBar = new SurveyNavigationBar(surveyHeader, surveyContent);
 		surveyNavBar.setPerson(person);
+		surveyNavBar.setLogOutURL(loginInfo.getLogoutUrl());
 		
 		RootPanel.get().add(surveyNavBar);
 		RootPanel.get().add(surveyHeader);

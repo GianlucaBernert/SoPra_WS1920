@@ -23,6 +23,7 @@ public class SurveyNavigationBar extends FlowPanel {
 	SurveyManagementHeader header;
 	SurveyContent surveyContent;
 	Person p;
+	String logOutURL;
 	
 	Image menuIcon;
 	Image logoIcon;
@@ -189,6 +190,7 @@ public class SurveyNavigationBar extends FlowPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			Window.Location.assign(logOutURL);
 			Window.alert("Successfully logged out!");
 			
 		}
@@ -201,6 +203,9 @@ public class SurveyNavigationBar extends FlowPanel {
 	
 	public Person getPerson() {
 		return p;
+	}
+	public void setLogOutURL(String logOutURL) {
+		this.logOutURL = logOutURL;
 	}
 	
 

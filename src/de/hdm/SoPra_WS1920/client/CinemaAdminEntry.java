@@ -87,6 +87,7 @@ public class CinemaAdminEntry implements EntryPoint{
 //		navBar = new NavigationBar(this,header,content);
 		navBar = new NavigationBar(header,content);
 		navBar.setPerson(person);
+		navBar.setLogOutURL(loginInfo.getLogoutUrl());
 		
 		RootPanel.get().add(navBar); //Add the Menu to the RootPanel
 		RootPanel.get().add(header);
