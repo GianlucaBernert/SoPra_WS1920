@@ -11,6 +11,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
+import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -417,6 +418,20 @@ public interface SurveyManagement extends RemoteService {
 	Screening getScreeningById(int id) throws IllegalArgumentException;
 
 	Movie getMovieById(int id) throws IllegalArgumentException;
+
+	Vector<SurveyEntry> getSurveyEntryByScreeningFK(int screeningFK) throws IllegalArgumentException;
+
+	Vector<Movie> getMovieByGenre(String genre) throws IllegalArgumentException;
+
+	Cinema getCinemaById(int id) throws IllegalArgumentException;
+
+	Vector<Vote> getVotesBySurveyEntryFK(int surveyEntryFK) throws IllegalArgumentException;
+
+	Vector<Movie> getAllMovies() throws IllegalArgumentException;
+
+	Cinema getCinemaByScreeningFK(int screeningFK);
+	
+	
 
 	
 }

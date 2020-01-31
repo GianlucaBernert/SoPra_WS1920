@@ -9,7 +9,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.client.gui.Admin.Content;
 import de.hdm.SoPra_WS1920.client.gui.Admin.MovieCard;
-import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -22,7 +21,7 @@ public class SurveyContent extends FlowPanel {
 	Survey s;
 	
 	SurveyManagementAsync surveyManagementAdministration;
-	CinemaAdministrationAsync cinemaAdministration;
+	
 	
 	public SurveyContent() {
 		
@@ -32,12 +31,12 @@ public class SurveyContent extends FlowPanel {
 		super.onLoad();
 		this.setStylePrimaryName("content");
 		surveyManagementAdministration = ClientsideSettings.getSurveyManagement();
-		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
+	
 	}
 	
 	public void showMovies() {
 		this.clear();
-		cinemaAdministration.getAllMovies(new GetAllMoviesCallback(this));
+		surveyManagementAdministration.getAllMovies(new GetAllMoviesCallback(this));
 	}
 	
 	class GetAllMoviesCallback implements AsyncCallback<Vector<Movie>>{

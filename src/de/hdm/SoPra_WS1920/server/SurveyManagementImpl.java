@@ -858,4 +858,46 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
 		return this.sMapper.updateSurvey(s);
 	}
 	
+	
+    @Override
+    public Vector<SurveyEntry> getSurveyEntryByScreeningFK(int screeningFK) throws IllegalArgumentException{
+    	
+    	return this.seMapper.findSurveyEntryByScreeningFK(screeningFK);
+    }
+    
+    @Override
+    public Cinema getCinemaById(int id) throws IllegalArgumentException{
+        
+    	
+        return this.cMapper.findCinemaByID(id);
+    }
+    
+    @Override
+    public Vector<Vote> getVotesBySurveyEntryFK(int surveyEntryFK) throws IllegalArgumentException{
+       	
+       	return this.vMapper.findVoteBySurveyEntryFK(surveyEntryFK);
+        }
+    
+    @Override
+    public Vector <Movie> getAllMovies() throws IllegalArgumentException{
+    	
+    	return this.mMapper.findAll();
+    }
+    
+    @Override
+    public Cinema getCinemaByScreeningFK(int screeningFK) {
+    	Screening s = this.getScreeningById(screeningFK);
+    	return this.getCinemaById(s.getCinemaFK());
+    }
+    
+   
+    @Override
+    public Vector<Movie> getMovieByGenre(String genre) throws IllegalArgumentException {
+        
+        return this.mMapper.findMovieByGenre(genre);
+    }
+   
+           
+
+	
 }

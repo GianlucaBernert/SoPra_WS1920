@@ -25,7 +25,6 @@ import com.google.gwt.user.datepicker.client.DateBox;
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.client.gui.Admin.ScreeningCardEdit;
 import de.hdm.SoPra_WS1920.server.SurveyManagementImpl;
-import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;

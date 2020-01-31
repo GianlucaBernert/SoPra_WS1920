@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
-import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
+
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
@@ -40,7 +40,7 @@ public class EditSurveyCard extends DialogBox {
 //	Date currentStartDate;
 //	Date currentEndDate;
 	SurveyManagementAsync sma; 
-	CinemaAdministrationAsync caa; 
+	
 	
 	
 	//EditSurvey 1/2
@@ -115,7 +115,7 @@ public class EditSurveyCard extends DialogBox {
 	public void onLoad() {
 		super.onLoad();
 		
-		caa = ClientsideSettings.getCinemaAdministration();
+		
 		sma = ClientsideSettings.getSurveyManagement();
 		sma.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
 		sma.getGroupById(surveyToShow.getGroupFK(), new GetGroupCallback());
@@ -471,10 +471,10 @@ public class EditSurveyCard extends DialogBox {
 		public void onLoad() {
 			super.onLoad();
 		
-			caa.getSurveyEntryByScreeningFK(s.getId(), new GetSurveyEntryCallback());
-			caa.getCinemaById(s.getCinemaFK(), new GetCinemaCallback());
+			sma.getSurveyEntryByScreeningFK(s.getId(), new GetSurveyEntryCallback());
+			sma.getCinemaById(s.getCinemaFK(), new GetCinemaCallback());
 			for (SurveyEntry se : seV) {
-				caa.getVotesBySurveyEntryFK(se.getId(), new GetVoteCallback());
+				sma.getVotesBySurveyEntryFK(se.getId(), new GetVoteCallback());
 			}
 			for (Vote v : vV) {
 				if (v.getVotingWeight() > 0) {
