@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -73,7 +74,12 @@ public class GroupForm extends DialogBox {
 	
 	public void onLoad() {
 		super.onLoad();
-		groupAdmin = content.getPerson();
+		
+		groupAdmin = new Person();
+		groupAdmin.setEMail(Cookies.getCookie("gmail"));
+		groupAdmin.setFirstname(Cookies.getCookie("firstName"));
+		groupAdmin.setLastname(Cookies.getCookie("lastName"));
+		groupAdmin.setId(Integer.parseInt(Cookies.getCookie("userId")));
 		
 		
 		surveyManagementAdministration = ClientsideSettings.getSurveyManagement();
@@ -180,17 +186,19 @@ public class GroupForm extends DialogBox {
 			this.setStyleName("MemberRow");
 			
 			if(groupToShow==null) {
-//				if(p.getId()==groupToShow.getPersonFK()){
-					adminIcon = new Image("/Images/png/002-user-1.png");
-					adminIcon.setStyleName("MemberDeleteIcon");
+					if(p.getId()==Integer.parseInt(Cookies.getCookie("userId"))) {
+						adminIcon = new Image("/Images/png/002-user-1.png");
+						adminIcon.setStyleName("MemberDeleteIcon");	
+						this.add(adminIcon);
+					}else {
+						deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
+						deleteIcon.setStyleName("MemberDeleteIcon");
+						deleteIcon.addClickHandler(new DeleteMemberClickHandler(this));
+						this.add(deleteIcon);
+					}		
 					newGroupMembers.add(p);
-					this.add(adminIcon);
-//				}else {
-//					deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
-//					deleteIcon.setStyleName("MemberDeleteIcon");
-//					deleteIcon.addClickHandler(new DeleteMemberClickHandler(this));
-//					this.add(deleteIcon);
-//				}
+					
+
 			}else if(p.getId()==groupToShow.getPersonFK()){
 				adminIcon = new Image("/Images/png/002-user-1.png");
 				adminIcon.setStyleName("MemberDeleteIcon");
@@ -237,7 +245,7 @@ public class GroupForm extends DialogBox {
 		@Override
 		public void onFailure(Throwable caught) {
 			// TODO Auto-generated method stub
-			Window.alert("funzt net");
+			Window.alert("Problem with the callback");
 		}
 
 		@Override
@@ -349,7 +357,7 @@ public class GroupForm extends DialogBox {
 		public void onClick(ClickEvent event) {
 			if(gf.groupNameTextBox.getText().length()>3)
 				if(groupToShow==null) {
-					surveyManagementAdministration.createGroup(groupNameTextBox.getText(), groupAdmin.getId() , new CreateGroupCallback(gf));	
+					surveyManagementAdministration.createGroup(groupNameTextBox.getText(), Integer.parseInt(Cookies.getCookie("userId")) , new CreateGroupCallback(gf));	
 				}else {
 					
 					for(Person p: newGroupMembers) {
