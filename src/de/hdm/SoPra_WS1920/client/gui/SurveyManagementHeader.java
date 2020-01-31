@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.client.gui.Admin.Header;
-import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
+
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -34,7 +34,7 @@ public class SurveyManagementHeader extends FlowPanel {
 	
 	SurveyContent content;
 	SurveyManagementAsync surveyManagementAdministration;
-	CinemaAdministrationAsync cinemaAdministration;
+	
 	
 	
 	public SurveyManagementHeader(SurveyContent content) {
@@ -46,7 +46,7 @@ public class SurveyManagementHeader extends FlowPanel {
 		super.onLoad();
 		this.setStylePrimaryName("Header");
 		surveyManagementAdministration = ClientsideSettings.getSurveyManagement();
-		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
+		
 	}
 	
 	class CreateGroupClickHandler implements ClickHandler{
@@ -134,7 +134,7 @@ public class SurveyManagementHeader extends FlowPanel {
 			
 		public void searchWord(SearchBox searchBox, SurveyManagementHeader header) {
 			if(header.headline.getText().equals("Movies")){
-				cinemaAdministration.searchMovie(searchBox.searchText.getText(), new SearchMovieCallback());
+				surveyManagementAdministration.searchMovie(searchBox.searchText.getText(), new SearchMovieCallback());
 			}
 //				}else if(header.headline.getText().equals("Groups")){
 //					cinemaAdministration.searchCinema(1,searchBox.searchText.getText(), new SearchCinemaCallback());

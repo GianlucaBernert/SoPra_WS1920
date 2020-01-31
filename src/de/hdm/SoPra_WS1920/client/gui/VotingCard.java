@@ -27,7 +27,6 @@ import de.hdm.SoPra_WS1920.client.gui.SurveyCardEdit.GetScreeningsCallback;
 import de.hdm.SoPra_WS1920.client.gui.SurveyCardEdit.GetSurveyEntriesCallback;
 import de.hdm.SoPra_WS1920.client.gui.SurveyCardEdit.ScreeningRow;
 import de.hdm.SoPra_WS1920.client.gui.SurveyCardEdit.UpdateSurveyClickHandler;
-import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
@@ -60,7 +59,7 @@ public class VotingCard extends DialogBox {
 	SurveyContent surveyContent;
 	SurveyCard parentCard;
 	SurveyManagementAsync surveyManagement;
-	CinemaAdministrationAsync cinemaAdministration;
+	
 	
 	public VotingCard(SurveyCard parentCard, Survey surveyToShow) {
 		this.surveyToShow = surveyToShow;
@@ -77,7 +76,7 @@ public class VotingCard extends DialogBox {
 		person.setId(1);
 		
 		surveyManagement = ClientsideSettings.getSurveyManagement();
-		cinemaAdministration = ClientsideSettings.getCinemaAdministration();	
+		
 //		surveyEntries = new Vector<SurveyEntry>();
 		formWrapper = new FlowPanel();
 		formWrapper.setStyleName("DialogBoxWrapper");
@@ -268,7 +267,7 @@ public class VotingCard extends DialogBox {
 			newVoteOfPerson = new Vote();
 			newVoteOfPerson.setVotingWeight(0);
 			
-			cinemaAdministration.getCinemaByScreeningFK(surveyEntry.getScreeningFK(), new GetCinemaOfSurveyEntryCallback());
+			surveyManagement.getCinemaByScreeningFK(surveyEntry.getScreeningFK(), new GetCinemaOfSurveyEntryCallback());
 			surveyManagement.getVoteBySurveyEntryFK(surveyEntry.getId(), new GetVoteBySurveyEntryCallback());
 			surveyEntryDescription = new Label();
 			surveyEntryDescription.setStyleName("SurveyRowLabel");
@@ -375,7 +374,7 @@ public class VotingCard extends DialogBox {
 			public void onSuccess(Cinema result) {
 				// TODO Auto-generated method stub
 				cinemaOfSurveyEntry = result;
-				cinemaAdministration.getScreeningById(surveyEntry.getScreeningFK(), new GetScreeningOfSurveyEntryCallback());
+				surveyManagement.getScreeningById(surveyEntry.getScreeningFK(), new GetScreeningOfSurveyEntryCallback());
 			}
 			
 		}

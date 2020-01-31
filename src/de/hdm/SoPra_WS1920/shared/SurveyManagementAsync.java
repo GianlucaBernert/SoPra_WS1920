@@ -8,6 +8,7 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
+import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -455,6 +456,18 @@ public interface SurveyManagementAsync {
 	void getMovieById(int id, AsyncCallback<Movie> callback);
 
 	void getGroupOfPersonByGroupName(int personFk, String groupName, AsyncCallback<Group> callback);
+
+	void getSurveyEntryByScreeningFK(int screeningFK, AsyncCallback<Vector<SurveyEntry>> callback);
+
+	void getMovieByGenre(String genre, AsyncCallback<Vector<Movie>> callback);
+
+	void getCinemaById(int id, AsyncCallback<Cinema> callback);
+
+	void getVotesBySurveyEntryFK(int surveyEntryFK, AsyncCallback<Vector<Vote>> callback);
+
+	void getAllMovies(AsyncCallback<Vector<Movie>> callback);
+
+	void getCinemaByScreeningFK(int screeningFK, AsyncCallback<Cinema> callback);
     
 
 }
