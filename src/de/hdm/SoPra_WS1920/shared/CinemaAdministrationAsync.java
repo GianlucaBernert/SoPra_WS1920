@@ -21,10 +21,12 @@ import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
 
+
 /**
  * 
  */
 public interface CinemaAdministrationAsync {
+	
 
     /**
      * @param name 

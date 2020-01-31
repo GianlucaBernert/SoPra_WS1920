@@ -100,6 +100,7 @@ public class SurveyNavigationBar extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
 //			Window.Location.assign(GWT.getHostPageBaseURL() + "SoPra_WS1920a.html");
+			Window.Location.replace("/SoPra_WS1920a.html");
 //			cinemaAdminEntry.showCinemaAdminEntry();
 		}
 		

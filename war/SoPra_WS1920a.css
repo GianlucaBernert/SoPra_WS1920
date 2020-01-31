@@ -40,7 +40,96 @@ body{
     margin-bottom: 20px;
     margin-top: 20px;
 }
+.is-fullwidth {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 95%;
+}
 
+.large {
+    font-size: 1rem;
+    height: 1.5em;
+    width: 1.5em;
+}
+.button {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    font-size: 1rem;
+    height: 3.25em;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding-bottom: calc(0.375em - 1px);
+    padding-left: calc(0.625em - 1px);
+    padding-right: calc(0.625em - 1px);
+    padding-top: calc(0.375em - 1px);
+    position: relative;
+    vertical-align: top;
+
+    background-color: white;
+    border-color: #dbdbdb;
+    border-width: 1px;
+    color: #363636;
+    cursor: pointer;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding-bottom: calc(0.375em - 1px);
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    padding-top: calc(0.375em - 1px);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.is-block {
+    display: block !important;
+}
+.title {
+    color: var(--green-black);
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.125;
+}
+.box {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+    color: #4a4a4a;
+    display: block;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+.has-text-primary {
+    color: var(--primary) !important;
+}
+.radiusless {
+    border-radius: 0 !important;
+}
+.is_128 {
+    height: 128px;
+    width: 128px;   
+}
+.is-size-4 {
+    font-size: 1.5rem !important;
+} 	
+
+.image_style {
+    display: block;
+    position: relative;
+}
 .createIcon{
 	display: block;
 	height: 20px;
@@ -398,6 +487,21 @@ body{
 
 .Card {
   	position: relative;
+	float:left;
+	/* width: calc(100% - 40px); */
+	width: 20%;
+	min-width: 200px;
+	/* max-width: 350px; */
+	padding: 20px;
+	border-radius: 10px;
+	background-image: linear-gradient(to bottom right, #0D1D2D, #112D49);
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	overflow-x: hidden;
+	margin: 0px 20px 20px 0px; 
+	height: 200px;
+}
+.GoogleCard {
+  	position: absolute;
 	float:left;
 	/* width: calc(100% - 40px); */
 	width: 20%;

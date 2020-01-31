@@ -18,10 +18,12 @@ import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
+
 /**
  * @author GianlucaBernert
  */
 public interface SurveyManagementAsync {
+	
 	
 	/**
      * Methode um ein BusinessObject zu erstellen

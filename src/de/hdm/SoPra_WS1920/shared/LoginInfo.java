@@ -14,6 +14,7 @@ public class LoginInfo implements IsSerializable{
     private String loginURL;
     private String logoutURL;
     private String emailAddress;
+    private String nickname;
     
     /**
      * 
@@ -77,6 +78,17 @@ public class LoginInfo implements IsSerializable{
 	 */
 	public void setEmailAddress(String emailAddress) {
 	    this.emailAddress = emailAddress;
+	}
+	
+	public String getNickname() {
+	    return nickname;
+	}
+	/**
+	 * 
+	 * @param nickname
+	 */
+	public void setNickname(String nickname) {
+		    this.nickname = nickname;
 	}
 
 }

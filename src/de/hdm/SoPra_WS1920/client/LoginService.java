@@ -3,6 +3,7 @@ package de.hdm.SoPra_WS1920.client;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+
 import de.hdm.SoPra_WS1920.shared.LoginInfo;
 
 /**
@@ -13,12 +14,8 @@ import de.hdm.SoPra_WS1920.shared.LoginInfo;
  * 
  * @author GianlucaBernert
  **/
-@RemoteServiceRelativePath("LoginImpl")
+@RemoteServiceRelativePath("login")
 public interface LoginService extends RemoteService {
-
-    /**
-     * @param String requestURL
-     */
-    public LoginInfo login(String requestURL);
+	  public LoginInfo login(String requestUri);
 
 }

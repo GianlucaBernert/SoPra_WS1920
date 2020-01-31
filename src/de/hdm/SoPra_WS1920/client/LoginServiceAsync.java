@@ -14,10 +14,6 @@ import de.hdm.SoPra_WS1920.shared.LoginInfo;
  * @Author GianlucaBernert
  **/
 public interface LoginServiceAsync {
-
-    /**
-     * 
-     */
-    public void login(String requestURL, AsyncCallback<LoginInfo> async);
+	  public void login(String requestUri, AsyncCallback<LoginInfo> async);
 
 }
