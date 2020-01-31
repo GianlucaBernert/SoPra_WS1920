@@ -98,7 +98,7 @@ public class SurveyCardEdit extends DialogBox {
 	SurveyManagementHeader header;
 	SurveyContent content;
 	SurveyManagementAsync surveyManagement;
-	CinemaAdministrationAsync cinemaAdministration;
+	
 	
 	
 	
@@ -122,7 +122,6 @@ public class SurveyCardEdit extends DialogBox {
 		person = new Person();
 		person.setId(1);
 		surveyManagement = ClientsideSettings.getSurveyManagement();
-		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
 		formWrapper = new FlowPanel();
 		
 		
@@ -141,7 +140,7 @@ public class SurveyCardEdit extends DialogBox {
 		movieLabel = new Label("Movie");
 		movieLabel.setStyleName("TextBoxLabel");
 		allMovies = new MultiWordSuggestOracle();
-		cinemaAdministration.getAllMovies(new AllMoviesCallback());
+		surveyManagement.getAllMovies(new AllMoviesCallback());
 		movieSuggestBox = new SuggestBox(allMovies);
 		movieSuggestBox.setStyleName("CardSuggestBox");
 		
@@ -208,7 +207,7 @@ public class SurveyCardEdit extends DialogBox {
 			@Override
 			
 			public void onClick(ClickEvent event) {
-				cinemaAdministration.getMoviesByName(movieSuggestBox.getText(), new GetMovieCallback(surveyCardEdit));
+				surveyManagement.getMoviesByName(movieSuggestBox.getText(), new GetMovieCallback(surveyCardEdit));
 
 			}
 		}
@@ -311,7 +310,7 @@ public class SurveyCardEdit extends DialogBox {
 				selectedGroup.setText("Group: "+ group.getName());
 				selectedPeriod.setText("Screening Period: "+ startDate.toString()+" - "+endDate.toString());
 				
-				cinemaAdministration.getScreeningsforSurveyCreation(movie, city, startDate, endDate, new GetScreeningsCallback());
+				surveyManagement.getScreeningsforSurveyCreation(movie, city, startDate, endDate, new GetScreeningsCallback());
 				saveSurvey.addClickHandler(new CreateSurveyClickHandler(this));
 				formWrapper.add(saveSurvey);
 			}else{
@@ -320,7 +319,7 @@ public class SurveyCardEdit extends DialogBox {
 				selectedPeriod.setText("Screening Period: "+ surveyToShow.getStartDate().toString()+" - "+surveyToShow.getEndDate().toString());
 				surveyManagement.getSurveyEntryBySurveyFK(surveyToShow.getId(), new GetSurveyEntriesCallback());
 //				surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieBySurveyCallback());			
-				cinemaAdministration.getMoviesByName(surveyToShow.getMovieName(), new GetMovieByNameCallback());			
+				surveyManagement.getMoviesByName(surveyToShow.getMovieName(), new GetMovieByNameCallback());			
 				surveyManagement.getGroupById(surveyToShow.getGroupFK(), new GetGroupOfSurveyCallback());
 				
 				deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
@@ -402,7 +401,7 @@ public class SurveyCardEdit extends DialogBox {
 			public void onSuccess(Vector<Movie> result) {
 				// TODO Auto-generated method stub
 				movie = result.firstElement();
-				cinemaAdministration.getScreeningsforSurveyCreation(movie, surveyToShow.getSelectedCity(), surveyToShow.getStartDate(), surveyToShow.getEndDate(), new GetScreeningsCallback());
+				surveyManagement.getScreeningsforSurveyCreation(movie, surveyToShow.getSelectedCity(), surveyToShow.getStartDate(), surveyToShow.getEndDate(), new GetScreeningsCallback());
 			}
 			
 		}
@@ -575,7 +574,7 @@ public class SurveyCardEdit extends DialogBox {
 						}
 					}	
 				}
-				cinemaAdministration.getCinemaById(s.getCinemaFK(), new GetCinemaCallback(this));	
+				surveyManagement.getCinemaById(s.getCinemaFK(), new GetCinemaCallback(this));	
 				
 				this.add(cb);
 				this.add(screeningDescription);
@@ -651,7 +650,7 @@ public class SurveyCardEdit extends DialogBox {
 				// TODO Auto-generated method stub
 				movie = result;
 				selectedMovie.setText("Movie: " + movie.getName());
-				cinemaAdministration.getScreeningsforSurveyCreation(movie, surveyToShow.getSelectedCity(), surveyToShow.getStartDate(), surveyToShow.getEndDate(), new GetScreeningsCallback());
+				surveyManagement.getScreeningsforSurveyCreation(movie, surveyToShow.getSelectedCity(), surveyToShow.getStartDate(), surveyToShow.getEndDate(), new GetScreeningsCallback());
 			}
 		}
 	

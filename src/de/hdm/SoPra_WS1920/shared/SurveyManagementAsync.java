@@ -468,6 +468,9 @@ public interface SurveyManagementAsync {
 	void getAllMovies(AsyncCallback<Vector<Movie>> callback);
 
 	void getCinemaByScreeningFK(int screeningFK, AsyncCallback<Cinema> callback);
+
+	void getScreeningsforSurveyCreation(Movie movie, String city, Date startDate, Date endDate,
+			AsyncCallback<Vector<Screening>> callback);
     
 
 }
