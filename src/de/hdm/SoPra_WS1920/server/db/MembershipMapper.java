@@ -85,7 +85,35 @@ public class MembershipMapper {
 			}
         return me;
     }
-    
+    /**
+     * @param groupID 
+     * @return
+     */
+    public Vector<Membership> findMembershipByPersonFK(int pFK) {
+        Connection con = DBConnection.connection();
+        Vector<Membership> result = new Vector<Membership>();
+        
+        try {
+        	Statement stmt = con.createStatement();
+        	
+        	ResultSet rs = stmt.executeQuery("SELECT * FROM membership "
+        			+ "WHERE personFK=" + pFK);
+        	
+        	while(rs.next()) {
+        		Membership me = new Membership();
+//        		me.setId(rs.getInt("id"));
+        		me.setGroupFK(rs.getInt("groupFK"));
+        		me.setPersonFK(rs.getInt("personFK"));
+        		
+        		result.addElement(me);
+        	}
+        	
+        }
+        catch(SQLException e2) {
+        	e2.printStackTrace();
+        }
+        return result;
+    }
     /**
      * @param groupID 
      * @return

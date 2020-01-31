@@ -236,6 +236,7 @@ public class NavigationBar extends FlowPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			Window.Location.assign(logoutUrl);
 			Window.alert("Successfully logged out!");
 			
 		}
