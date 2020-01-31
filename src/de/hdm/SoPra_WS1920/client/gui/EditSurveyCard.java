@@ -247,7 +247,7 @@ public class EditSurveyCard extends DialogBox {
 		// vorerst objekte manuell	
 		Movie m = new Movie();
 		m.setName(movieSuggestBox.getText());
-		m.setId(1);
+		//m.setId(1);
 		Group g = new Group();
 		g.setName(allGroups.getSelectedItemText());
 		String c = new String();

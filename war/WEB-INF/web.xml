@@ -45,4 +45,9 @@
     <url-pattern>/sopra_ws1920a/login</url-pattern>
 </servlet-mapping>
 
+<servlet-mapping>
+    <servlet-name>loginService</servlet-name>
+    <url-pattern>/surveyManagement/login</url-pattern>
+</servlet-mapping>
+
 </web-app>

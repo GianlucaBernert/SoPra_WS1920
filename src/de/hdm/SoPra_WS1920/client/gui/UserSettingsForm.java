@@ -34,21 +34,21 @@ public class UserSettingsForm extends DialogBox {
 	SurveyManagementHeader header;
 	SurveyContent content;
 	
-	public UserSettingsForm(Person personToShow) {
-		this.personToShow = personToShow;
-		
-	}
+//	public UserSettingsForm(Person personToShow) {
+//		this.personToShow = personToShow;
+//		
+//	}
 	
 	public UserSettingsForm(SurveyManagementHeader header, SurveyContent content) {
 		this.header = header;
 		this.content = content;
 	
-	
-	Person p = new Person();
-	p.setFirstname("Yesin");
-	p.setLastname("Soufi");
-	p.setEMail("ys018@hdm-stuttgart.de");
-	personToShow = p;
+		personToShow = content.getPerson();
+//		Person p = new Person();
+//		p.setFirstname("Yesin");
+//		p.setLastname("Soufi");
+//		p.setEMail("ys018@hdm-stuttgart.de");
+//		personToShow = p;
 
 }
 	public void onLoad() {

@@ -120,8 +120,9 @@ public class SurveyCardEdit extends DialogBox {
 		super.onLoad();
 		
 		this.setStyleName("EditCard");
-		person = new Person();
-		person.setId(1);
+//		person = new Person();
+//		person.setId(content.getPerson().getId());
+		person = content.getPerson();
 		surveyManagement = ClientsideSettings.getSurveyManagement();
 		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
 		formWrapper = new FlowPanel();
@@ -232,7 +233,7 @@ public class SurveyCardEdit extends DialogBox {
 				// TODO Auto-generated method stub
 				movie = result.firstElement();
 				//getGroupByNameAndPersonFk
-				surveyManagement.getGroupOfPersonByGroupName(1, allGroups.getSelectedItemText(), new GetGroupCallback(surveyCardEdit));
+				surveyManagement.getGroupOfPersonByGroupName(person.getId(), allGroups.getSelectedItemText(), new GetGroupCallback(surveyCardEdit));
 
 			}
 			

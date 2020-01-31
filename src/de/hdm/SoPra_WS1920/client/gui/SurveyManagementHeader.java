@@ -21,6 +21,7 @@ import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
 
 
@@ -31,7 +32,7 @@ public class SurveyManagementHeader extends FlowPanel {
 	Label headline;
 	Button createBo;
 	SearchBox searchBox;
-	
+	Person p;
 	SurveyContent content;
 	SurveyManagementAsync surveyManagementAdministration;
 	CinemaAdministrationAsync cinemaAdministration;
@@ -321,7 +322,14 @@ public class SurveyManagementHeader extends FlowPanel {
 //			}
 //			
 //		}
+		public void setPerson(Person person) {
+			this.p = p;
+		}
 		
+		public Person getPerson() {
+			return p;
+		}
+			
 }
 		
 		

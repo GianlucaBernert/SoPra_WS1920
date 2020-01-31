@@ -13,6 +13,7 @@ import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
+import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
 
 public class SurveyContent extends FlowPanel {
@@ -20,6 +21,7 @@ public class SurveyContent extends FlowPanel {
 	Group g;
 	Movie m;
 	Survey s;
+	Person p;
 	
 	SurveyManagementAsync surveyManagementAdministration;
 	CinemaAdministrationAsync cinemaAdministration;
@@ -68,7 +70,7 @@ public class SurveyContent extends FlowPanel {
 	
 	public void showGroups() {
 		this.clear();
-		surveyManagementAdministration.getGroupByPersonFK(1, new GetGroupByPersonCallback(this));
+		surveyManagementAdministration.getGroupByPersonFK(p.getId(), new GetGroupByPersonCallback(this));
 	}
 	
 	class GetGroupByPersonCallback implements AsyncCallback<Vector<Group>>{
@@ -101,7 +103,7 @@ public class SurveyContent extends FlowPanel {
 	
 	public void showSurveys() {
 		this.clear();
-		surveyManagementAdministration.getSurveyByPersonFK(1, new GetSurveyByPersonCallback(this));
+		surveyManagementAdministration.getSurveyByPersonFK(p.getId(), new GetSurveyByPersonCallback(this));
 		
 	}
 	
@@ -164,7 +166,15 @@ public class SurveyContent extends FlowPanel {
 	public void showMovies() {
 		this.clear();
 		MovieCard movieCard = new MovieCard(content, m);
-		this.add(movieCard);*/
+	this.add(movieCard);*/
+	public void setPerson(Person person) {
+		this.p = p;
+	}
+	
+	public Person getPerson() {
+		return p;
+	}
+	
 	}
 	
 
