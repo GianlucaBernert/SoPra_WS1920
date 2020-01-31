@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -72,7 +73,11 @@ public class VotingCard extends DialogBox {
 		this.clear();
 		this.setStyleName("EditCard");
 		
-		person = surveyContent.getPerson();
+		person = new Person();
+		person.setEMail(Cookies.getCookie("gmail"));
+		person.setFirstname(Cookies.getCookie("firstName"));
+		person.setLastname(Cookies.getCookie("lastName"));
+		person.setId(Integer.parseInt(Cookies.getCookie("userId")));
 		
 		surveyManagement = ClientsideSettings.getSurveyManagement();
 		

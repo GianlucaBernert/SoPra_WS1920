@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -121,7 +122,13 @@ public class SurveyCardEdit extends DialogBox {
 		this.setStyleName("EditCard");
 //		person = new Person();
 //		person.setId(content.getPerson().getId());
-		person = content.getPerson();
+		person = new Person();
+		person.setEMail(Cookies.getCookie("gmail"));
+		person.setFirstname(Cookies.getCookie("firstName"));
+		person.setLastname(Cookies.getCookie("lastName"));
+		person.setId(Integer.parseInt(Cookies.getCookie("userId")));
+		
+		
 		surveyManagement = ClientsideSettings.getSurveyManagement();
 		formWrapper = new FlowPanel();
 		
