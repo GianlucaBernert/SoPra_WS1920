@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.SoPra_WS1920.server.IlegalArgumentAxception;
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
@@ -433,6 +434,10 @@ public interface SurveyManagement extends RemoteService {
 
 	Vector<Screening> getScreeningsforSurveyCreation(Movie movie, String city, java.sql.Date startDate,
 			java.sql.Date endDate) throws IllegalArgumentException;
+
+	Vector<Group> getGroupsByMemberships(int personFK) throws IllegalArgumentException;
+
+	Vector<Survey> getSurveyToShow(int personFK) throws IllegalArgumentException;
 	
 	
 

@@ -471,6 +471,10 @@ public interface SurveyManagementAsync {
 
 	void getScreeningsforSurveyCreation(Movie movie, String city, Date startDate, Date endDate,
 			AsyncCallback<Vector<Screening>> callback);
+
+	void getGroupsByMemberships(int personFK, AsyncCallback<Vector<Group>> callback);
+
+	void getSurveyToShow(int personFK, AsyncCallback<Vector<Survey>> callback);
     
 
 }

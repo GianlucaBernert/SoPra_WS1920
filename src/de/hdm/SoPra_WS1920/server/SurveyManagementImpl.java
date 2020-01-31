@@ -904,8 +904,55 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	return this.scMapper.findScreeningForSurveyCreation(startDate, endDate, movie.getId(), city);
     }
     
+    
+    @Override
+    public Vector<Group> getGroupsByMemberships(int personFK) throws IllegalArgumentException{
+    	
+    	Vector<Group> vg = new Vector<Group>();
+    	
+    	Vector<Membership> vm = this.meMapper.findMembershipByPersonFK(personFK);
+    	
+    		for(Membership mm : vm) {
+    			Group g = this.gMapper.findGroupByID(mm.getId());
+    			
+    			vg.add(g);
+  	
+    				
+    			}
+    		return vg;
+    			
+    		}
+    
+    @Override
+    public Vector<Survey> getSurveyToShow(int personFK) throws IllegalArgumentException{
+    	
+    	Vector<Survey> surveyToShow = new Vector<Survey>();
+    	
+    	Vector<Group> vg = new Vector<Group>();
+    	
+    	Vector<Membership> vm = this.meMapper.findMembershipByPersonFK(personFK);
+    	
+    		for(Membership mm : vm) {
+    			Group g = this.gMapper.findGroupByID(mm.getGroupFK());
+    			
+    			vg.add(g);
+    			}
+    		for(Group g : vg) {
+    			Vector<Survey> vs = this.getSurveyByGroupFK(g.getId());
+    			for(Survey s : vs) {
+    				surveyToShow.add(s);
+    				
+    			}
+    			
+    			
+    		}
+    		return surveyToShow;
+    }
+  
+    	
+    }
+    
    
            
 
 	
-}
