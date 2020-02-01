@@ -62,11 +62,12 @@ public class SurveyCardView extends FlowPanel {
 		
 		movie = new Label();
 		movie.setStyleName("CardViewTitle");
-		if(movieOfSurvey!=null) {
-			movie.setText(movieOfSurvey.getName());
-		}else {
-			surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
-		}
+//		if(movieOfSurvey!=null) {
+//			movie.setText(movieOfSurvey.getName());
+//		}else {
+//			surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
+//		}
+		movie.setText(surveyToShow.getMovieName());
 		
 		group = new Label();
 		group.setStyleName("CardViewSubTitle");
