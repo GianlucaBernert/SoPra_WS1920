@@ -129,7 +129,6 @@ public class SurveyContent extends FlowPanel {
 			// TODO Auto-generated method stub
 			for(Survey s : result) {
 				SurveyCard surveyCard = new SurveyCard(content, s);
-//				surveyCard.showSurveyCardView(s);
 				content.add(surveyCard);
 				
 			}
