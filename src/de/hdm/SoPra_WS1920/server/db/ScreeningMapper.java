@@ -176,9 +176,13 @@ public class ScreeningMapper {
     	
     	try {
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM screening INNER JOIN cinema" 
-    				+ " WHERE screeningDate BETWEEN '" + startDate + "' AND '" + endDate 
-    				+ "' AND city='" + c + "' AND movieFK='" + movieFK+"'");
+    		ResultSet rs = stmt.executeQuery("SELECT screening.id, screening.screeningDate, screening.screeningTime, screening.cinemaFK, screening.movieFK FROM screening "
+    				+"INNER JOIN cinema " 
+    				+"On screening.cinemaFK = cinema.id "
+    				+"WHERE cinema.city= '" + c 
+    				+"' AND screeningDate BETWEEN '"+startDate
+    				+"' AND '" + endDate
+    				+"' AND movieFK= "+ movieFK);
     		
     		while(rs.next()) {
     			Screening sc = new Screening();
