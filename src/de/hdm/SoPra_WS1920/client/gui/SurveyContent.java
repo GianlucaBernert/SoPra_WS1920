@@ -69,7 +69,7 @@ public class SurveyContent extends FlowPanel {
 	
 	public void showGroups() {
 		this.clear();
-		surveyManagementAdministration.getGroupByPersonFK(p.getId(), new GetGroupByPersonCallback(this));
+		surveyManagementAdministration.getGroupsByMemberships(p.getId(), new GetGroupByPersonCallback(this));
 	}
 	
 	class GetGroupByPersonCallback implements AsyncCallback<Vector<Group>>{
@@ -102,7 +102,7 @@ public class SurveyContent extends FlowPanel {
 	
 	public void showSurveys() {
 		this.clear();
-		surveyManagementAdministration.getSurveyByPersonFK(p.getId(), new GetSurveyByPersonCallback(this));
+		surveyManagementAdministration.getSurveyToShow(p.getId(), new GetSurveyByPersonCallback(this));
 		
 	}
 	

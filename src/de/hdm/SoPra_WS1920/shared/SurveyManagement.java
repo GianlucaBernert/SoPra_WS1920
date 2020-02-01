@@ -10,7 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import de.hdm.SoPra_WS1920.server.IlegalArgumentAxception;
+//import de.hdm.SoPra_WS1920.server.IllegalArgumentException;
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
@@ -416,28 +416,28 @@ public interface SurveyManagement extends RemoteService {
 
 	Vector<Person> searchPerson(String text);
 
-	Screening getScreeningById(int id) throws IllegalArgumentException;
+	Screening getScreeningById(int id);
 
-	Movie getMovieById(int id) throws IllegalArgumentException;
+	Movie getMovieById(int id);
 
-	Vector<SurveyEntry> getSurveyEntryByScreeningFK(int screeningFK) throws IllegalArgumentException;
+	Vector<SurveyEntry> getSurveyEntryByScreeningFK(int screeningFK);
 
-	Vector<Movie> getMovieByGenre(String genre) throws IllegalArgumentException;
+	Vector<Movie> getMovieByGenre(String genre);
 
-	Cinema getCinemaById(int id) throws IllegalArgumentException;
+	Cinema getCinemaById(int id);
 
-	Vector<Vote> getVotesBySurveyEntryFK(int surveyEntryFK) throws IllegalArgumentException;
+	Vector<Vote> getVotesBySurveyEntryFK(int surveyEntryFK);
 
-	Vector<Movie> getAllMovies() throws IllegalArgumentException;
+	Vector<Movie> getAllMovies();
 
 	Cinema getCinemaByScreeningFK(int screeningFK);
 
 	Vector<Screening> getScreeningsforSurveyCreation(Movie movie, String city, java.sql.Date startDate,
-			java.sql.Date endDate) throws IllegalArgumentException;
+			java.sql.Date endDate);
 
-	Vector<Group> getGroupsByMemberships(int personFK) throws IllegalArgumentException;
+	Vector<Group> getGroupsByMemberships(int personFK);
 
-	Vector<Survey> getSurveyToShow(int personFK) throws IllegalArgumentException;
+	Vector<Survey> getSurveyToShow(int personFK) ;
 	
 	
 

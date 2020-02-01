@@ -139,6 +139,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
      * @throws IllegalArgumentException
      * @return Person p
      */
+    
     public Person createPerson(String firstName, String lastName, String eMail) throws IllegalArgumentException {
     	BusinessObject bo = this.createBusinessObject();
         Person p = new Person();
@@ -913,7 +914,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	Vector<Membership> vm = this.meMapper.findMembershipByPersonFK(personFK);
     	
     		for(Membership mm : vm) {
-    			Group g = this.gMapper.findGroupByID(mm.getId());
+    			Group g = this.gMapper.findGroupByID(mm.getGroupFK());
     			
     			vg.add(g);
   	
