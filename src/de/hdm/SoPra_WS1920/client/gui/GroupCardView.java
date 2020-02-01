@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -43,15 +44,16 @@ public class GroupCardView extends FlowPanel {
 		member = new Label("");
 		member.setStyleName("CardViewSubTitle");
 		edit = new Button("");
-		edit.setStyleName("InvisibleButton");
-		editIcon = new Image("/Images/png/006-pen.png");
-		editIcon.setStyleName("EditIcon");
-		editIcon.addClickHandler(new EditClickHandler(this));
-		
 		this.add(groupName);
 		this.add(member);
-		this.add(edit);
-		this.add(editIcon);
+		if(groupToShow.getPersonFK()==Integer.parseInt(Cookies.getCookie("userId"))) {
+			edit.setStyleName("InvisibleButton");
+			editIcon = new Image("/Images/png/006-pen.png");
+			editIcon.setStyleName("EditIcon");
+			editIcon.addClickHandler(new EditClickHandler(this));
+			this.add(edit);
+			this.add(editIcon);
+		}
 		
 	}
 		class EditClickHandler implements ClickHandler{

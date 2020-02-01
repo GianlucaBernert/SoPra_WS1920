@@ -270,8 +270,10 @@ public class SurveyMapper {
     	
     	try {
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM survey "
-    				+ "WHERE survey.groupFK=" + groupFK);
+    		ResultSet rs = stmt.executeQuery("SELECT survey.id, groupFK, isActive, startDate, endDate, selectedCity, movieName, personFK FROM survey " 
+    				+"INNER JOIN businessownership "
+    				+"WHERE businessownership.id = survey.id "
+    				+"And groupFK = " + groupFK);
     		
     		//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
     		while(rs.next()) {
@@ -283,7 +285,7 @@ public class SurveyMapper {
     			s.setSelectedCity(rs.getString("selectedCity"));
     			s.setMovieName(rs.getString("movieName"));
     			s.setStatus(rs.getInt("isActive"));
-    			
+    			s.setPersonFK(rs.getInt("personFK"));
     			
     			//Hinzuf�gen des Objekts zum Ergebnisvektor
     			result.addElement(s);

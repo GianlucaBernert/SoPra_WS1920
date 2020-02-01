@@ -7,8 +7,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
-import de.hdm.SoPra_WS1920.client.gui.Admin.Content;
-import de.hdm.SoPra_WS1920.client.gui.Admin.MovieCard;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
