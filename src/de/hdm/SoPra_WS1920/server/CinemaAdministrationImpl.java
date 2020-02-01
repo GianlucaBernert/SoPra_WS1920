@@ -188,7 +188,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     
     
     /**
-     * Methode zum Lï¿½schen von Personen Objekten und allen zugehï¿½rigen Businessobjekten
+     * Methode zum Löschen von Personen Objekten und allen zugehörigen Businessobjekten
      * @param p
      */
     
@@ -867,7 +867,9 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     }
 
 
-
+    /**
+     * Methode zum Suchen nach MovieObjekten
+     */
 	@Override
 	public Vector<Movie> searchMovie(String text) {
 		// TODO Auto-generated method stub
@@ -885,7 +887,10 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 		return movies;
 
 	}
-
+	
+	/**
+	 * Methode zum Suchen nach KinoObjekten
+	 */
 	public Vector<Cinema> searchCinema(int personFk, String text) {
 		// TODO Auto-generated method stub
 		HashSet<Cinema> hs = new HashSet<Cinema>();
@@ -914,7 +919,9 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 	}
 
 
-
+	/**
+	 * methode zum Suchen nach Kinoketten
+	 */
 	@Override
 	public Vector<CinemaChain> searchCinemaChain(int personFk,String text) {
 		// TODO Auto-generated method stub
@@ -932,7 +939,9 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 	}
 
 
-
+	/**
+	 * Methode zum Suchen nach Screeningobjekten
+	 */
 	@Override
 	public Vector<Screening> searchScreening(int personFk, String text) {
 		// TODO Auto-generated method stub
@@ -965,6 +974,10 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 		
 		return screenings;
 	}
+	
+	/**
+	 * Methode zum löschen von Membershipobjekten
+	 */
 	@Override
 	  public void deleteMembership(int gFK, int pFK) {    	
 	        this.mmMapper.deleteMembership(gFK, pFK);

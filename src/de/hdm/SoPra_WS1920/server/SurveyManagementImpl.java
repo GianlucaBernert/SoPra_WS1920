@@ -672,12 +672,18 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	return m;
     }
     
+    /**
+     * Methode um ein Screening Objekt anhand seiner Id aufzurufen.
+     */
     @Override
     public Screening getScreeningById(int id) throws IllegalArgumentException {
         
         return this.scMapper.findScreeningByID(id);
     }
     
+    /**
+     * Methode um ein Movie Objekt anhand seiner Id aufzurufen
+     */
     @Override
     public Movie getMovieById(int id) throws IllegalArgumentException {
         
@@ -786,18 +792,27 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
 		return se;
 	}
 	
+	/**
+	 * Methode zur Ausgabe von Filmen nach deren Namen
+	 */
 	public Vector<Movie> getMoviesByName(String name) throws IllegalArgumentException {
 		
 		return this.mMapper.findMovieByName(name);
 		
 	}
 	
+	/**
+	 * Methode zur Ausgabe von Film Objekten nach Genre
+	 */
 	public Vector<Movie> getMoviesByGenre(String genre) throws IllegalArgumentException {
 		
 	
 		return this.mMapper.findMovieByGenre(genre);
 	}
 	
+	/**
+	 * Methode zur Suche passender Kinobjekte anhand eine Texteingabe
+	 */
 	public Vector<Movie> searchMovie(String text){
 		
 		HashSet<Movie> hs = new HashSet<Movie>();
@@ -815,6 +830,9 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
 	
 	}
 	
+	/**
+	 * Methode zur Suche passender Gruppen anhand einer Texteingabe
+	 */
 	public Vector<Group> searchGroup(String text){
 		
 		HashSet<Group> hs = new HashSet<Group>();
@@ -863,17 +881,30 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
 			return persons;
 	}
 	
+	/**
+	 * Methode zum Beenden einer Umfrage
+	 * @param s
+	 * @return
+	 */
 	public Survey endSurvey(Survey s) {
 		s.setId(0);
 		return this.sMapper.updateSurvey(s);
 	}
 	
-	
+	/**
+	 * Methode um sich den ScreeningFK eines Umfrageeintrags zu holen
+	 * @param screeningFK
+	 */
     @Override
     public Vector<SurveyEntry> getSurveyEntryByScreeningFK(int screeningFK) throws IllegalArgumentException{
     	
     	return this.seMapper.findSurveyEntryByScreeningFK(screeningFK);
     }
+    
+    /**
+	 * Methode um die Kino Id zu erhalten
+	 * @param int id
+	 */
     
     @Override
     public Cinema getCinemaById(int id) throws IllegalArgumentException{
@@ -882,11 +913,21 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         return this.cMapper.findCinemaByID(id);
     }
     
+    /**
+	 * Methode um die Votes eines Umfrageeintrags zu erhalten
+	 * @param int surveyEntryFK
+	 */
+    
     @Override
     public Vector<Vote> getVotesBySurveyEntryFK(int surveyEntryFK) throws IllegalArgumentException{
        	
        	return this.vMapper.findVoteBySurveyEntryFK(surveyEntryFK);
         }
+    
+    /**
+	 * Methode um alle Movies zu erhalten
+	 * @return Movie
+	 */
     
     @Override
     public Vector <Movie> getAllMovies() throws IllegalArgumentException{
@@ -894,12 +935,21 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	return this.mMapper.findAll();
     }
     
+    /**
+	 * Methode um das Screening des Kinos zu erhalten
+	 * @param int screeningFK
+	 */
+    
     @Override
     public Cinema getCinemaByScreeningFK(int screeningFK) {
     	Screening s = this.getScreeningById(screeningFK);
     	return this.getCinemaById(s.getCinemaFK());
     }
     
+    /**
+	 * Methode um die Kinos eines Genre zu erhalten
+	 * @param String genre
+	 */
    
     @Override
     public Vector<Movie> getMovieByGenre(String genre) throws IllegalArgumentException {
@@ -907,13 +957,19 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         return this.mMapper.findMovieByGenre(genre);
     }
     
+    /**
+	 * Methode um die Kino Id zu erhalten
+	 * @param int id
+	 */
     @Override
     public Vector<Screening> getScreeningsforSurveyCreation(Movie movie, String city, Date startDate, Date endDate) throws IllegalArgumentException{
     	
     	return this.scMapper.findScreeningForSurveyCreation(startDate, endDate, movie.getId(), city);
     }
     
-    
+    /**
+     * Methode um Gruppen aller Person aufzrufen in den sie Mitglied ist
+     */
     @Override
     public Vector<Group> getGroupsByMemberships(int personFK) throws IllegalArgumentException{
     	
@@ -932,6 +988,9 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     			
     		}
     
+    /**
+     * Methode zum Aufrufen aller Umfragen an denen eine Person teilnehmen darf
+     */
     @Override
     public Vector<Survey> getSurveyToShow(int personFK) throws IllegalArgumentException{
     	
