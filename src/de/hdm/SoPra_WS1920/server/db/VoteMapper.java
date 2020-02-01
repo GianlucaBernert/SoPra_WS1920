@@ -61,8 +61,9 @@ public class VoteMapper {
   	 */	
     
     /**
+     * Methode, die ein Vote Objekt anhand der ID zurückgibt
      * @param voteID 
-     * @return
+     * @return Vote Objekt
      */
     public Vote findVoteByID(int voteID) {
     	Connection con = DBConnection.connection();
@@ -89,6 +90,11 @@ public class VoteMapper {
 
     
     
+    /**
+	 * Methode, die ein Vote in der Datenbank abspeichert .
+	 * @param Vote vote
+	 * @return Vote
+	 */
     
     public Vote insertVote(Vote vote) {
     	Connection con = DBConnection.connection();
@@ -111,8 +117,9 @@ public class VoteMapper {
     }
 
     /**
+     * Methode, die ein Vote Objekt in der Datenbank aktualisiert.
      * @param vote 
-     * @return
+     * @return vote
      */
     public Vote updateVote(Vote vote) {
     	Connection con = DBConnection.connection();
@@ -130,8 +137,8 @@ public class VoteMapper {
     }
 
     /**
+     * Methode, die ein Vote Objekt aus der Datenbank löscht.
      * @param vote 
-     * @return
      */
     public void deleteVote(Vote vote) {
     	Connection con = DBConnection.connection();
@@ -148,8 +155,9 @@ public class VoteMapper {
 
   
     /**
+     * Methode, die alle Votes des Erstellers zurückgibt.
      * @param personFK 
-     * @return
+     * @return Vektor Vote
      */
     public Vector<Vote> findVoteByPersonFK(int personFK) {
     	Connection con = DBConnection.connection();
@@ -179,8 +187,8 @@ public class VoteMapper {
     }
 
     /**
-     * @param person 
-     * @return
+     * Methode, die alle Votes einer Person aus der Datenbank löscht
+     * @param int personFk
      */
  public void deleteVoteByPersonFK(int personFK) {
     	Connection con = DBConnection.connection();
@@ -200,8 +208,9 @@ public class VoteMapper {
  
 
     /**
-     * @param id 
-     * @return
+     * Methode, die alle Votes anhand eines SurveyEntry zurückgibt
+     * @param int surveyEntryFK
+     * @return Vektor Vote
      */
     public Vector<Vote> findVoteBySurveyEntryFK(int surveyEntryFK) {
     	Connection con = DBConnection.connection();
@@ -233,8 +242,9 @@ public class VoteMapper {
 
 
     /**
-     * @param surveyentry 
-     * @return
+     * Methode, die Votes anhand des Votingweights zurückgibt
+     * @param int votingweight
+     * @return Vektor Vote
      */
     public Vector<Vote> findVoteByVotingWeight(int vw) {
     	Connection con = DBConnection.connection();

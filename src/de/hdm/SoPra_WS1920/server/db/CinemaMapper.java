@@ -294,6 +294,11 @@ public class CinemaMapper {
         
     }
     
+    /**
+	 * Methode, die alle Cinemas die zu einer CinemaChain gehören zurückgibt
+	 * @param int cinemachainFK
+	 * @return Vektor mit Cinema-Objekten
+	 */
     public Vector<Cinema> findCinemaByCinemaChainFK(int cinemachainFK) {
     	Connection con = DBConnection.connection();
     	Vector<Cinema> result = new Vector<Cinema>();
@@ -322,6 +327,7 @@ public class CinemaMapper {
     }
 
     /**
+     * Methode, die ein Cinema anhand des Namens löscht
      * @param name
      */
     public void deleteCinemaByName(String name) {
@@ -339,6 +345,10 @@ public class CinemaMapper {
         
     }
     
+    /**
+	 * Methode, die ein Cinema anhand des CinemaChainFK's löscht
+	 * @param int cinemachainFK
+	 */
     public void deleteCinemaByCinemachainFK(int cinemachainFK) {
     	Connection con = DBConnection.connection();
     	
@@ -352,8 +362,9 @@ public class CinemaMapper {
     }
 
     /**
+     * Methode, die alle Cinemas eines Erstellers/Erstellerin zurückgibt
      * @param person 
-     * @return
+     * @return Vektor Cinema
      */
     public Vector<Cinema> findCinemaByPersonFK(int personFK) {
         Connection con = DBConnection.connection();

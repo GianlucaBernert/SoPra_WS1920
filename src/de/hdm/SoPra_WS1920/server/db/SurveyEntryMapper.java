@@ -115,8 +115,9 @@ public class SurveyEntryMapper {
     }
 
     /**
+     * Methode, die ein SurveyEntry Objekt in der Datenbank aktualisiert
      * @param surveyEntry 
-     * @return
+     * @return surveyEntry se
      */
      
     public SurveyEntry updateSurveyEntry(SurveyEntry se) {
@@ -140,8 +141,8 @@ public class SurveyEntryMapper {
     
 
     /**
+     * Methode, die ein SurveyEntry Objekt in der Datenbank löscht
      * @param surveyEntry 
-     * @return
      */
     public void deleteSurveyEntry(SurveyEntry se) {
         Connection con = DBConnection.connection();
@@ -159,7 +160,7 @@ public class SurveyEntryMapper {
     /**
      * Auslesen aller Umfrageeinträge durch Fremdschlüssel (screeningFK) gegebene Spielzeiten.
      * @param screeningFK 
-     * @return
+     * @return Vektor SurveyEntry
      */
     public Vector<SurveyEntry> findSurveyEntryByScreeningFK(int screeningFK) {
         Connection con = DBConnection.connection();

@@ -64,7 +64,11 @@ public class MembershipMapper {
 	 * 
 	 */	
     
-
+    /**
+     * Methode, die ein Membership Objekt in der Datenbank speichert
+     * @param Membership me
+     * @return Membership me
+     */
     
     public Membership insertMembership(Membership me) {
     	Connection con = DBConnection.connection();
@@ -86,8 +90,9 @@ public class MembershipMapper {
         return me;
     }
     /**
-     * @param groupID 
-     * @return
+     * Methode, die alle Memberships einer Person zurückgibt.
+     * @param int personFK
+     * @return Vektor Membership
      */
     public Vector<Membership> findMembershipByPersonFK(int pFK) {
         Connection con = DBConnection.connection();
@@ -115,8 +120,9 @@ public class MembershipMapper {
         return result;
     }
     /**
-     * @param groupID 
-     * @return
+     * Methode, die alle Memberships einer Gruppe zurückgibt.
+     * @param int groupID 
+     * @return Vektor Membership
      */
     public Vector<Membership> findMembershipByGroupFK(int gFK) {
         Connection con = DBConnection.connection();
@@ -165,5 +171,7 @@ public class MembershipMapper {
 			e2.printStackTrace();
 		}
     }
+    
+    
 
 }

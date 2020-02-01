@@ -175,6 +175,11 @@ public class SurveyMapper {
         
     }
     
+    /**
+	 * Methode, die eine Umfrage anhand des Startdatums zurückgibt.
+	 * @param Date startDate
+	 * @return Survey
+	 */
     public Survey findSurveyByStartDate(java.sql.Date startDate) {
     	Connection con = DBConnection.connection();
     	
@@ -202,6 +207,11 @@ public class SurveyMapper {
     	return null;
     }
     
+    /**
+	 * Methode, die eine Umfrage anhand des Enddatums zurückgibt.
+	 * @param Date endDate
+	 * @return Survey
+	 */
     public Survey findSurveyByEndDate(java.sql.Date endDate) {
     	Connection con = DBConnection.connection();
     	
@@ -230,6 +240,11 @@ public class SurveyMapper {
     	return null;
     }
     
+    /**
+	 * Methode, die eine Umfrage anhand der ausgewählten Stadt vom Erstellzeitpunkt zurückgibt.
+	 * @param String selected City
+	 * @return Survey
+	 */
     public Survey findSelectedCityOfSurvey(String selectedCity) {
     	Connection con = DBConnection.connection();
     	
@@ -335,6 +350,11 @@ public class SurveyMapper {
         
     }
     
+    /**
+	 * Methode, die eine Umfrage anhand des zum ERstellzeitpunkt ausgewählten Movies zurückgibt.
+	 * @param String movieName
+	 * @return Survey
+	 */
     public Survey findMovieNameOfSurvey(String movieName) {
     	Connection con = DBConnection.connection();
     	
@@ -381,6 +401,7 @@ public class SurveyMapper {
     
     
     /**
+     * Methode, die alle Umfragen des Erstellers zurückgibt.
      * @param personFK 
      * @return Vektor mit Survey-Objekten eines Erstellers
      */

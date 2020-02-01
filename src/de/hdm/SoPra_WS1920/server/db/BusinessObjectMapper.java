@@ -56,8 +56,14 @@ public class BusinessObjectMapper {
 	 * =============================================================================================
 	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
 	 * in allen Mapper-Klassen existieren.
-	 * 
 	 */	
+    
+    /**
+	 * Methode, die ein BusinessObject anhand der ID zurückgibt
+	 * @param int ID
+	 * @return businessobject
+	 */
+    
     public BusinessObject findBusinessObjectByID(int BOID) {
     	Connection con = DBConnection.connection();
 		
@@ -81,7 +87,12 @@ public class BusinessObjectMapper {
         return null;
     }
 
-    //Methode, die das Einfügen eines BusinessObjects in die Datenbank ermöglicht
+
+    /**
+	 * Methode, die das Einfügen eines BusinessObjects in die Datenbank ermöglicht
+	 * @param businessobject
+	 * @return businessobject
+	 */
     
     public BusinessObject insertBusinessObject(BusinessObject BO) {
     	Connection con = DBConnection.connection();
@@ -117,7 +128,7 @@ public class BusinessObjectMapper {
 
     /**
 	 * Methode, die das Loeschen eines BusinessObject-Objekts aus der Datenbank ermöglicht
-	 * @param ownership
+	 * @param businessobject
 	 */
     public void deleteBusinessObject(BusinessObject businessobject) {
     	Connection con = DBConnection.connection();

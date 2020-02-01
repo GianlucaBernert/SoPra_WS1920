@@ -57,6 +57,12 @@ public class OwnershipMapper {
 	 * in allen Mapper-Klassen existieren.
 	 * 
 	 */	
+    
+    /**
+     * Methode, die ein Ownership Objekt anhand der ID zurück gibt.
+     * @param int OwnershipID
+     * @return Ownership Objekt
+     */
     public Ownership findOwnershipByID(int ownershipID) {
     	Connection con = DBConnection.connection();
 		
@@ -79,6 +85,11 @@ public class OwnershipMapper {
         return null;
     }
 
+    /**
+     * Methode, die ein Ownership Objekt in der Datenbank speichert.
+     * @param Ownership Objekt
+     * @return Ownership o
+     */
     
     public Ownership insertOwnership(Ownership ownership) {
     	Connection con = DBConnection.connection();
@@ -140,6 +151,12 @@ public class OwnershipMapper {
  	 * ================================================================================================
  	 * Beginn: Foreign Key-Mapper-Methoden
  	 */
+    
+    /**
+	 * Methode, die ein Ownership Objekt einer Person zurückgibt
+	 * @param int personFk
+	 * @return Vektor Ownership
+	 */
     public Vector<Ownership> findOwnershipByPersonFK(int personFK) {
     	Connection con = DBConnection.connection();
 		Vector<Ownership> result = new Vector<Ownership>();
