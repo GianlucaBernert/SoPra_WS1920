@@ -13,6 +13,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 //import de.hdm.SoPra_WS1920.server.IllegalArgumentException;
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -438,6 +439,20 @@ public interface SurveyManagement extends RemoteService {
 	Vector<Group> getGroupsByMemberships(int personFK);
 
 	Vector<Survey> getSurveyToShow(int personFK) ;
+
+	void deleteScreening(Screening screening);
+
+	void deleteCinema(Cinema cinema);
+
+	Vector<Screening> getScreeningByCinemaFK(int cinemaFK);
+
+	void deleteMovie(Movie movie);
+
+	Vector<Screening> getScreeningByMovieFK(int movieFK);
+
+	void deleteCinemaChain(CinemaChain cc);
+
+	Vector<Cinema> getCinemasByCinemaChainFK(CinemaChain cc) throws IllegalArgumentException;
 	
 	
 

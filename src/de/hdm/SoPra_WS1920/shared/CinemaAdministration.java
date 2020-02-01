@@ -14,10 +14,12 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
+import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
+import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
@@ -251,5 +253,13 @@ public interface CinemaAdministration extends RemoteService {
 
 	Vector<Screening> getScreeningsforSurveyCreation(Movie movie, String city, Date startDate, Date endDate)
 			throws IllegalArgumentException;
+
+	void deleteMembership(int gFK, int pFK);
+
+	void deleteSurvey(Survey s);
+
+	Vector<SurveyEntry> getSurveyEntryBySurveyFK(int sFK);
+
+	void deleteGroup(Group g);
 	
 }
