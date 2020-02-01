@@ -9,6 +9,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -104,6 +105,7 @@ public class SurveyManagementEntry implements EntryPoint {
 		private Label abfrage = new Label("Sign Up");
 		private Button signUpButton = new Button("Sign Up");
 //		private Button noBtn = new Button("Abbrechen");
+		private FlowPanel formWrapper = new FlowPanel();
 		private VerticalPanel vPanel = new VerticalPanel();
 		private HorizontalPanel btnPanel = new HorizontalPanel();
 	
@@ -118,7 +120,7 @@ public class SurveyManagementEntry implements EntryPoint {
 		 */
 		public RegistrationFormDialogBox(String mail) {
 			this.setStylePrimaryName("RegistrationForm");
-
+			
 			firstInput.setStylePrimaryName("CardTextBox");
 			lastInput.setStylePrimaryName("CardTextBox");
 			
@@ -132,17 +134,18 @@ public class SurveyManagementEntry implements EntryPoint {
 			googleMail = mail;
 			signUpButton.addClickHandler(new CreateUserClickHandler(this));
 //			noBtn.addClickHandler(new DontCreateUserClickHandler(this));
-			vPanel.add(abfrage);
+			formWrapper.add(abfrage);
 			//vPanel.add(nickInput);
-			vPanel.add(firstName);
-			vPanel.add(firstInput);
-			vPanel.add(lastName);
-			vPanel.add(lastInput);
+			formWrapper.add(firstName);
+			formWrapper.add(firstInput);
+			formWrapper.add(lastName);
+			formWrapper.add(lastInput);
 			btnPanel.add(signUpButton);
 //			btnPanel.add(noBtn);
-			vPanel.add(btnPanel);
-			this.add(vPanel);
+			formWrapper.add(btnPanel);
+			this.add(formWrapper);
 			//this.setWidth("300px");
+		
 		}
 	}
 	
