@@ -57,27 +57,57 @@ public class Survey extends Ownership {
    	public String toString() {
    		return "SurveyID #S" + this.getId();
    	}
+   	
+   	/**
+     * Methode um den Status einer Umfrage auszugeben
+     * @return int status
+     */
 
 	public int getStatus() {
 		return status;
 	}
+	
+	/** 
+     * Methode um den Status einer Umfrage zu setzen 
+     * @return int status
+     */
 
 	public void setStatus(int status) {
 		this.status = status;
 	}
 	
+	/**
+     * Methode um das StartDatum einer Umfrage auszugeben
+     * @return Date startDate
+     */
+	
 	public java.sql.Date getStartDate() {
 		return startDate;
 	}
+	
+	/**
+     * Methode um das StartDatum einer Umfrage zu setzen
+     * @return Date startDate
+     */
 
 	public void setStartDate(java.sql.Date startDate) {
 		this.startDate = startDate;
 		
 	}
 	
+	/**
+     * Methode um das EndDatum einer Umfrage auszugeben
+     * @return Date startDate
+     */
+	
 	public java.sql.Date getEndDate() {
 		return endDate;
 	}
+	
+	/**
+     * Methode um das EndDatum einer Umfrage zu setzen
+     * @return Date startDate
+     */
 
 	public void setEndDate(java.sql.Date endDate) {
 		this.endDate = endDate;
@@ -85,17 +115,36 @@ public class Survey extends Ownership {
 		
 	}
 	
+	/**
+     * Methode um die ausgewählte Stadt einer Umfrage auszugeben
+     * @return selectedCity
+     */
+	
 	public String getSelectedCity() {
 		return selectedCity;
 	}
+	/**
+     * Methode um die ausgewählte Stadt einer Umfrage zu setzen
+     * @return selectedCity
+     */
 	
 	public void setSelectedCity(String selectedCity) {
 		this.selectedCity = selectedCity;
 	}
 	
+	/**
+     * Methode um den Name des Films einer Umfrage auszugeben
+     * @return movieName
+     */
+	
 	public String getMovieName() {
 		return movieName;
 	}
+	
+	/**
+     * Methode um den Name des Films einer Umfrage zu setzen
+     * @return movieName
+     */
 	
 	public void setMovieName(String movieName) {
 		this.movieName = movieName;
