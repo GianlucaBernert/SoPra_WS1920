@@ -99,10 +99,9 @@ public class CinemaAdminEntry implements EntryPoint{
 		/**
 		 * Instantiierung der notwendigen GUI Objekte
 		 */
-		private Label abfrage = new Label("Du bist noch nicht registriert!"
-				+ " Bitte lege einen User an.");
-		private Button yesBtn = new Button("Registrieren");
-		private Button noBtn = new Button("Abbrechen");
+		private Label abfrage = new Label("Sign Up");
+		private Button signUpButton = new Button("Sign Up");
+//		private Button noBtn = new Button("Abbrechen");
 		private VerticalPanel vPanel = new VerticalPanel();
 		private HorizontalPanel btnPanel = new HorizontalPanel();
 	
@@ -116,29 +115,29 @@ public class CinemaAdminEntry implements EntryPoint{
 		 * @param mail
 		 */
 		public RegistrationFormDialogBox(String mail) {
-			this.setStylePrimaryName("CardDescription");
+			this.setStylePrimaryName("RegistrationForm");
 
 			firstInput.setStylePrimaryName("CardTextBox");
 			lastInput.setStylePrimaryName("CardTextBox");
 			
-			yesBtn.setStylePrimaryName("SaveButton");
-			noBtn.setStylePrimaryName("SaveButton");
+			signUpButton.setStylePrimaryName("SignUpButton");
+//			noBtn.setStylePrimaryName("SaveButton");
 			
-			abfrage.setStylePrimaryName("TextBoxLabel");
+			abfrage.setStylePrimaryName("CardDescription");
 			firstName.setStylePrimaryName("TextBoxLabel");
 			lastName.setStylePrimaryName("TextBoxLabel");
 			
 			googleMail = mail;
-			yesBtn.addClickHandler(new CreateUserClickHandler(this));
-			noBtn.addClickHandler(new DontCreateUserClickHandler(this));
+			signUpButton.addClickHandler(new CreateUserClickHandler(this));
+//			noBtn.addClickHandler(new DontCreateUserClickHandler(this));
 			vPanel.add(abfrage);
 			//vPanel.add(nickInput);
 			vPanel.add(firstName);
 			vPanel.add(firstInput);
 			vPanel.add(lastName);
 			vPanel.add(lastInput);
-			btnPanel.add(yesBtn);
-			btnPanel.add(noBtn);
+			btnPanel.add(signUpButton);
+//			btnPanel.add(noBtn);
 			vPanel.add(btnPanel);
 			this.add(vPanel);
 			//this.setWidth("300px");

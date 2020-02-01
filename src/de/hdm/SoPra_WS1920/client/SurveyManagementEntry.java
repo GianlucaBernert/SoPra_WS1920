@@ -22,7 +22,6 @@ import de.hdm.SoPra_WS1920.client.gui.Admin.AuthenticationForm;
 import de.hdm.SoPra_WS1920.shared.LoginInfo;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
-
 import de.hdm.SoPra_WS1920.client.gui.SurveyContent;
 import de.hdm.SoPra_WS1920.client.gui.SurveyManagementHeader;
 
@@ -102,10 +101,9 @@ public class SurveyManagementEntry implements EntryPoint {
 		/**
 		 * Instantiierung der notwendigen GUI Objekte
 		 */
-		private Label abfrage = new Label("Du bist noch nicht registriert!"
-				+ " Bitte lege einen User an.");
-		private Button yesBtn = new Button("Registrieren");
-		private Button noBtn = new Button("Abbrechen");
+		private Label abfrage = new Label("Sign Up");
+		private Button signUpButton = new Button("Sign Up");
+//		private Button noBtn = new Button("Abbrechen");
 		private VerticalPanel vPanel = new VerticalPanel();
 		private HorizontalPanel btnPanel = new HorizontalPanel();
 	
@@ -119,31 +117,29 @@ public class SurveyManagementEntry implements EntryPoint {
 		 * @param mail
 		 */
 		public RegistrationFormDialogBox(String mail) {
-			this.setStylePrimaryName("CardDescription");
-			// Adding Styles to Interaction Fields
-			//vPanel.setStyleName("CardDescription");
-			//nickInput.addStyleName("control input content_margin");
+			this.setStylePrimaryName("RegistrationForm");
+
 			firstInput.setStylePrimaryName("CardTextBox");
 			lastInput.setStylePrimaryName("CardTextBox");
 			
-			yesBtn.setStylePrimaryName("SaveButton");
-			noBtn.setStylePrimaryName("SaveButton");
+			signUpButton.setStylePrimaryName("SignUpButton");
+//			noBtn.setStylePrimaryName("SaveButton");
 			
-			abfrage.setStylePrimaryName("TextBoxLabel");
+			abfrage.setStylePrimaryName("CardDescription");
 			firstName.setStylePrimaryName("TextBoxLabel");
 			lastName.setStylePrimaryName("TextBoxLabel");
 			
 			googleMail = mail;
-			yesBtn.addClickHandler(new CreateUserClickHandler(this));
-			noBtn.addClickHandler(new DontCreateUserClickHandler(this));
+			signUpButton.addClickHandler(new CreateUserClickHandler(this));
+//			noBtn.addClickHandler(new DontCreateUserClickHandler(this));
 			vPanel.add(abfrage);
 			//vPanel.add(nickInput);
 			vPanel.add(firstName);
 			vPanel.add(firstInput);
 			vPanel.add(lastName);
 			vPanel.add(lastInput);
-			btnPanel.add(yesBtn);
-			btnPanel.add(noBtn);
+			btnPanel.add(signUpButton);
+//			btnPanel.add(noBtn);
 			vPanel.add(btnPanel);
 			this.add(vPanel);
 			//this.setWidth("300px");
