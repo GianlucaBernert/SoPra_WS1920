@@ -190,10 +190,17 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         	}
         }
         
+        Vector<Membership> mOfGroup = this.meMapper.findMembershipByPersonFK(p.getId());
+        if (mOfGroup != null) {
+        	for (Membership me : mOfGroup) {
+        		this.deleteMembership(me.getGroupFK(), me.getPersonFK());
+        	}
+        }
+        
         Vector<Screening> scOfPerson = this.scMapper.findScreeningByPersonFK(p.getId());
         if (scOfPerson != null) {
         	for (Screening sc : scOfPerson) {
-        		this.scMapper.deleteScreening(sc);
+        		this.deleteScreening(sc);
         		System.out.println("Screening ok");
         	}
         }
@@ -201,7 +208,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Cinema> cOfPerson = this.cMapper.findCinemaByPersonFK(p.getId());
         if (cOfPerson != null) {
         	for (Cinema c : cOfPerson) {
-        		this.cMapper.deleteCinema(c);
+        		this.deleteCinema(c);
         		System.out.println("Cinema ok");
         	}
         }
@@ -209,7 +216,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
         Vector<Movie> mOfPerson = this.mMapper.findMovieByPersonFK(p.getId());
         if (mOfPerson != null) {
         	for (Movie m : mOfPerson) {
-        		this.mMapper.deleteMovie(m);
+        		this.deleteMovie(m);
         		System.out.println("Movie ok");
         	}
         }
@@ -950,8 +957,131 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     		}
     		return surveyToShow;
     }
-  
+    
+    /**
+     * Methode zum L�schen eines Screening Objects und dazugeh�rigen Business Objects.
+     * @param screening 
+     * @return
+     */
+    @Override
+    public void deleteScreening(Screening screening) throws IllegalArgumentException {
     	
+    	Ownership os = this.oMapper.findOwnershipByID(screening.getId());
+    	
+        
+    	Vector<SurveyEntry> ses = this.getSurveyEntryByScreeningFK(screening.getId());
+    	
+    	if (ses != null) {
+    		for (SurveyEntry se : ses) {
+    			this.deleteSurveyEntry(se);
+    		}
+    	}
+    	
+        this.scMapper.deleteScreening(screening);
+        this.deleteOwnership(os);
+        
+    }
+    
+    /**
+     * Methode zum L�schen eines KinoObjects und zugeh�rigen BusinessObjects.
+     * @param cinema 
+     * @return
+     */
+    @Override
+    public void deleteCinema(Cinema cinema) throws IllegalArgumentException {
+    	
+    	Ownership os = this.oMapper.findOwnershipByID(cinema.getId());
+    	
+    	//Loeschen aller Screenings eines Kinos
+        
+    	Vector<Screening> s = this.getScreeningByCinemaFK(cinema.getId());
+    	
+    	if (s != null) {
+    		for(Screening s1 : s) {
+    			this.deleteScreening(s1);
+    		}
+    	}
+    	//Wenn cc Id -> 
+    	
+    	//Loeschen des Cinema Object
+        this.cMapper.deleteCinema(cinema);
+        this.deleteOwnership(os);
+      
+    }
+    
+    /**
+     * Methode zum Aufrufen von Screening Objects anhand des cinemaFK.
+     * @param cinemaFK 
+     * @return
+     */
+    @Override
+    public Vector<Screening> getScreeningByCinemaFK(int cinemaFK) throws IllegalArgumentException {
+        
+        return this.scMapper.findScreeningByCinemaFK(cinemaFK);
+    }
+    
+    
+    /**
+     * Methode zum L�schen eines Kino Objects.
+     * @param movie 
+     * @return
+     */
+    @Override
+    public void deleteMovie(Movie movie) throws IllegalArgumentException {
+    	Ownership os = this.oMapper.findOwnershipByID(movie.getId());
+    	Vector<Screening> screenings = this.getScreeningByMovieFK(movie.getId());
+    	
+    	if(screenings != null) {
+    		for(Screening s : screenings) {
+    			this.deleteScreening(s);
+    		}
+    	}
+    	
+       this.mMapper.deleteMovie(movie); 
+       this.deleteOwnership(os);
+    }
+    
+    
+    /**
+     * Methode zum Aufrufen von Screening Objects anhand des movieFK.
+     * @param movieFK 
+     * @return
+     */
+    @Override
+    public Vector<Screening> getScreeningByMovieFK(int movieFK) throws IllegalArgumentException {
+        
+        return this.scMapper.findScreeningByMovieFK(movieFK);
+    }
+    
+    
+    /**
+     * Methode zum L�schen einer CinemaChain und zur�cksetzen der ccId in den betroffenen Cinema Objects
+     */
+    @Override
+    public void deleteCinemaChain(CinemaChain cc) throws IllegalArgumentException {
+    	Ownership os = this.oMapper.findOwnershipByID(cc.getId());
+    	Vector <Cinema> vc = this.getCinemasByCinemaChainFK(cc);
+    	if(vc != null) {
+    		for (Cinema c : vc) {
+    			this.deleteCinema(c);
+    		}
+    	}
+    	this.ccMapper.deleteCinemaChain(cc);
+    	this.deleteOwnership(os);
+
+    }
+    
+    /**
+     * Methode zum Aufrufen aller zugeh�rigen Cinema Objekte einer CinemaChain
+     * @param cc
+     * @return
+     */
+    @Override
+    public Vector <Cinema> getCinemasByCinemaChainFK(CinemaChain cc) throws IllegalArgumentException{
+    	return this.cMapper.findCinemaByCinemaChainFK(cc.getId());
+    }
+    
+    
     }
     
    
