@@ -62,8 +62,9 @@ public class GroupMapper {
 	 */	
     
     /**
+     * Methode, die eine Gruppe anhand der ID zurückgibt
      * @param groupID 
-     * @return
+     * @return Group
      */
     public Group findGroupByID(int groupID) {
     	Connection con = DBConnection.connection();
@@ -90,6 +91,11 @@ public class GroupMapper {
     }
 
     
+    /**
+     * Methode, die ein Group Objekt in der Datenbank speichert
+     * @param groupI
+     * @return Group
+     */
     public Group insertGroup(Group group) {
     	Connection con = DBConnection.connection();
 
@@ -152,6 +158,13 @@ public class GroupMapper {
  	 * ================================================================================================
  	 * Beginn: Foreign Key-Mapper-Methoden
  	 */
+    
+    
+    /**
+     * Methode, die alle Group Objekte des Erstellers zurückgibt
+     * @param personFK
+     * @return Vektor Group
+     */
     public Vector<Group> findGroupByPersonFK(int personFK) {
     	Connection con = DBConnection.connection();
 		Vector<Group> result = new Vector<Group>();
@@ -178,8 +191,8 @@ public class GroupMapper {
     }
 
     /**
-     * @param person 
-     * @return
+     * Methode die eine Gruppe anhand des Erstellers löscht
+     * @param personFK
      */
     public void deleteGroupByPersonFK(int personFK) {
     	Connection con = DBConnection.connection();
@@ -196,8 +209,9 @@ public class GroupMapper {
     
 
     /**
+     * Methode, die Gruppen anhand des Gruppennamens zurückgibt
      * @param name 
-     * @return
+     * @return Vektor Group
      */
     public Vector<Group> findGroupByName(String name) {
     	Connection con = DBConnection.connection();
@@ -222,11 +236,6 @@ public class GroupMapper {
         return result;
     }
 
-    
-    /**
-     * @param id 
-     * @return
-     */
     
 
 }

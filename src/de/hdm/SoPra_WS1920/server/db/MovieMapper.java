@@ -56,8 +56,14 @@ public class MovieMapper {
 	 * =============================================================================================
 	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
 	 * in allen Mapper-Klassen existieren.
-	 * 
 	 */	
+  
+    
+    /**
+     * Methode, die ein Movie Objekt anhand der ID zurückgibt
+     * @param int movieID 
+     * @return movie m
+     */
     public Movie findMovieByID(int movieID) {
     	Connection con = DBConnection.connection();
 		
@@ -84,7 +90,8 @@ public class MovieMapper {
     
     /**
 	 * Methode, die das Anlegen eines Movie-Objekts ermöglicht
-	 * @param person
+	 * @param movie
+	 * @return movie
 	 */
     
     
@@ -112,7 +119,8 @@ public class MovieMapper {
 
     /**
 	 * Methode, die das Updaten eines Movie-Objekts in der Datenbank ermöglicht	
-	 * @param person
+	 * @param movie
+	 * @return movie
 	 */
     
     public Movie updateMovie(Movie movie) {
@@ -135,7 +143,7 @@ public class MovieMapper {
 
     /**
 	 * Methode, die das Loeschen eines Movie-Objekts aus der Datenbank ermöglicht
-	 * @param person
+	 * @param movie
 	 */
     
     public void deleteMovie(Movie movie) {
@@ -156,9 +164,11 @@ public class MovieMapper {
  	 * ================================================================================================
  	 * Beginn: Foreign Key-Mapper-Methoden
  	 */
+    
     /**
-     * @param id 
-     * @return
+     * Methode, die alle Movie Objekte zurückgibt, die ein User erstellt hat
+     * @param int personFK
+     * @return Vektor movie
      */
     public Vector<Movie> findMovieByPersonFK(int personFK) {
     	Connection con = DBConnection.connection();
@@ -203,6 +213,10 @@ public class MovieMapper {
      * Beginn: Spezifische Business Object Methoden
 	 */	
     	
+    /** 
+     * Methode, die alle Movies in der Datenbank zurückgibt
+     * @return Vektor movie
+     */
     // Find-All Methode zum Abrufen aller Movie-Objekte
     public Vector<Movie> findAll() {
         Connection con = DBConnection.connection();
@@ -233,9 +247,12 @@ public class MovieMapper {
         // Ergebnisvektor zurückgeben
         return result;
       }
+    
+    
     /**
+     * Methode, die Movie Objekte anhand des Namens zurückgibt
      * @param name 
-     * @return
+     * @return Vektor movie
      */
     public Vector<Movie> findMovieByName(String name) {
     	Connection con = DBConnection.connection();
@@ -263,8 +280,8 @@ public class MovieMapper {
     }
 
     /**
+     * Methode, die ein Movie Objekt anhand des Namens löscht
      * @param name 
-     * @return
      */
     public void deleteMovieByName(String name) {
     	Connection con = DBConnection.connection();
@@ -284,8 +301,9 @@ public class MovieMapper {
 	
 	
     /**
+     * Methode, die Movie Objekte anhand des Genres zurückgibt.
      * @param genre 
-     * @return
+     * @return Vektor movie
      */
     public Vector<Movie> findMovieByGenre(String genre) {
     	Connection con = DBConnection.connection();

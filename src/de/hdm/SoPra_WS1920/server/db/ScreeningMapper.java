@@ -170,6 +170,11 @@ public class ScreeningMapper {
         
     }
     
+    /**
+	 * Methode, die Screenings für das Erstellen einer Umfrage bereitstellt.
+	 * @param startDate, endDate, int movieFK, String City
+	 * @return Vektor Screening
+	 */
     public Vector<Screening> findScreeningForSurveyCreation(Date startDate, Date endDate, int movieFK, String c) {
     	Connection con = DBConnection.connection();
     	Vector<Screening> result = new Vector<Screening>();
@@ -301,6 +306,10 @@ public class ScreeningMapper {
     }
     
     
+    /**
+	 * Methode, die das Loeschen eines Screening-Objekts aus der Datenbank ermöglicht
+	 * @param ownership
+	 */
     public void deleteByScreeningDate(Date screeningDate) {
     	Connection con = DBConnection.connection();
     	
@@ -313,6 +322,10 @@ public class ScreeningMapper {
     	}
     }
     
+    /**
+	 * Methode, die das Loeschen eines Screening-Objekts aus der Datenbank anhand der screeningTime ermöglicht
+	 * @param Time screeningTime
+	 */
     public void deleteByScreeningTime(Time screeningTime) {
     	Connection con = DBConnection.connection();
     	
@@ -325,6 +338,10 @@ public class ScreeningMapper {
     	}
     }
     
+    /**
+	 * Methode, die das Loeschen eines Screening-Objekts aus der Datenbank anhand der screeningTime und  ermöglicht
+	 * @param Time screeningTime, Date screeningDate
+	 */
     public void deleteByScreeningDateTime(Date screeningDate, Time screeningTime) {
     	Connection con = DBConnection.connection();
     	

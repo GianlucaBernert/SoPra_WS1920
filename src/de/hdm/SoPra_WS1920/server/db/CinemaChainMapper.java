@@ -205,6 +205,7 @@ public class CinemaChainMapper {
 	    }
 	    
 	    /**
+	     * Methode, die einen Vektor mit allen erstellen CinemaChain Objekten einer Person zurückgibt
 	     * @param personFK 
 	     * @return Vektor mit Kinoketten-Objekten eines Erstellers/Besitzers
 	     */

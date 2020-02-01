@@ -64,8 +64,9 @@ public class PersonMapper {
 	 */	
      
     /**
-     * @param personID 
-     * @return
+     * Methode, die einer Person anhand einer ID zurückgibt.
+     * @param int personID 
+     * @return Person p
      */
     public Person findPersonByID(int personID) {
 	Connection con = DBConnection.connection();
@@ -93,8 +94,9 @@ public class PersonMapper {
 	
     
 	/**
-	 * Methode, die das Anlegen eines User-Objekts ermöglicht
+	 * Methode, die das Anlegen eines Person-Objekts ermöglicht
 	 * @param person
+	 * @return person p
 	 */
     
     public Person insertPerson(Person person) {
@@ -121,6 +123,7 @@ public class PersonMapper {
 	/**
 	 * Methode, die das Updaten eines Person-Objekts in der Datenbank ermöglicht	
 	 * @param person
+	 * @return person
 	 */
     
     public Person updatePerson(Person person) {
@@ -163,8 +166,9 @@ public class PersonMapper {
 	 * Beginn: Foreign Key-Mapper-Methoden
 	 */
     /**
+     * Methode, die alle Personen einer Gruppe zurückgibt
      * @param group 
-     * @return
+     * @return Vektor Person
      */
     public Vector <Person> findPersonByGroupFK(int groupFK) {
     	Connection con = DBConnection.connection();
@@ -199,8 +203,9 @@ public class PersonMapper {
     
     
     /**
+     * Methode, die Personen anhand des Vornamen zurückgibt
      * @param firstname 
-     * @return
+     * @return Vektor Person
      */
     public Vector<Person> findPersonByFirstname(String firstname) {
     	Connection con= DBConnection.connection();	
@@ -223,8 +228,9 @@ public class PersonMapper {
     }
 
     /**
+     * Methode, die Personen anahnd des Nachnamen zurückgibt.
      * @param lastname 
-     * @return
+     * @return Vektor Person
      */
     public Vector<Person> findPersonByLastname(String lastname) {
     	Connection con= DBConnection.connection();	
@@ -247,8 +253,9 @@ public class PersonMapper {
     }
 
     /**
+     * Methode, die eine Person anhand der Email zurückgibt.
      * @param email 
-     * @return
+     * @return Person p
      */
    public Person findPersonByEmail(String mail) {
     	Connection con= DBConnection.connection();	
@@ -275,8 +282,9 @@ public class PersonMapper {
     
     
     /**
+     * Methode, die Personen welche den Status isAdmin erfüllen zurückgibt
      * @param isAdmin 
-     * @return
+     * @return Vektor Person
      */
     public Vector<Person> findPersonByIsAdmin(boolean isAdmin) {
     	Connection con= DBConnection.connection();	
@@ -298,6 +306,10 @@ public class PersonMapper {
 		return result;
     }
     
+    /**
+	 * Methode, die alle Personen zurückgibt, die in der Datenbank gespeichert sind.
+	 * @return Vektor Person
+	 */
     public Vector<Person> findAll() {
         Connection con = DBConnection.connection();
         Vector<Person> result = new Vector<Person>();
