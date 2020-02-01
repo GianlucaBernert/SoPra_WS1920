@@ -27,6 +27,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
 /**
  * @author GianlucaBernert
+ * @author Yesin Soufi
  */
 
 @RemoteServiceRelativePath("surveyManagement")
@@ -416,42 +417,129 @@ public interface SurveyManagement extends RemoteService {
      */
 
 	Vector<Person> searchPerson(String text);
+	
+	 /**
+     * Methode um den Screening der Id zu erhalten
+     * @param id
+     */
 
 	Screening getScreeningById(int id);
+	
+	 /**
+     * Methode um den Movie der Id zu erhalten
+     * @param id
+     */
 
 	Movie getMovieById(int id);
+	
+	/**
+     * Methode um den Eintrag  des ScreeningFK erhalten
+     * @param screeningFK
+     */
 
 	Vector<SurveyEntry> getSurveyEntryByScreeningFK(int screeningFK);
+	
+	/**
+     * Methode um den Movie des Genres zu erhalten
+     * @param genre
+     */
 
 	Vector<Movie> getMovieByGenre(String genre);
+	
+	/**
+     * Methode um den Cinema Id zu erhalten
+     * @param id
+     */
 
 	Cinema getCinemaById(int id);
+	
+	/**
+     * Methode um die Votes der SurveyEinträge zu erhalten
+     * @param surveyEntryFK
+     */
 
 	Vector<Vote> getVotesBySurveyEntryFK(int surveyEntryFK);
-
+	
+	/**
+     * Methode um alle Movies zu erhalten
+     * @param id
+     */
+	
 	Vector<Movie> getAllMovies();
+	
+	/**
+     * Methode um Cinemas von ScreeningFK zu erhalten
+     * @param screeningFK
+     */
 
 	Cinema getCinemaByScreeningFK(int screeningFK);
+	
+	/**
+     * Methode um Screenings der Survey Erstellung 
+     * @param id
+     */
 
 	Vector<Screening> getScreeningsforSurveyCreation(Movie movie, String city, java.sql.Date startDate,
 			java.sql.Date endDate);
+	
+	/**
+     * Methode um die Gruppen der Mitgliedschaften zu erhalten 
+     * @param personFK
+     */
 
 	Vector<Group> getGroupsByMemberships(int personFK);
+	
+	/**
+     * Methode um die Umfrageb erhalten 
+     * @param personFK
+     */
 
 	Vector<Survey> getSurveyToShow(int personFK) ;
-
+	
+	/**
+	 * Methode zum löschen eines Screening Objekts
+	 * @param screening
+	 */
 	void deleteScreening(Screening screening);
-
+	
+	/**
+	 * Methode zum löschen eines Cinema Objekts
+	 * @param cinema
+	 */
 	void deleteCinema(Cinema cinema);
 
+	/**
+	 * Methode die alle Screenings eines Kinos zurück gibt
+	 * @param cinemaFK
+	 * @return
+	 */
 	Vector<Screening> getScreeningByCinemaFK(int cinemaFK);
 
+	/**
+	 * Methode zum löschen eines Movie Objekts
+	 * @param movie
+	 */
 	void deleteMovie(Movie movie);
-
+	
+	/**
+	 * Methode die alle Screenings die den übergebenen Film enthalten zurückgibt
+	 * @param movieFK
+	 * @return
+	 */
 	Vector<Screening> getScreeningByMovieFK(int movieFK);
-
+	
+	/**
+	 * Löschen einer CinemaChain
+	 * @param cc
+	 */
 	void deleteCinemaChain(CinemaChain cc);
-
+	
+	/**
+	 * Methode die Alle Cinema Objekte einer Kinokette zurückgibt.
+	 * @param cc
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	Vector<Cinema> getCinemasByCinemaChainFK(CinemaChain cc) throws IllegalArgumentException;
 	
 	
