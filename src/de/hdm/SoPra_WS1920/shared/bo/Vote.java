@@ -50,7 +50,7 @@ public class Vote extends Ownership {
     }
 
     /**
-     * MEthode um den surveyENtryFK eines VOtings zu setzen
+     * Methode um den surveyEntryFK eines Votings zu setzen
      * @param int surveyEntryFK 
      */
     public void setSurveyEntryFK(int surveyEntryFK) {
