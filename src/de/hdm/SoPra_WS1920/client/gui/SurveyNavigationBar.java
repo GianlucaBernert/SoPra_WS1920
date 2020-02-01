@@ -1,6 +1,5 @@
 package de.hdm.SoPra_WS1920.client.gui;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -11,7 +10,6 @@ import com.google.gwt.user.client.ui.Label;
 
 import de.hdm.SoPra_WS1920.client.CinemaAdminEntry;
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
-import de.hdm.SoPra_WS1920.client.SurveyManagementEntry;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 
@@ -79,7 +77,7 @@ public class SurveyNavigationBar extends FlowPanel {
 		
 		settings = new Label("Settings");
 		settings.setStyleName("navbar-element bottom");
-		settings.addClickHandler(new SettingsClickHandler());
+		settings.addClickHandler(new SettingsClickHandler(this));
 		
 		logOut = new Label("Logout");
 		logOut.setStyleName("navbar-element logout");
@@ -172,14 +170,16 @@ public class SurveyNavigationBar extends FlowPanel {
 	
 	class SettingsClickHandler implements ClickHandler{
 
-		public SettingsClickHandler() {
+		SurveyNavigationBar surveyNavigationBar;
+		public SettingsClickHandler(SurveyNavigationBar surveyNavigationBar) {
 			// TODO Auto-generated constructor stub
+			this.surveyNavigationBar = surveyNavigationBar;
 		}
 
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			UserSettingsForm userSettingsForm = new UserSettingsForm(header, surveyContent);
+			UserSettingsForm userSettingsForm = new UserSettingsForm(surveyNavigationBar, p);
 			userSettingsForm.center();
 			userSettingsForm.show();
 		}
@@ -207,6 +207,8 @@ public class SurveyNavigationBar extends FlowPanel {
 	public void setLogOutURL(String logOutURL) {
 		this.logOutURL = logOutURL;
 	}
-	
+	public String getLogOutURL() {
+		return logOutURL;
+	}
 
 }

@@ -15,7 +15,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Person;
 public class NavigationBar extends FlowPanel {
 	
 	Person person;
-	String logoutUrl;
+	String logOutUrl;
 	
 	Header header;
 	Content content;
@@ -73,7 +73,7 @@ public class NavigationBar extends FlowPanel {
 		
 		settings = new Label("Settings");
 		settings.setStyleName("navbar-element bottom");
-		settings.addClickHandler(new SettingsClickHandler());
+		settings.addClickHandler(new SettingsClickHandler(this));
 		
 		logOut = new Label("Logout");
 		logOut.setStyleName("navbar-element logout");
@@ -212,9 +212,10 @@ public class NavigationBar extends FlowPanel {
 		
 	}
 	class SettingsClickHandler implements ClickHandler{
-
-		public SettingsClickHandler() {
+		NavigationBar navigationBar;
+		public SettingsClickHandler(NavigationBar navigationBar) {
 			// TODO Auto-generated constructor stub
+			this.navigationBar = navigationBar;
 		}
 
 		@Override
@@ -225,7 +226,7 @@ public class NavigationBar extends FlowPanel {
 			movies.setStyleName("navbar-element");
 			screenings.setStyleName("navbar-element");
 			settings.setStyleName("navbar-element bottom");
-			UserSettingsForm userSettingsForm = new UserSettingsForm(person);
+			UserSettingsForm userSettingsForm = new UserSettingsForm(navigationBar,person);
 			userSettingsForm.center();
 			userSettingsForm.show();
 		}
@@ -236,7 +237,7 @@ public class NavigationBar extends FlowPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.Location.assign(logoutUrl);
+			Window.Location.assign(logOutUrl);
 			Window.alert("Successfully logged out!");
 			
 		}
@@ -251,10 +252,14 @@ public class NavigationBar extends FlowPanel {
 		return person;
 	}
 
-	public void setLogOutURL(String logoutUrl) {
+	public void setLogOutURL(String logOutUrl) {
 		// TODO Auto-generated method stub
-		this.logoutUrl = logoutUrl;
+		this.logOutUrl = logOutUrl;
 		
+	}
+	
+	public String getLogOutURL() {
+		return logOutUrl;
 	}
 	
 }
