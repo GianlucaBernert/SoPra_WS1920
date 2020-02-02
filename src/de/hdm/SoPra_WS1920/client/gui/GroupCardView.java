@@ -16,8 +16,16 @@ import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
 
+/**
+ * Klasse, die den Inhalt einer GroupCard zum Anzeigen einer Gruppe erzeugt
+ * @author SebastianHermann
+ *
+ */
 public class GroupCardView extends FlowPanel {
 	
+	/**
+	 * Variablen der Klasse GroupCardView
+	 */
 	Label groupName;
 	Label member;
 	Button edit;
@@ -28,6 +36,11 @@ public class GroupCardView extends FlowPanel {
 	
 	SurveyManagementAsync surveyManagementAdministration;
 	
+	/**
+	 * Konstruktor der Klasse GroupCardView
+	 * @param groupCard
+	 * @param groupToShow
+	 */
 	public GroupCardView(GroupCard groupCard, Group groupToShow) {
 		this.parentCard = groupCard;
 		this.groupToShow = groupToShow;
@@ -56,6 +69,11 @@ public class GroupCardView extends FlowPanel {
 		}
 		
 	}
+	/**
+	 * ClickHandler zum Editieren einer Gruppe
+	 * @author SebastianHermann
+	 *
+	 */
 		class EditClickHandler implements ClickHandler{
 			
 			GroupCardView groupCardView;
@@ -72,6 +90,12 @@ public class GroupCardView extends FlowPanel {
 			}
 			
 		}
+		
+		/**
+		 * Callback der bei Erfolg einen Vector von Memberships der Gruppe zurueck gibt
+		 * @author SebastianHermann
+		 *
+		 */
 		class GetMembershipsOfGroup implements AsyncCallback<Vector<Membership>>{
 
 			@Override
