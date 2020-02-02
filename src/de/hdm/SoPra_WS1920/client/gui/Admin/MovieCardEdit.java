@@ -17,7 +17,11 @@ import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 
-//Edit Mode of a MovieCard
+/*
+ * Formular zum Erstellen und Bearbeiten von Movies. 
+ * 
+ * @author SebastianHerrmann
+ */
 public class MovieCardEdit extends DialogBox{
 	
 	FlowPanel formWrapper;
@@ -44,12 +48,21 @@ public class MovieCardEdit extends DialogBox{
 	Content content;
 	CinemaAdministrationAsync cinemaAdministration;
 	
+	
+	/*
+	 * Konstruktor von MovieCardEdit
+	 * @param movieCard, movieToShow
+	 */
 	public MovieCardEdit(MovieCard movieCard, Movie movieToShow) {
 		// TODO Auto-generated constructor stub
 		this.parentCard=movieCard;
 		this.movieToShow=movieToShow;
 	}
-
+	
+	/*
+	 * Weiterer Konstruktor von MovieCardEdit
+	 * @param header, content
+	 */
 	public MovieCardEdit(Header header, Content content) {
 		this.header = header;
 		this.content = content;
@@ -142,6 +155,10 @@ public class MovieCardEdit extends DialogBox{
 		formWrapper.add(saveButton);
 		this.add(formWrapper);
 	}
+	
+	/*
+	 * ClickHandler, um Movies zu speichern.
+	 */
 	class SaveClickHandler implements ClickHandler{
 		MovieCardEdit movieCardEdit;
 		public SaveClickHandler(MovieCardEdit movieCardEdit) {
@@ -171,6 +188,9 @@ public class MovieCardEdit extends DialogBox{
 		
 	}
 	
+	/*
+	 * Callback zum Speichern und Überschreiben eines Movies.
+	 */
 	class UpdateMovieCallback implements AsyncCallback<Movie>{
 		
 		MovieCardEdit movieCardEdit;
@@ -196,6 +216,9 @@ public class MovieCardEdit extends DialogBox{
 		
 	}
 	
+	/*
+	 * Callback zum Anlegen eines Movies.
+	 */
 	class NewMovieCallback implements AsyncCallback<Movie>{
 		MovieCardEdit movieCardEdit;
 		public NewMovieCallback(MovieCardEdit movieCardEdit) {
@@ -221,7 +244,9 @@ public class MovieCardEdit extends DialogBox{
 	}
 	
 	
-	
+	/*
+	 * ClickHandler, um das Movie-Formular zu schließen.
+	 */
 	class CancelClickHandler implements ClickHandler{
 		MovieCardEdit movieCardEdit;
 		public CancelClickHandler(MovieCardEdit movieCardEdit) {
@@ -244,6 +269,9 @@ public class MovieCardEdit extends DialogBox{
 		
 	}
 	
+	/*
+	 * ClickHandler, um ein Movie-Objekt zu löschen. 
+	 */
 	class DeleteClickHandler implements ClickHandler{
 		MovieCardEdit movieCardEdit;
 		public DeleteClickHandler(MovieCardEdit movieCardEdit) {
@@ -258,6 +286,10 @@ public class MovieCardEdit extends DialogBox{
 		}
 		
 	}
+	
+	/*
+	 * Callback zum Löschen eines Movies.
+	 */
 	class DeleteMovieCallback implements AsyncCallback<Void>{
 		MovieCardEdit movieCardEdit;
 		

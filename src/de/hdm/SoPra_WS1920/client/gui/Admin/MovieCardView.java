@@ -1,6 +1,7 @@
 package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import com.google.gwt.event.dom.client.ClickEvent;
+
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -9,6 +10,11 @@ import com.google.gwt.user.client.ui.Label;
 
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 
+/*
+ * Klasse zum Anzeigen eines einzelnen Movie-Objekts. 
+ * 
+ * @author SebastianHerrmann
+ */
 //ViewMode of a MovieCard
 public class MovieCardView extends FlowPanel{
 	Label name;
@@ -19,7 +25,10 @@ public class MovieCardView extends FlowPanel{
 	MovieCard parentCard;
 	Image editIcon;
 
-	
+	/*
+	 * Konstruktor von MovieCardView
+	 * @param movieCard, movieToShow
+	 */
 	public MovieCardView(MovieCard movieCard, Movie movieToShow) {
 		this.parentCard=movieCard;
 		this.movieToShow=movieToShow;
@@ -48,6 +57,9 @@ public class MovieCardView extends FlowPanel{
 	
 	}
 	
+	/*
+	 * ClickHandler zum Editieren eines Movies. 
+	 */
 	class EditClickHandler implements ClickHandler{
 
 		@Override
