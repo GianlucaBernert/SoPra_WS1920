@@ -15,6 +15,11 @@ import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 
+/**
+ * Methode zur Darstellung einer CinemaChain auf einer Karte.
+ * @author Sebastian
+ *
+ */
 public class CinemaChainCardView extends FlowPanel{
 	
 	Label cinemaChainName;
@@ -25,11 +30,19 @@ public class CinemaChainCardView extends FlowPanel{
 	CinemaChainCard parentCard;
 	CinemaAdministrationAsync cinemaAdministration;
 	
+	/**
+	 * Konstruktor der CinemaChainCardView
+	 * @param cinemaChainCard
+	 * @param cinemaChainToShow
+	 */
 	public CinemaChainCardView(CinemaChainCard cinemaChainCard, CinemaChain cinemaChainToShow) {
 		this.parentCard = cinemaChainCard;
 		this.cinemaChainToShow = cinemaChainToShow;
 	}
 	
+	/**
+	 * on Load Methode die das Anzeigen der CinemaChain als Karte ermoeglicht.
+	 */
 	public void onLoad() {
 		super.onLoad();
 		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
@@ -47,6 +60,9 @@ public class CinemaChainCardView extends FlowPanel{
 		this.add(editIcon);
 	}
 	
+	/**
+	 * Clickhandler zum Aufrufen der CinemaChainCardForm
+	 */
 	class EditClickHandler implements ClickHandler{
 
 		@Override
@@ -57,6 +73,9 @@ public class CinemaChainCardView extends FlowPanel{
 		
 	}
 	
+	/**
+	 * Callback zum Aufrufen der Anzahl von Kinoobjekten die zur ausgewaehlten CinemaChain gehoeren
+	 */
 	class CinemasByCinemaChainCallback implements AsyncCallback<Vector<Cinema>>{
 
 		@Override

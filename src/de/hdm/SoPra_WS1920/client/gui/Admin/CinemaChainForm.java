@@ -21,6 +21,10 @@ import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 
+/**
+ * Diese Klasse ermoeglicht das Anlegen von CinemaChain Objekten in einer Eingabemaske 
+ * @author sebastian
+ */
 public class CinemaChainForm extends DialogBox {
 
 	FlowPanel formWrapper;
@@ -44,11 +48,22 @@ public class CinemaChainForm extends DialogBox {
 	
 	CinemaAdministrationAsync cinemaAdministration;
 	
+	/**
+	 * Konstruktor der CinemaChainForm
+	 * @param cinemaChainCard
+	 * @param cinemaChain
+	 */
 	public CinemaChainForm(CinemaChainCard cinemaChainCard, CinemaChain cinemaChain) {
 		this.parentCard=cinemaChainCard;
 		this.cinemaChainToShow=cinemaChain;
 	}
 	
+	/**
+	 * Methode zum Aufrufen der CinemaChainForm Bearbeitungsoberflaeche von bereits
+	 * bestehenden CinemaChain Objekten
+	 * @param header
+	 * @param content
+	 */
 	public CinemaChainForm(Header header, Content content) {
 		this.header = header;
 		this.content = content;
@@ -59,6 +74,10 @@ public class CinemaChainForm extends DialogBox {
 		cinemaChainToShow = cinemaChain;
 	}
 	
+	/**
+	 * On Load Methode die bestimmt wie die CinemaChainForm Maske aussieht und Eingaben,
+	 * löschen und Erstellen möglich macht
+	 */
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("EditCard");
@@ -107,13 +126,18 @@ public class CinemaChainForm extends DialogBox {
 		this.add(formWrapper);
 	}
 	
+	/**
+	 * Clickhandler zum Schließen des Fensters.
+	 */
 	class CancelClickHandler implements ClickHandler{
 		CinemaChainForm cinemaChainForm;
 		public CancelClickHandler(CinemaChainForm cinemaChainForm) {
 			// TODO Auto-generated constructor stub
 			this.cinemaChainForm = cinemaChainForm;
 		}
-
+		/**
+		 * On Click MEthode des Clickhandlers welche das Fenster schließt
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
@@ -127,13 +151,18 @@ public class CinemaChainForm extends DialogBox {
 		
 	}
 	
+	/**
+	 * Clickhandler zum Speichern einer CinemaChain
+	 */
 	class SaveClickHandler implements ClickHandler{
 		CinemaChainForm cinemaChainForm;
 		public SaveClickHandler(CinemaChainForm cinemaChainForm) {
 			// TODO Auto-generated constructor stub
 			this.cinemaChainForm = cinemaChainForm;
 		}
-
+		/**
+		 * On Click Methode, die beim Aufrufen die CinemaChain speichert.
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
@@ -151,6 +180,9 @@ public class CinemaChainForm extends DialogBox {
 		}
 	}
 	
+	/**
+	 * Callback zum Speichern und eines cinemaChainObjekts, Schließen des Panels und hinzufuegen zur Kartenansicht.
+	 */
 	class SaveCinemaChainCallback implements AsyncCallback<CinemaChain>{
 		CinemaChainForm cinemaChainForm;
 		public SaveCinemaChainCallback(CinemaChainForm cinemaChainForm) {
@@ -173,6 +205,9 @@ public class CinemaChainForm extends DialogBox {
 		
 	}
 	
+	/**
+	 * Callback zum Erstellen eines CinemaChain Objekts
+	 */
 	class CreateCinemaChainCallback implements AsyncCallback<CinemaChain>{
 		CinemaChainForm cinemaChainForm;
 		public CreateCinemaChainCallback(CinemaChainForm cinemaChainForm) {
@@ -198,6 +233,10 @@ public class CinemaChainForm extends DialogBox {
 		}
 		
 	}
+	
+	/**
+	 * Clickhandler zum Löschen des ausgewaehlten CinemaChain Objekts
+	 */
 	class DeleteClickHandler implements ClickHandler{
 		CinemaChainForm cinemaChainForm;
 		public DeleteClickHandler(CinemaChainForm cinemaChainForm) {
@@ -215,6 +254,9 @@ public class CinemaChainForm extends DialogBox {
 		
 	}
 	
+	/**
+	 * Callback zur Durchführen der DeleteCinemaChain Methode
+	 */
 	class DeleteCinemaChainCallback implements AsyncCallback<Void>{
 		CinemaChainForm cinemaChainForm;
 		

@@ -14,6 +14,10 @@ import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 
+/**
+ * Klasse zum Anzeigen der CinemaChain Karten.
+ * @author Seabstian
+ */
 public class CinemaChainCard extends FlowPanel {
 	
 	CinemaChain cinemaChainToShow;
@@ -34,6 +38,9 @@ public class CinemaChainCard extends FlowPanel {
 		
 	}
 	
+	/**
+	 * On Load Methode zum Anzeigen der CinemaChainForms
+	 */
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("Card CinemaCardView");
@@ -43,6 +50,10 @@ public class CinemaChainCard extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Methode zum Anzeigen von CinemaChainCardViews
+	 * @param cinemaChain
+	 */
 	public void showCinemaChainCardView(CinemaChain cinemaChain) {
 		this.cinemaChainToShow = cinemaChain;
 		this.clear();
@@ -52,6 +63,10 @@ public class CinemaChainCard extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Methode zum Anzeigen und Anordnen der CinemaChainForm
+	 * @param cinemaChain
+	 */
 	public void showCinemaChainForm(CinemaChain cinemaChain) {
 		this.cinemaChainToShow = cinemaChain;
 		CinemaChainForm cinemaChainForm = new CinemaChainForm(this, cinemaChainToShow);

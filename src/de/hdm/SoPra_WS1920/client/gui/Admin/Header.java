@@ -24,6 +24,11 @@ import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
 
+/**
+ * Diese Klasse bildet den Header in der CinemaAdministration ab.
+ * @author Sebastian
+ *
+ */
 public class Header extends FlowPanel{
 	
 	Label headline;
@@ -34,19 +39,28 @@ public class Header extends FlowPanel{
 	Content content;
 	CinemaAdministrationAsync cinemaAdministration;
 	
-	
+	/**
+	 * Konstruktor des Headers
+	 * @param content
+	 */
 	public Header(Content content) {
 		// TODO Auto-generated constructor stub
 		this.content=content;
 		
 	}
-
+	
+	/**
+	 * On Load MEthode zum Anzeigen des Headers.
+	 */
 	public void onLoad() {
 		super.onLoad();
 		this.setStyleName("Header");
 		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
 	}
 	
+	/**
+	 * nested class CreateCinemaClickhandler zur Abbildung im Header
+	 */
 	class CreateCinemaChainClickHandler implements ClickHandler{
 		Header header;
 		Content content;
@@ -66,6 +80,9 @@ public class Header extends FlowPanel{
 		
 	}
 	
+	/**
+	 * Clickhandler zum erstellen von CinemaObjekten der im Header angezeigt wird.
+	 */
 	class CreateCinemaClickHandler implements ClickHandler{
 		Header header;
 		Content content;
@@ -85,6 +102,9 @@ public class Header extends FlowPanel{
 		
 	}
 	
+	/**
+	 * Clickhandler zum erstellen von MovieObjekten der im Header angezeigt wird.
+	 */
 	class CreateMovieClickHandler implements ClickHandler{
 		Header header;
 		Content content;
@@ -103,6 +123,9 @@ public class Header extends FlowPanel{
 		
 	}
 	
+	/**
+	 * Clickhandler zum erstellen von ScreeningObjekten der im Header angezeigt wird.
+	 */
 	class CreateScreeningClickHandler implements ClickHandler{
 		Header header;
 		Content content;
@@ -121,6 +144,9 @@ public class Header extends FlowPanel{
 		
 	}
 	
+	/**
+	 * Diese Klasse stellt eine Suchleiste da, die das Suchen nach Objekten moeglich macht. 
+	 */
 	class SearchBox extends FlowPanel{
 		Header header;
 		TextBox searchText;
@@ -128,14 +154,19 @@ public class Header extends FlowPanel{
 		Image searchIcon;
 		Image searchSubmitIcon;
 		
-		
+		/**
+		 * Konstruktor der SearchBox
+		 * @param header
+		 */
 		public SearchBox(Header header) {
 			// TODO Auto-generated constructor stub
 			this.header = header;
 		}
 
 
-
+		/**
+		 * On Load Methode zum Anzeigen der SearchBox
+		 */
 		public void onLoad(){
 			super.onLoad();
 			this.setStyleName("SearchBox");
@@ -163,6 +194,11 @@ public class Header extends FlowPanel{
 			
 		}	 	 
 		
+		/**
+		 * 
+		 * @param searchBox
+		 * @param header
+		 */
 		public void searchWord(SearchBox searchBox, Header header) {
 			if(header.headline.getText().equals("Movies")){
 				cinemaAdministration.searchMovie(searchBox.searchText.getText(), new SearchMovieCallback());
