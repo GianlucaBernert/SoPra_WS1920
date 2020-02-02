@@ -373,7 +373,7 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     }
     
     public Group getGroupOfPersonByGroupName(int personFk ,String groupName) {
-    	Vector<Group> groupsOfPerson = this.getGroupByPersonFK(personFk);
+    	Vector<Group> groupsOfPerson = this.getGroupsByMemberships(personFk);
     	Group group = null;
     	for(Group g: groupsOfPerson) {
     		if(!g.getName().equals(groupName)) {
