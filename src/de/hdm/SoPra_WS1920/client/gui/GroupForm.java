@@ -25,9 +25,13 @@ import de.hdm.SoPra_WS1920.shared.bo.Person;
 /*
  * Dies ist die Gruppenform-Klasse. Sie wird aufgerufen wenn entweder eine neue Gruppe erstellt werden soll, oder eine bereits existierende
  * Gruppe editiert werden soll.
+ * @author SebastianHermann
  */
 public class GroupForm extends DialogBox {
 	
+	/**
+	 * Variablen der Klasse GroupForm
+	 */
 	FlowPanel formWrapper;	
 	Group groupToShow;
 	GroupCard parentCard;
@@ -61,13 +65,22 @@ public class GroupForm extends DialogBox {
 	
 	SurveyManagementAsync surveyManagementAdministration;
 	
-	
+	/**
+	 * Konstruktor der Klasse GroupForm
+	 * @param groupCard
+	 * @param group
+	 */
 	public GroupForm(GroupCard groupCard, Group group) {
 		this.parentCard = groupCard;
 		this.groupToShow = group;
 		
 	}
 	
+	/**
+	 * Konstruktor der Klasse GroupForm
+	 * @param header
+	 * @param content
+	 */
 	public GroupForm(SurveyManagementHeader header, SurveyContent content) {
 		this.header = header;
 		this.content = content;
@@ -156,6 +169,9 @@ public class GroupForm extends DialogBox {
 	
 	}
 	
+	/**
+	 * Methode um die Mitglieder einer Gruppe anzuzeigen
+	 */
 	public void showMembers() {
 		membersPanel.clear();
 		for(Person p: groupMembers) {
@@ -166,7 +182,16 @@ public class GroupForm extends DialogBox {
 		
 	}
 	
+	/**
+	 * Klasse die eine Zeile erstellt in der ein Gruppen Mitglied angezeigt wird, mit der Moeglichkeit es zu editieren oder zu entfernen
+	 * @author SebastianHermann
+	 *
+	 */
 	class MemberRow extends FlowPanel{
+		
+		/**
+		 * Variablen der Klasse MemberRow
+		 */
 		Image deleteIcon;
 		Image adminIcon;
 		Label fullNameLabel;
@@ -174,6 +199,11 @@ public class GroupForm extends DialogBox {
 		Person p;
 		FlowPanel memberPanel;
 		
+		/**
+		 * Konstruktor der Klasse MemberRow
+		 * @param memberPanel
+		 * @param p
+		 */
 		public MemberRow(FlowPanel memberPanel, Person p) {
 			this.memberPanel = memberPanel;
 			this.p = p;
@@ -215,6 +245,11 @@ public class GroupForm extends DialogBox {
 			this.add(fullNameLabel);
 		}
 		
+		/**
+		 * ClickHandler um ein Mitglied zu entfernen
+		 * @author SebastianHermann
+		 *
+		 */
 		class DeleteMemberClickHandler implements ClickHandler{
 			MemberRow memberRow;
 			
@@ -238,6 +273,11 @@ public class GroupForm extends DialogBox {
 		
 	}
 	
+	/**
+	 * Callback der bei Erfolg einen Vector von Personen zurueck gibt
+	 * @author SebastianHermann
+	 *
+	 */
 	class GetAllPersonsCallback implements AsyncCallback<Vector<Person>>{
 
 		@Override
@@ -256,6 +296,11 @@ public class GroupForm extends DialogBox {
 		
 	}
 	
+	/**
+	 * Methode die überprüft ob die angegebene Person bereits Mitglied ist
+	 * @param person
+	 * @return isMember
+	 */
 	public boolean checkforMembership(Person person) {
 		boolean isMember= false;
 		
@@ -269,13 +314,20 @@ public class GroupForm extends DialogBox {
 		return isMember;
 	}
 
-	
+	/**
+	 * Methode um die GrouForm anzuzeigen
+	 */
 	public void showGroupForm() {
 		this.center();
 		this.show();
 
 	}
 	
+	/**
+	 * Callback der bei Erfolg einen Vector von Memberships zurueck gibt
+	 * @author SebastianHermann
+	 *
+	 */
 	class GetMembershipCallback implements AsyncCallback<Vector<Membership>>{
 		GroupForm groupForm;
 		public GetMembershipCallback(GroupForm groupForm) {
@@ -299,6 +351,11 @@ public class GroupForm extends DialogBox {
 		
 	}
 	
+	/**
+	 * Callback der bei Erfolg eine Person zurueck gibt
+	 * @author SebastianHermann
+	 *
+	 */
 	class GetMembersCallback implements AsyncCallback<Person>{
 		GroupForm groupForm;
 		public GetMembersCallback(GroupForm groupForm) {
@@ -321,7 +378,11 @@ public class GroupForm extends DialogBox {
 		}
 	}
 		
-	
+	/**
+	 * ClickHandler zum entfernen einer Gruppe
+	 * @author SebastianHermann
+	 *
+	 */
 	class CancelClickHandler implements ClickHandler {
 		GroupForm gf;
 		
@@ -342,7 +403,11 @@ public class GroupForm extends DialogBox {
 		
 	}
 	
-
+	/**
+	 * ClickHandler zum speichern von Gruppen
+	 * @author SebastianHermann
+	 *
+	 */
 	class SaveClickHandler implements ClickHandler {
 		GroupForm gf;
 		
@@ -374,6 +439,11 @@ public class GroupForm extends DialogBox {
 		}
 	}
 	
+	/**
+	 * Callback der bei Erfolg die GroupForm updated
+	 * @author gianluca
+	 *
+	 */
 	class UpdateGroupCallback implements AsyncCallback<Group>{
 		GroupForm gf;
 		public UpdateGroupCallback(GroupForm gf) {
@@ -396,6 +466,11 @@ public class GroupForm extends DialogBox {
 		
 	}
 	
+	/**
+	 * Callback der bei Erfolg  eine Membership entfernt
+	 * @author SebastianHermann
+	 *
+	 */
 	class DeleteMembershipCallback implements AsyncCallback<Void>{
 
 		@Override
@@ -412,6 +487,11 @@ public class GroupForm extends DialogBox {
 		
 	}
 		
+	/**
+	 * Callback der bei Erfolg eine Gruppe erstellt
+	 * @author SebastianHermann
+	 *
+	 */
 	class CreateGroupCallback implements AsyncCallback<Group>{
 		GroupForm gf;
 		public CreateGroupCallback(GroupForm gf) {
@@ -446,6 +526,11 @@ public class GroupForm extends DialogBox {
 		}
 	}
 		
+	/**
+	 * Callback der bei Erfolg die Member der Gruppe hinzufuegt
+	 * @author SebastianHermann
+	 *
+	 */
 	class AddMembersCallback implements AsyncCallback<Membership>{
 
 		@Override
@@ -462,6 +547,11 @@ public class GroupForm extends DialogBox {
 		
 	}
 				
+	/**
+	 * ClickHandler um Member einer Gruppe hinzuzufuegen
+	 * @author SebastianHermann
+	 *
+	 */
 	class AddMemberClickHandler implements ClickHandler{
 		GroupForm gf;
 		
@@ -479,6 +569,11 @@ public class GroupForm extends DialogBox {
 		}
 	}
 	
+	/**
+	 * Callback der bei Erfolg eine Person zurueck gibt
+	 * @author SebastianHermann
+	 *
+	 */
 	class GetPersonCallback implements AsyncCallback<Person>{
 		GroupForm gf;
 		public GetPersonCallback(GroupForm gf) {
@@ -513,6 +608,11 @@ public class GroupForm extends DialogBox {
 		
 	}
 	
+	/**
+	 * ClickHandler um eine Gruppe zu entfernen
+	 * @author SebastianHermann
+	 *
+	 */
 	class DeleteGroupClickHandler implements ClickHandler{
 		
 		GroupForm gf;
@@ -529,6 +629,12 @@ public class GroupForm extends DialogBox {
 		
 		
 	}
+	
+	/**
+	 * Callback der bei Erfolg die Gruppe entfernt
+	 * @author SebatianHermann
+	 *
+	 */
 	class DeleteGroupCallback implements AsyncCallback<Void>{
 		GroupForm gf;
 		
