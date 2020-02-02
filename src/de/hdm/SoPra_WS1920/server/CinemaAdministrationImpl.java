@@ -188,7 +188,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     
     
     /**
-     * Methode zum Löschen von Personen Objekten und allen zugehörigen Businessobjekten
+     * Methode zum Lï¿½schen von Personen Objekten und allen zugehï¿½rigen Businessobjekten
      * @param p
      */
     
@@ -976,7 +976,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 	}
 	
 	/**
-	 * Methode zum löschen von Membershipobjekten
+	 * Methode zum lï¿½schen von Membershipobjekten
 	 */
 	@Override
 	  public void deleteMembership(int gFK, int pFK) {    	
