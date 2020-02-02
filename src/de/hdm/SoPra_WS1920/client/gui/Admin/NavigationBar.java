@@ -12,6 +12,11 @@ import com.google.gwt.user.client.ui.Label;
 import de.hdm.SoPra_WS1920.client.CinemaAdminEntry;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 
+/*
+ * Navigator, der Schaltfl�chen zur Ausf�hrung von Unterprogrammen enth�lt.
+ * 
+ * @SebastianHerrmann
+ */
 public class NavigationBar extends FlowPanel {
 	
 	Person person;
@@ -32,7 +37,10 @@ public class NavigationBar extends FlowPanel {
 	Button b;
 	CinemaAdminEntry cinemaAdminEntry;
 	
-	
+	/*
+	 * Konstruktor der Klasse NavigationBar
+	 * @param header, content
+	 */
 	public NavigationBar(Header header,Content content) {
 		this.header=header;
 		this.content=content;
@@ -91,6 +99,9 @@ public class NavigationBar extends FlowPanel {
 		this.add(logOut);
 	}
 	
+	/*
+	 * ClickHandler, der es erm�glicht zum Editor-Client zu steuern.
+	 */
 	class SwitchToEditorClickHandler implements ClickHandler{
 
 		@Override
@@ -103,7 +114,9 @@ public class NavigationBar extends FlowPanel {
 		
 	}
 	
-	
+	/*
+	 * ClickHandler, der die Kinos anzeigt.
+	 */
 	class ShowCinemasClickHandler implements ClickHandler{
 		NavigationBar navigationBar;
 		public ShowCinemasClickHandler(Header header, Content content, NavigationBar navigationBar) {
@@ -128,6 +141,9 @@ public class NavigationBar extends FlowPanel {
 		
 	}
 	
+	/*
+	 * ClickHandler, der die Kinoketten anzeigt
+	 */
 	class ShowCinemaChainsClickHandler implements ClickHandler{
 		NavigationBar navigationBar;
 		public ShowCinemaChainsClickHandler(Header header, Content content, NavigationBar navigationBar) {
@@ -158,6 +174,9 @@ public class NavigationBar extends FlowPanel {
 		
 	}
 	
+	/*
+	 * ClickHandler, der die Movies anzeigt.
+	 */
 	class ShowMoviesClickHandler implements ClickHandler{
 		NavigationBar navigationBar;
 		public ShowMoviesClickHandler(Header header, Content content, NavigationBar navigationBar) {
@@ -187,6 +206,10 @@ public class NavigationBar extends FlowPanel {
 		}
 		
 	}
+	
+	/*
+	 * ClickHandler, der die Screenings anzeigt.
+	 */
 	class ShowScreeningsClickHandler implements ClickHandler{
 		NavigationBar navigationBar;
 		public ShowScreeningsClickHandler(Header header, Content content, NavigationBar navigationBar) {
@@ -211,6 +234,10 @@ public class NavigationBar extends FlowPanel {
 		}
 		
 	}
+	
+	/*
+	 * ClickHandler, der die Einstellungen aufruft.
+	 */
 	class SettingsClickHandler implements ClickHandler{
 		NavigationBar navigationBar;
 		public SettingsClickHandler(NavigationBar navigationBar) {
@@ -233,6 +260,10 @@ public class NavigationBar extends FlowPanel {
 		
 	}
 	
+	
+	/*
+	 * ClickHandler, der den LougOut organisiert.
+	 */
 	class LogOutClickHandler implements ClickHandler{
 
 		@Override
@@ -244,15 +275,27 @@ public class NavigationBar extends FlowPanel {
 		
 	}
 	
+	/*
+	 * Methode, mit der eine Person gesetzt wird.
+	 * @param person
+	 */
 	public void setPerson(Person person) {
 		this.person = person;
 	}
 	
+	/*
+	 * Methode, mit der eine Person zur�ck gegeben wird.
+	 * @return person
+	 */
 	public Person getPerson() {
 		return person;
 	}
 
-	public void setLogOutURL(String logOutUrl) {
+	/*
+	 * Methode, um die LogOutURL zu setzen.
+	 */
+	public void setLogOutURL(String logoutUrl) {
+
 		// TODO Auto-generated method stub
 		this.logOutUrl = logOutUrl;
 		
