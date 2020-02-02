@@ -31,6 +31,10 @@ import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
 
+/**
+ * Klasse, die den Content auf dem Rootpanel darstellt.
+ * @author Sebastian Hermann
+ */
 public class Content extends FlowPanel{
 	
 	Cinema c;
@@ -57,13 +61,18 @@ public class Content extends FlowPanel{
 		
 	}
 
-	
+	/**
+	 * Methode, die alle Cinemas anzeigt, die der User angelegt hat.
+	 */
 	public void showCinemas() {
 		this.clear();
 		cinemaAdministration.getCinemasByPersonFK(person.getId(), new GetCinemasByPersonCallback(this));
 		
 	}
 	
+	/**
+	 * Callback, der alle Cinemas eines Users zurückgibt.
+	 */
 	class GetCinemasByPersonCallback implements AsyncCallback<Vector<Cinema>>{
 		Content content;
 		public GetCinemasByPersonCallback(Content content) {
@@ -89,11 +98,18 @@ public class Content extends FlowPanel{
 		
 	}
 	
+	/**
+	 * Methode, die alle Movies aus der Datenbank anzeigt.
+	 */
 	public void showMovies() {
 		this.clear();
 		cinemaAdministration.getAllMovies(new GetMoviesCallback(this));
 
 	}
+	
+	/**
+	 * Callback, um alle Movie Objekte aus der Datenbank abzurufen.
+	 */
 	class GetMoviesCallback implements AsyncCallback<Vector<Movie>>{
 		Content content;
 		public GetMoviesCallback(Content content) {
@@ -118,11 +134,18 @@ public class Content extends FlowPanel{
 		
 	}
 
+	/**
+	 * Methode, die alle Screenings anzeigt, die der User angelegt hat.
+	 */
 	public void showScreenings() {
 		this.clear();
 		cinemaAdministration.getScreeningsByPersonFK(person.getId(), new GetScreeningsCallback(this));
 	}
 	
+	
+	/**
+	 * Callback, der alle Screenings eines Users zurückgibt.
+	 */
 	class GetScreeningsCallback implements AsyncCallback<Vector<Screening>>{
 		Content content;
 		public GetScreeningsCallback(Content content) {
@@ -174,12 +197,19 @@ public class Content extends FlowPanel{
 //		 
 //		}
 
+	
+	/**
+	 * Methode, die alle CinemaChains anzeigt, die der User angelegt hat.
+	 */
 	public void showCinemaChains() {
 		// TODO Auto-generated method stub
 		this.clear();
 		cinemaAdministration.getCinemaChainByPersonFK(person.getId(), new CinemaChainCallback(this));
 	}
 	
+	/**
+	 * Callback, der alle CinemaChains eines Users zurückgibt
+	 */
 	class CinemaChainCallback implements AsyncCallback<Vector<CinemaChain>>{
 		Content content;
 		public CinemaChainCallback(Content content) {
@@ -203,10 +233,19 @@ public class Content extends FlowPanel{
 	
 	}
 	
+	/**
+	 * Methode, die den Content der eingeloggten Person zuordnet.
+	 * @param person
+	 */
 	public void setPerson(Person person) {
 		this.person = person;
 	}
 	
+	/**
+	 * Methode, die die Person des angezeigten Contents zurueckgibt.
+	 * @param person
+	 * @return person
+	 */
 	public Person getPerson() {
 		return person;
 	}

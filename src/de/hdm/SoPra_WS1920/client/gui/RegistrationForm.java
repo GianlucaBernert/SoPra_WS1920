@@ -11,7 +11,6 @@ public class RegistrationForm extends VerticalPanel {
 	
 	/**
 	 * Die Klasse <code>RegistrationForm</code> ist eine Form zur Registrierung des Nutzers im CinemaSurveySystem.
-	 * 
 	 * @author Yesin Soufi
 	 */
 	HorizontalPanel formHeaderPanel = new HorizontalPanel();
