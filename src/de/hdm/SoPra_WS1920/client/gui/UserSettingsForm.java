@@ -3,12 +3,16 @@ package de.hdm.SoPra_WS1920.client.gui;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
+
+import de.hdm.SoPra_WS1920.client.ClientsideSettings;
+import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 public class UserSettingsForm extends DialogBox {
@@ -24,8 +28,8 @@ public class UserSettingsForm extends DialogBox {
 	TextBox firstNameTextBox;
 	Label lastNameLabel;
 	TextBox lastNameTextBox;
-	Label emailLabel;
-	TextBox emailTextBox;
+	Label eMailLabel;
+	TextBox eMailTextBox;
 	
 	Button cancel;
 	Label deleteLabel;
@@ -34,34 +38,26 @@ public class UserSettingsForm extends DialogBox {
 	
 	SurveyManagementHeader header;
 	SurveyContent content;
-	
-//	public UserSettingsForm(Person personToShow) {
-//		this.personToShow = personToShow;
-//		
-//	}
-	
-	public UserSettingsForm(SurveyManagementHeader header, SurveyContent content) {
-		this.header = header;
-		this.content = content;
-	
-		personToShow = content.getPerson();
-//		Person p = new Person();
-//		p.setFirstname("Yesin");
-//		p.setLastname("Soufi");
-//		p.setEMail("ys018@hdm-stuttgart.de");
-//		personToShow = p;
+	SurveyNavigationBar surveyNavigationBar;
+	SurveyManagementAsync surveyManagement;
 
-}
+	public UserSettingsForm(SurveyNavigationBar surveyNavigationBar, Person p) {
+		this.surveyNavigationBar = surveyNavigationBar;
+		this.personToShow = p;
+	}
+
 	public void onLoad() {
 		super.onLoad();
+		surveyManagement = ClientsideSettings.getSurveyManagement();
+		surveyManagement.getPersonByEmail(personToShow.getEMail(), new GetPersonCallback());
 		
-		this.setStylePrimaryName("EditCard");
+		this.setStyleName("EditCard");
 		formWrapper = new FlowPanel();
 		
 		cardDescription = new Label("Profile Settings");
 		cardDescription.setStylePrimaryName("CardDescription");
 		cancelIcon = new Image("/Images/png/007-close.png");
-		cancelIcon.setStylePrimaryName("cancelIcon");
+		cancelIcon.setStylePrimaryName("CancelIcon");
 		cancelIcon.addClickHandler(new CancelClickHandler(this));
 		
 		invisibleButton = new Button();
@@ -77,10 +73,10 @@ public class UserSettingsForm extends DialogBox {
 		lastNameTextBox=new TextBox();
 		lastNameTextBox.setStyleName("CardTextBox");
 		lastNameTextBox.getElement().setPropertyString("placeholder", "Genre");
-		emailLabel = new Label("E-Mail");
-		emailLabel.setStyleName("TextBoxLabel");
-		emailTextBox=new TextBox();
-		emailTextBox.setStyleName("CardTextBox");
+		eMailLabel = new Label("E-Mail");
+		eMailLabel.setStyleName("TextBoxLabel");
+		eMailTextBox=new TextBox();
+		eMailTextBox.setStyleName("CardTextBox");
 		
 		formWrapper.add(cardDescription);
 		formWrapper.add(cancelIcon);
@@ -88,8 +84,8 @@ public class UserSettingsForm extends DialogBox {
 		formWrapper.add(firstNameTextBox);
 		formWrapper.add(lastNameLabel);
 		formWrapper.add(lastNameTextBox);
-		formWrapper.add(emailLabel);
-		formWrapper.add(emailTextBox);
+		formWrapper.add(eMailLabel);
+		formWrapper.add(eMailTextBox);
 		
 		deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
 		deleteIcon.setStyleName("DeleteIcon");
@@ -97,21 +93,74 @@ public class UserSettingsForm extends DialogBox {
 		
 		deleteLabel = new Label("Delete Profile");
 		deleteLabel.setStyleName("DeleteLabel");
-		//deleteLabel.addClickHandler(new DeleteClickHandler(this));
+		deleteLabel.addClickHandler(new DeleteClickHandler(this));
 		formWrapper.add(deleteIcon);
 		formWrapper.add(deleteLabel);
 		
 		saveButton = new Button("Save");
-		//saveButton.addClickHandler(new SaveClickHandler(this));
+		saveButton.addClickHandler(new SaveClickHandler(this));
 		saveButton.setStyleName("SaveButton");
 		
 		firstNameTextBox.setText(personToShow.getFirstname());
 		lastNameTextBox.setText(personToShow.getLastname());
-		emailTextBox.setText(personToShow.getEMail());
+		eMailTextBox.setText(personToShow.getEMail());
 		
-
 		formWrapper.add(saveButton);
 		this.add(formWrapper);
+		
+	}
+	
+	class GetPersonCallback implements AsyncCallback<Person>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Person result) {
+			// TODO Auto-generated method stub
+			personToShow = result;
+			firstNameTextBox.setText(personToShow.getFirstname());
+			lastNameTextBox.setText(personToShow.getLastname());
+			eMailTextBox.setText(personToShow.getEMail());
+		}
+		
+	}
+	
+	class SaveClickHandler implements ClickHandler{
+		UserSettingsForm userSettingsForm;
+		public SaveClickHandler(UserSettingsForm userSettingsForm) {
+			// TODO Auto-generated constructor stub
+			this.userSettingsForm = userSettingsForm;
+		}
+
+		@Override
+		public void onClick(ClickEvent arg0) {
+			// TODO Auto-generated method stub
+			personToShow.setFirstname(firstNameTextBox.getText());
+			personToShow.setLastname(lastNameTextBox.getText());
+			personToShow.setEMail(eMailTextBox.getText());
+			userSettingsForm.hide();
+			surveyManagement.updatePerson(personToShow, new UpdatePersonCallback());
+		}
+		
+	}
+	
+	class UpdatePersonCallback implements AsyncCallback<Person>{
+
+		@Override
+		public void onFailure(Throwable arg0) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the connection. Please try again later");
+		}
+
+		@Override
+		public void onSuccess(Person arg0) {
+			// TODO Auto-generated method stub
+			
+		}
 		
 	}
 	
@@ -125,6 +174,7 @@ public class UserSettingsForm extends DialogBox {
 			userSettingsForm.hide();
 			
 		}
+	}
 		
 	class DeleteClickHandler implements ClickHandler{
 		UserSettingsForm userSettingsForm;
@@ -136,10 +186,25 @@ public class UserSettingsForm extends DialogBox {
 		@Override
 		public void onClick(ClickEvent event) {
 			userSettingsForm.hide();
-			
+			surveyManagement.deletePerson(personToShow, new DeletePersonCallback());
 		}
 		
 	}
+	
+	class DeletePersonCallback implements AsyncCallback<Void>{
+
+		@Override
+		public void onFailure(Throwable result) {
+			// TODO Auto-generated method stub
+			Window.alert("Problem with the connection. Please try again later");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			Window.Location.assign(surveyNavigationBar.getLogOutURL());
+		}
+		
 	}
 	
 }

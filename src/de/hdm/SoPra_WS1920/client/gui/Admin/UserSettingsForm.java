@@ -12,11 +12,11 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
-import de.hdm.SoPra_WS1920.shared.CinemaAdministration;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 public class UserSettingsForm extends DialogBox{
+	
 	FlowPanel formWrapper;
 	Person personToShow;
 	
@@ -38,24 +38,18 @@ public class UserSettingsForm extends DialogBox{
 	
 	Header header;
 	Content content;
+	NavigationBar navigationBar;
 	CinemaAdministrationAsync cinemaAdministration;
 	
-	public UserSettingsForm(Person personToShow){
+	public UserSettingsForm(NavigationBar navigationBar, Person personToShow){
 		this.personToShow = personToShow;
-		
-	}
-	
-	public UserSettingsForm(Header header, Content content) {
-		this.header = header;
-		this.content = content;
+		this.navigationBar = navigationBar;
 	}
 	
 	public void onLoad() {
 		super.onLoad();
 		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
 		cinemaAdministration.getPersonByEMail(personToShow.getEMail(), new GetPersonCallback());
-		
-		
 		
 		this.setStyleName("EditCard");
 		formWrapper = new FlowPanel();
@@ -110,7 +104,6 @@ public class UserSettingsForm extends DialogBox{
 		lastNameTextBox.setText(personToShow.getLastname());
 		eMailTextBox.setText(personToShow.getEMail());
 		
-
 		formWrapper.add(saveButton);
 		this.add(formWrapper);
 	}
@@ -132,7 +125,6 @@ public class UserSettingsForm extends DialogBox{
 			eMailTextBox.setText(personToShow.getEMail());
 		}
 		
-		
 	}
 	
 	class SaveClickHandler implements ClickHandler{
@@ -150,9 +142,10 @@ public class UserSettingsForm extends DialogBox{
 			personToShow.setEMail(eMailTextBox.getText());
 			userSettingsForm.hide();
 			cinemaAdministration.updatePerson(personToShow, new UpdatePersonCallback());
-			}
-			
 		}
+			
+	}
+	
 	class UpdatePersonCallback implements AsyncCallback<Person>{
 
 		@Override
@@ -197,9 +190,8 @@ public class UserSettingsForm extends DialogBox{
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
 			userSettingsForm.hide();
-//			cinemaAdministration.deletePerson(personToShow, new DeletePersonCallback());
-		}
-		
+			cinemaAdministration.deletePerson(personToShow, new DeletePersonCallback());
+		}	
 		
 	}
 	
@@ -214,7 +206,7 @@ public class UserSettingsForm extends DialogBox{
 		@Override
 		public void onSuccess(Void result) {
 			// TODO Auto-generated method stub
-			
+			Window.Location.assign(navigationBar.getLogOutURL());
 		}
 		
 	}

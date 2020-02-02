@@ -2,13 +2,13 @@ package de.hdm.SoPra_WS1920.shared;
 
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -475,6 +475,20 @@ public interface SurveyManagementAsync {
 	void getGroupsByMemberships(int personFK, AsyncCallback<Vector<Group>> callback);
 
 	void getSurveyToShow(int personFK, AsyncCallback<Vector<Survey>> callback);
+
+	void deleteScreening(Screening screening, AsyncCallback<Void> callback);
+
+	void deleteCinema(Cinema cinema, AsyncCallback<Void> callback);
+
+	void getScreeningByCinemaFK(int cinemaFK, AsyncCallback<Vector<Screening>> callback);
+
+	void deleteMovie(Movie movie, AsyncCallback<Void> callback);
+
+	void getScreeningByMovieFK(int movieFK, AsyncCallback<Vector<Screening>> callback);
+
+	void deleteCinemaChain(CinemaChain cc, AsyncCallback<Void> callback);
+
+	void getCinemasByCinemaChainFK(CinemaChain cc, AsyncCallback<Vector<Cinema>> callback);
     
 
 }

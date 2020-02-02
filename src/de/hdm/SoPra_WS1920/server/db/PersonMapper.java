@@ -1,9 +1,11 @@
 package de.hdm.SoPra_WS1920.server.db;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
-import java.sql.*;
 
-import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 
@@ -13,8 +15,8 @@ import de.hdm.SoPra_WS1920.shared.bo.Person;
  * 
  * 
  * Mit Hilfe der MapperKlasse <code>PersonMapper</code> werden Person-Objekte auf eine relationale Datenbank abgebildet.
- * Durch das implementieren der Methoden können Person-Objekte gesucht, erzeugt, modifiziert und
- * gelöscht werden.
+ * Durch das implementieren der Methoden kï¿½nnen Person-Objekte gesucht, erzeugt, modifiziert und
+ * gelï¿½scht werden.
  * 
  */
 public class PersonMapper {
@@ -59,13 +61,14 @@ public class PersonMapper {
 
 	/*
 	 * =============================================================================================
-	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezï¿½hlt, die
 	 * in allen Mapper-Klassen existieren.
 	 */	
      
     /**
-     * @param personID 
-     * @return
+     * Methode, die einer Person anhand einer ID zurï¿½ckgibt.
+     * @param int personID 
+     * @return Person p
      */
     public Person findPersonByID(int personID) {
 	Connection con = DBConnection.connection();
@@ -93,8 +96,9 @@ public class PersonMapper {
 	
     
 	/**
-	 * Methode, die das Anlegen eines User-Objekts ermöglicht
+	 * Methode, die das Anlegen eines Person-Objekts ermï¿½glicht
 	 * @param person
+	 * @return person p
 	 */
     
     public Person insertPerson(Person person) {
@@ -119,8 +123,9 @@ public class PersonMapper {
     }
 
 	/**
-	 * Methode, die das Updaten eines Person-Objekts in der Datenbank ermöglicht	
+	 * Methode, die das Updaten eines Person-Objekts in der Datenbank ermï¿½glicht	
 	 * @param person
+	 * @return person
 	 */
     
     public Person updatePerson(Person person) {
@@ -142,7 +147,7 @@ public class PersonMapper {
     }
 
     /**
-	 * Methode, die das Loeschen eines Person-Objekts aus der Datenbank ermöglicht
+	 * Methode, die das Loeschen eines Person-Objekts aus der Datenbank ermï¿½glicht
 	 * @param person
 	 */
     public void deletePerson(Person person) {
@@ -163,8 +168,9 @@ public class PersonMapper {
 	 * Beginn: Foreign Key-Mapper-Methoden
 	 */
     /**
+     * Methode, die alle Personen einer Gruppe zurï¿½ckgibt
      * @param group 
-     * @return
+     * @return Vektor Person
      */
     public Vector <Person> findPersonByGroupFK(int groupFK) {
     	Connection con = DBConnection.connection();
@@ -199,8 +205,9 @@ public class PersonMapper {
     
     
     /**
+     * Methode, die Personen anhand des Vornamen zurï¿½ckgibt
      * @param firstname 
-     * @return
+     * @return Vektor Person
      */
     public Vector<Person> findPersonByFirstname(String firstname) {
     	Connection con= DBConnection.connection();	
@@ -223,8 +230,9 @@ public class PersonMapper {
     }
 
     /**
+     * Methode, die Personen anahnd des Nachnamen zurï¿½ckgibt.
      * @param lastname 
-     * @return
+     * @return Vektor Person
      */
     public Vector<Person> findPersonByLastname(String lastname) {
     	Connection con= DBConnection.connection();	
@@ -247,8 +255,9 @@ public class PersonMapper {
     }
 
     /**
+     * Methode, die eine Person anhand der Email zurï¿½ckgibt.
      * @param email 
-     * @return
+     * @return Person p
      */
    public Person findPersonByEmail(String mail) {
     	Connection con= DBConnection.connection();	
@@ -275,8 +284,9 @@ public class PersonMapper {
     
     
     /**
+     * Methode, die Personen welche den Status isAdmin erfï¿½llen zurï¿½ckgibt
      * @param isAdmin 
-     * @return
+     * @return Vektor Person
      */
     public Vector<Person> findPersonByIsAdmin(boolean isAdmin) {
     	Connection con= DBConnection.connection();	
@@ -298,6 +308,10 @@ public class PersonMapper {
 		return result;
     }
     
+    /**
+	 * Methode, die alle Personen zurï¿½ckgibt, die in der Datenbank gespeichert sind.
+	 * @return Vektor Person
+	 */
     public Vector<Person> findAll() {
         Connection con = DBConnection.connection();
         Vector<Person> result = new Vector<Person>();
@@ -315,7 +329,7 @@ public class PersonMapper {
             p.setLastname(rs.getString("lastname"));
             p.setEMail(rs.getString("email"));
 
-            //  Hinzufügen des neuen Objekts zum Ergebnisvektor
+            //  Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
             result.addElement(p);
           }
         }
@@ -323,7 +337,7 @@ public class PersonMapper {
           e2.printStackTrace();
         }
 
-        // Ergebnisvektor zurückgeben
+        // Ergebnisvektor zurï¿½ckgeben
         return result;
       }
 

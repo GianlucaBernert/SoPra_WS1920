@@ -1,10 +1,11 @@
 package de.hdm.SoPra_WS1920.server;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.sql.Date;
-import java.util.*;
-
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -12,6 +13,7 @@ import de.hdm.SoPra_WS1920.server.db.BusinessObjectMapper;
 import de.hdm.SoPra_WS1920.server.db.CinemaChainMapper;
 import de.hdm.SoPra_WS1920.server.db.CinemaMapper;
 import de.hdm.SoPra_WS1920.server.db.GroupMapper;
+import de.hdm.SoPra_WS1920.server.db.MembershipMapper;
 import de.hdm.SoPra_WS1920.server.db.MovieMapper;
 import de.hdm.SoPra_WS1920.server.db.OwnershipMapper;
 import de.hdm.SoPra_WS1920.server.db.PersonMapper;
@@ -24,6 +26,7 @@ import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
+import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
@@ -74,6 +77,10 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     
     private SurveyMapper sMapper = null;
     
+    private MembershipMapper mmMapper = null;
+    
+    
+    
     /**
      * Initialisierung
      */
@@ -91,6 +98,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	this.boMapper = BusinessObjectMapper.businessObjectMapper();
     	this.gMapper = GroupMapper.groupMapper();
     	this.sMapper = SurveyMapper.surveyMapper();
+    	this.mmMapper = MembershipMapper.membershipMapper();
     	
     }
     
@@ -187,64 +195,84 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     
     @Override
     public void deletePerson(Person p) throws IllegalArgumentException{
-        Vector<Vote> vOfPerson = this.vMapper.findVoteByPersonFK(p.getId());
+    	Vector<Vote> vOfPerson = this.vMapper.findVoteByPersonFK(p.getId());
         if (vOfPerson != null) {
         	for (Vote v : vOfPerson) {
-        		this.vMapper.deleteVote(v);
+        		this.deleteVote(v);
+        		System.out.println("Vote ok");
         	}
         }
-        
         
         Vector<Survey> sOfPerson = this.sMapper.findSurveyByPersonFK(p.getId());
         if (sOfPerson != null) {
         	for (Survey s : sOfPerson) {
-        		// surveyEntrys l�schen
-        		this.sMapper.deleteSurvey(s);
+        		this.deleteSurvey(s);
+        		System.out.println("Survey ok");
         	}
         }
         
         Vector<Group> gOfPerson = this.gMapper.findGroupByPersonFK(p.getId());
         if (gOfPerson != null) {
         	for (Group g : gOfPerson) {
-        		this.gMapper.deleteGroup(g);
+        		this.deleteGroup(g);
+        		System.out.println("Group ok");
+        	}
+        }
+        
+        Vector<Membership> mOfGroup = this.mmMapper.findMembershipByPersonFK(p.getId());
+        if (mOfGroup != null) {
+        	for (Membership me : mOfGroup) {
+        		this.deleteMembership(me.getGroupFK(), me.getPersonFK());
         	}
         }
         
         Vector<Screening> scOfPerson = this.scMapper.findScreeningByPersonFK(p.getId());
         if (scOfPerson != null) {
         	for (Screening sc : scOfPerson) {
-        		this.scMapper.deleteScreening(sc);
+        		this.deleteScreening(sc);
+        		System.out.println("Screening ok");
         	}
         }
         
         Vector<Cinema> cOfPerson = this.cMapper.findCinemaByPersonFK(p.getId());
         if (cOfPerson != null) {
         	for (Cinema c : cOfPerson) {
-        		this.cMapper.deleteCinema(c);
+        		this.deleteCinema(c);
+        		System.out.println("Cinema ok");
         	}
         }
-        
-        // CinemaChains l�schen
         
         Vector<Movie> mOfPerson = this.mMapper.findMovieByPersonFK(p.getId());
         if (mOfPerson != null) {
         	for (Movie m : mOfPerson) {
-        		this.mMapper.deleteMovie(m);
+        		this.deleteMovie(m);
+        		System.out.println("Movie ok");
+        	}
+        }
+        
+        Vector<CinemaChain> ccOfPerson = this.ccMapper.findCinemaChainByPersonFK(p.getId());
+        if (ccOfPerson != null) {
+        	for (CinemaChain cc : ccOfPerson) {
+        		this.ccMapper.deleteCinemaChain(cc);
+        		System.out.println("CinemaChain ok");
         	}
         }
         
         Vector<Ownership> osOfPerson = this.oMapper.findOwnershipByPersonFK(p.getId());
         if (osOfPerson != null) {
         	for (Ownership os : osOfPerson) {
-        		this.oMapper.deleteOwnership(os);
+        		this.deleteOwnership(os);
+        		System.out.println("Ownership ok");
         	}
         }
         
-        
+        BusinessObject bo = this.boMapper.findBusinessObjectByID(p.getId());
         this.pMapper.deletePerson(p);
+        this.deleteBusinessObject(bo);
         
-        this.deleteBusinessObject(this.boMapper.findBusinessObjectByID(p.getId()));
+       
     }
+    
     
     
     /**
@@ -678,13 +706,12 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     	Vector <Cinema> vc = this.getCinemasByCinemaChainFK(cc);
     	if(vc != null) {
     		for (Cinema c : vc) {
-    			c.setId(1);
-    			this.updateCinema(c);
+    			this.deleteCinema(c);
     		}
     	}
     	this.ccMapper.deleteCinemaChain(cc);
     	this.deleteOwnership(this.getOwnership(cc.getId()));
-    	// L�schen der CinemaChainID in den Cinema Objekten notwenig!
+
     }
     
     
@@ -841,7 +868,9 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     }
 
 
-
+    /**
+     * Methode zum Suchen nach MovieObjekten
+     */
 	@Override
 	public Vector<Movie> searchMovie(String text) {
 		// TODO Auto-generated method stub
@@ -859,7 +888,10 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 		return movies;
 
 	}
-
+	
+	/**
+	 * Methode zum Suchen nach KinoObjekten
+	 */
 	public Vector<Cinema> searchCinema(int personFk, String text) {
 		// TODO Auto-generated method stub
 		HashSet<Cinema> hs = new HashSet<Cinema>();
@@ -888,7 +920,9 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 	}
 
 
-
+	/**
+	 * methode zum Suchen nach Kinoketten
+	 */
 	@Override
 	public Vector<CinemaChain> searchCinemaChain(int personFk,String text) {
 		// TODO Auto-generated method stub
@@ -906,7 +940,9 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 	}
 
 
-
+	/**
+	 * Methode zum Suchen nach Screeningobjekten
+	 */
 	@Override
 	public Vector<Screening> searchScreening(int personFk, String text) {
 		// TODO Auto-generated method stub
@@ -939,5 +975,69 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 		
 		return screenings;
 	}
+	
+	/**
+	 * Methode zum l�schen von Membershipobjekten
+	 */
+	@Override
+	  public void deleteMembership(int gFK, int pFK) {    	
+	        this.mmMapper.deleteMembership(gFK, pFK);
+	    }
+	
+	 /**
+     * Methode um eine Umfrage zu löschen
+     * @param Survey s
+     */
+	@Override
+    public void deleteSurvey(Survey s) {
+    	Ownership os = this.oMapper.findOwnershipByID(s.getId());
+        
+        Vector<SurveyEntry> seOfSurvey = this.getSurveyEntryBySurveyFK(s.getId());
+        if (seOfSurvey != null) {
+        	for (SurveyEntry se : seOfSurvey) {
+        		this.deleteSurveyEntry(se);
+        	}
+        }
+        this.sMapper.deleteSurvey(s);
+        
+        this.deleteOwnership(os);
+        
+    }
+	
+	 /**
+     * Methode um einen Umfrageeintrag anhand des SurveyFKs zu finden
+     * @param int sFK 
+     * @return Vector<SurveyEntry>
+     */
+	@Override
+    public Vector<SurveyEntry> getSurveyEntryBySurveyFK(int sFK){
+    	return this.seMapper.findSurveyEntryBySurveyFK(sFK);
+    }
+	
+	/**
+     * Methode um eine Gruppe zu löschen
+     * @param Group g 
+     */
+	@Override
+    public void deleteGroup(Group g) {
+    	Ownership os = this.oMapper.findOwnershipByID(g.getId());
+    	
+    	Vector<Survey> sOfGroups = this.sMapper.findSurveyByGroupFK(g.getId());
+        if (sOfGroups != null) {
+        	for (Survey s : sOfGroups) {
+        		this.deleteSurvey(s);
+        	}
+        }
+        
+        Vector<Membership> mOfGroup = this.mmMapper.findMembershipByGroupFK(g.getId());
+        if (mOfGroup != null) {
+        	for (Membership me : mOfGroup) {
+        		this.deleteMembership(me.getGroupFK(), me.getPersonFK());
+        	}
+        }
+        	
+    	this.gMapper.deleteGroup(g);
+    	this.deleteOwnership(os);    
+    }
         
 }

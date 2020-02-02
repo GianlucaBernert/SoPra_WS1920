@@ -1,7 +1,6 @@
 package de.hdm.SoPra_WS1920.server.db;
 
 import java.sql.Connection;
-import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -175,6 +174,11 @@ public class SurveyMapper {
         
     }
     
+    /**
+	 * Methode, die eine Umfrage anhand des Startdatums zur�ckgibt.
+	 * @param Date startDate
+	 * @return Survey
+	 */
     public Survey findSurveyByStartDate(java.sql.Date startDate) {
     	Connection con = DBConnection.connection();
     	
@@ -202,6 +206,11 @@ public class SurveyMapper {
     	return null;
     }
     
+    /**
+	 * Methode, die eine Umfrage anhand des Enddatums zur�ckgibt.
+	 * @param Date endDate
+	 * @return Survey
+	 */
     public Survey findSurveyByEndDate(java.sql.Date endDate) {
     	Connection con = DBConnection.connection();
     	
@@ -230,6 +239,11 @@ public class SurveyMapper {
     	return null;
     }
     
+    /**
+	 * Methode, die eine Umfrage anhand der ausgew�hlten Stadt vom Erstellzeitpunkt zur�ckgibt.
+	 * @param String selected City
+	 * @return Survey
+	 */
     public Survey findSelectedCityOfSurvey(String selectedCity) {
     	Connection con = DBConnection.connection();
     	
@@ -270,8 +284,10 @@ public class SurveyMapper {
     	
     	try {
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM survey "
-    				+ "WHERE survey.groupFK=" + groupFK);
+    		ResultSet rs = stmt.executeQuery("SELECT survey.id, groupFK, isActive, startDate, endDate, selectedCity, movieName, personFK FROM survey " 
+    				+"INNER JOIN businessownership "
+    				+"WHERE businessownership.id = survey.id "
+    				+"And groupFK = " + groupFK);
     		
     		//Für jeden Eintrag im Suchergebnis wird ein Survey-Objekt erstellt
     		while(rs.next()) {
@@ -283,7 +299,7 @@ public class SurveyMapper {
     			s.setSelectedCity(rs.getString("selectedCity"));
     			s.setMovieName(rs.getString("movieName"));
     			s.setStatus(rs.getInt("isActive"));
-    			
+    			s.setPersonFK(rs.getInt("personFK"));
     			
     			//Hinzuf�gen des Objekts zum Ergebnisvektor
     			result.addElement(s);
@@ -333,6 +349,11 @@ public class SurveyMapper {
         
     }
     
+    /**
+	 * Methode, die eine Umfrage anhand des zum ERstellzeitpunkt ausgew�hlten Movies zur�ckgibt.
+	 * @param String movieName
+	 * @return Survey
+	 */
     public Survey findMovieNameOfSurvey(String movieName) {
     	Connection con = DBConnection.connection();
     	
@@ -379,6 +400,7 @@ public class SurveyMapper {
     
     
     /**
+     * Methode, die alle Umfragen des Erstellers zur�ckgibt.
      * @param personFK 
      * @return Vektor mit Survey-Objekten eines Erstellers
      */

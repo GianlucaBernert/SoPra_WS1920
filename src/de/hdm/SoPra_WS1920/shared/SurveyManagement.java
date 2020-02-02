@@ -1,18 +1,14 @@
 package de.hdm.SoPra_WS1920.shared;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Vector;
 
-import org.apache.james.mime4j.field.datetime.DateTime;
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import de.hdm.SoPra_WS1920.server.IlegalArgumentAxception;
+//import de.hdm.SoPra_WS1920.server.IllegalArgumentException;
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
+import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -26,6 +22,7 @@ import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
 /**
  * @author GianlucaBernert
+ * @author Yesin Soufi
  */
 
 @RemoteServiceRelativePath("surveyManagement")
@@ -415,29 +412,130 @@ public interface SurveyManagement extends RemoteService {
      */
 
 	Vector<Person> searchPerson(String text);
+	
+	 /**
+     * Methode um den Screening der Id zu erhalten
+     * @param id
+     */
 
-	Screening getScreeningById(int id) throws IllegalArgumentException;
+	Screening getScreeningById(int id);
+	
+	 /**
+     * Methode um den Movie der Id zu erhalten
+     * @param id
+     */
 
-	Movie getMovieById(int id) throws IllegalArgumentException;
+	Movie getMovieById(int id);
+	
+	/**
+     * Methode um den Eintrag  des ScreeningFK erhalten
+     * @param screeningFK
+     */
 
-	Vector<SurveyEntry> getSurveyEntryByScreeningFK(int screeningFK) throws IllegalArgumentException;
+	Vector<SurveyEntry> getSurveyEntryByScreeningFK(int screeningFK);
+	
+	/**
+     * Methode um den Movie des Genres zu erhalten
+     * @param genre
+     */
 
-	Vector<Movie> getMovieByGenre(String genre) throws IllegalArgumentException;
+	Vector<Movie> getMovieByGenre(String genre);
+	
+	/**
+     * Methode um den Cinema Id zu erhalten
+     * @param id
+     */
 
-	Cinema getCinemaById(int id) throws IllegalArgumentException;
+	Cinema getCinemaById(int id);
+	
+	/**
+     * Methode um die Votes der SurveyEintr�ge zu erhalten
+     * @param surveyEntryFK
+     */
 
-	Vector<Vote> getVotesBySurveyEntryFK(int surveyEntryFK) throws IllegalArgumentException;
-
-	Vector<Movie> getAllMovies() throws IllegalArgumentException;
+	Vector<Vote> getVotesBySurveyEntryFK(int surveyEntryFK);
+	
+	/**
+     * Methode um alle Movies zu erhalten
+     * @param id
+     */
+	
+	Vector<Movie> getAllMovies();
+	
+	/**
+     * Methode um Cinemas von ScreeningFK zu erhalten
+     * @param screeningFK
+     */
 
 	Cinema getCinemaByScreeningFK(int screeningFK);
+	
+	/**
+     * Methode um Screenings der Survey Erstellung 
+     * @param id
+     */
 
 	Vector<Screening> getScreeningsforSurveyCreation(Movie movie, String city, java.sql.Date startDate,
-			java.sql.Date endDate) throws IllegalArgumentException;
+			java.sql.Date endDate);
+	
+	/**
+     * Methode um die Gruppen der Mitgliedschaften zu erhalten 
+     * @param personFK
+     */
 
-	Vector<Group> getGroupsByMemberships(int personFK) throws IllegalArgumentException;
+	Vector<Group> getGroupsByMemberships(int personFK);
+	
+	/**
+     * Methode um die Umfrageb erhalten 
+     * @param personFK
+     */
 
-	Vector<Survey> getSurveyToShow(int personFK) throws IllegalArgumentException;
+	Vector<Survey> getSurveyToShow(int personFK) ;
+	
+	/**
+	 * Methode zum l�schen eines Screening Objekts
+	 * @param screening
+	 */
+	void deleteScreening(Screening screening);
+	
+	/**
+	 * Methode zum l�schen eines Cinema Objekts
+	 * @param cinema
+	 */
+	void deleteCinema(Cinema cinema);
+
+	/**
+	 * Methode die alle Screenings eines Kinos zur�ck gibt
+	 * @param cinemaFK
+	 * @return
+	 */
+	Vector<Screening> getScreeningByCinemaFK(int cinemaFK);
+
+	/**
+	 * Methode zum l�schen eines Movie Objekts
+	 * @param movie
+	 */
+	void deleteMovie(Movie movie);
+	
+	/**
+	 * Methode die alle Screenings die den �bergebenen Film enthalten zur�ckgibt
+	 * @param movieFK
+	 * @return
+	 */
+	Vector<Screening> getScreeningByMovieFK(int movieFK);
+	
+	/**
+	 * L�schen einer CinemaChain
+	 * @param cc
+	 */
+	void deleteCinemaChain(CinemaChain cc);
+	
+	/**
+	 * Methode die Alle Cinema Objekte einer Kinokette zur�ckgibt.
+	 * @param cc
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	Vector<Cinema> getCinemasByCinemaChainFK(CinemaChain cc) throws IllegalArgumentException;
 	
 	
 

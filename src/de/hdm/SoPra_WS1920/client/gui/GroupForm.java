@@ -10,12 +10,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
-import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
@@ -24,10 +22,13 @@ import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 
-
+/*
+ * Dies ist die Gruppenform-Klasse. Sie wird aufgerufen wenn entweder eine neue Gruppe erstellt werden soll, oder eine bereits existierende
+ * Gruppe editiert werden soll.
+ */
 public class GroupForm extends DialogBox {
 	
-	FlowPanel formWrapper;
+	FlowPanel formWrapper;	
 	Group groupToShow;
 	GroupCard parentCard;
 
@@ -36,7 +37,7 @@ public class GroupForm extends DialogBox {
 	Button invisibleButton;
 	
 	Label groupNameLabel;
-	TextBox groupNameTextBox;
+	TextBox groupNameTextBox;	
 	Label addMembersLabel;
 	MultiWordSuggestOracle allMembers;
 	SuggestBox memberSuggestBox;
@@ -80,7 +81,6 @@ public class GroupForm extends DialogBox {
 		groupAdmin.setFirstname(Cookies.getCookie("firstName"));
 		groupAdmin.setLastname(Cookies.getCookie("lastName"));
 		groupAdmin.setId(Integer.parseInt(Cookies.getCookie("userId")));
-		
 		
 		surveyManagementAdministration = ClientsideSettings.getSurveyManagement();
 		surveyManagementAdministration.getAllPersons(new GetAllPersonsCallback());
@@ -130,7 +130,6 @@ public class GroupForm extends DialogBox {
 		formWrapper.add(addMembersLabel);
 		formWrapper.add(memberSuggestBox);
 		formWrapper.add(addIcon);
-//		formWrapper.add(addedMembers);
 		formWrapper.add(membersPanel);
 		if(groupToShow!=null) {
 			surveyManagementAdministration.getMembershipsOfGroup(groupToShow, new GetMembershipCallback(this));
@@ -355,11 +354,11 @@ public class GroupForm extends DialogBox {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if(gf.groupNameTextBox.getText().length()>3)
+			if(gf.groupNameTextBox.getText().length()>2)
 				if(groupToShow==null) {
 					surveyManagementAdministration.createGroup(groupNameTextBox.getText(), Integer.parseInt(Cookies.getCookie("userId")) , new CreateGroupCallback(gf));	
 				}else {
-					
+					groupToShow.setName(groupNameTextBox.getText());
 					for(Person p: newGroupMembers) {
 						surveyManagementAdministration.createMembership(groupToShow, p, new AddMembersCallback());
 					}
@@ -367,13 +366,35 @@ public class GroupForm extends DialogBox {
 					for(Person p: groupMembersToBeDeleted) {
 						surveyManagementAdministration.deleteMembership(groupToShow.getId(), p.getId(), new DeleteMembershipCallback());
 					}
-					parentCard.showGroupCardView(groupToShow);
-					gf.hide();
+					surveyManagementAdministration.updateGroup(groupToShow, new UpdateGroupCallback(gf));
+					
 				}
 			else {
 				Window.alert("Group name must have at least 3 characters.");
 			}
 		}
+	}
+	
+	class UpdateGroupCallback implements AsyncCallback<Group>{
+		GroupForm gf;
+		public UpdateGroupCallback(GroupForm gf) {
+			// TODO Auto-generated constructor stub
+			this.gf = gf;
+		}
+
+		@Override
+		public void onFailure(Throwable arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Group result) {
+			// TODO Auto-generated method stub
+			parentCard.showGroupCardView(result);
+			gf.hide();
+		}
+		
 	}
 	
 	class DeleteMembershipCallback implements AsyncCallback<Void>{
@@ -415,13 +436,14 @@ public class GroupForm extends DialogBox {
 			}
 			if(parentCard==null) {
 				parentCard = new GroupCard(content,result);
-				parentCard.showGroupCardView(groupToShow);
+//				parentCard.showGroupCardView(groupToShow);
 				content.add(parentCard);
 				gf.hide();
 			}else {
 				parentCard.showGroupCardView(groupToShow);
 				gf.hide();
 			}
+			content.showGroups();
 		}
 	}
 		

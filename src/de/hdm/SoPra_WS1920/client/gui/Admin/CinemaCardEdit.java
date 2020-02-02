@@ -2,7 +2,6 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import java.util.Vector;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
@@ -20,8 +19,11 @@ import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
-import de.hdm.SoPra_WS1920.shared.bo.Person;
 
+/**
+ * Klasse, die eine Karte zum Editieren eines Cinemas erzeugt
+ * @author Sebastian Hermann
+ */
 public class CinemaCardEdit extends DialogBox{
 	
 	FlowPanel formWrapper;
@@ -142,36 +144,18 @@ public class CinemaCardEdit extends DialogBox{
 			formWrapper.add(deleteLabel);
 		}
 		
-		
 		saveButton = new Button("Save");
 		saveButton.setStyleName("SaveButton");
 		saveButton.addClickHandler(new SaveClickHandler(this));
 		
-//		cinemaToShow.setName(nameTextBox.getText());
-////		Logic required for mapping the cinema chain name to the Id/FK
-//		cinemaToShow.setCinemaChainFK();
-//		cinemaToShow.setStreet(streetTextBox.getText());
-//		cinemaToShow.setStreetNo(streetNrTextBox.getText());
-//		cinemaToShow.setZipCode(zipCodeTextBox.getText());
-//		cinemaToShow.setCity(cityTextBox.getText());
-//		
-//		formWrapper.add(cardDescription);
-//		formWrapper.add(cancelIcon);
-//		formWrapper.add(nameLabel);
-//		formWrapper.add(nameTextBox);
-//		formWrapper.add(cinemaChainLabel);
-//		formWrapper.add(cinemaChainListBox);
-//		formWrapper.add(adressLabel);
-//		formWrapper.add(streetTextBox);
-//		formWrapper.add(streetNrTextBox);
-//		formWrapper.add(zipCodeTextBox);
-//		formWrapper.add(cityTextBox);
-//		formWrapper.add(deleteIcon);
-//		formWrapper.add(deleteLabel);
 		formWrapper.add(saveButton);
 		this.add(formWrapper);
 		
 	}
+	
+	/**
+	 * Methode, die einen Callback erzeugt um alle CinemaChains auf der Datenbank abzurufen.
+	 */
 	
 	class CinemaChainCallback implements AsyncCallback<Vector<CinemaChain>>{
 
@@ -193,6 +177,9 @@ public class CinemaCardEdit extends DialogBox{
 		
 	}
 	
+	/**
+	 * Mit diesem Clickhandler wird das Cinema Objekt durch einen Callback in der Datenbank gespeichert
+	 */
 	class SaveClickHandler implements ClickHandler{
 		CinemaCardEdit cinemaCardEdit;
 		
@@ -203,28 +190,40 @@ public class CinemaCardEdit extends DialogBox{
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			
-			if(parentCard==null) {
-				cinemaAdministration.createCinema(nameTextBox.getText(), 
-						cityTextBox.getText(), streetTextBox.getText(), 
-						streetNrTextBox.getText(), zipCodeTextBox.getText(), 
-						cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()), 
-						Integer.parseInt(Cookies.getCookie("userId")), 
-						new CreateCinemaCallback());
-
+			if(nameTextBox.getText().length()==0 
+				|| cityTextBox.getText().length()==0  
+				|| streetTextBox.getText().length()==0 
+				|| streetNrTextBox.getText().length()==0 
+				|| zipCodeTextBox.getText().length()==0
+				) {
+				Window.alert("Please fill in all fields.");
 			}else {
-
-				cinemaToShow.setName(nameTextBox.getText());
-				cinemaToShow.setCity(cityTextBox.getText()); 
-				cinemaToShow.setStreet(streetTextBox.getText()); 
-				cinemaToShow.setStreetNo(streetNrTextBox.getText()); 
-				cinemaToShow.setZipCode(zipCodeTextBox.getText()); 
-				cinemaToShow.setCinemaChainFK(cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()));
-				cinemaToShow.setPersonFK(Integer.parseInt(Cookies.getCookie("userId")));
-				cinemaAdministration.updateCinema(cinemaToShow, new UpdateCinemaCinemaCallback());
+				
+				if(parentCard==null) {
+					cinemaAdministration.createCinema(nameTextBox.getText(), 
+							cityTextBox.getText(), streetTextBox.getText(), 
+							streetNrTextBox.getText(), zipCodeTextBox.getText(), 
+							cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()), 
+							Integer.parseInt(Cookies.getCookie("userId")), 
+							new CreateCinemaCallback());
+	
+				}else {
+	
+					cinemaToShow.setName(nameTextBox.getText());
+					cinemaToShow.setCity(cityTextBox.getText()); 
+					cinemaToShow.setStreet(streetTextBox.getText()); 
+					cinemaToShow.setStreetNo(streetNrTextBox.getText()); 
+					cinemaToShow.setZipCode(zipCodeTextBox.getText()); 
+					cinemaToShow.setCinemaChainFK(cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()));
+					cinemaToShow.setPersonFK(Integer.parseInt(Cookies.getCookie("userId")));
+					cinemaAdministration.updateCinema(cinemaToShow, new UpdateCinemaCinemaCallback());
+				}
 			}
 		}
 		
+		/**
+		 * Mit diesem Callback werden Cinema Objekte in der Datenbank aktualisiert
+		 */
 		class UpdateCinemaCinemaCallback implements AsyncCallback<Cinema>{
 
 			@Override
@@ -242,6 +241,9 @@ public class CinemaCardEdit extends DialogBox{
 			
 		}
 		
+		/**
+		 * Callback, der ein CinemaObjekt auf der Datenbank anlegt.
+		 */
 		class CreateCinemaCallback implements AsyncCallback<Cinema>{
 
 			@Override
@@ -267,6 +269,9 @@ public class CinemaCardEdit extends DialogBox{
 		
 	}
 	
+	/**
+	 * Clickhandler, der das Editieren bzw. Erstellen eines Cinema Objekts abbricht und die Karte schließt.
+	 */
 	class CancelClickHandler implements ClickHandler{
 		CinemaCardEdit cinemaCardEdit;
 		public CancelClickHandler(CinemaCardEdit cinemaCardEdit) {
@@ -287,6 +292,9 @@ public class CinemaCardEdit extends DialogBox{
 		
 	}
 	
+	/**
+	 * Clickhandler, der ein CinemaObjekt aus der Datenbank löscht.
+	 */
 	class DeleteClickHandler implements ClickHandler{
 		CinemaCardEdit cinemaCardEdit;
 		public DeleteClickHandler(CinemaCardEdit cinemaCardEdit) {
@@ -304,6 +312,9 @@ public class CinemaCardEdit extends DialogBox{
 		
 	}
 	
+	/**
+	 * Dieser Callback löscht ein Cinema Objekt aus der Datenbank.
+	 */
 	class DeleteCinemaCallback implements AsyncCallback<Void>{
 		CinemaCardEdit cinemaCardEdit;
 		
@@ -327,6 +338,11 @@ public class CinemaCardEdit extends DialogBox{
 		
 	}
 
+	/**
+	 * Methode, die das vom USer ausgewählte CinemaChain Objekt zurückgibt
+	 * @param String selectedValue
+	 * @return CinemaChain ID
+	 */
 	public int getSelectedCinemaChain(String selectedValue) {
 		// TODO Auto-generated method stub
 		CinemaChain cinemaChain = null;

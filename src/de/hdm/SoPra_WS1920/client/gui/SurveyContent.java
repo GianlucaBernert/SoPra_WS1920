@@ -7,8 +7,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import de.hdm.SoPra_WS1920.client.ClientsideSettings;
-import de.hdm.SoPra_WS1920.client.gui.Admin.Content;
-import de.hdm.SoPra_WS1920.client.gui.Admin.MovieCard;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
@@ -69,7 +67,7 @@ public class SurveyContent extends FlowPanel {
 	
 	public void showGroups() {
 		this.clear();
-		surveyManagementAdministration.getGroupByPersonFK(p.getId(), new GetGroupByPersonCallback(this));
+		surveyManagementAdministration.getGroupsByMemberships(p.getId(), new GetGroupByPersonCallback(this));
 	}
 	
 	class GetGroupByPersonCallback implements AsyncCallback<Vector<Group>>{
@@ -102,7 +100,7 @@ public class SurveyContent extends FlowPanel {
 	
 	public void showSurveys() {
 		this.clear();
-		surveyManagementAdministration.getSurveyByPersonFK(p.getId(), new GetSurveyByPersonCallback(this));
+		surveyManagementAdministration.getSurveyToShow(p.getId(), new GetSurveyByPersonCallback(this));
 		
 	}
 	
@@ -129,7 +127,6 @@ public class SurveyContent extends FlowPanel {
 			// TODO Auto-generated method stub
 			for(Survey s : result) {
 				SurveyCard surveyCard = new SurveyCard(content, s);
-//				surveyCard.showSurveyCardView(s);
 				content.add(surveyCard);
 				
 			}

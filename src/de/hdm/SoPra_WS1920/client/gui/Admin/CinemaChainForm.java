@@ -137,12 +137,16 @@ public class CinemaChainForm extends DialogBox {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			if(parentCard != null) {
-				cinemaChainToShow.setName(cinemaChainTextBox.getText());
-				cinemaAdministration.updateCinemaChain(cinemaChainToShow, new SaveCinemaChainCallback(cinemaChainForm));
+			
+			if(cinemaChainTextBox.getText().length()==0) {
+				Window.alert("Please fill in a name");
 			}else {
-				cinemaAdministration.createCinemaChain(cinemaChainTextBox.getText(), Integer.parseInt(Cookies.getCookie("userId")), new CreateCinemaChainCallback(cinemaChainForm));
-				
+				if(parentCard != null) {
+					cinemaChainToShow.setName(cinemaChainTextBox.getText());
+					cinemaAdministration.updateCinemaChain(cinemaChainToShow, new SaveCinemaChainCallback(cinemaChainForm));
+				}else {
+					cinemaAdministration.createCinemaChain(cinemaChainTextBox.getText(), Integer.parseInt(Cookies.getCookie("userId")), new CreateCinemaChainCallback(cinemaChainForm));				
+				}
 			}
 		}
 	}

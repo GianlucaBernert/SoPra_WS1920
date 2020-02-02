@@ -1,7 +1,5 @@
 package de.hdm.SoPra_WS1920.shared.bo;
 
-import java.util.*;
-
 /**
  * @author GianlucaBernert
  * Klasse Vote, welche die Attribute votingWeight, surveyEntryFK und personFK direkt enthält
@@ -50,7 +48,7 @@ public class Vote extends Ownership {
     }
 
     /**
-     * MEthode um den surveyENtryFK eines VOtings zu setzen
+     * Methode um den surveyEntryFK eines Votings zu setzen
      * @param int surveyEntryFK 
      */
     public void setSurveyEntryFK(int surveyEntryFK) {

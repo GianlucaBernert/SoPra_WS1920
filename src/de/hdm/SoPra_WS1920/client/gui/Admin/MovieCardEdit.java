@@ -126,13 +126,6 @@ public class MovieCardEdit extends DialogBox{
 			formWrapper.add(deleteIcon);
 			formWrapper.add(deleteLabel);
 		}
-//		deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
-//		deleteIcon.setStyleName("DeleteIcon");
-//		deleteIcon.addClickHandler(new DeleteClickHandler(this));
-//		
-//		deleteLabel = new Label("Delete");
-//		deleteLabel.setStyleName("DeleteLabel");
-//		deleteLabel.addClickHandler(new DeleteClickHandler(this));
 		
 		saveButton = new Button("Save");
 		saveButton.addClickHandler(new SaveClickHandler(this));
@@ -142,20 +135,11 @@ public class MovieCardEdit extends DialogBox{
 		genreTextBox.setText(movieToShow.getGenre());
 		descriptionTextArea.setText(movieToShow.getDescription());
 		
-//		formWrapper.add(cardDescription);
-//		formWrapper.add(cancelIcon);
-//		formWrapper.add(nameLabel);
-//		formWrapper.add(nameTextBox);
-//		formWrapper.add(genreLabel);
-//		formWrapper.add(genreTextBox);
-//		formWrapper.add(descriptionLabel);
-//		formWrapper.add(descriptionTextArea);
-//		formWrapper.add(deleteIcon);
-//		formWrapper.add(deleteLabel);
 		formWrapper.add(saveButton);
 		this.add(formWrapper);
 	}
 	
+
 	/*
 	 * ClickHandler, um Movies zu speichern.
 	 */
@@ -173,23 +157,26 @@ public class MovieCardEdit extends DialogBox{
 			movieToShow.setGenre(genreTextBox.getText());
 			movieToShow.setDescription(descriptionTextArea.getText());
 			
-			if(parentCard==null) {
-				
-				cinemaAdministration.createMovie(nameTextBox.getText(), genreTextBox.getText(),descriptionTextArea.getText(), Integer.parseInt(Cookies.getCookie("userId")), new NewMovieCallback(movieCardEdit));
-				
-				
+			if(nameTextBox.getText().length()==0
+				||genreTextBox.getText().length()==0
+				||descriptionTextArea.getText().length()==0
+				) {
+				Window.alert("Please fill in all fields.");
 			}else {
-				cinemaAdministration.updateMovie(movieToShow, new UpdateMovieCallback(movieCardEdit));
-				
+				if(parentCard==null) {
+					cinemaAdministration.createMovie(nameTextBox.getText(), genreTextBox.getText(),descriptionTextArea.getText(), Integer.parseInt(Cookies.getCookie("userId")), new NewMovieCallback(movieCardEdit));
+					
+				}else {
+					cinemaAdministration.updateMovie(movieToShow, new UpdateMovieCallback(movieCardEdit));
+					
+				}
 			}
-			
-			
 		}
 		
 	}
 	
 	/*
-	 * Callback zum Speichern und Überschreiben eines Movies.
+	 * Callback zum Speichern und ï¿½berschreiben eines Movies.
 	 */
 	class UpdateMovieCallback implements AsyncCallback<Movie>{
 		
@@ -245,7 +232,7 @@ public class MovieCardEdit extends DialogBox{
 	
 	
 	/*
-	 * ClickHandler, um das Movie-Formular zu schließen.
+	 * ClickHandler, um das Movie-Formular zu schlieï¿½en.
 	 */
 	class CancelClickHandler implements ClickHandler{
 		MovieCardEdit movieCardEdit;
@@ -270,7 +257,7 @@ public class MovieCardEdit extends DialogBox{
 	}
 	
 	/*
-	 * ClickHandler, um ein Movie-Objekt zu löschen. 
+	 * ClickHandler, um ein Movie-Objekt zu lï¿½schen. 
 	 */
 	class DeleteClickHandler implements ClickHandler{
 		MovieCardEdit movieCardEdit;
@@ -288,7 +275,7 @@ public class MovieCardEdit extends DialogBox{
 	}
 	
 	/*
-	 * Callback zum Löschen eines Movies.
+	 * Callback zum Lï¿½schen eines Movies.
 	 */
 	class DeleteMovieCallback implements AsyncCallback<Void>{
 		MovieCardEdit movieCardEdit;

@@ -5,6 +5,37 @@ body{
 	overflow-x: hidden; /* Disables horizontal scroll */
 	min-width: 240px;
 }
+
+.RegistrationForm {
+	font-size: 20px;
+    top: 150px !important;
+    background: #0C1C2C !important;
+    padding: 20px 20px;
+    background: azure;
+    border-radius: 15px;
+    color: black !important;
+    height: 350px;
+    min-width: 350px;
+}
+
+.RegistrationForm table{
+	width: 100%;
+}
+
+.SignUpButton {
+	width: calc(100% - 40px)!important;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    display: block;
+    position: absolute;
+    margin-top: 20px;
+    background-color: #9278FF;
+    color: #ffffff;
+    outline: none;
+    bottom: 20px;
+}
+
 .navbar {
 	height: 100%;
 	top: 0;

@@ -325,8 +325,7 @@ public class SurveyCardEdit extends DialogBox {
 				cardDescription.setText("Edit Survey");
 				selectedMovie.setText("Movie: "+ surveyToShow.getMovieName());
 				selectedPeriod.setText("Screening Period: "+ surveyToShow.getStartDate().toString()+" - "+surveyToShow.getEndDate().toString());
-				surveyManagement.getSurveyEntryBySurveyFK(surveyToShow.getId(), new GetSurveyEntriesCallback());
-//				surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieBySurveyCallback());			
+				surveyManagement.getSurveyEntryBySurveyFK(surveyToShow.getId(), new GetSurveyEntriesCallback());			
 				surveyManagement.getMoviesByName(surveyToShow.getMovieName(), new GetMovieByNameCallback());			
 				surveyManagement.getGroupById(surveyToShow.getGroupFK(), new GetGroupOfSurveyCallback());
 				
@@ -490,7 +489,7 @@ public class SurveyCardEdit extends DialogBox {
 				// TODO Auto-generated method stub
 				surveyCardEdit.saveSurvey();
 				surveyCardEdit.hide();
-				
+//				parentCard.surveyContent.showSurveys();
 			}
 			
 		}
@@ -529,6 +528,7 @@ public class SurveyCardEdit extends DialogBox {
 				// TODO Auto-generated method stub
 				parentCard.showSurveyCardView(result);
 				surveyCardEdit.hide();
+//				parentCard.surveyContent.showSurveys();
 			}
 			
 		}

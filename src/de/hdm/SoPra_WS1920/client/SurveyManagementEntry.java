@@ -9,6 +9,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -16,15 +17,13 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.SoPra_WS1920.client.gui.SurveyContent;
+import de.hdm.SoPra_WS1920.client.gui.SurveyManagementHeader;
 import de.hdm.SoPra_WS1920.client.gui.SurveyNavigationBar;
 import de.hdm.SoPra_WS1920.client.gui.Admin.AuthenticationForm;
-
 import de.hdm.SoPra_WS1920.shared.LoginInfo;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
-
-import de.hdm.SoPra_WS1920.client.gui.SurveyContent;
-import de.hdm.SoPra_WS1920.client.gui.SurveyManagementHeader;
 
 public class SurveyManagementEntry implements EntryPoint {
 	
@@ -102,10 +101,10 @@ public class SurveyManagementEntry implements EntryPoint {
 		/**
 		 * Instantiierung der notwendigen GUI Objekte
 		 */
-		private Label abfrage = new Label("Du bist noch nicht registriert!"
-				+ " Bitte lege einen User an.");
-		private Button yesBtn = new Button("Registrieren");
-		private Button noBtn = new Button("Abbrechen");
+		private Label abfrage = new Label("Sign Up");
+		private Button signUpButton = new Button("Sign Up");
+//		private Button noBtn = new Button("Abbrechen");
+		private FlowPanel formWrapper = new FlowPanel();
 		private VerticalPanel vPanel = new VerticalPanel();
 		private HorizontalPanel btnPanel = new HorizontalPanel();
 	
@@ -119,34 +118,33 @@ public class SurveyManagementEntry implements EntryPoint {
 		 * @param mail
 		 */
 		public RegistrationFormDialogBox(String mail) {
-			this.setStylePrimaryName("CardDescription");
-			// Adding Styles to Interaction Fields
-			//vPanel.setStyleName("CardDescription");
-			//nickInput.addStyleName("control input content_margin");
+			this.setStylePrimaryName("RegistrationForm");
+			
 			firstInput.setStylePrimaryName("CardTextBox");
 			lastInput.setStylePrimaryName("CardTextBox");
 			
-			yesBtn.setStylePrimaryName("SaveButton");
-			noBtn.setStylePrimaryName("SaveButton");
+			signUpButton.setStylePrimaryName("SignUpButton");
+//			noBtn.setStylePrimaryName("SaveButton");
 			
-			abfrage.setStylePrimaryName("TextBoxLabel");
+			abfrage.setStylePrimaryName("CardDescription");
 			firstName.setStylePrimaryName("TextBoxLabel");
 			lastName.setStylePrimaryName("TextBoxLabel");
 			
 			googleMail = mail;
-			yesBtn.addClickHandler(new CreateUserClickHandler(this));
-			noBtn.addClickHandler(new DontCreateUserClickHandler(this));
-			vPanel.add(abfrage);
+			signUpButton.addClickHandler(new CreateUserClickHandler(this));
+//			noBtn.addClickHandler(new DontCreateUserClickHandler(this));
+			formWrapper.add(abfrage);
 			//vPanel.add(nickInput);
-			vPanel.add(firstName);
-			vPanel.add(firstInput);
-			vPanel.add(lastName);
-			vPanel.add(lastInput);
-			btnPanel.add(yesBtn);
-			btnPanel.add(noBtn);
-			vPanel.add(btnPanel);
-			this.add(vPanel);
+			formWrapper.add(firstName);
+			formWrapper.add(firstInput);
+			formWrapper.add(lastName);
+			formWrapper.add(lastInput);
+			btnPanel.add(signUpButton);
+//			btnPanel.add(noBtn);
+			formWrapper.add(btnPanel);
+			this.add(formWrapper);
 			//this.setWidth("300px");
+		
 		}
 	}
 	

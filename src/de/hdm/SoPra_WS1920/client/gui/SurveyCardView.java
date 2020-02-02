@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -62,11 +63,12 @@ public class SurveyCardView extends FlowPanel {
 		
 		movie = new Label();
 		movie.setStyleName("CardViewTitle");
-		if(movieOfSurvey!=null) {
-			movie.setText(movieOfSurvey.getName());
-		}else {
-			surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
-		}
+//		if(movieOfSurvey!=null) {
+//			movie.setText(movieOfSurvey.getName());
+//		}else {
+//			surveyManagement.getMovieBySurveyFK(surveyToShow.getId(), new GetMovieCallback());
+//		}
+		movie.setText(surveyToShow.getMovieName());
 		
 		group = new Label();
 		group.setStyleName("CardViewSubTitle");
@@ -109,7 +111,7 @@ public class SurveyCardView extends FlowPanel {
 		}else {
 			this.showResultsView();
 		}
-		if(surveyToShow.getPersonFK()==1) {
+		if(surveyToShow.getPersonFK()==Integer.parseInt(Cookies.getCookie("userId"))) {
 			editIcon.addClickHandler(new EditClickHandler());
 			this.add(edit);
 			this.add(editIcon);

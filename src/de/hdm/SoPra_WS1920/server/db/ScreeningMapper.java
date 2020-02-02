@@ -8,11 +8,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.util.Vector;
 
-import de.hdm.SoPra_WS1920.shared.bo.Cinema;
-import de.hdm.SoPra_WS1920.shared.bo.Movie;
-import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
-import de.hdm.SoPra_WS1920.shared.bo.Survey;
 
 /**
 *
@@ -170,15 +166,24 @@ public class ScreeningMapper {
         
     }
     
+    /**
+	 * Methode, die Screenings f�r das Erstellen einer Umfrage bereitstellt.
+	 * @param startDate, endDate, int movieFK, String City
+	 * @return Vektor Screening
+	 */
     public Vector<Screening> findScreeningForSurveyCreation(Date startDate, Date endDate, int movieFK, String c) {
     	Connection con = DBConnection.connection();
     	Vector<Screening> result = new Vector<Screening>();
     	
     	try {
     		Statement stmt = con.createStatement();
-    		ResultSet rs = stmt.executeQuery("SELECT * FROM screening INNER JOIN cinema" 
-    				+ " WHERE screeningDate BETWEEN '" + startDate + "' AND '" + endDate 
-    				+ "' AND city='" + c + "' AND movieFK='" + movieFK+"'");
+    		ResultSet rs = stmt.executeQuery("SELECT screening.id, screening.screeningDate, screening.screeningTime, screening.cinemaFK, screening.movieFK FROM screening "
+    				+"INNER JOIN cinema " 
+    				+"On screening.cinemaFK = cinema.id "
+    				+"WHERE cinema.city= '" + c 
+    				+"' AND screeningDate BETWEEN '"+startDate
+    				+"' AND '" + endDate
+    				+"' AND movieFK= "+ movieFK);
     		
     		while(rs.next()) {
     			Screening sc = new Screening();
@@ -297,6 +302,10 @@ public class ScreeningMapper {
     }
     
     
+    /**
+	 * Methode, die das Loeschen eines Screening-Objekts aus der Datenbank erm�glicht
+	 * @param ownership
+	 */
     public void deleteByScreeningDate(Date screeningDate) {
     	Connection con = DBConnection.connection();
     	
@@ -309,6 +318,10 @@ public class ScreeningMapper {
     	}
     }
     
+    /**
+	 * Methode, die das Loeschen eines Screening-Objekts aus der Datenbank anhand der screeningTime erm�glicht
+	 * @param Time screeningTime
+	 */
     public void deleteByScreeningTime(Time screeningTime) {
     	Connection con = DBConnection.connection();
     	
@@ -321,6 +334,10 @@ public class ScreeningMapper {
     	}
     }
     
+    /**
+	 * Methode, die das Loeschen eines Screening-Objekts aus der Datenbank anhand der screeningTime und  erm�glicht
+	 * @param Time screeningTime, Date screeningDate
+	 */
     public void deleteByScreeningDateTime(Date screeningDate, Time screeningTime) {
     	Connection con = DBConnection.connection();
     	

@@ -1,22 +1,21 @@
 package de.hdm.SoPra_WS1920.shared;
 
 
-import java.sql.Time;
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.*;
-
-import org.apache.james.mime4j.field.datetime.DateTime;
+import java.sql.Time;
+import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
+import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Ownership;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
+import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
@@ -279,5 +278,13 @@ public interface CinemaAdministrationAsync {
 	void getScreeningsforSurveyCreation(Movie movie, String city, Date startDate, Date endDate, AsyncCallback<Vector<Screening>> callback);
 
 	void getCinemaByScreeningFK(int screeningFK, AsyncCallback<Cinema> callback);
+
+	void deleteMembership(int gFK, int pFK, AsyncCallback<Void> callback);
+
+	void deleteSurvey(Survey s, AsyncCallback<Void> callback);
+
+	void getSurveyEntryBySurveyFK(int sFK, AsyncCallback<Vector<SurveyEntry>> callback);
+
+	void deleteGroup(Group g, AsyncCallback<Void> callback);
     
 }

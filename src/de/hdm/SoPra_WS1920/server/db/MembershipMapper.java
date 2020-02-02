@@ -1,14 +1,12 @@
 package de.hdm.SoPra_WS1920.server.db;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
-import de.hdm.SoPra_WS1920.shared.bo.Movie;
-import de.hdm.SoPra_WS1920.shared.bo.Person;
-import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
-
-import java.sql.*;
 
 /**
  * @author David Flattich
@@ -64,7 +62,11 @@ public class MembershipMapper {
 	 * 
 	 */	
     
-
+    /**
+     * Methode, die ein Membership Objekt in der Datenbank speichert
+     * @param Membership me
+     * @return Membership me
+     */
     
     public Membership insertMembership(Membership me) {
     	Connection con = DBConnection.connection();
@@ -86,8 +88,9 @@ public class MembershipMapper {
         return me;
     }
     /**
-     * @param groupID 
-     * @return
+     * Methode, die alle Memberships einer Person zur�ckgibt.
+     * @param int personFK
+     * @return Vektor Membership
      */
     public Vector<Membership> findMembershipByPersonFK(int pFK) {
         Connection con = DBConnection.connection();
@@ -115,8 +118,9 @@ public class MembershipMapper {
         return result;
     }
     /**
-     * @param groupID 
-     * @return
+     * Methode, die alle Memberships einer Gruppe zur�ckgibt.
+     * @param int groupID 
+     * @return Vektor Membership
      */
     public Vector<Membership> findMembershipByGroupFK(int gFK) {
         Connection con = DBConnection.connection();
@@ -165,5 +169,7 @@ public class MembershipMapper {
 			e2.printStackTrace();
 		}
     }
+    
+    
 
 }

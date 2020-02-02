@@ -1,8 +1,6 @@
 
 package de.hdm.SoPra_WS1920.shared.bo;
 
-import java.util.*;
-
 /**
  * @author GianlucaBernert
  * Klasse SurveyEntry, welche die Attribute screeningFK, surveyFK, personFK direkt enthält
