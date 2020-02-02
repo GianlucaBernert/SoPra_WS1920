@@ -517,7 +517,7 @@ public class VotingCard extends DialogBox {
 				surveyEntryVector.add(surveyEntryRow);
 				
 			}
-		}
+		} 
 		
 	}
 }
