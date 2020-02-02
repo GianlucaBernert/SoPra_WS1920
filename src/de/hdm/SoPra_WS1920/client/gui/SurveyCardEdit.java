@@ -181,7 +181,7 @@ public class SurveyCardEdit extends DialogBox {
 		groupLabel =  new Label("Group");
 		groupLabel.setStyleName("TextBoxLabel");
 		allGroups = new ListBox();
-		surveyManagement.getGroupByPersonFK(person.getId(), new GetGroupsByFKCallback());
+		surveyManagement.getGroupsByMemberships(person.getId(), new GetGroupsByFKCallback());
 		allGroups.setStyleName("CardSuggestBox");
 		
 		cityLabel = new Label("City");

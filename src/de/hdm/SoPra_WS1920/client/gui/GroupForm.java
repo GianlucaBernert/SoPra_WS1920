@@ -563,6 +563,7 @@ public class GroupForm extends DialogBox {
 		@Override
 		public void onClick(ClickEvent event) {
 			if((gf.memberSuggestBox.getValue().length())>1) {
+				//Does the user exist?
 				surveyManagementAdministration.getPersonByEmail(gf.memberSuggestBox.getValue(), new GetPersonCallback(gf));
 			}else {
 				Window.alert("Please enter a valid e-Mail");
@@ -603,7 +604,7 @@ public class GroupForm extends DialogBox {
 				gf.membersPanel.add(newMember);
 				gf.memberSuggestBox.setText("");
 			}else {
-				Window.alert("User is allready a member.");
+				Window.alert("User does not exist or is allready a member");
 			}
 		}
 		
