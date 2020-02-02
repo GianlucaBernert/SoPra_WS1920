@@ -135,8 +135,7 @@ public class SurveyCardEdit extends DialogBox {
 	public SurveyCardEdit(SurveyContent content, SurveyManagementHeader header) {
 		this.content = content;
 		this.header = header;
-
-		
+	
 	}
 	
 	/**
@@ -844,10 +843,11 @@ public class SurveyCardEdit extends DialogBox {
 
 		@Override
 		public void onSuccess(Survey result) {
-		
+			int counter = 0;
 			surveyToShow = result;	
 			for(ScreeningRow sr: screeningRowVector) {
 				if(sr.cb.getValue() == true) {
+					counter++;
 					surveyManagement.createSurveyEntry(sr.s.getId(), result.getId(), person.getId(), new CreateSurveyEntryCallback());
 				}
 			}
@@ -855,6 +855,7 @@ public class SurveyCardEdit extends DialogBox {
 			parentCard.setMovie(movie);
 			content.add(parentCard);
 			surveyCardEdit.hide();
+			Window.alert("Selected Screenings: "+Integer.toString(counter));
 		}
 	}
 	
