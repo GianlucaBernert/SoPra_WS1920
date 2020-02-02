@@ -15,6 +15,11 @@ import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
 
+/*
+ * @author Yesin Soufi
+ * @author Sebastian Hermann
+ * Die Klasse UserSettingsForm die er ermöglicht seinen Namen anzupassen.
+ */
 public class UserSettingsForm extends DialogBox {
 	
 	FlowPanel formWrapper;
@@ -40,6 +45,12 @@ public class UserSettingsForm extends DialogBox {
 	SurveyContent content;
 	SurveyNavigationBar surveyNavigationBar;
 	SurveyManagementAsync surveyManagement;
+	
+	/*
+	 * Konstruktor der UserSettingsForm
+	 * @param surveyNavigationBar
+	 * @p
+	 */
 
 	public UserSettingsForm(SurveyNavigationBar surveyNavigationBar, Person p) {
 		this.surveyNavigationBar = surveyNavigationBar;
@@ -110,6 +121,10 @@ public class UserSettingsForm extends DialogBox {
 		
 	}
 	
+	/*
+	 * AsyncCallback der bei Erfolg den Namen, Nachnamen und EMail zurückgibt
+	 */
+	
 	class GetPersonCallback implements AsyncCallback<Person>{
 
 		@Override
@@ -128,6 +143,10 @@ public class UserSettingsForm extends DialogBox {
 		}
 		
 	}
+	
+	/*
+	 * ClickHandler der beim speichern die Änderungen der UserSettingsForm übernimmt
+	 */
 	
 	class SaveClickHandler implements ClickHandler{
 		UserSettingsForm userSettingsForm;
@@ -148,6 +167,8 @@ public class UserSettingsForm extends DialogBox {
 		
 	}
 	
+
+	
 	class UpdatePersonCallback implements AsyncCallback<Person>{
 
 		@Override
@@ -164,6 +185,10 @@ public class UserSettingsForm extends DialogBox {
 		
 	}
 	
+	/*
+	 * ClickHandler der bei Aktion die UserSettingsForm schließt
+	 */
+	
 	class CancelClickHandler implements ClickHandler{
 		UserSettingsForm userSettingsForm;
 		
@@ -175,6 +200,10 @@ public class UserSettingsForm extends DialogBox {
 			
 		}
 	}
+	
+	/*
+	 * ClickHandler der bei Aktion den Löschvorgang auslöst
+	 */
 		
 	class DeleteClickHandler implements ClickHandler{
 		UserSettingsForm userSettingsForm;
@@ -190,6 +219,10 @@ public class UserSettingsForm extends DialogBox {
 		}
 		
 	}
+	
+	/*
+	 * AsyncCallback der bei löschen einer Person zurück zur Google Startseite zurück verweist
+	 */
 	
 	class DeletePersonCallback implements AsyncCallback<Void>{
 

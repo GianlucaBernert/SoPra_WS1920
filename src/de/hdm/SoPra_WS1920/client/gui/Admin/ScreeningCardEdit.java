@@ -2,6 +2,7 @@
 package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import java.sql.Date;
+
 import java.sql.Time;
 import java.util.TimeZone;
 import java.util.Vector;
@@ -33,6 +34,12 @@ import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
+
+/*
+ * @author Yesin Soufi
+ * @author Sebastian Hermann
+ * In der Klasse ScreeningCardEdit wird das Formular erstellt um verschiedene Screenings anzulegen.
+ */
 
 public class ScreeningCardEdit extends DialogBox {
 	
@@ -74,6 +81,14 @@ public class ScreeningCardEdit extends DialogBox {
 
 	CinemaAdministrationAsync cinemaAdministration;
 	
+	/*
+	 * Konstruktor der ScreeningCardEdit
+	 * @param screeningCard
+	 * @param screeningTpShow
+	 * @param movieOfScreening
+	 * @param cinemaOfScreening
+	 */
+	
 	public ScreeningCardEdit(ScreeningCard screeningCard, Screening screeningToShow, Movie movieOfScreening, Cinema cinemaOfScreening) {
 		// TODO Auto-generated constructor stub
 		this.parentCard=screeningCard;
@@ -81,6 +96,13 @@ public class ScreeningCardEdit extends DialogBox {
 		this.movieOfScreening=movieOfScreening;
 		this.cinemaOfScreening=cinemaOfScreening;
 	}
+	
+	/*
+	 * Zweiter Konstruktor der ScreeningCardEdit um den Inhalt der
+	 * @param header
+	 * @param content
+	 * anzuordnen
+	 */
 	
 	public ScreeningCardEdit(Header header, Content content) {
 		this.header = header;
@@ -253,6 +275,10 @@ public class ScreeningCardEdit extends DialogBox {
 		}
 	}
 	
+	/*
+	 * AsyncCallback um alle Movies zurückzugeben
+	 */
+	
 	class AllMoviesCallback implements AsyncCallback<Vector<Movie>>{
 
 		@Override
@@ -271,6 +297,10 @@ public class ScreeningCardEdit extends DialogBox {
 		}
 		
 	}
+	
+	/*
+	 * AsyncCallback der bei Erfolg alle angelegten Kinos der jeweiligen Person zurückgibt
+	 */
 	
 	class CinemasOfPersonCallback implements AsyncCallback<Vector<Cinema>>{
 
@@ -293,6 +323,10 @@ public class ScreeningCardEdit extends DialogBox {
 		
 		
 	}
+	
+	/*
+	 * ClickHandler um das angelegte Screening zu speichern
+	 */
 	
 	class SaveClickHandler implements ClickHandler{
 		ScreeningCardEdit screeningCardEdit;
@@ -334,6 +368,10 @@ public class ScreeningCardEdit extends DialogBox {
 		
 	}
 	
+	/*
+	 * ClickHandler um ein Screening zu löschen
+	 */
+	
 	class DeleteClickHandler implements ClickHandler{
 		ScreeningCardEdit screeningCardEdit;
 		
@@ -352,6 +390,10 @@ public class ScreeningCardEdit extends DialogBox {
 		}
 		
 	}
+	
+	/*
+	 * AsynCallback der bei Erfolg die Screenings löscht
+	 */
 	
 	class DeleteCallback implements AsyncCallback<Void>{
 		ScreeningCardEdit screeningCardEdit;
@@ -374,6 +416,10 @@ public class ScreeningCardEdit extends DialogBox {
 		}
 		
 	}
+	
+	/*
+	 * AsyncCallback der bei Erfolg die erstellten Screening Objekte zurückgibt
+	 */
 	
 	class CreateScreeningCallback implements AsyncCallback<Screening>{
 		ScreeningCardEdit screeningCardEdit;
@@ -399,6 +445,10 @@ public class ScreeningCardEdit extends DialogBox {
 		}
 		
 	}
+	
+	/*
+	 * AsyncCallback der bei Erfolg die aktualisierten Screening Objekte zurueckgibt
+	 */
 	class UpdateScreeningCallback implements AsyncCallback<Screening>{
 		ScreeningCardEdit screeningCardEdit;
 		public UpdateScreeningCallback(ScreeningCardEdit screeningCardEdit) {
@@ -420,6 +470,10 @@ public class ScreeningCardEdit extends DialogBox {
 		}
 		
 	}
+	
+	/*
+	 * ClickHandler der bei Abbruch die ScreeningCard edit schließt
+	 */
 	
 	class CancelClickHandler implements ClickHandler{
 		ScreeningCardEdit screeningCardEdit;
@@ -443,6 +497,10 @@ public class ScreeningCardEdit extends DialogBox {
 	}
 	
 	
+	/*
+	 * Methode um die ausgewaehlten Kinos zu erhalten
+	 * @param selectedCinema
+	 */
 	
 	
 	public int getSelectedCinema(String selectedCinema) {
@@ -453,6 +511,11 @@ public class ScreeningCardEdit extends DialogBox {
 			}
 		} return cinema.getId();
 	}
+	
+	/*
+	 * Methode um die ausgewählten Movies zu erhalten
+	 * @param selectedMovie
+	 */
 	
 	public int getSelectedMovie(String selectedMovie) {
 		Movie movie = null;
