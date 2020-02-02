@@ -20,6 +20,10 @@ import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 
+/**
+ * Klasse, die eine Karte zum Editieren eines Cinemas erzeugt
+ * @author Sebastian Hermann
+ */
 public class CinemaCardEdit extends DialogBox{
 	
 	FlowPanel formWrapper;
@@ -149,6 +153,10 @@ public class CinemaCardEdit extends DialogBox{
 		
 	}
 	
+	/**
+	 * Methode, die einen Callback erzeugt um alle CinemaChains auf der Datenbank abzurufen.
+	 */
+	
 	class CinemaChainCallback implements AsyncCallback<Vector<CinemaChain>>{
 
 		@Override
@@ -169,6 +177,9 @@ public class CinemaCardEdit extends DialogBox{
 		
 	}
 	
+	/**
+	 * Mit diesem Clickhandler wird das Cinema Objekt durch einen Callback in der Datenbank gespeichert
+	 */
 	class SaveClickHandler implements ClickHandler{
 		CinemaCardEdit cinemaCardEdit;
 		
@@ -210,6 +221,9 @@ public class CinemaCardEdit extends DialogBox{
 			}
 		}
 		
+		/**
+		 * Mit diesem Callback werden Cinema Objekte in der Datenbank aktualisiert
+		 */
 		class UpdateCinemaCinemaCallback implements AsyncCallback<Cinema>{
 
 			@Override
@@ -227,6 +241,9 @@ public class CinemaCardEdit extends DialogBox{
 			
 		}
 		
+		/**
+		 * Callback, der ein CinemaObjekt auf der Datenbank anlegt.
+		 */
 		class CreateCinemaCallback implements AsyncCallback<Cinema>{
 
 			@Override
@@ -252,6 +269,9 @@ public class CinemaCardEdit extends DialogBox{
 		
 	}
 	
+	/**
+	 * Clickhandler, der das Editieren bzw. Erstellen eines Cinema Objekts abbricht und die Karte schließt.
+	 */
 	class CancelClickHandler implements ClickHandler{
 		CinemaCardEdit cinemaCardEdit;
 		public CancelClickHandler(CinemaCardEdit cinemaCardEdit) {
@@ -272,6 +292,9 @@ public class CinemaCardEdit extends DialogBox{
 		
 	}
 	
+	/**
+	 * Clickhandler, der ein CinemaObjekt aus der Datenbank löscht.
+	 */
 	class DeleteClickHandler implements ClickHandler{
 		CinemaCardEdit cinemaCardEdit;
 		public DeleteClickHandler(CinemaCardEdit cinemaCardEdit) {
@@ -289,6 +312,9 @@ public class CinemaCardEdit extends DialogBox{
 		
 	}
 	
+	/**
+	 * Dieser Callback löscht ein Cinema Objekt aus der Datenbank.
+	 */
 	class DeleteCinemaCallback implements AsyncCallback<Void>{
 		CinemaCardEdit cinemaCardEdit;
 		
@@ -312,6 +338,11 @@ public class CinemaCardEdit extends DialogBox{
 		
 	}
 
+	/**
+	 * Methode, die das vom USer ausgewählte CinemaChain Objekt zurückgibt
+	 * @param String selectedValue
+	 * @return CinemaChain ID
+	 */
 	public int getSelectedCinemaChain(String selectedValue) {
 		// TODO Auto-generated method stub
 		CinemaChain cinemaChain = null;

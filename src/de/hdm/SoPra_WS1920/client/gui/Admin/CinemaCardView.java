@@ -1,6 +1,8 @@
 package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import com.google.gwt.event.dom.client.ClickEvent;
+
+
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -14,6 +16,10 @@ import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
 
+/**
+ * Klasse, die den INhalt einer CinemaCard zum Anzeigen eines Cinemas erzeugt
+ * @author Sebastian Hermann
+ */
 public class CinemaCardView extends FlowPanel{
 
 	Label name;
@@ -79,6 +85,9 @@ public class CinemaCardView extends FlowPanel{
 		
 	}
 	
+	/**
+	 * Callback, der die CinemaChain des ausgewählten Kinos zurückgibt.
+	 */
 	class GetCinemaChainCallback implements AsyncCallback<CinemaChain>{
 
 		@Override
@@ -97,6 +106,9 @@ public class CinemaCardView extends FlowPanel{
 		
 	}
 	
+	/**
+	 * Clickhandler, der die CinemaEditCard zum bearbeiten von CInemas aufruft.
+	 */
 	class EditClickHandler implements ClickHandler{	
 
 		@Override

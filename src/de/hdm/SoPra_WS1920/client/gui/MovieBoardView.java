@@ -5,6 +5,10 @@ import com.google.gwt.user.client.ui.Label;
 
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 
+/**
+ * Klasse, die dafür zustaendig ist, den Inhalt eines Movies anzuzeigen
+ * @author Sebastian Hermann
+ */
 public class MovieBoardView extends FlowPanel {
 	
 	Label name;
