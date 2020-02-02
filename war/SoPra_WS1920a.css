@@ -58,6 +58,16 @@ body{
     margin-right: 5px;
     transform: rotate(20deg) !important;
 }
+.GoogleLogoIcon{
+	float: left;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    margin-left: 50px;
+    margin-top: 11px;
+    margin-right: 5px;
+    transform: rotate(20deg) !important;
+}
 
 .LogoText{
 	width: 100%;
@@ -560,6 +570,24 @@ body{
 	min-height: 350px;
 }
 
+.GoogleEditCard {
+
+    top: 80px !important;
+    margin-top: 60px;
+    min-width: 250px;
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 210px;
+    border-radius: 15px;
+    padding: 20px;
+    background-image: linear-gradient(to bottom right, #0D1D2D, #112D49);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    min-height: 200px;
+}
+   
+
+
 .Card:hover {
 	box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -645,6 +673,12 @@ body{
 }
 
 .CardDescription {
+	font-size: 20px;
+	color:  #7A93B0;
+	padding: 10px 0px;
+}
+.GoogleCardDescription {
+	position: absolute;
 	font-size: 20px;
 	color:  #7A93B0;
 	padding: 10px 0px;
@@ -792,6 +826,24 @@ body{
     padding: 12px;
     border-radius: 5px;
     background-color: #9278FF;
+    color: #ffffff;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    bottom: 0;
+    left: 0;
+    margin-top: 20px;
+    /* border-bottom-left-radius: 10px; */
+    /* border-bottom-right-radius: 10px;*/
+	transition: background-color 0.2s;
+}
+
+.GoogleButton {
+	/*position: absolute;*/
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    background-color: #ffffff;
     color: #ffffff;
     outline: none;
     border: none;

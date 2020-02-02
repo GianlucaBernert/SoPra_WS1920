@@ -10,9 +10,10 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 
 
-public class AuthenticationForm extends FlowPanel{
+public class AuthenticationForm extends DialogBox{
 
 
+	FlowPanel formWrapper;
 /**
  * Die <code>AuthenticationForm</code>-Klasse ist zuständig für
  * die Zugangsberechtigungsüberprüfung der User in das Cinema Survey
@@ -44,31 +45,35 @@ public class AuthenticationForm extends FlowPanel{
 	 * Die <code>onLoad()</code>-Methode 
 	 */
 	public void onLoad() {
-		this.setStyleName("CardDescription");
+		super.onLoad();
+		this.setStyleName("GoogleEditCard");
 		
+		formWrapper = new FlowPanel();
 		logoText = new Label("Popcorns");
 		logoText.setStylePrimaryName("LogoText");
 		//this.getElement().setAttribute("style", "width: 500px; height:350px; text-align: center;");
 		imgGoogle.getElement().setAttribute("style", "width: 35px;");
-		popcornsLogo.setStylePrimaryName("LogoIcon");
+		popcornsLogo.setStylePrimaryName("GoogleLogoIcon");
 		//popcornsLogo.getElement().setAttribute("style", "padding: 30px; display: inline-block;");
 		
 		
 		welcomeLabel.setStyleName("TextBoxLabel");
 		//welcomeLabel.getElement().setAttribute("style", "display: inline_block;");
-		googleBtn.addStyleName("button is-block is-large is-fullwidth");
+		googleBtn.setStyleName("GoogleButton");
+		//("button is-block is-large is-fullwidth");
 		googleBtn.getElement().appendChild(imgGoogle.getElement());
-		googleBtn.getElement().setAttribute("style", "display: inline-block;");
-		
+		//googleBtn.getElement().setAttribute("style", "display: inline-block;");
+		googleBtn.addClickHandler(new loginClickHandler());
 		
 		//this.add(pinnersLogo);
-		this.add(popcornsLogo);
-		this.add(logoText);
-		this.add(welcomeLabel);
-		this.add(googleBtn);
+		formWrapper.add(popcornsLogo);
+		formWrapper.add(logoText);
+		formWrapper.add(welcomeLabel);
+		formWrapper.add(googleBtn);
+		this.add(formWrapper);
 		
+	
 		
-		googleBtn.addClickHandler(new loginClickHandler());
 	}
 	
 	
