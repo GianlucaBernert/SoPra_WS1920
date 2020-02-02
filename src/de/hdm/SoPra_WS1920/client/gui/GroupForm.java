@@ -129,6 +129,7 @@ public class GroupForm extends DialogBox {
 		formWrapper.add(cancelIcon);
 		formWrapper.add(addMembersLabel);
 		formWrapper.add(memberSuggestBox);
+		formWrapper.add(addIcon);
 		formWrapper.add(membersPanel);
 		if(groupToShow!=null) {
 			surveyManagementAdministration.getMembershipsOfGroup(groupToShow, new GetMembershipCallback(this));
@@ -442,7 +443,7 @@ public class GroupForm extends DialogBox {
 				parentCard.showGroupCardView(groupToShow);
 				gf.hide();
 			}
-//			content.showGroups();
+			content.showGroups();
 		}
 	}
 		
