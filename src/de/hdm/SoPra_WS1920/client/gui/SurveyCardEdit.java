@@ -489,7 +489,7 @@ public class SurveyCardEdit extends DialogBox {
 				// TODO Auto-generated method stub
 				surveyCardEdit.saveSurvey();
 				surveyCardEdit.hide();
-				
+//				parentCard.surveyContent.showSurveys();
 			}
 			
 		}
@@ -528,6 +528,7 @@ public class SurveyCardEdit extends DialogBox {
 				// TODO Auto-generated method stub
 				parentCard.showSurveyCardView(result);
 				surveyCardEdit.hide();
+//				parentCard.surveyContent.showSurveys();
 			}
 			
 		}
