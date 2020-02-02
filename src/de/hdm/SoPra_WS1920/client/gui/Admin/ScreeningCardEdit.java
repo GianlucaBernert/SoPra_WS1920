@@ -99,9 +99,6 @@ public class ScreeningCardEdit extends DialogBox {
 		super.onLoad();
 		this.setStyleName("EditCard");
 		cinemaAdministration = ClientsideSettings.getCinemaAdministration();
-		
-		
-		
 		formWrapper = new FlowPanel();
 		
 		cardDescription = new Label("Add Screening");
@@ -124,11 +121,9 @@ public class ScreeningCardEdit extends DialogBox {
 		cinemaLabel = new Label("Cinema");
 		cinemaLabel.setStyleName("TextBoxLabel");
 		allCinemas = new ListBox();
-//		allCinemas.setItemText(0, cinemaOfScreening.getName());
 		allCinemas.setStyleName("CardListBox");
 		listOfCinemas = new Vector<Cinema>();
 		cinemaAdministration.getCinemasByPersonFK(Integer.parseInt(Cookies.getCookie("userId")),new CinemasOfPersonCallback());
-		
 		
 		dateLabel = new Label("Date");
 		dateLabel.setStyleName("TextBoxLabel");
@@ -139,12 +134,9 @@ public class ScreeningCardEdit extends DialogBox {
 				new DateBox.DefaultFormat(
 						DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
 		
-//		datePicker.setValue(screeningToShow.getScreeningDate());
 		timeLabel = new Label("Time");
 		timeLabel.setStyleName("TextBoxLabel");
 		timePicker = new TimePicker(this);
-//		timePicker.hourPicker.setText(screeningToShow.getScreeningTime().toString().substring(0, 2));
-//		timePicker.minutePicker.setText(screeningToShow.getScreeningTime().toString().substring(2, 4));
 
 		formWrapper.add(cardDescription);
 		formWrapper.add(cancelIcon);
@@ -173,12 +165,9 @@ public class ScreeningCardEdit extends DialogBox {
 			formWrapper.add(deleteLabel);
 		}
 		
-		
 		saveButton=new Button("Save");
 		saveButton.setStyleName("SaveButton");
 		saveButton.addClickHandler(new SaveClickHandler(this));
-		
-		
 		
 		formWrapper.add(saveButton);
 		this.add(formWrapper);
@@ -313,26 +302,33 @@ public class ScreeningCardEdit extends DialogBox {
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-
-			java.sql.Date dt = new java.sql.Date(datePicker.getValue().getTime());
-			
-			Time t =new Time(DateTimeFormat.getFormat("HH:mm").parse(timePicker.hourPicker.getText()+":"+timePicker.minutePicker.getText()).getTime());
-			if(parentCard==null) {				
-				cinemaAdministration.createScreening(
-						dt, 
-						t,
-						screeningCardEdit.getSelectedCinema(allCinemas.getSelectedValue()), 
-						screeningCardEdit.getSelectedMovie(movieSuggestBox.getText()), 
-						Integer.parseInt(Cookies.getCookie("userId")), 
-						new CreateScreeningCallback(screeningCardEdit));
+			if(movieSuggestBox.getText().length()==0
+					|| datePicker.getValue().toString().isEmpty()
+					|| timePicker.hourPicker.getText().isEmpty()
+					|| timePicker.minutePicker.getText().isEmpty()
+					) {
+				Window.alert("Please fill in all values");
 			}else {
-				screeningToShow.setCinemaFK(screeningCardEdit.getSelectedCinema(allCinemas.getSelectedValue()));
-				screeningToShow.setMovieFK(screeningCardEdit.getSelectedMovie(movieSuggestBox.getText()));
-//				screeningToShow.setScreeningDate((Date) datePicker.getValue()); --> Geht nicht!
-				screeningToShow.setScreeningDate(dt);
-				screeningToShow.setScreeningTime(t);
+				java.sql.Date dt = new java.sql.Date(datePicker.getValue().getTime());
 				
-				cinemaAdministration.updateScreening(screeningToShow, new UpdateScreeningCallback(screeningCardEdit));
+				Time t =new Time(DateTimeFormat.getFormat("HH:mm").parse(timePicker.hourPicker.getText()+":"+timePicker.minutePicker.getText()).getTime());
+				if(parentCard==null) {				
+					cinemaAdministration.createScreening(
+							dt, 
+							t,
+							screeningCardEdit.getSelectedCinema(allCinemas.getSelectedValue()), 
+							screeningCardEdit.getSelectedMovie(movieSuggestBox.getText()), 
+							Integer.parseInt(Cookies.getCookie("userId")), 
+							new CreateScreeningCallback(screeningCardEdit));
+				}else {
+					screeningToShow.setCinemaFK(screeningCardEdit.getSelectedCinema(allCinemas.getSelectedValue()));
+					screeningToShow.setMovieFK(screeningCardEdit.getSelectedMovie(movieSuggestBox.getText()));
+	//				screeningToShow.setScreeningDate((Date) datePicker.getValue()); --> Geht nicht!
+					screeningToShow.setScreeningDate(dt);
+					screeningToShow.setScreeningTime(t);
+					
+					cinemaAdministration.updateScreening(screeningToShow, new UpdateScreeningCallback(screeningCardEdit));
+				}
 			}
 		}
 		

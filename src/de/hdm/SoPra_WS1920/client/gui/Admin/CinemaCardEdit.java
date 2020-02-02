@@ -2,7 +2,6 @@ package de.hdm.SoPra_WS1920.client.gui.Admin;
 
 import java.util.Vector;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
@@ -20,7 +19,6 @@ import de.hdm.SoPra_WS1920.client.ClientsideSettings;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
-import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 public class CinemaCardEdit extends DialogBox{
 	
@@ -142,32 +140,10 @@ public class CinemaCardEdit extends DialogBox{
 			formWrapper.add(deleteLabel);
 		}
 		
-		
 		saveButton = new Button("Save");
 		saveButton.setStyleName("SaveButton");
 		saveButton.addClickHandler(new SaveClickHandler(this));
 		
-//		cinemaToShow.setName(nameTextBox.getText());
-////		Logic required for mapping the cinema chain name to the Id/FK
-//		cinemaToShow.setCinemaChainFK();
-//		cinemaToShow.setStreet(streetTextBox.getText());
-//		cinemaToShow.setStreetNo(streetNrTextBox.getText());
-//		cinemaToShow.setZipCode(zipCodeTextBox.getText());
-//		cinemaToShow.setCity(cityTextBox.getText());
-//		
-//		formWrapper.add(cardDescription);
-//		formWrapper.add(cancelIcon);
-//		formWrapper.add(nameLabel);
-//		formWrapper.add(nameTextBox);
-//		formWrapper.add(cinemaChainLabel);
-//		formWrapper.add(cinemaChainListBox);
-//		formWrapper.add(adressLabel);
-//		formWrapper.add(streetTextBox);
-//		formWrapper.add(streetNrTextBox);
-//		formWrapper.add(zipCodeTextBox);
-//		formWrapper.add(cityTextBox);
-//		formWrapper.add(deleteIcon);
-//		formWrapper.add(deleteLabel);
 		formWrapper.add(saveButton);
 		this.add(formWrapper);
 		
@@ -203,25 +179,34 @@ public class CinemaCardEdit extends DialogBox{
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			
-			if(parentCard==null) {
-				cinemaAdministration.createCinema(nameTextBox.getText(), 
-						cityTextBox.getText(), streetTextBox.getText(), 
-						streetNrTextBox.getText(), zipCodeTextBox.getText(), 
-						cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()), 
-						Integer.parseInt(Cookies.getCookie("userId")), 
-						new CreateCinemaCallback());
-
+			if(nameTextBox.getText().length()==0 
+				|| cityTextBox.getText().length()==0  
+				|| streetTextBox.getText().length()==0 
+				|| streetNrTextBox.getText().length()==0 
+				|| zipCodeTextBox.getText().length()==0
+				) {
+				Window.alert("Please fill in all fields.");
 			}else {
-
-				cinemaToShow.setName(nameTextBox.getText());
-				cinemaToShow.setCity(cityTextBox.getText()); 
-				cinemaToShow.setStreet(streetTextBox.getText()); 
-				cinemaToShow.setStreetNo(streetNrTextBox.getText()); 
-				cinemaToShow.setZipCode(zipCodeTextBox.getText()); 
-				cinemaToShow.setCinemaChainFK(cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()));
-				cinemaToShow.setPersonFK(Integer.parseInt(Cookies.getCookie("userId")));
-				cinemaAdministration.updateCinema(cinemaToShow, new UpdateCinemaCinemaCallback());
+				
+				if(parentCard==null) {
+					cinemaAdministration.createCinema(nameTextBox.getText(), 
+							cityTextBox.getText(), streetTextBox.getText(), 
+							streetNrTextBox.getText(), zipCodeTextBox.getText(), 
+							cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()), 
+							Integer.parseInt(Cookies.getCookie("userId")), 
+							new CreateCinemaCallback());
+	
+				}else {
+	
+					cinemaToShow.setName(nameTextBox.getText());
+					cinemaToShow.setCity(cityTextBox.getText()); 
+					cinemaToShow.setStreet(streetTextBox.getText()); 
+					cinemaToShow.setStreetNo(streetNrTextBox.getText()); 
+					cinemaToShow.setZipCode(zipCodeTextBox.getText()); 
+					cinemaToShow.setCinemaChainFK(cinemaCardEdit.getSelectedCinemaChain(cinemaChainListBox.getSelectedValue()));
+					cinemaToShow.setPersonFK(Integer.parseInt(Cookies.getCookie("userId")));
+					cinemaAdministration.updateCinema(cinemaToShow, new UpdateCinemaCinemaCallback());
+				}
 			}
 		}
 		

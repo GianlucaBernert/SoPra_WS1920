@@ -18,6 +18,10 @@ body{
     min-width: 350px;
 }
 
+.RegistrationForm table{
+	width: 100%;
+}
+
 .SignUpButton {
 	width: calc(100% - 40px)!important;
     padding: 10px;
@@ -29,6 +33,7 @@ body{
     background-color: #9278FF;
     color: #ffffff;
     outline: none;
+    bottom: 20px;
 }
 
 .navbar {

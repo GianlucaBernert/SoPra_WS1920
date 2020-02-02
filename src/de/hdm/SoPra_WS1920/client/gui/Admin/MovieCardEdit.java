@@ -113,13 +113,6 @@ public class MovieCardEdit extends DialogBox{
 			formWrapper.add(deleteIcon);
 			formWrapper.add(deleteLabel);
 		}
-//		deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
-//		deleteIcon.setStyleName("DeleteIcon");
-//		deleteIcon.addClickHandler(new DeleteClickHandler(this));
-//		
-//		deleteLabel = new Label("Delete");
-//		deleteLabel.setStyleName("DeleteLabel");
-//		deleteLabel.addClickHandler(new DeleteClickHandler(this));
 		
 		saveButton = new Button("Save");
 		saveButton.addClickHandler(new SaveClickHandler(this));
@@ -129,19 +122,10 @@ public class MovieCardEdit extends DialogBox{
 		genreTextBox.setText(movieToShow.getGenre());
 		descriptionTextArea.setText(movieToShow.getDescription());
 		
-//		formWrapper.add(cardDescription);
-//		formWrapper.add(cancelIcon);
-//		formWrapper.add(nameLabel);
-//		formWrapper.add(nameTextBox);
-//		formWrapper.add(genreLabel);
-//		formWrapper.add(genreTextBox);
-//		formWrapper.add(descriptionLabel);
-//		formWrapper.add(descriptionTextArea);
-//		formWrapper.add(deleteIcon);
-//		formWrapper.add(deleteLabel);
 		formWrapper.add(saveButton);
 		this.add(formWrapper);
 	}
+	
 	class SaveClickHandler implements ClickHandler{
 		MovieCardEdit movieCardEdit;
 		public SaveClickHandler(MovieCardEdit movieCardEdit) {
@@ -156,17 +140,20 @@ public class MovieCardEdit extends DialogBox{
 			movieToShow.setGenre(genreTextBox.getText());
 			movieToShow.setDescription(descriptionTextArea.getText());
 			
-			if(parentCard==null) {
-				
-				cinemaAdministration.createMovie(nameTextBox.getText(), genreTextBox.getText(),descriptionTextArea.getText(), Integer.parseInt(Cookies.getCookie("userId")), new NewMovieCallback(movieCardEdit));
-				
-				
+			if(nameTextBox.getText().length()==0
+				||genreTextBox.getText().length()==0
+				||descriptionTextArea.getText().length()==0
+				) {
+				Window.alert("Please fill in all fields.");
 			}else {
-				cinemaAdministration.updateMovie(movieToShow, new UpdateMovieCallback(movieCardEdit));
-				
+				if(parentCard==null) {
+					cinemaAdministration.createMovie(nameTextBox.getText(), genreTextBox.getText(),descriptionTextArea.getText(), Integer.parseInt(Cookies.getCookie("userId")), new NewMovieCallback(movieCardEdit));
+					
+				}else {
+					cinemaAdministration.updateMovie(movieToShow, new UpdateMovieCallback(movieCardEdit));
+					
+				}
 			}
-			
-			
 		}
 		
 	}
