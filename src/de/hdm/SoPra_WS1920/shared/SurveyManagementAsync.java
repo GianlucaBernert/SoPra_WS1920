@@ -490,6 +490,8 @@ public interface SurveyManagementAsync {
 	void deleteCinemaChain(CinemaChain cc, AsyncCallback<Void> callback);
 
 	void getCinemasByCinemaChainFK(CinemaChain cc, AsyncCallback<Vector<Cinema>> callback);
+
+	void getGroupByNameAndMembership(String groupName, int personFk, AsyncCallback<Group> callback);
     
 
 }

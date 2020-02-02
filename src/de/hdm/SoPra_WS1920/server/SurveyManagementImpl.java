@@ -1140,6 +1140,17 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	return this.cMapper.findCinemaByCinemaChainFK(cc.getId());
     }
     
+    public Group getGroupByNameAndMembership(String groupName, int personFk) {
+    	Vector<Group> groupsOfPerson = this.getGroupsByMemberships(personFk);
+    	Group group = new Group();
+    	for(Group g: groupsOfPerson) {
+    		if(g.getName().equals(groupName)){
+    			group = g;
+    		}
+    	}
+    	return group;
+    }
+    
     
     }
     

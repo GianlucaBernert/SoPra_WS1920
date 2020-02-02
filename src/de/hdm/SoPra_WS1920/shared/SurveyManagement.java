@@ -454,7 +454,7 @@ public interface SurveyManagement extends RemoteService {
 	Cinema getCinemaById(int id);
 	
 	/**
-     * Methode um die Votes der SurveyEinträge zu erhalten
+     * Methode um die Votes der SurveyEintrï¿½ge zu erhalten
      * @param surveyEntryFK
      */
 
@@ -497,52 +497,52 @@ public interface SurveyManagement extends RemoteService {
 	Vector<Survey> getSurveyToShow(int personFK) ;
 	
 	/**
-	 * Methode zum löschen eines Screening Objekts
+	 * Methode zum lï¿½schen eines Screening Objekts
 	 * @param screening
 	 */
 	void deleteScreening(Screening screening);
 	
 	/**
-	 * Methode zum löschen eines Cinema Objekts
+	 * Methode zum lï¿½schen eines Cinema Objekts
 	 * @param cinema
 	 */
 	void deleteCinema(Cinema cinema);
 
 	/**
-	 * Methode die alle Screenings eines Kinos zurück gibt
+	 * Methode die alle Screenings eines Kinos zurï¿½ck gibt
 	 * @param cinemaFK
 	 * @return
 	 */
 	Vector<Screening> getScreeningByCinemaFK(int cinemaFK);
 
 	/**
-	 * Methode zum löschen eines Movie Objekts
+	 * Methode zum lï¿½schen eines Movie Objekts
 	 * @param movie
 	 */
 	void deleteMovie(Movie movie);
 	
 	/**
-	 * Methode die alle Screenings die den übergebenen Film enthalten zurückgibt
+	 * Methode die alle Screenings die den ï¿½bergebenen Film enthalten zurï¿½ckgibt
 	 * @param movieFK
 	 * @return
 	 */
 	Vector<Screening> getScreeningByMovieFK(int movieFK);
 	
 	/**
-	 * Löschen einer CinemaChain
+	 * Lï¿½schen einer CinemaChain
 	 * @param cc
 	 */
 	void deleteCinemaChain(CinemaChain cc);
 	
 	/**
-	 * Methode die Alle Cinema Objekte einer Kinokette zurückgibt.
+	 * Methode die Alle Cinema Objekte einer Kinokette zurï¿½ckgibt.
 	 * @param cc
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
 	Vector<Cinema> getCinemasByCinemaChainFK(CinemaChain cc) throws IllegalArgumentException;
 	
-	
+	Group getGroupByNameAndMembership(String groupName, int personFk) throws IllegalArgumentException;
 
 	
 }
