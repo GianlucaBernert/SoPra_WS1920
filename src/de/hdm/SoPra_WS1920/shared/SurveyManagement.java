@@ -537,7 +537,7 @@ public interface SurveyManagement extends RemoteService {
 	 */
 	Vector<Cinema> getCinemasByCinemaChainFK(CinemaChain cc) throws IllegalArgumentException;
 	
-	
+	Group getGroupByNameAndMembership(String groupName, int personFk) throws IllegalArgumentException;
 
 	
 }

@@ -275,8 +275,8 @@ public class SurveyCardEdit extends DialogBox {
 				// TODO Auto-generated method stub
 				movie = result.firstElement();
 				//getGroupByNameAndPersonFk
-				surveyManagement.getGroupOfPersonByGroupName(person.getId(), allGroups.getSelectedItemText(), new GetGroupCallback(surveyCardEdit));
 
+				surveyManagement.getGroupByNameAndMembership(allGroups.getSelectedItemText(), person.getId(), new GetGroupCallback(surveyCardEdit));
 			}
 			
 		}
