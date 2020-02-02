@@ -152,8 +152,8 @@ public class VotingCard extends DialogBox {
 			}
 			votingCard.hide();
 			parentCard.showSurveyCardView(surveyToShow);
+			parentCard.surveyContent.showSurveys();
 			
-			//implement save logic
 		}
 		
 	}
