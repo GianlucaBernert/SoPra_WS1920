@@ -35,14 +35,26 @@ import de.hdm.SoPra_WS1920.shared.bo.Screening;
 import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 
+/**
+ * Diese Klasse dient dazu, entweder neue Umfragen zu erstellen oder bestehende Umfragen zu editieren.
+ * Sie wird als Dialogbox realisiert.
+ * @author Sebastian Hermann
+ *
+ */
 public class SurveyCardEdit extends DialogBox {
 	
-	FlowPanel formWrapper;
-	SurveyCard parentCard;
+	/**
+	 * Deklaration der drei Attribute formWrapper, parentCard und surveyToShow
+	 */
+	FlowPanel formWrapper;	//Platzhalter für sämtliche Widgets, da auf einer Dialogbox nur ein Widget/Panel platziert werden kann
+	SurveyCard parentCard;	//Referenz zur SurveyCard, sofern diese besteht und die SurveyCardEdit nicht im Zug der Ertellung einer neuen Umfrage aufgerufen wird
 	Survey surveyToShow;
 	
-	//CreateSurvey 1/2
-	
+	/**
+	 * Zunächst wird die Erstellung einer Umfrage betrachtet.
+	 * Dort wird der Umfragefilm, die Umfragestadt und der Umfragezeitraum festgelegt um so die für den nächsten Schritt relevanten
+	 * Filmpräsentationen nach diesen Kriterien suchen zu können.
+	 */
 	Label cardDescription;
 	Label movieLabel;
 	Label groupLabel;
@@ -72,8 +84,11 @@ public class SurveyCardEdit extends DialogBox {
 	java.sql.Date endDate;
 	
 	
-	//CreateSurvey 2/2 
-	
+	/**
+	 * Bevor die Umfrage letztendlich erstellt werden kann, werden je nach den zuvor definierten Suchkriterien Filmpräsentationsvorschläge
+	 * gemacht. Durch Auswahl der Checkboxen können dann Filmpräsentationen zu Umfrageoptionen umgewandelt und gespeichert werden.
+	 * 
+	 */
 	Label cardDescription2;
 	Label selectedMovie;
 	Label selectedGroup;
@@ -102,13 +117,21 @@ public class SurveyCardEdit extends DialogBox {
 	
 	
 	
-	
+	/**
+	 * Konstruktor der aufgerufen wird, wenn eine bestehende Karte editiert werden soll
+	 * @param surveyCard
+	 * @param survey
+	 */
 	public SurveyCardEdit(SurveyCard surveyCard, Survey survey) {
 		this.parentCard = surveyCard;
 		this.surveyToShow = survey;
 	}
 	
-	
+	/**
+	 * Konstruktor der aufgerufen wird, wenn eine neue Umfrage erstellt werden soll
+	 * @param content
+	 * @param header
+	 */
 	public SurveyCardEdit(SurveyContent content, SurveyManagementHeader header) {
 		this.content = content;
 		this.header = header;
@@ -116,6 +139,10 @@ public class SurveyCardEdit extends DialogBox {
 		
 	}
 	
+	/**
+	 * Definition der onLoad-Methode. Wird aufgerufen sobald das Panel aufgerufen wird.
+	 * die <code>super.onLoad()<code> Methode wird aufgerufen, damit zunächst alle Eigenschaften der vererbten DialogBox-Klasse übernommen werden.
+	 */
 	public void onLoad() {
 		super.onLoad();
 		
@@ -130,12 +157,11 @@ public class SurveyCardEdit extends DialogBox {
 		
 		
 		surveyManagement = ClientsideSettings.getSurveyManagement();
-		formWrapper = new FlowPanel();
-		
-		
-		
+		formWrapper = new FlowPanel();	
 	}
-	
+	/**
+	 * Methode zur Zuweisung der Widgets zur angezeigten Dialogbox, die für das Erstellen der Karte zuständig sind.
+	 */
 	public void showCreateCard() {
 		cardDescription = new Label("Create Survey 1/2");
 		cardDescription.setStyleName("CardDescription");
@@ -196,7 +222,10 @@ public class SurveyCardEdit extends DialogBox {
 		formWrapper.add(endDateLabel);
 		formWrapper.add(endDateBox);
 		
-
+		/**
+		 * Über den <code>addScreenings<code> button wird die nächste Schaltfläche aufgerufen, über die das Hinzufügen von Sceenings zu einer
+		 * Umfrage, sprich die Filmpräsentationsvorschläge, ermöglicht wird.
+		 */
 		addScreenings = new Button("Add Screenings");
 		addScreenings.setStyleName("SaveButton");
 		addScreenings.addClickHandler(new AddScreeningsClickHandler(this));
@@ -205,7 +234,11 @@ public class SurveyCardEdit extends DialogBox {
 		this.add(formWrapper);
 	}
 	
-	//Clickhandler muss CreateScreening2/2 aufrufen und eingetragene Werte �bernehmen
+		/**
+		 * Anonyme Klasse die das ClickHandler-Interface implementiert. Beim Klick wird der ausgewählte Film anhand des Titels gesucht.
+		 * @author Sebastian Hermann
+		 *
+		 */
 		class AddScreeningsClickHandler implements ClickHandler{
 			
 			SurveyCardEdit surveyCardEdit;
@@ -219,7 +252,12 @@ public class SurveyCardEdit extends DialogBox {
 
 			}
 		}
-		
+		/**
+		 * Anonyme Klasse, die das AsnycCallback Interface implementiert. Erhält per Rückruf das angeforderte Film-Objekt. 
+		 * Im Anschluss daran wird die Gruppe der Umfrage ermittelt.
+		 * @author Sebastian Hermann
+		 *
+		 */
 		class GetMovieCallback implements AsyncCallback<Vector<Movie>>{
 			SurveyCardEdit surveyCardEdit;
 			public GetMovieCallback(SurveyCardEdit surveyCardEdit) {
@@ -243,7 +281,12 @@ public class SurveyCardEdit extends DialogBox {
 			}
 			
 		}
-		
+		/**
+		 * Anonyme Klasse, die die Gruppe einer Umfrage per Callback erhält. Im Anschluss daran wird der Film gesetzt und die Karte
+		 * wird mit in den Editiermodus gebracht.
+		 * @author Sebastian Hermann
+		 *
+		 */
 		class GetGroupCallback implements AsyncCallback<Group>{
 			SurveyCardEdit surveyCardEdit;
 			public GetGroupCallback(SurveyCardEdit surveyCardEdit) {
@@ -270,16 +313,17 @@ public class SurveyCardEdit extends DialogBox {
 			}
 
 		}
-//		public void showAddScreenings(Movie movie, Group group, String city, java.sql.Date startDate, java.sql.Date endDate) {
-		/*
+
+		/**
 		 * End of Create Survey Card 1
 		 * ------------------------------------------------------------------------------------------------------------------------
 		 * Start of Create Survey Card 2 & Edit Survey Card
+		 * Hier wird definiert was passieren soll, wenn die Karte in den Editier-Zustand gebracht werden soll.
 		 */
 		public void showSurveyCardEdit() {
 			this.clear();
 			this.setStyleName("EditCard");
-//			Window.alert("In editClickHandler: "+parentCard.toString()+ " "+surveyToShow.toString());
+
 			screeningRowVector = new Vector<ScreeningRow>();
 			formWrapper = new FlowPanel();
 			formWrapper.setStyleName("DialogBoxWrapper");
@@ -299,8 +343,7 @@ public class SurveyCardEdit extends DialogBox {
 			screeningSelection = new FlowPanel();
 			screeningSelection.setStyleName("ScreeningSelection");
 
-			showSelected = new Label("Screenings:");
-			
+			showSelected = new Label("Screenings:");	
 			saveSurvey = new Button("Create Survey");
 			saveSurvey.setStyleName("SaveButton");
 			
@@ -312,6 +355,11 @@ public class SurveyCardEdit extends DialogBox {
 			formWrapper.add(selectedPeriod);
 			formWrapper.add(screeningSelection);
 			
+			/**
+			 * Hier wird geprueft, ob die Survey neu angelegt werden soll, oder ob eine bestehende editiert werden soll.
+			 * Je nach Fall, werden entsprechende Widgets der Karte hinzugefügt. Z.B. macht eine Delete-Funktion beim Erstellen einer
+			 * neuen Karte keinen Sinn, da die Karte noch garnicht existiert.
+			 */
 			if(surveyToShow==null){
 				cardDescription.setText("Create Survey 2/2");
 				selectedMovie.setText("Movie: "+ movie.getName());
@@ -352,14 +400,31 @@ public class SurveyCardEdit extends DialogBox {
 			this.add(formWrapper);
 		}
 		
+		/**
+		 * Diese Methode wird aufgerufen wenn die vorgenommenen Änderungen gespeichert werden sollen.
+		 * Hierzu werden drei Vektoren angelegt
+		 */
 		public void saveSurvey() {
+			/**
+			 * Der erste Vektor ist für die Überprüfung der selektierten Filmpräsentationen zuständig.
+			 */
 			Vector<Screening> selectedScreenings = new Vector<Screening>();
+			
+			/**
+			 * Der zweite Vektor sammelt alle Filmpräsentationen, die neu zur Umfrage hinzugefügt werden sollen.
+			 */
 			Vector<Screening> screeningsForCreation = new Vector<Screening>();
+			
+			/**
+			 * Der dritte Vektor sammelt alle SurveyEntries, die gelöscht werden sollen
+			 */
 			Vector<SurveyEntry> surveyEntriesForDeletion = new Vector<SurveyEntry>();
 			
-//			Window.alert("Screenings + ScreeningRows: "+Integer.toString(screeningVector.size())+" "+Integer.toString(screeningRowVector.size()));
-//			Window.alert("Selected Screenings: "+Integer.toString(selectedScreenings.size()));
-			
+			/**
+			 * Alle ausgewählten Filmpräsentationen sollen zunächst dem Creation-Vektor hinzugefügt werden.
+			 * Weiterhin sollen für den Löschvorgang ausschließlich SurveyEntries in den Vektor aufgenommen werden, 
+			 * die logischerweise zuvor als SurveyEntry gespeichert wurden.
+			 */
 			for(ScreeningRow sR: screeningRowVector) {
 				if(sR.cb.getValue()==true) {
 					screeningsForCreation.add(sR.s);
@@ -371,7 +436,10 @@ public class SurveyCardEdit extends DialogBox {
 					}
 				}
 			}
-			
+			/**
+			 * Um sicherzustellen, dass auch nur diejenigen Filmpräsentationen hinzugefügt werden, die zuvor noch nicht 
+			 * existiert haben, werden alle Filmpräsentationen von Creation-Vektor gelöscht, die bereits existieren.
+			 */
 			for(ScreeningRow sR: screeningRowVector) {
 				if(sR.cb.getValue()==true) {
 					for(SurveyEntry sE:surveyEntryVector) {
@@ -382,20 +450,24 @@ public class SurveyCardEdit extends DialogBox {
 				}
 			}
 			
-//			Window.alert("1. To be created:"+ Integer.toString(screeningsForCreation.size()));
-//			Window.alert("To be deleted:"+ Integer.toString(surveyEntriesForDeletion.size()));
-			
+			/**
+			 * Zum Schluss wird für jede übrig gebliebene Filmpräsentation ein Umfrageeintrag erstellt
+			 */
 			for(Screening s: screeningsForCreation) {
 				surveyManagement.createSurveyEntry(s.getId(), surveyToShow.getId(), person.getId(), new CreateSurveyEntryCallback());
 			}
 			
+			/**
+			 * Analog wird für jedes zu löschende Objekt der Löschbefehl ausgeführt
+			 */
 			for(SurveyEntry sE: surveyEntriesForDeletion) {
 				surveyManagement.deleteSurveyEntry(sE, new DeleteSurveyEntryCallback());
 			}
-
-
 		}
 		
+		/**
+		 * Anonyme Klasse zum verarbeiten von vom Server zurückgegebenen Film-Vektor.
+		 */
 		class GetMovieByNameCallback implements AsyncCallback<Vector<Movie>>{
 
 			@Override
@@ -413,6 +485,9 @@ public class SurveyCardEdit extends DialogBox {
 			
 		}
 		
+		/**
+		 * Anonyme Klasse zum verarbeiten eines Klicks auf den Löschbutton. Im Anschluss an das erfolgte Löschen wird die Karte geschlossen.
+		 */
 		class DeleteSurveyClickHandler implements ClickHandler{
 			SurveyCardEdit surveyCardEdit;
 			public DeleteSurveyClickHandler(SurveyCardEdit surveyCardEdit) {
@@ -430,6 +505,10 @@ public class SurveyCardEdit extends DialogBox {
 			
 		}
 		
+		/**
+		 *  Anonyme Klasse zur Verarbeitung einer erfolgten Löschung. Hier soll eigentlich nichts passieren, außer dass der User
+		 *  über den erfolgten Löschvorgang informiert wird
+		 */
 		class DeleteSurveyCallback implements AsyncCallback<Void>{
 
 			@Override
@@ -445,6 +524,11 @@ public class SurveyCardEdit extends DialogBox {
 			}
 			
 		}
+		
+		/**
+		 * 
+		 *  Anonyme Klasse zur Verarbeitung einer erfolgten Löschung eines Umfrageeintrags. Hier soll nichts weiter passieren.
+		 */
 		class DeleteSurveyEntryCallback implements AsyncCallback<Void>{
 
 			@Override
@@ -461,22 +545,11 @@ public class SurveyCardEdit extends DialogBox {
 			
 		}
 		
-		class SaveSurveyCallback implements AsyncCallback<SurveyEntry>{
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onSuccess(SurveyEntry result) {
-				// TODO Auto-generated method stub
-//				Window.alert(Integer.toString(result.getSurveyFK()));
-			}
-			
-		}
-		
+		/*
+		 * Anonyme Klasse um Verarbeiten eines Klicks auf den save-button. Im Anschluss an den Aufruf wird die zuvor definierte
+		 * <code>saveSurvey<code> Methode aufgerufen, die die Speicherung auf dem Server anstoßt.
+		 * Abschließend wird die Karte geschlossen.
+		 */
 		class UpdateSurveyClickHandler implements ClickHandler{
 			SurveyCardEdit surveyCardEdit;
 			public UpdateSurveyClickHandler(SurveyCardEdit surveyCardEdit) {
@@ -494,6 +567,9 @@ public class SurveyCardEdit extends DialogBox {
 			
 		}
 		
+		/*
+		 * Verarbeitung eines Klicks auf den stop-survey-button. Hierbei wird eine Statusänderung auf der Datenbank angestoßen.
+		 */
 		class StopSurveyClickHandler implements ClickHandler{
 			SurveyCardEdit surveyCardEdit;
 			public StopSurveyClickHandler(SurveyCardEdit surveyCardEdit) {
@@ -510,6 +586,10 @@ public class SurveyCardEdit extends DialogBox {
 			
 		}
 		
+		/*
+		 * Anonyme Klasse zur Verarbeitung des Rückrufobjekts im Anschluss an die Statusänderung einer Umfrage.
+		 * Die Karte soll im Anschluss danach geschlossen werden.
+		 */
 		class StopSurveyCallback implements AsyncCallback<Survey>{
 			SurveyCardEdit surveyCardEdit;
 			public StopSurveyCallback(SurveyCardEdit surveyCardEdit) {
@@ -533,6 +613,10 @@ public class SurveyCardEdit extends DialogBox {
 			
 		}
 		
+		/*
+		 * Anonyme Klasse um alle Filpräsentationsvorschläge zu erhalten und zu verarbeiten. Für jeden Präsentationsvorschlag
+		 * wir ein neues Objekt der Klasse <code>class ScreeningRow<code> erstellt, um die Präsentation der Vorschlagssliste hinzuzufügen
+		 */
 		class GetScreeningsCallback implements AsyncCallback<Vector<Screening>>{
 
 			@Override
@@ -558,7 +642,13 @@ public class SurveyCardEdit extends DialogBox {
 			}
 		}
 
-		
+		/**
+		 * Klasse um eine Filmpräsentationszeile erstellen zu können. Diese Klasse beinhaltet Informationen über die Selektion,
+		 * die Präsentationsbeschreibung und die Präsentation an sich. Hierdurch wird ein Mapping ermöglicht zwischen Präsentation und
+		 * User-Auswahl
+		 * @author Sebastian Hermann
+		 *
+		 */
 		class ScreeningRow extends FlowPanel{
 			
 			CheckBox cb;
@@ -589,7 +679,9 @@ public class SurveyCardEdit extends DialogBox {
 			}
 	
 		}
-
+		/*
+		 * Methode um das Kino einer Präsentation aufzurufen. Wird benötigt um auf den Kinonamen zuzugreifen, der in der ScreeningRow angezeigt wird.
+		 */
 		class GetCinemaCallback implements AsyncCallback<Cinema>{
 			ScreeningRow screeningRow;
 			public GetCinemaCallback(ScreeningRow screeningRow) {
@@ -611,6 +703,9 @@ public class SurveyCardEdit extends DialogBox {
 			}
 		}
 		
+		/*
+		 * Anonyme Klasse um den Callback einer Gruppe zu verarbeiten.
+		 */
 		class GetGroupOfSurveyCallback implements AsyncCallback<Group>{
 
 			@Override
@@ -627,6 +722,9 @@ public class SurveyCardEdit extends DialogBox {
 			}
 		}
 		
+		/*
+		 * Anonyme Klasse, um den Rückruf der Anfrage allre bereits einer Umfrage zugewiesenen Umfrageeinträge zu verarbeiten.
+		 */
 		class GetSurveyEntriesCallback implements AsyncCallback<Vector<SurveyEntry>>{
 
 			@Override
@@ -645,24 +743,6 @@ public class SurveyCardEdit extends DialogBox {
 			
 		}
 		
-		class GetMovieBySurveyCallback implements AsyncCallback<Movie>{
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onSuccess(Movie result) {
-				// TODO Auto-generated method stub
-				movie = result;
-				selectedMovie.setText("Movie: " + movie.getName());
-				surveyManagement.getScreeningsforSurveyCreation(movie, surveyToShow.getSelectedCity(), surveyToShow.getStartDate(), surveyToShow.getEndDate(), new GetScreeningsCallback());
-			}
-		}
-	
-	
 	class AllMoviesCallback implements AsyncCallback<Vector<Movie>>{
 
 		@Override
@@ -680,6 +760,9 @@ public class SurveyCardEdit extends DialogBox {
 		}
 	}
 	
+	/*
+	 * Anonyme Klasse um die Anfrage nach der Gruppe per Foreign Key zu verarbeiten.
+	 */
 	class GetGroupsByFKCallback implements AsyncCallback<Vector<Group>>{
 
 		@Override
@@ -699,7 +782,9 @@ public class SurveyCardEdit extends DialogBox {
 		
 	}
 	
-
+	/*
+	 *  Anonyme Klasse um den Klick auf den Cancel Button zu verarbeiten. Im Anschluss auf den Klick wird die Dialogbox geschlossen.
+	 */
 	class CancelClickHandler implements ClickHandler{
 		SurveyCardEdit surveyCardEdit;
 		public CancelClickHandler(SurveyCardEdit surveyCardEdit) {
@@ -720,6 +805,9 @@ public class SurveyCardEdit extends DialogBox {
 		}
 	}
 	
+	/*
+	 * Anonyme Klasse um den Klick auf den create-survey-button zu verarbeiten. Im Anschluss an den Klick wird eine neue Umfrage erstellt.
+	 */
 	class CreateSurveyClickHandler implements ClickHandler{
 		SurveyCardEdit surveyCardEdit;
 		
@@ -736,7 +824,10 @@ public class SurveyCardEdit extends DialogBox {
 			}	
 		}
 
-	
+	/*
+	 *  Anonyme Klasse um die erfolgte Erstellung einer Umfrage zu verarbeiten. Im Anschluss an die Erstellung einer Umfrage, wird jede Umfrageoption
+	 *  separat in einer neuen Serveranfrage angelegt.
+	 */
 	class CreateSurveyCallback implements AsyncCallback<Survey>{
 		
 		SurveyCardEdit surveyCardEdit;
@@ -760,17 +851,17 @@ public class SurveyCardEdit extends DialogBox {
 					surveyManagement.createSurveyEntry(sr.s.getId(), result.getId(), person.getId(), new CreateSurveyEntryCallback());
 				}
 			}
-			//Irgendwas damit ich sicherstellen kann dass die survey nur beim owner angezeigt wird
 			parentCard = new SurveyCard(content, result);
 			parentCard.setMovie(movie);
-//			parentCard.showSurveyCardView(result);
 			content.add(parentCard);
 			surveyCardEdit.hide();
 		}
 	}
 	
 	
-	
+	/*
+	 * Anonyme Klasse zur Verarbeitung der erstellten Umfrageoptionen
+	 */
 	class CreateSurveyEntryCallback implements AsyncCallback<SurveyEntry>{
 
 		@Override
