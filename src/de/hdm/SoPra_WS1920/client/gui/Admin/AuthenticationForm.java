@@ -60,8 +60,9 @@ public class AuthenticationForm extends DialogBox{
 		welcomeLabel.setStyleName("TextBoxLabel");
 		//welcomeLabel.getElement().setAttribute("style", "display: inline_block;");
 		googleBtn.setStyleName("GoogleButton");
+		googleBtn.setText("Sign Up with Google");
 		//("button is-block is-large is-fullwidth");
-		googleBtn.getElement().appendChild(imgGoogle.getElement());
+		//googleBtn.getElement().appendChild(imgGoogle.getElement());
 		//googleBtn.getElement().setAttribute("style", "display: inline-block;");
 		googleBtn.addClickHandler(new loginClickHandler());
 		
