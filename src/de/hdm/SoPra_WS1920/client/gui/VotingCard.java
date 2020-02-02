@@ -38,6 +38,11 @@ import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
+/*
+ * Formular, um für eine Umfrage abzustimmen.
+ * 
+ * @author SebastianHerrmann
+ */
 public class VotingCard extends DialogBox {
 	
 	Survey surveyToShow;
@@ -61,7 +66,10 @@ public class VotingCard extends DialogBox {
 	SurveyCard parentCard;
 	SurveyManagementAsync surveyManagement;
 	
-	
+	/*
+	 * Konstruktor der Klasse VotingCard
+	 * @param parentCard, surveyToShow
+	 */
 	public VotingCard(SurveyCard parentCard, Survey surveyToShow) {
 		this.surveyToShow = surveyToShow;
 		this.parentCard = parentCard;
@@ -127,6 +135,9 @@ public class VotingCard extends DialogBox {
 		this.add(formWrapper);
 	}
 	
+	/*
+	 * ClickHandler, der die Survey nachdem alle Votes getätigt sind, abspeichert.
+	 */
 	class SaveSurveyClickHandler implements ClickHandler{
 		VotingCard votingCard;
 		public SaveSurveyClickHandler(VotingCard votingCard) {
@@ -158,6 +169,10 @@ public class VotingCard extends DialogBox {
 		
 	}
 	
+	
+	/*
+	 * Callback, der die Methode zum Erstellen eines Votes aufruft.
+	 */
 	class CreateVoteCallback implements AsyncCallback<Vote>{
 
 		@Override
@@ -174,6 +189,9 @@ public class VotingCard extends DialogBox {
 		
 	}
 	
+	/*
+	 * Callback, der die Methode zum Bearbeiten eines Votes aufruft.
+	 */
 	class UpdateVoteCallback implements AsyncCallback<Vote>{
 
 		@Override
@@ -190,6 +208,9 @@ public class VotingCard extends DialogBox {
 		
 	}
 	
+	/*
+	 * Callback, der die Methode zum Löschen eines Votes aufruft.
+	 */
 	class DeleteVoteCallback implements AsyncCallback<Void>{
 
 		@Override
@@ -206,6 +227,9 @@ public class VotingCard extends DialogBox {
 		
 	}
 	
+	/*
+	 * ClickHandler zum Schließen der VotingCard.
+	 */
 	class CancelClickHandler implements ClickHandler{
 		VotingCard votingCard;
 		public CancelClickHandler(VotingCard votingCard) {
@@ -221,6 +245,9 @@ public class VotingCard extends DialogBox {
 		
 	}
 	
+	/*
+	 * Callback, der die Gruppe einer Survey angibt.
+	 */
 	class GetGroupOfSurveyCallback implements AsyncCallback<Group>{
 
 		@Override
@@ -237,6 +264,9 @@ public class VotingCard extends DialogBox {
 		
 	}
 	
+	/*
+	 * Zeile, die als Umfrageeintrag zum Abstimmen angezeigt wird.
+	 */
 	class SurveyEntryRow extends FlowPanel{
 		
 		SurveyEntry surveyEntry;
@@ -292,6 +322,9 @@ public class VotingCard extends DialogBox {
 						
 		}
 		
+		/*
+		 * ClickHandler, der für einen Umfrageeintrag abstimmen lässt.
+		 */
 		class UpVoteClickHandler implements ClickHandler{
 			
 			
@@ -331,6 +364,10 @@ public class VotingCard extends DialogBox {
 			
 		}
 		
+		
+		/*
+		 * ClickHandler, der gegen einen Umfrageeintrag abstimmen lässt.
+		 */
 		class DownVoteClickHandler implements ClickHandler{
 
 			@Override
@@ -366,6 +403,9 @@ public class VotingCard extends DialogBox {
 			
 		}
 		
+		/*
+		 * Callback, der das Kino zu einem Umfrageeintrag ausgibt.
+		 */
 		class GetCinemaOfSurveyEntryCallback implements AsyncCallback<Cinema>{
 
 			@Override
@@ -382,7 +422,9 @@ public class VotingCard extends DialogBox {
 			}
 			
 		}
-		
+		/*
+		 * Callback, zum Anzeigen einer Spielzeit zu einem Umfrageeintrag.
+		 */
 		class GetScreeningOfSurveyEntryCallback implements AsyncCallback<Screening>{
 
 			@Override
@@ -400,6 +442,9 @@ public class VotingCard extends DialogBox {
 			
 		}
 		
+		/*
+		 * Callback, um die Stimmen zu Umfrageeinträgen ausgeben zu lassen.
+		 */
 		class GetVoteBySurveyEntryCallback implements AsyncCallback<Vector<Vote>>{
 
 			@Override
@@ -450,6 +495,9 @@ public class VotingCard extends DialogBox {
 		
 	}
 	
+	/*
+	 * Callback zum Zurückgeben von Umfrageeinträgen.
+	 */
 	class GetSurveyEntriesCallback implements AsyncCallback<Vector<SurveyEntry>>{
 
 		@Override
@@ -469,7 +517,7 @@ public class VotingCard extends DialogBox {
 				surveyEntryVector.add(surveyEntryRow);
 				
 			}
-		}
+		} 
 		
 	}
 }
