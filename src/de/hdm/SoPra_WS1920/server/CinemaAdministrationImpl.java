@@ -445,9 +445,16 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
         
     	Vector<Screening> screenings = this.getScreeningByMovieFK(movie.getId());
     	
+    	Vector<Survey> surveys = this.sMapper.findMovieNameOfSurvey(movie.getName());
+    	
     	if(screenings != null) {
     		for(Screening s : screenings) {
     			this.deleteScreening(s);
+    		}
+    	}
+    	if(movie != null) {
+    		for(Survey s : surveys) {
+    			this.deleteSurvey(s);
     		}
     	}
     	

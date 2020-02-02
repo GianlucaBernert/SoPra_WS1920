@@ -354,15 +354,15 @@ public class SurveyMapper {
 	 * @param String movieName
 	 * @return Survey
 	 */
-    public Survey findMovieNameOfSurvey(String movieName) {
+    public Vector<Survey> findMovieNameOfSurvey(String movieName) {
     	Connection con = DBConnection.connection();
-    	
+    	Vector<Survey> result = new Vector<Survey>();
     	try {
     		
     		Statement stmt = con.createStatement();
     		ResultSet rs = stmt.executeQuery("SELECT * FROM survey WHERE movieName='" + movieName + "'");
     		
-    		if(rs.next()) {
+    		while(rs.next()) {
     			Survey s = new Survey();
     			s.setId(rs.getInt("id"));
     			s.setStartDate(rs.getDate("startDate"));
@@ -372,13 +372,14 @@ public class SurveyMapper {
     			s.setMovieName(rs.getString("movieName"));
     			s.setStatus(rs.getInt("isActive"));
     			
-    			return s; 
+    			result.addElement(s);
+    			
     		}
     	}
     	catch(SQLException e2) {
     		e2.printStackTrace();
     	}
-    	return null;
+    	return result;
     }
     /**
      * L�schen einer Umfrage durch den GroupFK(Fremdschlüssel)
