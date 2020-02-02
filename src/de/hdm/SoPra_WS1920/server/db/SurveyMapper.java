@@ -1,7 +1,6 @@
 package de.hdm.SoPra_WS1920.server.db;
 
 import java.sql.Connection;
-import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -176,7 +175,7 @@ public class SurveyMapper {
     }
     
     /**
-	 * Methode, die eine Umfrage anhand des Startdatums zurückgibt.
+	 * Methode, die eine Umfrage anhand des Startdatums zurï¿½ckgibt.
 	 * @param Date startDate
 	 * @return Survey
 	 */
@@ -208,7 +207,7 @@ public class SurveyMapper {
     }
     
     /**
-	 * Methode, die eine Umfrage anhand des Enddatums zurückgibt.
+	 * Methode, die eine Umfrage anhand des Enddatums zurï¿½ckgibt.
 	 * @param Date endDate
 	 * @return Survey
 	 */
@@ -241,7 +240,7 @@ public class SurveyMapper {
     }
     
     /**
-	 * Methode, die eine Umfrage anhand der ausgewählten Stadt vom Erstellzeitpunkt zurückgibt.
+	 * Methode, die eine Umfrage anhand der ausgewï¿½hlten Stadt vom Erstellzeitpunkt zurï¿½ckgibt.
 	 * @param String selected City
 	 * @return Survey
 	 */
@@ -351,7 +350,7 @@ public class SurveyMapper {
     }
     
     /**
-	 * Methode, die eine Umfrage anhand des zum ERstellzeitpunkt ausgewählten Movies zurückgibt.
+	 * Methode, die eine Umfrage anhand des zum ERstellzeitpunkt ausgewï¿½hlten Movies zurï¿½ckgibt.
 	 * @param String movieName
 	 * @return Survey
 	 */
@@ -401,7 +400,7 @@ public class SurveyMapper {
     
     
     /**
-     * Methode, die alle Umfragen des Erstellers zurückgibt.
+     * Methode, die alle Umfragen des Erstellers zurï¿½ckgibt.
      * @param personFK 
      * @return Vektor mit Survey-Objekten eines Erstellers
      */

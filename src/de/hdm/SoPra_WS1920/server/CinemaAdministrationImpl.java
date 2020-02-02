@@ -1,10 +1,11 @@
 package de.hdm.SoPra_WS1920.server;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.sql.Date;
-import java.util.*;
-
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 

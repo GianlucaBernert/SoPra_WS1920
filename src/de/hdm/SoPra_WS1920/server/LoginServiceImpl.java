@@ -9,7 +9,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.SoPra_WS1920.client.LoginService;
 import de.hdm.SoPra_WS1920.shared.LoginInfo;
-import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 
 /**

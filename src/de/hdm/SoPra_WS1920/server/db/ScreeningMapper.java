@@ -8,11 +8,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.util.Vector;
 
-import de.hdm.SoPra_WS1920.shared.bo.Cinema;
-import de.hdm.SoPra_WS1920.shared.bo.Movie;
-import de.hdm.SoPra_WS1920.shared.bo.Person;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
-import de.hdm.SoPra_WS1920.shared.bo.Survey;
 
 /**
 *
@@ -171,7 +167,7 @@ public class ScreeningMapper {
     }
     
     /**
-	 * Methode, die Screenings für das Erstellen einer Umfrage bereitstellt.
+	 * Methode, die Screenings fï¿½r das Erstellen einer Umfrage bereitstellt.
 	 * @param startDate, endDate, int movieFK, String City
 	 * @return Vektor Screening
 	 */
@@ -307,7 +303,7 @@ public class ScreeningMapper {
     
     
     /**
-	 * Methode, die das Loeschen eines Screening-Objekts aus der Datenbank ermöglicht
+	 * Methode, die das Loeschen eines Screening-Objekts aus der Datenbank ermï¿½glicht
 	 * @param ownership
 	 */
     public void deleteByScreeningDate(Date screeningDate) {
@@ -323,7 +319,7 @@ public class ScreeningMapper {
     }
     
     /**
-	 * Methode, die das Loeschen eines Screening-Objekts aus der Datenbank anhand der screeningTime ermöglicht
+	 * Methode, die das Loeschen eines Screening-Objekts aus der Datenbank anhand der screeningTime ermï¿½glicht
 	 * @param Time screeningTime
 	 */
     public void deleteByScreeningTime(Time screeningTime) {
@@ -339,7 +335,7 @@ public class ScreeningMapper {
     }
     
     /**
-	 * Methode, die das Loeschen eines Screening-Objekts aus der Datenbank anhand der screeningTime und  ermöglicht
+	 * Methode, die das Loeschen eines Screening-Objekts aus der Datenbank anhand der screeningTime und  ermï¿½glicht
 	 * @param Time screeningTime, Date screeningDate
 	 */
     public void deleteByScreeningDateTime(Date screeningDate, Time screeningTime) {

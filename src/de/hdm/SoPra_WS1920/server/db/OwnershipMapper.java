@@ -1,20 +1,20 @@
 package de.hdm.SoPra_WS1920.server.db;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.SoPra_WS1920.shared.bo.Group;
-import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Ownership;
-import de.hdm.SoPra_WS1920.shared.bo.Person;
-import java.sql.*;
 
 /**
  * @author David Flattich
  * 
  * 
  * Mit Hilfe der MapperKlasse <code>OwnershipMapper</code> werden Group-Objekte auf eine relationale Datenbank abgebildet.
- * Durch das implementieren der Methoden können Ownership-Objekte gesucht, erzeugt, modifiziert und
- * gelöscht werden.
+ * Durch das implementieren der Methoden kï¿½nnen Ownership-Objekte gesucht, erzeugt, modifiziert und
+ * gelï¿½scht werden.
  * 
  */
 public class OwnershipMapper {
@@ -53,13 +53,13 @@ public class OwnershipMapper {
     
     /*
 	 * =============================================================================================
-	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezï¿½hlt, die
 	 * in allen Mapper-Klassen existieren.
 	 * 
 	 */	
     
     /**
-     * Methode, die ein Ownership Objekt anhand der ID zurück gibt.
+     * Methode, die ein Ownership Objekt anhand der ID zurï¿½ck gibt.
      * @param int OwnershipID
      * @return Ownership Objekt
      */
@@ -112,7 +112,7 @@ public class OwnershipMapper {
     }
 
     /**
-   	 * Methode, die das Updaten eines Ownership-Objekts in der Datenbank ermöglicht	
+   	 * Methode, die das Updaten eines Ownership-Objekts in der Datenbank ermï¿½glicht	
    	 * @param ownership
    	 */
     public Ownership updateOwnership(Ownership ownership) {
@@ -132,7 +132,7 @@ public class OwnershipMapper {
     }
 
     /**
-	 * Methode, die das Loeschen eines Ownership-Objekts aus der Datenbank ermöglicht
+	 * Methode, die das Loeschen eines Ownership-Objekts aus der Datenbank ermï¿½glicht
 	 * @param ownership
 	 */
     public void deleteOwnership(Ownership ownership) {
@@ -153,7 +153,7 @@ public class OwnershipMapper {
  	 */
     
     /**
-	 * Methode, die ein Ownership Objekt einer Person zurückgibt
+	 * Methode, die ein Ownership Objekt einer Person zurï¿½ckgibt
 	 * @param int personFk
 	 * @return Vektor Ownership
 	 */

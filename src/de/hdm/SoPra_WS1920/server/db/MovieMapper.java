@@ -1,19 +1,20 @@
 package de.hdm.SoPra_WS1920.server.db;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
-import java.sql.*;
-
 
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
-import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 /**
  * @author David Flattich
  * 
  * 
  * Mit Hilfe der MapperKlasse <code>MovieMapper</code> werden Movie-Objekte auf eine relationale Datenbank abgebildet.
- * Durch das implementieren der Methoden können Movie-Objekte gesucht, erzeugt, modifiziert und
- * gelöscht werden.
+ * Durch das implementieren der Methoden kï¿½nnen Movie-Objekte gesucht, erzeugt, modifiziert und
+ * gelï¿½scht werden.
  * 
  */
 public class MovieMapper {
@@ -54,13 +55,13 @@ public class MovieMapper {
     
     /*
 	 * =============================================================================================
-	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezï¿½hlt, die
 	 * in allen Mapper-Klassen existieren.
 	 */	
   
     
     /**
-     * Methode, die ein Movie Objekt anhand der ID zurückgibt
+     * Methode, die ein Movie Objekt anhand der ID zurï¿½ckgibt
      * @param int movieID 
      * @return movie m
      */
@@ -89,7 +90,7 @@ public class MovieMapper {
     
     
     /**
-	 * Methode, die das Anlegen eines Movie-Objekts ermöglicht
+	 * Methode, die das Anlegen eines Movie-Objekts ermï¿½glicht
 	 * @param movie
 	 * @return movie
 	 */
@@ -118,7 +119,7 @@ public class MovieMapper {
     }
 
     /**
-	 * Methode, die das Updaten eines Movie-Objekts in der Datenbank ermöglicht	
+	 * Methode, die das Updaten eines Movie-Objekts in der Datenbank ermï¿½glicht	
 	 * @param movie
 	 * @return movie
 	 */
@@ -142,7 +143,7 @@ public class MovieMapper {
     }
 
     /**
-	 * Methode, die das Loeschen eines Movie-Objekts aus der Datenbank ermöglicht
+	 * Methode, die das Loeschen eines Movie-Objekts aus der Datenbank ermï¿½glicht
 	 * @param movie
 	 */
     
@@ -166,7 +167,7 @@ public class MovieMapper {
  	 */
     
     /**
-     * Methode, die alle Movie Objekte zurückgibt, die ein User erstellt hat
+     * Methode, die alle Movie Objekte zurï¿½ckgibt, die ein User erstellt hat
      * @param int personFK
      * @return Vektor movie
      */
@@ -203,7 +204,7 @@ public class MovieMapper {
      * @return
      */
     /*public void deleteMovieByPersonFK(Person person) {
-       /** Umsetzung überhaupt nötig? Movies einer Person sollten in der Regel nicht gelöscht werden
+       /** Umsetzung ï¿½berhaupt nï¿½tig? Movies einer Person sollten in der Regel nicht gelï¿½scht werden
         return null;
     }
     
@@ -214,7 +215,7 @@ public class MovieMapper {
 	 */	
     	
     /** 
-     * Methode, die alle Movies in der Datenbank zurückgibt
+     * Methode, die alle Movies in der Datenbank zurï¿½ckgibt
      * @return Vektor movie
      */
     // Find-All Methode zum Abrufen aller Movie-Objekte
@@ -236,7 +237,7 @@ public class MovieMapper {
             m.setDescription(rs.getString("description"));
             m.setId(rs.getInt("id"));
 
-            // Hinzufügen des neuen Objekts zum Ergebnisvektor
+            // Hinzufï¿½gen des neuen Objekts zum Ergebnisvektor
             result.addElement(m);
           }
         }
@@ -244,13 +245,13 @@ public class MovieMapper {
           e2.printStackTrace();
         }
 
-        // Ergebnisvektor zurückgeben
+        // Ergebnisvektor zurï¿½ckgeben
         return result;
       }
     
     
     /**
-     * Methode, die Movie Objekte anhand des Namens zurückgibt
+     * Methode, die Movie Objekte anhand des Namens zurï¿½ckgibt
      * @param name 
      * @return Vektor movie
      */
@@ -280,7 +281,7 @@ public class MovieMapper {
     }
 
     /**
-     * Methode, die ein Movie Objekt anhand des Namens löscht
+     * Methode, die ein Movie Objekt anhand des Namens lï¿½scht
      * @param name 
      */
     public void deleteMovieByName(String name) {
@@ -301,7 +302,7 @@ public class MovieMapper {
 	
 	
     /**
-     * Methode, die Movie Objekte anhand des Genres zurückgibt.
+     * Methode, die Movie Objekte anhand des Genres zurï¿½ckgibt.
      * @param genre 
      * @return Vektor movie
      */

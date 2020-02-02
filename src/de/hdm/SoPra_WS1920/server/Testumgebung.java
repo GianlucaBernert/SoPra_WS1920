@@ -1,14 +1,4 @@
 package de.hdm.SoPra_WS1920.server;
-import java.sql.Date;
-import java.util.Vector;
-
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.datepicker.client.DateBox;
-
-import de.hdm.SoPra_WS1920.shared.bo.Movie;
-import de.hdm.SoPra_WS1920.shared.bo.Person;
-import de.hdm.SoPra_WS1920.shared.bo.Screening;
-import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 
 public class Testumgebung {
 

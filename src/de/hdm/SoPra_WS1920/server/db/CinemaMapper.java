@@ -4,10 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.Vector;
 
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
-import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 /**
  * Mapper-Klasse, die <code>Cinema</code>-Objekte auf relationale Datenbank abbildet.
@@ -295,7 +294,7 @@ public class CinemaMapper {
     }
     
     /**
-	 * Methode, die alle Cinemas die zu einer CinemaChain gehören zurückgibt
+	 * Methode, die alle Cinemas die zu einer CinemaChain gehï¿½ren zurï¿½ckgibt
 	 * @param int cinemachainFK
 	 * @return Vektor mit Cinema-Objekten
 	 */
@@ -327,7 +326,7 @@ public class CinemaMapper {
     }
 
     /**
-     * Methode, die ein Cinema anhand des Namens löscht
+     * Methode, die ein Cinema anhand des Namens lï¿½scht
      * @param name
      */
     public void deleteCinemaByName(String name) {
@@ -346,7 +345,7 @@ public class CinemaMapper {
     }
     
     /**
-	 * Methode, die ein Cinema anhand des CinemaChainFK's löscht
+	 * Methode, die ein Cinema anhand des CinemaChainFK's lï¿½scht
 	 * @param int cinemachainFK
 	 */
     public void deleteCinemaByCinemachainFK(int cinemachainFK) {
@@ -362,7 +361,7 @@ public class CinemaMapper {
     }
 
     /**
-     * Methode, die alle Cinemas eines Erstellers/Erstellerin zurückgibt
+     * Methode, die alle Cinemas eines Erstellers/Erstellerin zurï¿½ckgibt
      * @param person 
      * @return Vektor Cinema
      */

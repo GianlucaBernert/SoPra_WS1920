@@ -1,21 +1,19 @@
 package de.hdm.SoPra_WS1920.server.db;
 
-import java.util.Vector;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import de.hdm.SoPra_WS1920.shared.bo.BusinessObject;
-import de.hdm.SoPra_WS1920.shared.bo.Group;
-import de.hdm.SoPra_WS1920.shared.bo.Movie;
-import de.hdm.SoPra_WS1920.shared.bo.Ownership;
-import de.hdm.SoPra_WS1920.shared.bo.Person;
-import java.sql.*;
 
 /**
  * @author David Flattich
  * 
  * 
  * Mit Hilfe der MapperKlasse <code>BusinessObjectMapper</code> werden BusinessObject-Objekte auf eine relationale Datenbank abgebildet.
- * Durch das implementieren der Methoden können BusinessObject-Objekte gesucht, erzeugt, modifiziert und
- * gelöscht werden.
+ * Durch das implementieren der Methoden kï¿½nnen BusinessObject-Objekte gesucht, erzeugt, modifiziert und
+ * gelï¿½scht werden.
  * 
  */
 public class BusinessObjectMapper {
@@ -54,12 +52,12 @@ public class BusinessObjectMapper {
     
     /*
 	 * =============================================================================================
-	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezï¿½hlt, die
 	 * in allen Mapper-Klassen existieren.
 	 */	
     
     /**
-	 * Methode, die ein BusinessObject anhand der ID zurückgibt
+	 * Methode, die ein BusinessObject anhand der ID zurï¿½ckgibt
 	 * @param int ID
 	 * @return businessobject
 	 */
@@ -89,7 +87,7 @@ public class BusinessObjectMapper {
 
 
     /**
-	 * Methode, die das Einfügen eines BusinessObjects in die Datenbank ermöglicht
+	 * Methode, die das Einfï¿½gen eines BusinessObjects in die Datenbank ermï¿½glicht
 	 * @param businessobject
 	 * @return businessobject
 	 */
@@ -127,7 +125,7 @@ public class BusinessObjectMapper {
     
 
     /**
-	 * Methode, die das Loeschen eines BusinessObject-Objekts aus der Datenbank ermöglicht
+	 * Methode, die das Loeschen eines BusinessObject-Objekts aus der Datenbank ermï¿½glicht
 	 * @param businessobject
 	 */
     public void deleteBusinessObject(BusinessObject businessobject) {

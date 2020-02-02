@@ -2,7 +2,6 @@ package de.hdm.SoPra_WS1920.shared;
 
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;

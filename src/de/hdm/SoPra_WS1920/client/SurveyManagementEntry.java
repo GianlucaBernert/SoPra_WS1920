@@ -17,14 +17,13 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.SoPra_WS1920.client.gui.SurveyContent;
+import de.hdm.SoPra_WS1920.client.gui.SurveyManagementHeader;
 import de.hdm.SoPra_WS1920.client.gui.SurveyNavigationBar;
 import de.hdm.SoPra_WS1920.client.gui.Admin.AuthenticationForm;
-
 import de.hdm.SoPra_WS1920.shared.LoginInfo;
 import de.hdm.SoPra_WS1920.shared.SurveyManagementAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Person;
-import de.hdm.SoPra_WS1920.client.gui.SurveyContent;
-import de.hdm.SoPra_WS1920.client.gui.SurveyManagementHeader;
 
 public class SurveyManagementEntry implements EntryPoint {
 	

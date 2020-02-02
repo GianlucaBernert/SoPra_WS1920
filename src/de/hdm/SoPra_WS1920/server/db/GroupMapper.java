@@ -1,12 +1,12 @@
 package de.hdm.SoPra_WS1920.server.db;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.SoPra_WS1920.shared.bo.Group;
-import de.hdm.SoPra_WS1920.shared.bo.Movie;
-import de.hdm.SoPra_WS1920.shared.bo.Survey;
-
-import java.sql.*;
 
 /**
  * @author David Flattich
@@ -62,7 +62,7 @@ public class GroupMapper {
 	 */	
     
     /**
-     * Methode, die eine Gruppe anhand der ID zurückgibt
+     * Methode, die eine Gruppe anhand der ID zurï¿½ckgibt
      * @param groupID 
      * @return Group
      */
@@ -161,7 +161,7 @@ public class GroupMapper {
     
     
     /**
-     * Methode, die alle Group Objekte des Erstellers zurückgibt
+     * Methode, die alle Group Objekte des Erstellers zurï¿½ckgibt
      * @param personFK
      * @return Vektor Group
      */
@@ -191,7 +191,7 @@ public class GroupMapper {
     }
 
     /**
-     * Methode die eine Gruppe anhand des Erstellers löscht
+     * Methode die eine Gruppe anhand des Erstellers lï¿½scht
      * @param personFK
      */
     public void deleteGroupByPersonFK(int personFK) {
@@ -209,7 +209,7 @@ public class GroupMapper {
     
 
     /**
-     * Methode, die Gruppen anhand des Gruppennamens zurückgibt
+     * Methode, die Gruppen anhand des Gruppennamens zurï¿½ckgibt
      * @param name 
      * @return Vektor Group
      */

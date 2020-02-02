@@ -1,8 +1,5 @@
 package de.hdm.SoPra_WS1920.shared.bo;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 /**
  * @author GianlucaBernert
  * Klasse Survey, welche die Attribute groupFK, startDate und endDate direkt enthÃ¤lt
@@ -116,7 +113,7 @@ public class Survey extends Ownership {
 	}
 	
 	/**
-     * Methode um die ausgewählte Stadt einer Umfrage auszugeben
+     * Methode um die ausgewï¿½hlte Stadt einer Umfrage auszugeben
      * @return selectedCity
      */
 	
@@ -124,7 +121,7 @@ public class Survey extends Ownership {
 		return selectedCity;
 	}
 	/**
-     * Methode um die ausgewählte Stadt einer Umfrage zu setzen
+     * Methode um die ausgewï¿½hlte Stadt einer Umfrage zu setzen
      * @return selectedCity
      */
 	

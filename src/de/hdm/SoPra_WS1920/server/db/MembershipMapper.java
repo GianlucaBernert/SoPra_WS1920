@@ -1,14 +1,12 @@
 package de.hdm.SoPra_WS1920.server.db;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.SoPra_WS1920.shared.bo.Group;
 import de.hdm.SoPra_WS1920.shared.bo.Membership;
-import de.hdm.SoPra_WS1920.shared.bo.Movie;
-import de.hdm.SoPra_WS1920.shared.bo.Person;
-import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
-
-import java.sql.*;
 
 /**
  * @author David Flattich
@@ -90,7 +88,7 @@ public class MembershipMapper {
         return me;
     }
     /**
-     * Methode, die alle Memberships einer Person zurückgibt.
+     * Methode, die alle Memberships einer Person zurï¿½ckgibt.
      * @param int personFK
      * @return Vektor Membership
      */
@@ -120,7 +118,7 @@ public class MembershipMapper {
         return result;
     }
     /**
-     * Methode, die alle Memberships einer Gruppe zurückgibt.
+     * Methode, die alle Memberships einer Gruppe zurï¿½ckgibt.
      * @param int groupID 
      * @return Vektor Membership
      */
