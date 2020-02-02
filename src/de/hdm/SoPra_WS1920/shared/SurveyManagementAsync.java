@@ -491,6 +491,14 @@ public interface SurveyManagementAsync {
 	void getCinemasByCinemaChainFK(CinemaChain cc, AsyncCallback<Vector<Cinema>> callback);
 
 	void getGroupByNameAndMembership(String groupName, int personFk, AsyncCallback<Group> callback);
+
+	void createSurveyEntries(Vector<SurveyEntry> surveyEntries, AsyncCallback<Void> callback);
+
+	void createVotes(Vector<Vote> votes, AsyncCallback<Void> callback);
+
+	void updateVotes(Vector<Vote> votes, AsyncCallback<Void> callback);
+
+	void deleteVotes(Vector<Vote> votes, AsyncCallback<Void> callback);
     
 
 }

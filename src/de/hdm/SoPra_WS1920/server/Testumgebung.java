@@ -17,7 +17,10 @@ public class Testumgebung {
 		SurveyManagementImpl implSurveyManagement = new SurveyManagementImpl();
 		implSurveyManagement.init();
 		
-		implAdmin.createMovie("Wonderwoman2", "Action", "ndjfns", 1);
+		//implAdmin.createMovie("Wonderwoman2", "Action", "ndjfns", 1);
+		
+		System.out.println(implSurveyManagement.createSurveyEntry(44,68 , 5));
+		
 		
 		//implSurveyManagement.createPerson("Yesin","Soufi", "ys018@hdm-stuttgart.de");
 		

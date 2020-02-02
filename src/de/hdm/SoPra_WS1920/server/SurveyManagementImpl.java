@@ -1151,6 +1151,47 @@ public class SurveyManagementImpl extends RemoteServiceServlet implements Survey
     	return group;
     }
     
+    /**
+     * Methode um einen Umfrageeintrag zu erstellen
+     * @param Vector<SurveyEntry> surveyEntries
+     * @throws IllegalArgumentException
+     */
+    @Override
+    public void createSurveyEntries(Vector<SurveyEntry> surveyEntries) throws IllegalArgumentException {
+    	for(SurveyEntry sE:surveyEntries) {
+    		Ownership os = this.createOwnership(sE.getPersonFK());
+    		sE.setId(os.getId());
+    		this.seMapper.insertSurveyEntry(sE);
+    	}
+
+    }
+    
+    @Override
+    public void createVotes(Vector<Vote> votes) throws IllegalArgumentException{
+    	for(Vote vote: votes) {
+    		Ownership os = this.createOwnership(vote.getPersonFK());
+    		vote.setId(os.getId());
+    		this.vMapper.insertVote(vote);
+    	}
+    }
+    
+    @Override
+    public void updateVotes(Vector<Vote> votes) throws IllegalArgumentException{
+    	for(Vote vote: votes) {
+    		this.vMapper.updateVote(vote);
+    	}
+    }
+    
+    @Override
+    public void deleteVotes(Vector<Vote> votes) throws IllegalArgumentException{
+    	for(Vote vote: votes) {
+    		this.vMapper.deleteVote(vote);
+    	}
+    }
+    
+    
+   
+    
     
     }
     

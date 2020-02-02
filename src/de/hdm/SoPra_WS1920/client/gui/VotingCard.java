@@ -62,6 +62,10 @@ public class VotingCard extends DialogBox {
 	Vector<SurveyEntry> surveyEntries;
 	Person person;
 	
+	Vector<Vote> votesToCreate;
+	Vector<Vote> votesToUpdate;
+	Vector<Vote> votesToDelete;
+	
 	SurveyContent surveyContent;
 	SurveyCard parentCard;
 	SurveyManagementAsync surveyManagement;
@@ -148,25 +152,87 @@ public class VotingCard extends DialogBox {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			
+			votesToCreate = new Vector<Vote>();
+			votesToUpdate = new Vector<Vote>();
+			votesToDelete = new Vector<Vote>();
 			for(SurveyEntryRow surveyEntryRow: surveyEntryVector) {
 				
 				if(surveyEntryRow.voteOfPerson.getVotingWeight()==0 && surveyEntryRow.newVoteOfPerson.getVotingWeight()!=0) {
-					surveyManagement.createVote(surveyEntryRow.newVoteOfPerson.getVotingWeight(), surveyEntryRow.surveyEntry.getId(), person.getId(), new CreateVoteCallback());
+//					surveyManagement.createVote(surveyEntryRow.newVoteOfPerson.getVotingWeight(), surveyEntryRow.surveyEntry.getId(), person.getId(), new CreateVoteCallback());
+					Vote v = new Vote();
+					v.setVotingWeight(surveyEntryRow.newVoteOfPerson.getVotingWeight());
+					v.setSurveyEntryFK(surveyEntryRow.surveyEntry.getId());
+					v.setPersonFK(person.getId());
+					votesToCreate.add(v);
 				}else if(surveyEntryRow.voteOfPerson.getVotingWeight()!=0 && surveyEntryRow.newVoteOfPerson.getVotingWeight()!=0) {
 					if(surveyEntryRow.newVoteOfPerson.getVotingWeight()!=surveyEntryRow.voteOfPerson.getVotingWeight()) {
-						surveyManagement.updateVote(surveyEntryRow.newVoteOfPerson, new UpdateVoteCallback());
+						Vote v = surveyEntryRow.newVoteOfPerson;
+						votesToUpdate.add(v);
+//						surveyManagement.updateVote(surveyEntryRow.newVoteOfPerson, new UpdateVoteCallback());
 					}
 				}else if(surveyEntryRow.voteOfPerson.getVotingWeight()!=0 && surveyEntryRow.newVoteOfPerson.getVotingWeight()==0) {
-					surveyManagement.deleteVote(surveyEntryRow.voteOfPerson, new DeleteVoteCallback());
+//					surveyManagement.deleteVote(surveyEntryRow.voteOfPerson, new DeleteVoteCallback());
+					Vote v = surveyEntryRow.voteOfPerson;
+					votesToDelete.add(v);
 				}
 			}
+			
+			surveyManagement.createVotes(votesToCreate, new CreateVotesCallback());
 			votingCard.hide();
 			parentCard.showSurveyCardView(surveyToShow);
-			parentCard.surveyContent.showSurveys();
+//			parentCard.surveyContent.showSurveys();
 			
 		}
 		
+	}
+	
+	class CreateVotesCallback implements AsyncCallback<Void>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+
+			surveyManagement.updateVotes(votesToUpdate, new UpdateVotesCallback());
+		}
+		
+	}
+	
+	class UpdateVotesCallback implements AsyncCallback<Void>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			surveyManagement.deleteVotes(votesToDelete, new DeleteVotesCallback());
+		}
+		
+	}
+
+	class DeleteVotesCallback implements AsyncCallback<Void>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			parentCard.surveyContent.showSurveys();
+		}
+	
 	}
 	
 	

@@ -539,5 +539,13 @@ public interface SurveyManagement extends RemoteService {
 	
 	Group getGroupByNameAndMembership(String groupName, int personFk) throws IllegalArgumentException;
 
+	void createSurveyEntries(Vector<SurveyEntry> surveyEntries) throws IllegalArgumentException;
+
+	void createVotes(Vector<Vote> votes) throws IllegalArgumentException;
+
+	void updateVotes(Vector<Vote> votes) throws IllegalArgumentException;
+
+	void deleteVotes(Vector<Vote> votes) throws IllegalArgumentException;
+
 	
 }
