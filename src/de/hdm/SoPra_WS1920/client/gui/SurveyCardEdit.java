@@ -275,8 +275,8 @@ public class SurveyCardEdit extends DialogBox {
 				// TODO Auto-generated method stub
 				movie = result.firstElement();
 				//getGroupByNameAndPersonFk
+				surveyManagement.getGroupOfPersonByGroupName(person.getId(), allGroups.getSelectedItemText(), new GetGroupCallback(surveyCardEdit));
 
-				surveyManagement.getGroupByNameAndMembership(allGroups.getSelectedItemText(), person.getId(), new GetGroupCallback(surveyCardEdit));
 			}
 			
 		}
@@ -452,9 +452,18 @@ public class SurveyCardEdit extends DialogBox {
 			/**
 			 * Zum Schluss wird für jede übrig gebliebene Filmpräsentation ein Umfrageeintrag erstellt
 			 */
+
+			Vector<SurveyEntry> surveyEntries = new Vector<SurveyEntry>();
 			for(Screening s: screeningsForCreation) {
-				surveyManagement.createSurveyEntry(s.getId(), surveyToShow.getId(), person.getId(), new CreateSurveyEntryCallback());
+//					Window.alert(s.toString() + " " + surveyToShow.getId() + " " + person.toString());
+					SurveyEntry sE = new SurveyEntry();
+					sE.setPersonFK(person.getId());
+					sE.setScreeningFK(s.getId());
+					sE.setSurveyFK(surveyToShow.getId());
+					surveyEntries.add(sE);
+//					surveyManagement.createSurveyEntry(sr.s.getId(), result.getId(), person.getId(), new CreateSurveyEntryCallback());
 			}
+			surveyManagement.createSurveyEntries(surveyEntries, new CreateSurveyEntriesCallback());
 			
 			/**
 			 * Analog wird für jedes zu löschende Objekt der Löschbefehl ausgeführt
@@ -462,6 +471,7 @@ public class SurveyCardEdit extends DialogBox {
 			for(SurveyEntry sE: surveyEntriesForDeletion) {
 				surveyManagement.deleteSurveyEntry(sE, new DeleteSurveyEntryCallback());
 			}
+			
 		}
 		
 		/**
@@ -843,19 +853,24 @@ public class SurveyCardEdit extends DialogBox {
 
 		@Override
 		public void onSuccess(Survey result) {
-			int counter = 0;
-			surveyToShow = result;	
+			surveyToShow = result;
+			Vector<SurveyEntry> surveyEntries = new Vector<SurveyEntry>();
 			for(ScreeningRow sr: screeningRowVector) {
 				if(sr.cb.getValue() == true) {
-					counter++;
-					surveyManagement.createSurveyEntry(sr.s.getId(), result.getId(), person.getId(), new CreateSurveyEntryCallback());
+					SurveyEntry sE = new SurveyEntry();
+					sE.setPersonFK(person.getId());
+					sE.setScreeningFK(sr.s.getId());
+					sE.setSurveyFK(result.getId());
+					surveyEntries.add(sE);
+//					surveyManagement.createSurveyEntry(sr.s.getId(), result.getId(), person.getId(), new CreateSurveyEntryCallback());
 				}
 			}
+			surveyManagement.createSurveyEntries(surveyEntries, new CreateSurveyEntriesCallback());
 			parentCard = new SurveyCard(content, result);
 			parentCard.setMovie(movie);
 			content.add(parentCard);
 			surveyCardEdit.hide();
-			Window.alert("Selected Screenings: "+Integer.toString(counter));
+//			Window.alert("Selected Screenings: "+Integer.toString(counter));
 		}
 	}
 	
@@ -875,6 +890,22 @@ public class SurveyCardEdit extends DialogBox {
 		}
 		
 	}
+	
+	
+	class CreateSurveyEntriesCallback implements AsyncCallback<Void>{
 
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 
 }
