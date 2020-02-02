@@ -3,7 +3,6 @@ package de.hdm.SoPra_WS1920.server.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
-import java.util.*;
 
 import com.google.appengine.api.rdbms.AppEngineDriver;
 import com.google.appengine.api.utils.SystemProperty;
@@ -20,7 +19,7 @@ public class DBConnection {
 	
 	/**
 	 * Sie speichert die einzige Instanz dieser Klasse. Sie ist durch static nur
-	 * einmal für alle sämtlichen Instanzen dieser Klasse vorhanden
+	 * einmal fï¿½r alle sï¿½mtlichen Instanzen dieser Klasse vorhanden
 	 */
 	
 	private static Connection con = null;
@@ -72,7 +71,7 @@ public class DBConnection {
 			}
 		}
 
-		// Zurückgegeben der Verbindung
+		// Zurï¿½ckgegeben der Verbindung
 		return con;
 	}
     

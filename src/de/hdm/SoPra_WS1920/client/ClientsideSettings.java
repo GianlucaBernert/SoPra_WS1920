@@ -1,9 +1,6 @@
 package de.hdm.SoPra_WS1920.client;
 
-import java.util.logging.Logger;
-
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.SoPra_WS1920.shared.CinemaAdministration;
 import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;

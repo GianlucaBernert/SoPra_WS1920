@@ -4,11 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.Vector;
 
 import de.hdm.SoPra_WS1920.shared.bo.CinemaChain;
-import de.hdm.SoPra_WS1920.shared.bo.Person;
 
 /**
  * Mapper-Klasse, die <code>CinemaChain</code>-Objekte auf relationale Datenbank abbildet.
@@ -205,7 +203,7 @@ public class CinemaChainMapper {
 	    }
 	    
 	    /**
-	     * Methode, die einen Vektor mit allen erstellen CinemaChain Objekten einer Person zurückgibt
+	     * Methode, die einen Vektor mit allen erstellen CinemaChain Objekten einer Person zurï¿½ckgibt
 	     * @param personFK 
 	     * @return Vektor mit Kinoketten-Objekten eines Erstellers/Besitzers
 	     */

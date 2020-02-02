@@ -1,10 +1,11 @@
 package de.hdm.SoPra_WS1920.server;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.sql.Date;
-import java.util.*;
-
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -188,7 +189,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
     
     
     /**
-     * Methode zum Löschen von Personen Objekten und allen zugehörigen Businessobjekten
+     * Methode zum Lï¿½schen von Personen Objekten und allen zugehï¿½rigen Businessobjekten
      * @param p
      */
     
@@ -976,7 +977,7 @@ public class CinemaAdministrationImpl extends RemoteServiceServlet implements Ci
 	}
 	
 	/**
-	 * Methode zum löschen von Membershipobjekten
+	 * Methode zum lï¿½schen von Membershipobjekten
 	 */
 	@Override
 	  public void deleteMembership(int gFK, int pFK) {    	

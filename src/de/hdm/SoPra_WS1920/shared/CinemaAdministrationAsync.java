@@ -1,12 +1,9 @@
 package de.hdm.SoPra_WS1920.shared;
 
 
-import java.sql.Time;
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.*;
-
-import org.apache.james.mime4j.field.datetime.DateTime;
+import java.sql.Time;
+import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

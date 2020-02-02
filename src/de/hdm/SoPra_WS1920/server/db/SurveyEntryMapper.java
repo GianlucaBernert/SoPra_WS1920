@@ -6,15 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.SoPra_WS1920.shared.bo.Screening;
-import de.hdm.SoPra_WS1920.shared.bo.Survey;
 import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 
 
 /**
  * Mapper-Klasse, die <code>SurveyEntry</code>-Objekte auf relationale Datenbank abbildet.
- * Anhand von den Methoden können Objekte gesucht, erzeugt, bearbeitet und gelöscht werden. 
- * Objekte können in DB-Strukturen umgewandelt werden und DB-Strukturen in Objekte.
+ * Anhand von den Methoden kï¿½nnen Objekte gesucht, erzeugt, bearbeitet und gelï¿½scht werden. 
+ * Objekte kï¿½nnen in DB-Strukturen umgewandelt werden und DB-Strukturen in Objekte.
  * 
  * @author shila
  */
@@ -22,13 +20,13 @@ public class SurveyEntryMapper {
 
     /**
      * Die Klasse SurveyEntryMapper wird nur einmal instanziiert (Singleton-Eigenschaft).
-     * Die folgende Variable ist durch den Bezeichner <code>static</code> nur einmal für 
+     * Die folgende Variable ist durch den Bezeichner <code>static</code> nur einmal fï¿½r 
      * alle Instanzen der Klasse vorhanden. Die einzige Instanz dieser Klasse wird darin gespeichert. 
      */
 	private static SurveyEntryMapper surveyEntryMapper = null;
      
 	/**
-	 * Geschützter Konstruktor, der verhindert, dass mit dem new-Operator
+	 * Geschï¿½tzter Konstruktor, der verhindert, dass mit dem new-Operator
 	 * neue Instanzen der Klasse erstellt werden.
 	 */
     protected SurveyEntryMapper() {
@@ -36,7 +34,7 @@ public class SurveyEntryMapper {
     
     /**
      * Folgende statische Methode sichert die Singleton-Eigenschaft.
-     * Es wird dafür gesorgt, dass nur eine einzige Instanz von
+     * Es wird dafï¿½r gesorgt, dass nur eine einzige Instanz von
      * <code>SurveyEntryMapper</code> existiert.
      * SurveyEntryMapper wird durch den Aufruf dieser statischen Methode instanziiert, 
      * nicht durch den new-Operator.
@@ -52,8 +50,8 @@ public class SurveyEntryMapper {
     }
     
     /**
-     * @param id (Primärschlüssel-Attribut)
-     * @return SurveyEntry-Objekt, das dem übergebenen Schlüssel entspricht,
+     * @param id (Primï¿½rschlï¿½ssel-Attribut)
+     * @return SurveyEntry-Objekt, das dem ï¿½bergebenen Schlï¿½ssel entspricht,
      * null bei nicht vorhandenem DB-Tupel
      */
     public SurveyEntry findSurveyEntryByID(int id) {
@@ -65,7 +63,7 @@ public class SurveyEntryMapper {
         	
         	ResultSet rs = stmt.executeQuery("SELECT * FROM surveyentry WHERE surveyentry.id= " + id);
         	
-        	//Es wird geprüft, ob ein Ergebnis vorliegt
+        	//Es wird geprï¿½ft, ob ein Ergebnis vorliegt
         	if(rs.next()) {
         		//Ergebnis-Tupel in Objekt umwandeln
         		SurveyEntry se = new SurveyEntry();
@@ -86,10 +84,10 @@ public class SurveyEntryMapper {
 
 
     /**
-     * Einfügen eines <code>SurveyEntry</code>-Objekts in die DB.
-     * Prüfung und ggf. Korrektur des Primärschlüssels
+     * Einfï¿½gen eines <code>SurveyEntry</code>-Objekts in die DB.
+     * Prï¿½fung und ggf. Korrektur des Primï¿½rschlï¿½ssels
      * @param surveyEntry das zu speichernde Objekt
-     * @return das übergebene Objekt, mit ggf. korrigierter <code>id</code>.
+     * @return das ï¿½bergebene Objekt, mit ggf. korrigierter <code>id</code>.
      */
     public SurveyEntry insertSurveyEntry(SurveyEntry se) {
     	Connection con = DBConnection.connection();
@@ -141,7 +139,7 @@ public class SurveyEntryMapper {
     
 
     /**
-     * Methode, die ein SurveyEntry Objekt in der Datenbank löscht
+     * Methode, die ein SurveyEntry Objekt in der Datenbank lï¿½scht
      * @param surveyEntry 
      */
     public void deleteSurveyEntry(SurveyEntry se) {
@@ -158,7 +156,7 @@ public class SurveyEntryMapper {
     }
 
     /**
-     * Auslesen aller Umfrageeinträge durch Fremdschlüssel (screeningFK) gegebene Spielzeiten.
+     * Auslesen aller Umfrageeintrï¿½ge durch Fremdschlï¿½ssel (screeningFK) gegebene Spielzeiten.
      * @param screeningFK 
      * @return Vektor SurveyEntry
      */
@@ -188,7 +186,7 @@ public class SurveyEntryMapper {
     }
 
     /**
-     * Löschen eines Umfrageeintrags durch die Spielzeit
+     * Lï¿½schen eines Umfrageeintrags durch die Spielzeit
      * @param screeningFK 
      */
     public void deleteSurveyEntryByScreeningFK(int screeningFK) {
@@ -208,7 +206,7 @@ public class SurveyEntryMapper {
 
 
     /**
-     * Auslesen aller Umfrageeinträge durch Fremdschlüssel (surveyFK) gegebene Umfragen
+     * Auslesen aller Umfrageeintrï¿½ge durch Fremdschlï¿½ssel (surveyFK) gegebene Umfragen
      * @param surveyFK
      * @return Vektor mit Umfrageeintrag-Objekten
      */
@@ -238,7 +236,7 @@ public class SurveyEntryMapper {
     
 
     /**
-     * Löschen eines Umfrageeintrags durch (Fremdschlüssel) der Angabe der UmfrageID
+     * Lï¿½schen eines Umfrageeintrags durch (Fremdschlï¿½ssel) der Angabe der UmfrageID
      * @param surveyFK 
      */
     public void deleteSurveyEntryBySurveyFK(int surveyFK) {

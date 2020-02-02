@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.SoPra_WS1920.shared.bo.Movie;
-import de.hdm.SoPra_WS1920.shared.bo.SurveyEntry;
 import de.hdm.SoPra_WS1920.shared.bo.Vote;
 
 /**
@@ -61,7 +59,7 @@ public class VoteMapper {
   	 */	
     
     /**
-     * Methode, die ein Vote Objekt anhand der ID zurückgibt
+     * Methode, die ein Vote Objekt anhand der ID zurï¿½ckgibt
      * @param voteID 
      * @return Vote Objekt
      */
@@ -137,7 +135,7 @@ public class VoteMapper {
     }
 
     /**
-     * Methode, die ein Vote Objekt aus der Datenbank löscht.
+     * Methode, die ein Vote Objekt aus der Datenbank lï¿½scht.
      * @param vote 
      */
     public void deleteVote(Vote vote) {
@@ -155,7 +153,7 @@ public class VoteMapper {
 
   
     /**
-     * Methode, die alle Votes des Erstellers zurückgibt.
+     * Methode, die alle Votes des Erstellers zurï¿½ckgibt.
      * @param personFK 
      * @return Vektor Vote
      */
@@ -187,7 +185,7 @@ public class VoteMapper {
     }
 
     /**
-     * Methode, die alle Votes einer Person aus der Datenbank löscht
+     * Methode, die alle Votes einer Person aus der Datenbank lï¿½scht
      * @param int personFk
      */
  public void deleteVoteByPersonFK(int personFK) {
@@ -208,7 +206,7 @@ public class VoteMapper {
  
 
     /**
-     * Methode, die alle Votes anhand eines SurveyEntry zurückgibt
+     * Methode, die alle Votes anhand eines SurveyEntry zurï¿½ckgibt
      * @param int surveyEntryFK
      * @return Vektor Vote
      */
@@ -242,7 +240,7 @@ public class VoteMapper {
 
 
     /**
-     * Methode, die Votes anhand des Votingweights zurückgibt
+     * Methode, die Votes anhand des Votingweights zurï¿½ckgibt
      * @param int votingweight
      * @return Vektor Vote
      */

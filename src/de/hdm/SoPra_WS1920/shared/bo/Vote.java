@@ -1,7 +1,5 @@
 package de.hdm.SoPra_WS1920.shared.bo;
 
-import java.util.*;
-
 /**
  * @author GianlucaBernert
  * Klasse Vote, welche die Attribute votingWeight, surveyEntryFK und personFK direkt enthält
