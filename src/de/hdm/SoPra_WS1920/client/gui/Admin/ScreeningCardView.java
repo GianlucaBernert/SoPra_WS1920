@@ -16,6 +16,13 @@ import de.hdm.SoPra_WS1920.shared.CinemaAdministrationAsync;
 import de.hdm.SoPra_WS1920.shared.bo.Cinema;
 import de.hdm.SoPra_WS1920.shared.bo.Movie;
 import de.hdm.SoPra_WS1920.shared.bo.Screening;
+ 
+/*
+ * @author Yesin Soufi
+ * @author Sebastian Hermann
+ * Die Klasse ScreeningCardView die die entprechende ScreeningCard anzeigt
+ */
+
 
 public class ScreeningCardView extends FlowPanel{
 		
@@ -32,6 +39,12 @@ public class ScreeningCardView extends FlowPanel{
 	
 	ScreeningCard parentCard;
 	CinemaAdministrationAsync cinemaAdministration;
+	
+	/*
+	 * Konstruktor der ScreeningCardView
+	 * @param screeningCard
+	 * @param screeningToShow
+	 */
 	public ScreeningCardView(ScreeningCard screeningCard, Screening screeningToShow) {
 		// TODO Auto-generated constructor stub
 		this.parentCard= screeningCard;
@@ -71,6 +84,10 @@ public class ScreeningCardView extends FlowPanel{
 		this.add(editIcon);
 	}
 	
+	/*
+	 * AsyncCallback der bei Erfolg das Kino Objekt zum jeweiligen Screening zurückgibt
+	 */
+	
 	class CinemaCallback implements AsyncCallback<Cinema>{
 
 		@Override
@@ -88,7 +105,9 @@ public class ScreeningCardView extends FlowPanel{
 		}
 		
 	}
-	
+	/*
+	 * AsyncCallback der bei Erfolg das Movie Objekt zum jeweiligen Screening zurückgibt
+	 */
 	class MovieCallback implements AsyncCallback<Movie>{
 
 		@Override
@@ -105,6 +124,10 @@ public class ScreeningCardView extends FlowPanel{
 		}
 		
 	}
+	
+	/*
+	 * ClickHandler der es ermöglicht die entsprechende ScreeningCard zu editieren
+	 */
 	
 	class EditClickHandler implements ClickHandler{
 
