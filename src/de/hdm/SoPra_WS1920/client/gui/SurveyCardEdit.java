@@ -307,7 +307,8 @@ public class SurveyCardEdit extends DialogBox {
 				endDate = new java.sql.Date(endDateBox.getValue().getTime());
 				
 //				surveyCardEdit.showAddScreenings(movie, group, city, startDate, endDate);
-				surveyCardEdit.showSurveyCardEdit();
+				surveyManagement.getScreeningsforSurveyCreation(movie, city, startDate, endDate, new GetScreeningsCallback(surveyCardEdit));
+				//surveyCardEdit.showSurveyCardEdit();
 				
 			}
 
@@ -365,7 +366,7 @@ public class SurveyCardEdit extends DialogBox {
 				selectedGroup.setText("Group: "+ group.getName());
 				selectedPeriod.setText("Screening Period: "+ startDate.toString()+" - "+endDate.toString());
 				
-				surveyManagement.getScreeningsforSurveyCreation(movie, city, startDate, endDate, new GetScreeningsCallback());
+				//surveyManagement.getScreeningsforSurveyCreation(movie, city, startDate, endDate, new GetScreeningsCallback());
 				saveSurvey.addClickHandler(new CreateSurveyClickHandler(this));
 				formWrapper.add(saveSurvey);
 			}else{
@@ -373,7 +374,7 @@ public class SurveyCardEdit extends DialogBox {
 				selectedMovie.setText("Movie: "+ surveyToShow.getMovieName());
 				selectedPeriod.setText("Screening Period: "+ surveyToShow.getStartDate().toString()+" - "+surveyToShow.getEndDate().toString());
 				surveyManagement.getSurveyEntryBySurveyFK(surveyToShow.getId(), new GetSurveyEntriesCallback());			
-				surveyManagement.getMoviesByName(surveyToShow.getMovieName(), new GetMovieByNameCallback());			
+				surveyManagement.getMoviesByName(surveyToShow.getMovieName(), new GetMovieByNameCallback(this));			
 				surveyManagement.getGroupById(surveyToShow.getGroupFK(), new GetGroupOfSurveyCallback());
 				
 				deleteIcon = new Image("/Images/png/008-rubbish-bin.png");
@@ -478,6 +479,11 @@ public class SurveyCardEdit extends DialogBox {
 		 * Anonyme Klasse zum verarbeiten von vom Server zurückgegebenen Film-Vektor.
 		 */
 		class GetMovieByNameCallback implements AsyncCallback<Vector<Movie>>{
+			SurveyCardEdit surveyCardEdit;
+			public GetMovieByNameCallback(SurveyCardEdit surveyCardEdit) {
+				// TODO Auto-generated constructor stub
+				this.surveyCardEdit=surveyCardEdit;
+			}
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -489,7 +495,7 @@ public class SurveyCardEdit extends DialogBox {
 			public void onSuccess(Vector<Movie> result) {
 				// TODO Auto-generated method stub
 				movie = result.firstElement();
-				surveyManagement.getScreeningsforSurveyCreation(movie, surveyToShow.getSelectedCity(), surveyToShow.getStartDate(), surveyToShow.getEndDate(), new GetScreeningsCallback());
+				surveyManagement.getScreeningsforSurveyCreation(movie, surveyToShow.getSelectedCity(), surveyToShow.getStartDate(), surveyToShow.getEndDate(), new GetScreeningsCallback(surveyCardEdit));
 			}
 			
 		}
@@ -627,6 +633,11 @@ public class SurveyCardEdit extends DialogBox {
 		 * wir ein neues Objekt der Klasse <code>class ScreeningRow<code> erstellt, um die Präsentation der Vorschlagssliste hinzuzufügen
 		 */
 		class GetScreeningsCallback implements AsyncCallback<Vector<Screening>>{
+			SurveyCardEdit surveyCardEdit;
+			public GetScreeningsCallback(SurveyCardEdit surveyCardEdit) {
+				// TODO Auto-generated constructor stub
+				this.surveyCardEdit = surveyCardEdit;
+			}
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -638,16 +649,22 @@ public class SurveyCardEdit extends DialogBox {
 			public void onSuccess(Vector<Screening> result) {
 				// TODO Auto-generated method stub
 				
-				screeningVector = new Vector<Screening>();
-				screeningVector.addAll(result);
+				if(result.size()==0) {
+					Window.alert("No screenings found for the selected criterias.");
+				}else {
+					if(surveyToShow==null) {
+						surveyCardEdit.showSurveyCardEdit();
+					}
+					screeningVector = new Vector<Screening>();
+					screeningVector.addAll(result);
 
-				for (Screening s : result) {	
-					ScreeningRow sr = new ScreeningRow(s);
-					screeningRowVector.add(sr);
-					screeningSelection.add(sr);
+					for (Screening s : result) {	
+						ScreeningRow sr = new ScreeningRow(s);
+						screeningRowVector.add(sr);
+						screeningSelection.add(sr);
+					}
 				}
 				
-		
 			}
 		}
 

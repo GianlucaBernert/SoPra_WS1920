@@ -192,7 +192,7 @@ public class SurveyManagementHeader extends FlowPanel {
 			headline = new Label("Groups");
 			headline.setStylePrimaryName("Headline");
 			
-			searchBox = new SearchBox(this);
+			//searchBox = new SearchBox(this);
 			
 			createBo = new Button("+Add Group");
 			createBo.setStylePrimaryName("CreateBoButton");
@@ -200,7 +200,7 @@ public class SurveyManagementHeader extends FlowPanel {
 			
 			this.add(headline);
 			this.add(createBo);
-			this.add(searchBox);
+		//	this.add(searchBox);
 		}
 		
 
@@ -211,7 +211,7 @@ public class SurveyManagementHeader extends FlowPanel {
 			headline = new Label("Surveys");
 			headline.setStylePrimaryName("Headline");
 			
-			searchBox = new SearchBox(this);
+			//searchBox = new SearchBox(this);
 			
 			createBo = new Button("+Add Survey");
 			createBo.setStylePrimaryName("CreateBoButton");
@@ -219,7 +219,7 @@ public class SurveyManagementHeader extends FlowPanel {
 			
 			this.add(headline);
 			this.add(createBo);
-			this.add(searchBox);
+			//this.add(searchBox);
 		}
 		
 		
